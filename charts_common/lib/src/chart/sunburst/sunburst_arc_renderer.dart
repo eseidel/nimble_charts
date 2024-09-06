@@ -352,7 +352,8 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
               previousEndAngle = animatingArc.previousArcEndAngle ?? 0.0;
             }
 
-            animatingArc.domain = domainValue;
+            // TODO: this could be a dangerous cast
+            animatingArc.domain = domainValue as D?;
 
             // Update the set of arcs that still exist in the series data.
             _currentKeys.add(arcKey);
@@ -436,11 +437,6 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
 
     super.paint(canvas, animationPercent);
   }
-
-  bool _isNodeDisplayed(TreeNode<D>? node) =>
-      node != null &&
-      (node.depth <= config.initialDisplayLevel ||
-          _nodeToExpand.contains(node));
 
   // Records the nodes to expand beyond initial display level.
   void expandNode(TreeNode<D> node) {

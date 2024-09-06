@@ -12,16 +12,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import 'dart:collection' show LinkedHashMap;
 
 import 'package:charts_common/common.dart';
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
-    show FillPatternType;
-import 'package:charts_common/src/common/color.dart';
+import 'package:charts_common/src/data/graph.dart' as graph;
 import 'package:charts_common/src/data/graph.dart';
 import 'package:charts_common/src/data/graph_utils.dart';
-import 'package:charts_common/src/data/series.dart'
-    show Series, TypedAccessorFn;
 import 'package:meta/meta.dart';
 
 /// Directed acyclic graph with Sankey diagram related data.
@@ -75,14 +70,14 @@ class SankeyGraph<N, L, D> extends Graph<N, L, D> {
     required this.links,
     required super.id,
     required super.nodeDomainFn,
-    required TypedAccessorFn<Link<N, L>, D> super.linkDomainFn,
+    required super.linkDomainFn,
     required super.nodeMeasureFn,
-    required TypedAccessorFn<Link<N, L>, num?> super.linkMeasureFn,
+    required super.linkMeasureFn,
     super.nodeColorFn,
     super.nodeFillColorFn,
     super.nodeFillPatternFn,
     super.nodeStrokeWidthPxFn,
-    TypedAccessorFn<Link<N, L>, Color>? super.linkFillColorFn,
+    super.linkFillColorFn,
   }) : super.base(
           nodes: nodes,
           links: links,
@@ -165,7 +160,7 @@ List<SankeyNode<N, L>> _convertSankeyNodes<N, L, D>(
 List<Node<N, L>> topologicalNodeSort<N, L, D>(
   List<Node<N, L>> givenNodes,
   TypedAccessorFn<Node<N, L>, D> nodeDomainFn,
-  TypedAccessorFn<Link<N, L>, D> linkDomainFn,
+  TypedAccessorFn<graph.Link<N, L>, D> linkDomainFn,
 ) {
   final nodeMap = <D, Node<N, L>>{};
   final givenNodeMap = <D, Node<N, L>>{};
@@ -270,17 +265,17 @@ class SankeyNode<N, L> extends Node<N, L> {
   int? column;
 }
 
-/// A Sankey specific [Link] in the graph.
+/// A Sankey specific [graph.Link] in the graph.
 ///
 /// We store the optional Sankey exclusive secondary link measure on the
 /// [SankeyLink] for variable links since it cannot be stored on a [Series].
-class SankeyLink<N, L> extends Link<N, L> {
+class SankeyLink<N, L> extends graph.Link<N, L> {
   SankeyLink(
-    SankeyNode<N, L> source,
-    SankeyNode<N, L> target,
-    L data, {
+    SankeyNode<N, L> super.source,
+    SankeyNode<N, L> super.target,
+    super.data, {
     this.secondaryLinkMeasure,
-  }) : super(source, target, data);
+  });
 
   /// Measure of a link at the target node if the link has variable value.
   ///
