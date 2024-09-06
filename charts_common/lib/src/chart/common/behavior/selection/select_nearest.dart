@@ -170,10 +170,10 @@ class SelectNearest<D> implements ChartBehavior<D> {
 
       if (maximumDomainDistancePx == null ||
           details[0].domainDistance! <= maximumDomainDistancePx!) {
-        seriesDatumList = _extractSeriesFromNearestSelection(details);
+        seriesDatumList = _extractSeriesFromNearestSelection(details)
 
-        // Filter out points from overlay series.
-        seriesDatumList.removeWhere((datum) => datum.series.overlaySeries);
+          // Filter out points from overlay series.
+          ..removeWhere((datum) => datum.series.overlaySeries);
 
         if (selectClosestSeries && seriesList.isEmpty) {
           if (details.first.series!.overlaySeries) {
@@ -182,13 +182,13 @@ class SelectNearest<D> implements ChartBehavior<D> {
             // copy of the list by domain distance because we do not want to
             // re-order the actual return values here.
             final sortedSeriesDatumList =
-                List<SeriesDatum<D>>.from(seriesDatumList);
-            sortedSeriesDatumList.sort((a, b) {
-              final detailsA = a.datum as DatumDetails<D>;
-              final detailsB = b.datum as DatumDetails<D>;
-              return detailsA.domainDistance!
-                  .compareTo(detailsB.domainDistance!);
-            });
+                List<SeriesDatum<D>>.from(seriesDatumList)
+                  ..sort((a, b) {
+                    final detailsA = a.datum as DatumDetails<D>;
+                    final detailsB = b.datum as DatumDetails<D>;
+                    return detailsA.domainDistance!
+                        .compareTo(detailsB.domainDistance!);
+                  });
             seriesList.add(sortedSeriesDatumList.first.series);
           } else {
             seriesList.add(details.first.series!);
@@ -313,8 +313,9 @@ class SelectNearest<D> implements ChartBehavior<D> {
 
   @override
   void removeFrom(BaseChart<D> chart) {
-    chart.removeGestureListener(_listener);
-    chart.unregisterTappable(this);
+    chart
+      ..removeGestureListener(_listener)
+      ..unregisterTappable(this);
     _chart = null;
   }
 

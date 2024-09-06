@@ -31,8 +31,9 @@ class SunburstRingExpander<D> implements ChartBehavior<D> {
 
   void _selectionChanged(SelectionModel<D> selectionModel) {
     if (selectionModel.selectedDatum.isNotEmpty) {
-      _chart.expandNode(selectionModel.selectedDatum.first.datum);
-      _chart.redraw(skipLayout: true, skipAnimation: true);
+      _chart
+        ..expandNode(selectionModel.selectedDatum.first.datum)
+        ..redraw(skipLayout: true, skipAnimation: true);
     }
   }
 

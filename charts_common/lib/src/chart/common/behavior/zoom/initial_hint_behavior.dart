@@ -125,8 +125,9 @@ abstract class InitialHintBehavior<D> implements ChartBehavior<D> {
 
     _chart = chart;
 
-    chart.addGestureListener(_listener);
-    chart.addLifecycleListener(_lifecycleListener);
+    chart
+      ..addGestureListener(_listener)
+      ..addLifecycleListener(_lifecycleListener);
   }
 
   @override
@@ -140,8 +141,9 @@ abstract class InitialHintBehavior<D> implements ChartBehavior<D> {
     stopHintAnimation();
 
     _chart = chart as CartesianChart<D>;
-    chart.removeGestureListener(_listener);
-    chart.removeLifecycleListener(_lifecycleListener);
+    chart
+      ..removeGestureListener(_listener)
+      ..removeLifecycleListener(_lifecycleListener);
 
     _chart = null;
   }
@@ -258,8 +260,7 @@ abstract class InitialHintBehavior<D> implements ChartBehavior<D> {
     }
 
     final chart = this.chart!;
-    final domainAxis = chart.domainAxis!;
-    domainAxis.setViewportSettings(
+    chart.domainAxis!.setViewportSettings(
       scaleFactor,
       translatePx,
       drawAreaWidth: chart.drawAreaBounds.width,

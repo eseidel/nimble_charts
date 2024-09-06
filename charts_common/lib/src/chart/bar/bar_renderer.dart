@@ -641,11 +641,11 @@ class AnimatedBar<D> extends BaseAnimatedBar<D, BarRendererElement<D>> {
 
   @override
   BarRendererElement<D> getCurrentBar(double animationPercent) {
-    final bar = super.getCurrentBar(animationPercent);
+    final bar = super.getCurrentBar(animationPercent)
 
     // Update with series and datum information to pass to bar decorator.
-    bar.series = series;
-    bar.datum = datum;
+    ..series = series
+    ..datum = datum;
 
     return bar;
   }

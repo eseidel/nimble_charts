@@ -180,12 +180,13 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
         var animatingArc =
             arcList.arcs.firstWhereOrNull((arc) => arc.key == arcKey);
 
-        arcList.center = center;
-        arcList.radius = radius;
-        arcList.innerRadius = innerRadius;
-        arcList.series = series;
-        arcList.stroke = config.noDataColor;
-        arcList.strokeWidthPx = 0.0;
+        arcList
+          ..center = center
+          ..radius = radius
+          ..innerRadius = innerRadius
+          ..series = series
+          ..stroke = config.noDataColor
+          ..strokeWidthPx = 0.0;
 
         // If we don't have any existing arc element, create a new arc. Unlike
         // real arcs, we should not animate the no data state in from 0.
@@ -193,8 +194,9 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
           animatingArc = AnimatedArc<D>(arcKey, null, null);
           arcList.arcs.add(animatingArc);
         } else {
-          animatingArc.datum = null;
-          animatingArc.domain = null;
+          animatingArc
+            ..datum = null
+            ..domain = null;
         }
 
         // Update the set of arcs that still exist in the series data.
@@ -224,12 +226,13 @@ class ArcRenderer<D> extends BaseArcRenderer<D> {
           var animatingArc =
               arcList.arcs.firstWhereOrNull((arc) => arc.key == arcKey);
 
-          arcList.center = center;
-          arcList.radius = radius;
-          arcList.innerRadius = innerRadius;
-          arcList.series = series;
-          arcList.stroke = config.stroke;
-          arcList.strokeWidthPx = config.strokeWidthPx;
+          arcList
+            ..center = center
+            ..radius = radius
+            ..innerRadius = innerRadius
+            ..series = series
+            ..stroke = config.stroke
+            ..strokeWidthPx = config.strokeWidthPx;
 
           // If we don't have any existing arc element, create a new arc and
           // have it animate in from the position of the previous arc's end

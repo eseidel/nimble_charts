@@ -142,7 +142,7 @@ class Slider<D> implements ChartBehavior<D> {
     // Set up slider event listeners.
     _sliderEventListener = SliderEventListener<D>(onChange: onChangeCallback);
   }
-  late _SliderLayoutView<D> _view;
+  late SliderLayoutView<D> _view;
 
   late GestureListener _gestureListener;
 
@@ -182,7 +182,7 @@ class Slider<D> implements ChartBehavior<D> {
   CartesianChart<D>? _chart;
 
   /// Rendering data for the slider line and handle.
-  _AnimatedSlider<D>? _sliderHandle;
+  AnimatedSlider<D>? _sliderHandle;
 
   bool _delaySelect = false;
 
@@ -290,7 +290,7 @@ class Slider<D> implements ChartBehavior<D> {
   }
 
   void _updateViewData() {
-    _sliderHandle ??= _AnimatedSlider<D>();
+    _sliderHandle ??= AnimatedSlider<D>();
 
     // If not set in the constructor, initial position for the handle is the
     // center of the draw area.
@@ -309,7 +309,7 @@ class Slider<D> implements ChartBehavior<D> {
     // Move the handle to the current event position.
     final handleBounds = this._handleBounds!;
     final domainCenterPoint = this._domainCenterPoint!;
-    final element = _SliderElement<D>(
+    final element = SliderElement<D>(
       domainCenterPoint: Point<int>(domainCenterPoint.x, domainCenterPoint.y),
       buttonBounds: Rectangle<int>(
         handleBounds.left,
@@ -464,8 +464,8 @@ class Slider<D> implements ChartBehavior<D> {
   /// [measure] is set moves it also to location of [measure] along the primary
   /// measure axis.
   ///
-  /// If [domain] or [measure] exists beyond either edge of the draw area, the position will
-  /// be bound to the nearest edge.
+  /// If [domain] or [measure] exists beyond either edge of the draw area, the
+  /// position will be bound to the nearest edge.
   ///
   /// Updates [_domainValue] with the location of [domain]. For ordinal axes,
   /// this might result in a different domain value if the range band of
@@ -533,21 +533,23 @@ class Slider<D> implements ChartBehavior<D> {
     // Only vertical rendering is supported by this behavior.
     assert(chart.vertical);
 
-    _view = _SliderLayoutView<D>(
+    _view = SliderLayoutView<D>(
       layoutPaintOrder: layoutPaintOrder,
       handleRenderer: _handleRenderer,
     );
 
-    chart.addView(_view);
-    chart.addGestureListener(_gestureListener);
-    chart.addLifecycleListener(_lifecycleListener);
+    chart
+      ..addView(_view)
+      ..addGestureListener(_gestureListener)
+      ..addLifecycleListener(_lifecycleListener);
   }
 
   @override
   void removeFrom(BaseChart<D> chart) {
-    chart.removeView(_view);
-    chart.removeGestureListener(_gestureListener);
-    chart.removeLifecycleListener(_lifecycleListener);
+    chart
+      ..removeView(_view)
+      ..removeGestureListener(_gestureListener)
+      ..removeLifecycleListener(_lifecycleListener);
     _chart = null;
   }
 
@@ -622,8 +624,8 @@ class SliderStyle {
 enum SliderHandlePosition { middle, top, manual }
 
 /// Layout view component for [Slider].
-class _SliderLayoutView<D> extends LayoutView {
-  _SliderLayoutView({
+class SliderLayoutView<D> extends LayoutView {
+  SliderLayoutView({
     required int layoutPaintOrder,
     required SymbolRenderer handleRenderer,
   })  : layoutConfig = LayoutViewConfig(
@@ -646,9 +648,9 @@ class _SliderLayoutView<D> extends LayoutView {
   final SymbolRenderer _handleRenderer;
 
   /// Rendering data for the slider line and handle.
-  _AnimatedSlider<D>? _sliderHandle;
+  AnimatedSlider<D>? _sliderHandle;
 
-  set sliderHandle(_AnimatedSlider<D> value) {
+  set sliderHandle(AnimatedSlider<D> value) {
     _sliderHandle = value;
   }
 
@@ -690,8 +692,8 @@ class _SliderLayoutView<D> extends LayoutView {
 }
 
 /// Rendering information for a slider control element.
-class _SliderElement<D> {
-  _SliderElement({
+class SliderElement<D> {
+  SliderElement({
     required this.domainCenterPoint,
     required this.buttonBounds,
     required this.fill,
@@ -704,7 +706,7 @@ class _SliderElement<D> {
   Color stroke;
   double strokeWidthPx;
 
-  _SliderElement<D> clone() => _SliderElement<D>(
+  SliderElement<D> clone() => SliderElement<D>(
         domainCenterPoint: domainCenterPoint,
         buttonBounds: buttonBounds,
         fill: fill,
@@ -713,8 +715,8 @@ class _SliderElement<D> {
       );
 
   void updateAnimationPercent(
-    _SliderElement<D> previous,
-    _SliderElement<D> target,
+    SliderElement<D> previous,
+    SliderElement<D> target,
     double animationPercent,
   ) {
     final previousPoint = previous.domainCenterPoint;
@@ -762,11 +764,11 @@ class _SliderElement<D> {
 
 /// Animates the slider control element of the behavior between different
 /// states.
-class _AnimatedSlider<D> {
-  _AnimatedSlider();
-  _SliderElement<D>? _previousSlider;
-  late _SliderElement<D> _targetSlider;
-  _SliderElement<D>? _currentSlider;
+class AnimatedSlider<D> {
+  AnimatedSlider();
+  SliderElement<D>? _previousSlider;
+  late SliderElement<D> _targetSlider;
+  SliderElement<D>? _currentSlider;
 
   // Flag indicating whether this point is being animated out of the chart.
   bool animatingOut = false;
@@ -787,29 +789,30 @@ class _AnimatedSlider<D> {
     final bottom = targetBounds.bottom;
     final left = right;
 
-    newTarget.buttonBounds = Rectangle<int>(
-      left.round(),
-      top,
-      (right - left).round(),
-      bottom - top,
-    );
+    newTarget
+      ..buttonBounds = Rectangle<int>(
+        left.round(),
+        top,
+        (right - left).round(),
+        bottom - top,
+      )
 
-    // Animate the stroke width to 0 so that we don't get a lingering line after
-    // animation is done.
-    newTarget.strokeWidthPx = 0.0;
+      // Animate the stroke width to 0 so that we don't get a lingering line 
+      // after animation is done.
+      ..strokeWidthPx = 0.0;
 
     setNewTarget(newTarget);
     animatingOut = true;
   }
 
-  void setNewTarget(_SliderElement<D> newTarget) {
+  void setNewTarget(SliderElement<D> newTarget) {
     animatingOut = false;
     _currentSlider ??= newTarget.clone();
     _previousSlider = _currentSlider!.clone();
     _targetSlider = newTarget;
   }
 
-  _SliderElement<D> getCurrentSlider(double animationPercent) {
+  SliderElement<D> getCurrentSlider(double animationPercent) {
     if (animationPercent == 1.0 || _previousSlider == null) {
       _currentSlider = _targetSlider;
       _previousSlider = _targetSlider;
@@ -883,5 +886,5 @@ class SliderTester<D> {
     behavior._view.layout(componentBounds, drawAreaBounds);
   }
 
-  _SliderLayoutView<D> get view => behavior._view;
+  SliderLayoutView<D> get view => behavior._view;
 }

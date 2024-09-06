@@ -194,10 +194,10 @@ List<Node<N, L>> convertGraphNodes<N, L, D>(
 
   // Add ingoing and outgoing links to the nodes in nodeMap
   for (final link in graphLinks) {
-    nodeMap.update(nodeClassDomainFn(link.target, indexNotRelevant),
+    nodeMap..update(nodeClassDomainFn(link.target, indexNotRelevant),
         (node) => addLinkToNode(node, link, isIncomingLink: true),
-        ifAbsent: () => addLinkToAbsentNode(link, isIncomingLink: true),);
-    nodeMap.update(nodeClassDomainFn(link.source, indexNotRelevant),
+        ifAbsent: () => addLinkToAbsentNode(link, isIncomingLink: true),)
+    ..update(nodeClassDomainFn(link.source, indexNotRelevant),
         (node) => addLinkToNode(node, link, isIncomingLink: false),
         ifAbsent: () => addLinkToAbsentNode(link, isIncomingLink: false),);
   }

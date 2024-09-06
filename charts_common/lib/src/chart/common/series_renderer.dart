@@ -214,6 +214,7 @@ abstract class BaseSeriesRenderer<D> implements SeriesRenderer<D> {
             final color = palettes[index % palettes.length].shadeDefault;
             index++;
             series.colorFn = (_) => color;
+            // ignore: cascade_invocations
             series.seriesColor ??= color;
           } else {
             // Fill in missing seriesColor values with the color of the first

@@ -403,22 +403,23 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
           rangeEndTickStart.y - rangeEndTickStart.y,
         );
     }
-    canvas.drawRect(
-      rangeShade,
-      fill: rangeShadeStyle.color,
-      stroke: rangeShadeStyle.color,
-      strokeWidthPx: rangeShadeStyle.strokeWidth.toDouble(),
-    );
+    canvas
+      ..drawRect(
+        rangeShade,
+        fill: rangeShadeStyle.color,
+        stroke: rangeShadeStyle.color,
+        strokeWidthPx: rangeShadeStyle.strokeWidth.toDouble(),
+      )
 
-    // Draw the start and end boundaries of the range.
-    canvas.drawLine(
-      points: [rangeStartTickStart, rangeStartTickEnd],
-      dashPattern: lineStyle.dashPattern,
-      fill: lineStyle.color,
-      stroke: lineStyle.color,
-      strokeWidthPx: lineStyle.strokeWidth.toDouble(),
-    );
-    canvas.drawLine(
+      // Draw the start and end boundaries of the range.
+      ..drawLine(
+        points: [rangeStartTickStart, rangeStartTickEnd],
+        dashPattern: lineStyle.dashPattern,
+        fill: lineStyle.color,
+        stroke: lineStyle.color,
+        strokeWidthPx: lineStyle.strokeWidth.toDouble(),
+      )
+    ..drawLine(
       points: [rangeEndTickStart, rangeEndTickEnd],
       dashPattern: lineStyle.dashPattern,
       fill: lineStyle.color,

@@ -42,7 +42,6 @@ class Color {
     final r = (bigint >> 16) & 255;
     final g = (bigint >> 8) & 255;
     final b = bigint & 255;
-    const a = 255;
     return Color(r: r, g: g, b: b);
   }
   static const black = Color(r: 0, g: 0, b: 0);

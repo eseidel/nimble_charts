@@ -156,7 +156,7 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
     int maxHeight, {
     bool collision = false,
   }) =>
-      const ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
+      ViewMeasuredSizes.zero;
 
   @override
   ViewMeasuredSizes measureVerticallyDrawnTicks(
@@ -165,5 +165,5 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
     int maxHeight, {
     bool collision = false,
   }) =>
-      const ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
+      ViewMeasuredSizes.zero;
 }

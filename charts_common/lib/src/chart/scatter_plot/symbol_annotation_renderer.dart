@@ -113,12 +113,14 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
           (rowInnerHeight / 2);
 
       series.measureFn = (index) => 0;
+      // ignore: cascade_invocations
       series.measureOffsetFn = (index) => 0;
 
       // Override the key function to allow for range annotations that start at
       // the same point. This is a necessary hack because every annotation has a
       // measure value of 0, so the key generated in [PointRenderer] is not
       // unique enough.
+      // ignore: cascade_invocations
       series.keyFn ??= (index) => '${series.id}__${series.domainFn(index)}__'
           '${series.domainLowerBoundFn!(index)}__'
           '${series.domainUpperBoundFn!(index)}';
@@ -244,15 +246,14 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
       );
 
   @override
-  ViewMeasuredSizes measure(int maxWidth, int maxHeight) {
-    // The sizing of component is not flexible. It's height is always a multiple
-    // of the number of series rendered, even if that ends up taking all of the
-    // available margin space.
-    return ViewMeasuredSizes(
-      preferredWidth: maxWidth,
-      preferredHeight: _currentHeight,
-    );
-  }
+  ViewMeasuredSizes measure(int maxWidth, int maxHeight) =>
+      // The sizing of component is not flexible. It's height is always a 
+      // multiple of the number of series rendered, even if that ends up taking 
+      // all of the available margin space.
+      ViewMeasuredSizes(
+        preferredWidth: maxWidth,
+        preferredHeight: _currentHeight,
+      );
 
   @override
   void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds) {

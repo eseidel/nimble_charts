@@ -124,11 +124,11 @@ class AnimatedArc<D> {
   ///
   /// Animates the angle of the arc to [endAngle], in radians.
   void animateOut(double endAngle) {
-    final newTarget = _currentArc!.clone();
+    final newTarget = _currentArc!.clone()
 
-    // Animate the arc out by setting the angles to 0.
-    newTarget.startAngle = endAngle;
-    newTarget.endAngle = endAngle;
+      // Animate the arc out by setting the angles to 0.
+      ..startAngle = endAngle
+      ..endAngle = endAngle;
 
     setNewTarget(newTarget);
     animatingOut = true;

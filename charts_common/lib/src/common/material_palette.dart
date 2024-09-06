@@ -20,9 +20,9 @@ import 'package:charts_common/src/common/palette.dart' show Palette;
 ///
 /// @link https://material.io/guidelines/style/color.html#color-color-palette
 class MaterialPalette {
-  static const black = Color(r: 0, g: 0, b: 0);
-  static const transparent = Color(r: 0, g: 0, b: 0, a: 0);
-  static const white = Color(r: 255, g: 255, b: 255);
+  static const black = Color.black;
+  static const transparent = Color.transparent;
+  static const white = Color.white;
 
   static Palette get blue => const MaterialBlue();
   static Palette get red => const MaterialRed();

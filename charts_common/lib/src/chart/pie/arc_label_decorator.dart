@@ -190,12 +190,12 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
 
         // Set the max width and text style.
         if (calculatedLabelPosition == ArcLabelPosition.inside) {
-          labelElement.textStyle = datumInsideLabelStyle;
-          labelElement.maxWidth = insideArcWidth;
+          labelElement..textStyle = datumInsideLabelStyle
+          ..maxWidth = insideArcWidth;
         } else {
           // calculatedLabelPosition == LabelPosition.outside
-          labelElement.textStyle = datumOutsideLabelStyle;
-          labelElement.maxWidth = outsideArcWidth;
+          labelElement..textStyle = datumOutsideLabelStyle
+          ..maxWidth = outsideArcWidth;
         }
 
         // Only calculate and draw label if there's actually space for the
@@ -370,7 +370,8 @@ class ArcLabelDecorator<D> extends ArcRendererDecorator<D> {
     return [labelLeftOfChart, labelY];
   }
 
-  /// Detects whether the current outside label collides with the previous label.
+  /// Detects whether the current outside label collides with the previous 
+  /// label.
   @protected
   bool detectOutsideLabelCollision(
     num labelY,

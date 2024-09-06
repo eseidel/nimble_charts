@@ -907,18 +907,19 @@ class AnimatedPoint<D> {
     // Set the target measure value to the axis position.
     final targetPoint = newTarget.point!;
     final y = newTarget.measureAxisPosition!.roundToDouble();
-    newTarget.point = DatumPoint<D>.from(
-      targetPoint,
-      x: targetPoint.x,
-      y: y,
-      yLower: y,
-      yUpper: y,
-    );
+    newTarget
+      ..point = DatumPoint<D>.from(
+        targetPoint,
+        x: targetPoint.x,
+        y: y,
+        yLower: y,
+        yUpper: y,
+      )
 
-    // Animate the radius and stroke width to 0 so that we don't get a lingering
-    // point after animation is done.
-    newTarget.radiusPx = 0.0;
-    newTarget.strokeWidthPx = 0.0;
+      // Animate the radius and stroke width to 0 so that we don't get a lingering
+      // point after animation is done.
+      ..radiusPx = 0.0
+      ..strokeWidthPx = 0.0;
 
     setNewTarget(newTarget);
     animatingOut = true;

@@ -197,10 +197,10 @@ abstract class Legend<D> implements ChartBehavior<D>, LayoutView {
         });
       }
 
-      legendState._legendEntries =
-          legendEntryGenerator.getLegendEntries(_currentSeriesList);
+      legendState.._legendEntries =
+          legendEntryGenerator.getLegendEntries(_currentSeriesList)
 
-      legendState._selectionModel = selectionModel;
+      .._selectionModel = selectionModel;
       _postProcessSeriesList = seriesList;
       _updateLegendEntries(seriesList: seriesList);
     }
@@ -247,9 +247,9 @@ abstract class Legend<D> implements ChartBehavior<D>, LayoutView {
     chart
         .getSelectionModel(selectionModelType)
         .removeSelectionChangedListener(_selectionChanged);
-    chart.removeLifecycleListener(_lifecycleListener);
+    chart..removeLifecycleListener(_lifecycleListener)
 
-    chart.removeView(this);
+    ..removeView(this);
   }
 
   @protected
@@ -274,10 +274,10 @@ abstract class Legend<D> implements ChartBehavior<D>, LayoutView {
       layoutPosition(behaviorPosition, outsideJustification, isRtl);
 
   @override
-  ViewMeasuredSizes measure(int maxWidth, int maxHeight) {
+  ViewMeasuredSizes measure(int maxWidth, int maxHeight) =>
     // Native child classes should override this method to return real
     // measurements.
-    return const ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
+     ViewMeasuredSizes.zero;
   }
 
   @override

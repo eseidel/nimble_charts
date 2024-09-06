@@ -36,7 +36,8 @@ abstract class ChartContext {
   /// mode.
   ///
   /// This will only be true if the container for the chart component was
-  /// configured with the rtl direction setting ([chartContainerIsRtl] == true), and the chart's
+  /// configured with the rtl direction setting ([chartContainerIsRtl] == true)
+  /// , and the chart's
   /// [RTLSpec] is set to reverse the axis direction in rtl mode.
   bool get isRtl;
 

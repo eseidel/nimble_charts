@@ -222,12 +222,12 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
         textElement.textStyle = labelStyle;
       } else {
         // Fill in whatever is missing
-        final textStyle = textElement.textStyle!;
-        textStyle.color ??= labelStyle.color;
-        textStyle.fontFamily ??= labelStyle.fontFamily;
-        textStyle.fontSize ??= labelStyle.fontSize;
-        textStyle.fontWeight ??= labelStyle.fontWeight;
-        textStyle.lineHeight ??= labelStyle.lineHeight;
+        textElement.textStyle!
+        ..color ??= labelStyle.color
+        ..fontFamily ??= labelStyle.fontFamily
+        ..fontSize ??= labelStyle.fontSize
+        ..fontWeight ??= labelStyle.fontWeight
+        ..lineHeight ??= labelStyle.lineHeight;
       }
     }
   }
@@ -286,11 +286,11 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
     ticks = [
       for (final tick in ticks)
         if (tick.locationPx != null) tick,
-    ];
+    ]
 
     // First sort ticks by smallest locationPx first (NOT sorted by value).
     // This allows us to only check if a tick collides with the previous tick.
-    ticks.sort((a, b) => a.locationPx!.compareTo(b.locationPx!));
+    ..sort((a, b) => a.locationPx!.compareTo(b.locationPx!));
 
     var previousEnd = double.negativeInfinity;
     var collides = false;
@@ -540,18 +540,18 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
           isFirst,
           isLast,
         )) {
-          case _PixelVerticalDirection.over:
+          case PixelVerticalDirection.over:
             y = (locationPx -
                     (labelHeight - multiLineLabelOffset) -
                     labelOffsetFromTickPx(collision: collision) -
                     labelOffsetPx)
                 .toInt();
-          case _PixelVerticalDirection.under:
+          case PixelVerticalDirection.under:
             y = (locationPx +
                     labelOffsetFromTickPx(collision: collision) +
                     labelOffsetPx)
                 .toInt();
-          case _PixelVerticalDirection.center:
+          case PixelVerticalDirection.center:
           default:
             y = (locationPx - labelHeight / 2 + labelOffsetPx).toInt();
             break;
@@ -594,27 +594,27 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
   }
 
   @protected
-  _PixelVerticalDirection normalizeVerticalAnchor(
+  PixelVerticalDirection normalizeVerticalAnchor(
     TickLabelAnchor anchor,
     bool isFirst,
     bool isLast,
   ) {
     switch (anchor) {
       case TickLabelAnchor.before:
-        return _PixelVerticalDirection.under;
+        return PixelVerticalDirection.under;
       case TickLabelAnchor.after:
-        return _PixelVerticalDirection.over;
+        return PixelVerticalDirection.over;
       case TickLabelAnchor.inside:
         if (isFirst) {
-          return _PixelVerticalDirection.over;
+          return PixelVerticalDirection.over;
         }
         if (isLast) {
-          return _PixelVerticalDirection.under;
+          return PixelVerticalDirection.under;
         }
-        return _PixelVerticalDirection.center;
+        return PixelVerticalDirection.center;
       case TickLabelAnchor.centered:
       default:
-        return _PixelVerticalDirection.center;
+        return PixelVerticalDirection.center;
     }
   }
 
@@ -703,7 +703,7 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
   }
 }
 
-enum _PixelVerticalDirection {
+enum PixelVerticalDirection {
   over,
   center,
   under,

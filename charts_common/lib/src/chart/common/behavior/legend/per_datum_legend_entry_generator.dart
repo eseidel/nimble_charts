@@ -102,20 +102,21 @@ class PerDatumLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
       for (final entry in legendEntries) {
         final series = entry.series;
         final measure = series.measureFn(entry.datumIndex);
-        entry.value = measure!.toDouble();
-        entry.formattedValue = _getFormattedMeasureValue(series, measure);
-
-        entry.isSelected = selectionModel.selectedSeries
-            .any((selectedSeries) => series.id == selectedSeries.id);
+        entry
+          ..value = measure!.toDouble()
+          ..formattedValue = _getFormattedMeasureValue(series, measure)
+          ..isSelected = selectionModel.selectedSeries
+              .any((selectedSeries) => series.id == selectedSeries.id);
       }
     }
   }
 
   void _resetLegendEntryMeasures(List<LegendEntry<D>> legendEntries) {
     for (final entry in legendEntries) {
-      entry.value = null;
-      entry.formattedValue = null;
-      entry.isSelected = false;
+      entry
+        ..value = null
+        ..formattedValue = null
+        ..isSelected = false;
     }
   }
 
@@ -132,9 +133,9 @@ class PerDatumLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
       for (final entry in legendEntries) {
         final series = entry.series;
         final measure = series.measureFn(entry.datumIndex);
-        entry.value = measure!.toDouble();
-        entry.formattedValue = _getFormattedMeasureValue(series, measure);
-        entry.isSelected = false;
+        entry..value = measure!.toDouble()
+        ..formattedValue = _getFormattedMeasureValue(series, measure)
+        ..isSelected = false;
       }
     }
   }

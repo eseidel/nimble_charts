@@ -359,16 +359,15 @@ abstract class CartesianChart<D> extends BaseChart<D> {
 
   @override
   MutableSeries<D> makeSeries(Series<dynamic, D> series) {
-    final s = super.makeSeries(series);
+    final s = super.makeSeries(series)
+      ..measureOffsetFn ??= ((_) => 0)
 
-    s.measureOffsetFn ??= (_) => 0;
-
-    // Setup the Axes
-    s..setAttr(domainAxisKey, domainAxis)
-    ..setAttr(
-      measureAxisKey,
-      getMeasureAxis(axisId: series.getAttribute(measureAxisIdKey)),
-    );
+      // Setup the Axes
+      ..setAttr(domainAxisKey, domainAxis)
+      ..setAttr(
+        measureAxisKey,
+        getMeasureAxis(axisId: series.getAttribute(measureAxisIdKey)),
+      );
 
     return s;
   }

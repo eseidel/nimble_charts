@@ -187,10 +187,9 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
 
       for (var barIndex = 0; barIndex < series.data.length; barIndex++) {
         final dynamic datum = series.data[barIndex];
-        final details = getBaseDetails(datum, barIndex);
-
-        details.barStackIndex = 0;
-        details.measureOffset = measureOffsetFn!(barIndex);
+        final details = getBaseDetails(datum, barIndex)
+          ..barStackIndex = 0
+          ..measureOffset = measureOffsetFn!(barIndex);
 
         if (fillPatternFn != null) {
           details.fillPattern = fillPatternFn(barIndex);
@@ -261,9 +260,10 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
         series.measureOffsetFn = (index) => elements[index!].measureOffset!;
       }
 
-      series.setAttr(barGroupIndexKey, barGroupIndex);
-      series.setAttr(stackKeyKey, stackKey);
-      series.setAttr(barElementsKey, elements);
+      series
+        ..setAttr(barGroupIndexKey, barGroupIndex)
+        ..setAttr(stackKeyKey, stackKey)
+        ..setAttr(barElementsKey, elements);
 
       if (config.grouped) {
         barGroupIndex++;
@@ -305,9 +305,10 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
             ? previousBarWeights.reduce((a, b) => a + b)
             : 0.0;
 
-        series.setAttr(barGroupWeightKey, barWeight);
-        series.setAttr(previousBarGroupWeightKey, previousBarWeight);
-        series.setAttr(allBarGroupWeightsKey, barWeights);
+        series
+          ..setAttr(barGroupWeightKey, barWeight)
+          ..setAttr(previousBarGroupWeightKey, previousBarWeight)
+          ..setAttr(allBarGroupWeightsKey, barWeights);
       }
     }
   }
@@ -741,9 +742,15 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
         ).map<DatumDetails<D>>((bar) {
           final barBounds = getBoundsForBar(bar.currentBar!)!;
           final segmentDomainDistance = _getDistance(
-              chartPoint.x.round(), barBounds.left, barBounds.right);
+            chartPoint.x.round(),
+            barBounds.left,
+            barBounds.right,
+          );
           final segmentMeasureDistance = _getDistance(
-              chartPoint.y.round(), barBounds.top, barBounds.bottom);
+            chartPoint.y.round(),
+            barBounds.top,
+            barBounds.bottom,
+          );
 
           final nearestPoint = Point<double>(
             clamp(chartPoint.x, barBounds.left, barBounds.right).toDouble(),
@@ -774,9 +781,15 @@ abstract class BaseBarRenderer<D, R extends BaseBarRendererElement,
         ).map<DatumDetails<D>>((bar) {
           final barBounds = getBoundsForBar(bar.currentBar!)!;
           final segmentDomainDistance = _getDistance(
-              chartPoint.y.round(), barBounds.top, barBounds.bottom);
+            chartPoint.y.round(),
+            barBounds.top,
+            barBounds.bottom,
+          );
           final segmentMeasureDistance = _getDistance(
-              chartPoint.x.round(), barBounds.left, barBounds.right);
+            chartPoint.x.round(),
+            barBounds.left,
+            barBounds.right,
+          );
 
           return DatumDetails<D>(
             series: bar.series,

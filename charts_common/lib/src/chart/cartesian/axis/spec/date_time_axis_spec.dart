@@ -241,13 +241,12 @@ class TimeFormatterSpec {
 /// [DateTimeFormatterFunction].
 @immutable
 class BasicDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
-  const BasicDateTimeTickFormatterSpec(DateTimeFormatterFunction formatter)
-      : formatter = formatter,
-        dateFormat = null;
+  const BasicDateTimeTickFormatterSpec(DateTimeFormatterFunction this.formatter)
+      : dateFormat = null;
 
-  const BasicDateTimeTickFormatterSpec.fromDateFormat(DateFormat dateFormat)
-      : formatter = null,
-        dateFormat = dateFormat;
+  const BasicDateTimeTickFormatterSpec.fromDateFormat(
+      DateFormat this.dateFormat,)
+      : formatter = null;
   final DateTimeFormatterFunction? formatter;
   final DateFormat? dateFormat;
 

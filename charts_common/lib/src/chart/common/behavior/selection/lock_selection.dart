@@ -49,10 +49,9 @@ class LockSelection<D> implements ChartBehavior<D> {
 
   BaseChart<D>? _chart;
 
-  bool _onTapTest(Point<double> chartPoint) {
-    // If the tap is within the drawArea, then claim the event from others.
-    return _chart!.pointWithinRenderer(chartPoint);
-  }
+  bool _onTapTest(Point<double> chartPoint) =>
+      // If the tap is within the drawArea, then claim the event from others.
+      _chart!.pointWithinRenderer(chartPoint);
 
   bool _onSelect(Point<double> chartPoint, [double? ignored]) {
     // Skip events that occur outside the drawArea for any series renderer.
@@ -103,8 +102,9 @@ class LockSelection<D> implements ChartBehavior<D> {
 
   @override
   void removeFrom(BaseChart<D> chart) {
-    chart.removeGestureListener(_listener);
-    chart.unregisterTappable(this);
+    chart
+      ..removeGestureListener(_listener)
+      ..unregisterTappable(this);
     _chart = null;
   }
 

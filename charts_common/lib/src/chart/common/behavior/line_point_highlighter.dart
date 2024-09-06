@@ -137,9 +137,9 @@ class LinePointHighlighter<D> implements ChartBehavior<D> {
       assert((chart as CartesianChart).vertical);
     }
 
-    chart.addView(_view);
+    chart..addView(_view)
 
-    chart.addLifecycleListener(_lifecycleListener);
+    ..addLifecycleListener(_lifecycleListener);
     chart
         .getSelectionModel(selectionModelType)
         .addSelectionChangedListener(_selectionChanged);
@@ -636,11 +636,11 @@ class _AnimatedPoint<D> {
       newTarget.measureAxisPosition!.roundToDouble(),
     );
 
-    newTarget.point = newPoint;
+    newTarget..point = newPoint
 
     // Animate the radius to 0 so that we don't get a lingering point after
     // animation is done.
-    newTarget.radiusPx = 0.0;
+    ..radiusPx = 0.0;
 
     setNewTarget(newTarget);
     animatingOut = true;

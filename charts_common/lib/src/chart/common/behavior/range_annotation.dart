@@ -161,15 +161,16 @@ class RangeAnnotation<D> implements ChartBehavior<D> {
       layoutPaintOrder: layoutPaintOrder,
     );
 
-    chart.addView(_view);
-
-    chart.addLifecycleListener(_lifecycleListener);
+    chart
+      ..addView(_view)
+      ..addLifecycleListener(_lifecycleListener);
   }
 
   @override
   void removeFrom(BaseChart<D> chart) {
-    chart.removeView(_view);
-    chart.removeLifecycleListener(_lifecycleListener);
+    chart
+      ..removeView(_view)
+      ..removeLifecycleListener(_lifecycleListener);
 
     _view.chart = null;
   }
@@ -195,8 +196,9 @@ class RangeAnnotation<D> implements ChartBehavior<D> {
         }
 
         if (annotation is RangeAnnotationSegment<Object>) {
-          axis.addDomainValue(annotation.startValue);
-          axis.addDomainValue(annotation.endValue);
+          axis
+            ..addDomainValue(annotation.startValue)
+            ..addDomainValue(annotation.endValue);
         } else if (annotation is LineAnnotationSegment<Object>) {
           axis.addDomainValue(annotation.value);
         }
@@ -478,6 +480,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
 
       if (rangeAnnotation
           .shouldShowLabels(annotationElement.annotationSegment)) {
+        // ignore: unused_local_variable
         final labels = {
           if (annotationElement.startLabel != null)
             _AnnotationLabelType.start: annotationElement.startLabel,
@@ -485,34 +488,35 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
             _AnnotationLabelType.end: annotationElement.endLabel,
           if (annotationElement.middleLabel != null)
             _AnnotationLabelType.middle: annotationElement.middleLabel,
-        };
+        }
 
-        // Draw labels that have been defined.
-        labels.forEach((labelType, label) {
-          final labelElement = graphicsFactory!.createTextElement(label!)
-            ..maxWidthStrategy = MaxWidthStrategy.ellipsize
-            ..textStyle = labelStyle;
+          // Draw labels that have been defined.
+          ..forEach((labelType, label) {
+            final labelElement = graphicsFactory!.createTextElement(label!)
+              ..maxWidthStrategy = MaxWidthStrategy.ellipsize
+              ..textStyle = labelStyle;
 
-          // Measure the label max width once if either type of label is defined.
-          labelElement.maxWidth =
-              _getLabelMaxWidth(bounds, annotationElement, labelElement);
+            // Measure the label max width once if either type of label is 
+            // defined.
+            labelElement.maxWidth =
+                _getLabelMaxWidth(bounds, annotationElement, labelElement);
 
-          final labelPoint = _getLabelPosition(
-            labelType,
-            bounds,
-            annotationElement,
-            labelElement,
-          );
-
-          if (labelPoint != null) {
-            canvas.drawText(
+            final labelPoint = _getLabelPosition(
+              labelType,
+              bounds,
+              annotationElement,
               labelElement,
-              labelPoint.x,
-              labelPoint.y,
-              rotation: rotation,
             );
-          }
-        });
+
+            if (labelPoint != null) {
+              canvas.drawText(
+                labelElement,
+                labelPoint.x,
+                labelPoint.y,
+                rotation: rotation,
+              );
+            }
+          });
       }
     });
   }

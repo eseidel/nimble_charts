@@ -218,8 +218,7 @@ abstract class Axis<D> extends ImmutableAxis<D> implements LayoutView {
     // regression for b/110371453.
     _formatterValueCache.clear();
 
-    final scale = this.scale!;
-    scale.resetDomain();
+    final scale = this.scale!..resetDomain();
     reverseOutputRange = false;
 
     if (autoViewport) {

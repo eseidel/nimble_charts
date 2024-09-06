@@ -385,8 +385,9 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
         element.boundingRect = Rectangle(left, top, width, length);
         left += width;
       }
-      boundingRect.top += length;
-      boundingRect.height -= length;
+      boundingRect
+        ..top += length
+        ..height -= length;
     }
   }
 
@@ -475,13 +476,14 @@ class _AnimatedTreeMapRect<D> {
   void animateOut() {
     final newTarget = _currentRect!.clone();
     final rect = newTarget.boundingRect;
-    newTarget.boundingRect = Rectangle(
-      rect.left + (rect.width / 2),
-      rect.top + (rect.height / 2),
-      0,
-      0,
-    );
-    newTarget.strokeWidthPx = 0.0;
+    newTarget
+      ..boundingRect = Rectangle(
+        rect.left + (rect.width / 2),
+        rect.top + (rect.height / 2),
+        0,
+        0,
+      )
+      ..strokeWidthPx = 0.0;
 
     setNewTarget(newTarget);
     animatingOut = true;

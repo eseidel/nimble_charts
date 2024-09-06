@@ -219,8 +219,9 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
         }
       }
 
-      series.setAttr(styleSegmentsKey, styleSegments);
-      series.setAttr(lineStackIndexKey, stackIndex);
+      series
+        ..setAttr(styleSegmentsKey, styleSegments)
+        ..setAttr(lineStackIndexKey, stackIndex);
 
       if (config.stacked) {
         stackIndex++;
@@ -335,9 +336,9 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     // Now whatever is left is stuff that has been removed. We still add it to
     // the end and removed them as the map is modified in place.
     newLineMap.addAll(_seriesLineMap.entries);
-    _seriesLineMap.clear();
-
-    _seriesLineMap.addEntries(newLineMap);
+    _seriesLineMap
+      ..clear()
+      ..addEntries(newLineMap);
   }
 
   @override
@@ -933,7 +934,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     if (!config.stacked || previousPointList == null) {
       // Start area segments at the bottom of a stack by adding a bottom line
       // segment along the measure axis.
-      areaPointList.add(
+      areaPointList..add(
         _getPoint(
           null,
           domainFn(end),
@@ -943,9 +944,9 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
           0.0,
           measureAxis,
         ),
-      );
+      )
 
-      areaPointList.add(
+      ..add(
         _getPoint(
           null,
           domainFn(start),
@@ -974,11 +975,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     bool initializeFromZero,
   ) {
     final measureAxis = series.getAttr(measureAxisKey)! as ImmutableAxis<num>;
-    final areaPointList = <_DatumPoint<D>>[];
-
-    // Add all points for upper bounds.
-    areaPointList.addAll(
-      pointList.map(
+    final areaPointList = <_DatumPoint<D>>[
+      ...pointList.map(
         (datumPoint) => _DatumPoint.from(
           datumPoint,
           datumPoint.x,
@@ -990,11 +988,8 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
                 ),
         ),
       ),
-    );
-
-    // Add all points for lower bounds, in reverse order.
-    areaPointList.addAll(
-      pointList.reversed.map(
+      // Add all points for lower bounds, in reverse order.
+      ...pointList.reversed.map(
         (datumPoint) => _DatumPoint.from(
           datumPoint,
           datumPoint.x,
@@ -1006,7 +1001,7 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
                 ),
         ),
       ),
-    );
+    ];
 
     return areaPointList;
   }
@@ -1520,11 +1515,11 @@ class _AnimatedLine<D> {
       );
     }
 
-    newTarget.points = newPoints;
+    newTarget..points = newPoints
 
     // Animate the stroke width to 0 so that we don't get a lingering line after
     // animation is done.
-    newTarget.strokeWidthPx = 0.0;
+    ..strokeWidthPx = 0.0;
 
     setNewTarget(newTarget);
     animatingOut = true;

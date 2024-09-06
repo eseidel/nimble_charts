@@ -47,5 +47,6 @@ class RangeTick<D> extends Tick<D> {
   String toString() => 'RangeTick(value: $value, locationPx: $locationPx, '
       'labelOffsetPx: $labelOffsetPx, rangeStartValue: $rangeStartValue, '
       'rangeStartLocationPx: $rangeStartLocationPx, '
-      'rangeEndValue: $rangeEndValue,  rangeEndLocationPx: $rangeEndLocationPx)';
+      'rangeEndValue: $rangeEndValue,  '
+      'rangeEndLocationPx: $rangeEndLocationPx)';
 }
