@@ -51,7 +51,6 @@ class NoneRenderSpec<D> extends RenderSpec<D> {
     GraphicsFactory graphicFactory,
   ) =>
       NoneDrawStrategy<D>(
-        context,
         graphicFactory,
         axisLineStyleSpec: axisLineStyle,
       );

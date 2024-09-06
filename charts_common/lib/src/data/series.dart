@@ -33,8 +33,8 @@ class Series<T, D> {
     String? seriesCategory,
   }) {
     // Wrap typed accessors.
-    dynamic domainFn(int? index) => domainFn(data[index!], index);
-    dynamic measureFn(int? index) => measureFn(data[index!], index);
+    dynamic domainFn(int? index) => domainFn(data[index!]);
+    dynamic measureFn(int? index) => measureFn(data[index!]);
     final areaColorFn = areaColorFn == null
         ? null
         : (index) => areaColorFn(data[index!], index);

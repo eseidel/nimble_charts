@@ -197,10 +197,10 @@ abstract class Legend<D> implements ChartBehavior<D>, LayoutView {
         });
       }
 
-      legendState.._legendEntries =
-          legendEntryGenerator.getLegendEntries(_currentSeriesList)
-
-      .._selectionModel = selectionModel;
+      legendState
+        .._legendEntries =
+            legendEntryGenerator.getLegendEntries(_currentSeriesList)
+        .._selectionModel = selectionModel;
       _postProcessSeriesList = seriesList;
       _updateLegendEntries(seriesList: seriesList);
     }
@@ -247,9 +247,9 @@ abstract class Legend<D> implements ChartBehavior<D>, LayoutView {
     chart
         .getSelectionModel(selectionModelType)
         .removeSelectionChangedListener(_selectionChanged);
-    chart..removeLifecycleListener(_lifecycleListener)
-
-    ..removeView(this);
+    chart
+      ..removeLifecycleListener(_lifecycleListener)
+      ..removeView(this);
   }
 
   @protected
@@ -275,10 +275,9 @@ abstract class Legend<D> implements ChartBehavior<D>, LayoutView {
 
   @override
   ViewMeasuredSizes measure(int maxWidth, int maxHeight) =>
-    // Native child classes should override this method to return real
-    // measurements.
-     ViewMeasuredSizes.zero;
-  }
+      // Native child classes should override this method to return real
+      // measurements.
+      ViewMeasuredSizes.zero;
 
   @override
   void layout(Rectangle<int> componentBounds, Rectangle<int> drawAreaBounds) {

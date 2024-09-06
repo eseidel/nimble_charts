@@ -85,28 +85,20 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
     for (final series in seriesList) {
       final elements = <SunburstArcRendererElement<D>>[];
 
-      final domainFn = series.domainFn;
       final measureFn = series.measureFn;
 
       // The seriesMeasureTotal needs to be computed from currently displayed
       // top level.
-      var seriesMeasureTotal = 0.0;
       for (var i = 0; i < series.data.length; i++) {
         final node = series.data[i] as TreeNode<Object>;
         final measure = measureFn(i);
-        if (node.depth == 1 && measure != null) {
-          seriesMeasureTotal += measure;
-        }
+        if (node.depth == 1 && measure != null) {}
       }
 
       // On the canvas, arc measurements are defined as angles from the positive
       // x axis. Start our first slice at the positive y axis instead.
       final startAngle = config.startAngle;
       final arcLength = config.arcLength;
-
-      const totalAngle = 0.0;
-
-      final measures = <num>[];
 
       // No data processing is same as the regular arc renderer.
       if (series.data.isEmpty) {
@@ -130,8 +122,7 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
       } else {
         // Create SunburstArcRendererElement for each item in the tree,
         // excluding the root node.
-        final root = series.data.first as TreeNode<D>;
-        root.visit((node) {
+        (series.data.first as TreeNode<D>).visit((node) {
           elements.addAll(_createArcRenderElementForNode(series, node));
         });
       }
@@ -250,12 +241,13 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
         var animatingArc =
             arcList.arcs.firstWhereOrNull((arc) => arc.key == arcKey);
 
-        arcList.center = center;
-        arcList.radius = radius;
-        arcList.innerRadius = innerRadius;
-        arcList.series = series;
-        arcList.stroke = config.noDataColor;
-        arcList.strokeWidthPx = 0.0;
+        arcList
+          ..center = center
+          ..radius = radius
+          ..innerRadius = innerRadius
+          ..series = series
+          ..stroke = config.noDataColor
+          ..strokeWidthPx = 0.0;
 
         // If we don't have any existing arc element, create a new arc. Unlike
         // real arcs, we should not animate the no data state in from 0.
@@ -263,8 +255,9 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
           animatingArc = AnimatedArc<D>(arcKey, null, null);
           arcList.arcs.add(animatingArc);
         } else {
-          animatingArc.datum = null;
-          animatingArc.domain = null;
+          animatingArc
+            ..datum = null
+            ..domain = null;
         }
 
         // Update the set of arcs that still exist in the series data.
@@ -312,7 +305,7 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
             final outerRadius = radii.last;
 
             final arcIndex = series.data.indexOf(node);
-            final Object datum = series.data[arcIndex];
+            final datum = series.data[arcIndex];
             final details = _nodeToArcRenderElementMap[node];
             final domainValue = details!.domain;
             final isLeaf = !node.hasChildren ||
@@ -326,12 +319,13 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
             var animatingArc =
                 arcList.arcs.firstWhereOrNull((arc) => arc.key == arcKey);
 
-            arcList.center = center;
-            arcList.radius = outerRadius;
-            arcList.innerRadius = innerRadius;
-            arcList.series = series;
-            arcList.stroke = config.stroke;
-            arcList.strokeWidthPx = config.strokeWidthPx;
+            arcList
+              ..center = center
+              ..radius = outerRadius
+              ..innerRadius = innerRadius
+              ..series = series
+              ..stroke = config.stroke
+              ..strokeWidthPx = config.strokeWidthPx;
 
             // If we don't have any existing arc element, create a new arc and
             // have it animate in from the position of the previous arc's end
@@ -460,8 +454,9 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
         });
       } else {
         // Expand clicked node by one level.
-        _nodeToExpand.add(node);
-        _nodeToExpand.addAll(node.children);
+        _nodeToExpand
+          ..add(node)
+          ..addAll(node.children);
       }
     }
   }

@@ -41,7 +41,6 @@ class SunburstArcLabelDecorator<D> extends ArcLabelDecorator<D> {
     super.leaderLineStyleSpec,
     super.labelPadding,
     super.showLeaderLines,
-    super.leaderLineColor,
     this.extendLeaderLine = false,
     // TODO: Change to auto when we can detect collision of inner
     // arcs' label with outer arcs.
@@ -167,28 +166,28 @@ class SunburstArcLabelDecorator<D> extends ArcLabelDecorator<D> {
     TextStyle labelStyle,
     int insideArcWidth,
     int outsideArcWidth,
-    ArcRendererElement arcRendererElement,
+    ArcRendererElement arcRendererelement,
     ArcLabelPosition labelPosition,
   ) {
-    assert(arcRendererElement is SunburstArcRendererElement);
+    assert(arcRendererelement is SunburstArcRendererElement);
 
-    if ((arcRendererElement as SunburstArcRendererElement).isOuterMostRing ==
+    if ((arcRendererelement as SunburstArcRendererElement).isOuterMostRing ==
         true) {
       return super.calculateLabelPosition(
         labelElement,
         labelStyle,
         insideArcWidth,
         outsideArcWidth,
-        arcRendererElement,
+        arcRendererelement,
         outerRingArcLabelPosition,
       );
-    } else if (arcRendererElement.isLeaf == true) {
+    } else if (arcRendererelement.isLeaf == true) {
       return super.calculateLabelPosition(
         labelElement,
         labelStyle,
         insideArcWidth,
         outsideArcWidth,
-        arcRendererElement,
+        arcRendererelement,
         innerRingLeafArcLabelPosition,
       );
     } else {

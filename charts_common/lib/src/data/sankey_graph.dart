@@ -143,16 +143,17 @@ List<SankeyNode<N, L>> _convertSankeyNodes<N, L, D>(
   }
 
   for (final link in graphLinks) {
-    nodeMap.update(
-      nodeClassDomainFn(link.target, indexNotRelevant),
-      (node) => _addLinkToSankeyNode(node, link, isIncomingLink: true),
-      ifAbsent: () => _addLinkToAbsentSankeyNode(link, isIncomingLink: true),
-    );
-    nodeMap.update(
-      nodeClassDomainFn(link.source, indexNotRelevant),
-      (node) => _addLinkToSankeyNode(node, link, isIncomingLink: false),
-      ifAbsent: () => _addLinkToAbsentSankeyNode(link, isIncomingLink: false),
-    );
+    nodeMap
+      ..update(
+        nodeClassDomainFn(link.target, indexNotRelevant),
+        (node) => _addLinkToSankeyNode(node, link, isIncomingLink: true),
+        ifAbsent: () => _addLinkToAbsentSankeyNode(link, isIncomingLink: true),
+      )
+      ..update(
+        nodeClassDomainFn(link.source, indexNotRelevant),
+        (node) => _addLinkToSankeyNode(node, link, isIncomingLink: false),
+        ifAbsent: () => _addLinkToAbsentSankeyNode(link, isIncomingLink: false),
+      );
   }
 
   nodeMap.forEach((domainId, node) => graphNodes.add(node));

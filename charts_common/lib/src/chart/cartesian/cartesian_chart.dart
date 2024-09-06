@@ -186,7 +186,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
     _disjointMeasureAxes.forEach((axisId, axis) {
       axis
         ..context = context
-        ..tickDrawStrategy = NoneDrawStrategy<num>(context, graphicsFactory);
+        ..tickDrawStrategy = NoneDrawStrategy<num>(graphicsFactory);
     });
   }
 
@@ -292,7 +292,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
       _disjointMeasureAxesSpec?.forEach((axisId, axisSpec) {
         _disjointMeasureAxes[axisId] = axisSpec.createAxis();
         _disjointMeasureAxes[axisId]!.tickDrawStrategy =
-            NoneDrawStrategy<num>(context, graphicsFactory!);
+            NoneDrawStrategy<num>(graphicsFactory!);
         axisSpec.configure(
           _disjointMeasureAxes[axisId]!,
           context,
@@ -410,10 +410,11 @@ abstract class CartesianChart<D> extends BaseChart<D> {
       addView(axis);
     });
 
-    final domainAxis = this.domainAxis!;
+    final domainAxis = this.domainAxis!
+      ..
 
-    // Reset stale values from previous draw cycles.
-    domainAxis.resetDomains();
+          // Reset stale values from previous draw cycles.
+          resetDomains();
     _primaryMeasureAxis.resetDomains();
     _secondaryMeasureAxis.resetDomains();
 
