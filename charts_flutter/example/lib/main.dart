@@ -35,6 +35,7 @@ class GalleryAppState extends State<GalleryApp> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: defaultConfig.appName,
         theme: defaultConfig.theme,
         showPerformanceOverlay: _showPerformanceOverlay,
