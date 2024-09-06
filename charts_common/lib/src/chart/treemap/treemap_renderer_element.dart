@@ -129,6 +129,7 @@ class TreeMapRendererElement<D> {
   }
 
   @override
+  // ignore: no_runtimetype_tostring
   String toString() => '$runtimeType${{
         'boundingRect': boundingRect,
         'area': area,

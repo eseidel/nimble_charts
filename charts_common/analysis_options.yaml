@@ -13,6 +13,8 @@ analyzer:
     type_annotate_public_apis: warning
     inference_failure_on_untyped_parameter: warning
     return_of_invalid_type_from_closure: warning
+    inference_failure_on_instance_creation: warning
+    inference_failure_on_function_invocation: warning
 
     # Probably OK
     prefer_asserts_in_initializer_lists: warning

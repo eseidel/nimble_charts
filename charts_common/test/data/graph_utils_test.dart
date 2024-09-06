@@ -13,35 +13,59 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/common.dart';
-import 'package:test/test.dart';
-import 'package:charts_common/src/data/graph_utils.dart';
 import 'package:charts_common/src/data/graph.dart' as graph_structure
     show Link, Node, indexNotRelevant;
+import 'package:charts_common/src/data/graph_utils.dart';
+import 'package:test/test.dart';
 
 class MyNode {
-  MyNode(this.domainId, this.measure);
+  MyNode({
+    required this.domainId,
+    required this.measure,
+  });
+  // ignore: unreachable_from_main
   final String domainId;
+  // ignore: unreachable_from_main
   final num measure;
 }
 
 class MyLink {
-  MyLink(this.domainId, this.sourceNode, this.targetNode, this.measure);
+  MyLink({
+    required this.domainId,
+    required this.sourceNode,
+    required this.targetNode,
+    required this.measure,
+  });
+
+  // ignore: unreachable_from_main
   final String domainId;
+  // ignore: unreachable_from_main
   final num measure;
+  // ignore: unreachable_from_main
   final MyNode sourceNode;
+  // ignore: unreachable_from_main
   final MyNode targetNode;
 }
 
 List<MyNode> myMockNodes = [
-  MyNode('Node 1', 4),
-  MyNode('Node 2', 5),
-  MyNode('Node 3', 6),
+  MyNode(domainId: 'Node 1', measure: 4),
+  MyNode(domainId: 'Node 2', measure: 5),
+  MyNode(domainId: 'Node 3', measure: 6),
 ];
 
 List<MyLink> myMockLinks = [
-  MyLink('Link A', myMockNodes[0], myMockNodes[1], 1),
-  MyLink('Link B', myMockNodes[1], myMockNodes[2], 2),
+  MyLink(
+    domainId: 'Link A',
+    sourceNode: myMockNodes[0],
+    targetNode: myMockNodes[1],
+    measure: 1,
+  ),
+  MyLink(
+    domainId: 'Link B',
+    sourceNode: myMockNodes[1],
+    targetNode: myMockNodes[2],
+    measure: 2,
+  ),
 ];
 
 void main() {
@@ -92,7 +116,7 @@ void main() {
         graph_structure.Node(myMockNodes[1]),
         myMockLinks[0],
       );
-      final secondLink = graph_structure.Link<MyNode, MyLink>(
+      graph_structure.Link<MyNode, MyLink>(
         graph_structure.Node(myMockNodes[1]),
         graph_structure.Node(myMockNodes[2]),
         myMockLinks[1],
