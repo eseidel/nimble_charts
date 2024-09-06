@@ -13,12 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show min, max, Point;
+import 'dart:math' show Point, max, min;
 
+import 'package:charts_common/src/chart/common/behavior/zoom/pan_behavior.dart';
+import 'package:charts_common/src/chart/common/behavior/zoom/panning_tick_provider.dart'
+    show PanningTickProviderMode;
 import 'package:meta/meta.dart' show protected;
-
-import 'pan_behavior.dart';
-import 'panning_tick_provider.dart' show PanningTickProviderMode;
 
 /// Adds domain axis panning and zooming support to the chart.
 ///
@@ -41,7 +41,7 @@ class PanAndZoomBehavior<D> extends PanBehavior<D> {
   bool get isZooming => _isZooming;
 
   /// Current zoom scaling factor for the behavior.
-  double _scalingFactor = 1.0;
+  double _scalingFactor = 1;
 
   /// Minimum scalingFactor to prevent zooming out beyond the data range.
   final _minScalingFactor = 1.0;
@@ -102,9 +102,11 @@ class PanAndZoomBehavior<D> extends PanBehavior<D> {
         min(max(_scalingFactor * scale, _minScalingFactor), _maxScalingFactor);
 
     domainAxis.setViewportSettings(
-        newScalingFactor, domainAxis.viewportTranslatePx,
-        drawAreaWidth: chart.drawAreaBounds.width,
-        drawAreaHeight: chart.drawAreaBounds.height);
+      newScalingFactor,
+      domainAxis.viewportTranslatePx,
+      drawAreaWidth: chart.drawAreaBounds.width,
+      drawAreaHeight: chart.drawAreaBounds.height,
+    );
 
     chart.redraw(skipAnimation: true, skipLayout: true);
 
@@ -113,7 +115,10 @@ class PanAndZoomBehavior<D> extends PanBehavior<D> {
 
   @override
   bool onDragEnd(
-      Point<double> localPosition, double scale, double pixelsPerSec) {
+    Point<double> localPosition,
+    double scale,
+    double pixelsPerSec,
+  ) {
     _isZooming = false;
 
     return super.onDragEnd(localPosition, scale, pixelsPerSec);

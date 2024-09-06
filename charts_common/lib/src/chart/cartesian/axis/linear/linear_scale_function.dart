@@ -13,50 +13,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../scale.dart'
+import 'package:charts_common/src/chart/cartesian/axis/linear/linear_scale_domain_info.dart'
+    show LinearScaleDomainInfo;
+import 'package:charts_common/src/chart/cartesian/axis/linear/linear_scale_viewport.dart'
+    show LinearScaleViewportSettings;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
     show RangeBandConfig, RangeBandType, StepSizeConfig, StepSizeType;
-import 'linear_scale_domain_info.dart' show LinearScaleDomainInfo;
-import 'linear_scale_viewport.dart' show LinearScaleViewportSettings;
 
 /// Component of the LinearScale which actually handles the apply and reverse
 /// function of the scale.
 class LinearScaleFunction {
   /// Cached rangeBand width in pixels given the RangeBandConfig and the current
   /// domain & range.
-  double rangeBandPixels = 0.0;
+  double rangeBandPixels = 0;
 
   /// Cached amount in domain units to shift the input value as a part of
   /// translation.
   num domainTranslate = 0.0;
 
   /// Cached translation ratio for scale translation.
-  double scalingFactor = 1.0;
+  double scalingFactor = 1;
 
   /// Cached amount in pixel units to shift the output value as a part of
   /// translation.
-  double rangeTranslate = 0.0;
+  double rangeTranslate = 0;
 
   /// The calculated step size given the step size config.
-  double stepSizePixels = 0.0;
+  double stepSizePixels = 0;
 
   /// Translates the given domainValue to the range output.
-  double operator [](num domainValue) {
-    return (((domainValue + domainTranslate) * scalingFactor) + rangeTranslate)
-        .toDouble();
-  }
+  double operator [](num domainValue) =>
+      ((domainValue + domainTranslate) * scalingFactor) + rangeTranslate;
 
   /// Translates the given range output back to a domainValue.
-  double reverse(double viewPixels) {
-    return ((viewPixels - rangeTranslate) / scalingFactor) - domainTranslate;
-  }
+  double reverse(double viewPixels) =>
+      ((viewPixels - rangeTranslate) / scalingFactor) - domainTranslate;
 
   /// Update the scale function's scaleFactor given the current state of the
   /// viewport.
   void updateScaleFactor(
-      LinearScaleViewportSettings viewportSettings,
-      LinearScaleDomainInfo domainInfo,
-      RangeBandConfig rangeBandConfig,
-      StepSizeConfig stepSizeConfig) {
+    LinearScaleViewportSettings viewportSettings,
+    LinearScaleDomainInfo domainInfo,
+    RangeBandConfig rangeBandConfig,
+    StepSizeConfig stepSizeConfig,
+  ) {
     final rangeDiff = viewportSettings.range!.diff.toDouble();
     // Note: if you provided a nicing function that extends the domain, we won't
     // muck with the extended side.
@@ -69,27 +69,38 @@ class LinearScaleFunction {
     // possible half step at the start and end.
     final reservedRangePercentOfStep =
         getStepReservationPercent(hasHalfStepAtStart, hasHalfStepAtEnd);
-    _updateStepSizeAndScaleFactor(viewportSettings, domainInfo, rangeDiff,
-        reservedRangePercentOfStep, rangeBandConfig, stepSizeConfig);
+    _updateStepSizeAndScaleFactor(
+      viewportSettings,
+      domainInfo,
+      rangeDiff,
+      reservedRangePercentOfStep,
+      rangeBandConfig,
+      stepSizeConfig,
+    );
   }
 
   /// Returns the percentage of the step reserved from the output range due to
   /// maybe having to hold half stepSizes on the start and end of the output.
   double getStepReservationPercent(
-      bool hasHalfStepAtStart, bool hasHalfStepAtEnd) {
+    bool hasHalfStepAtStart,
+    bool hasHalfStepAtEnd,
+  ) {
     if (!hasHalfStepAtStart && !hasHalfStepAtEnd) {
-      return 0.0;
+      return 0;
     }
     if (hasHalfStepAtStart && hasHalfStepAtEnd) {
-      return 1.0;
+      return 1;
     }
     return 0.5;
   }
 
   /// Updates the scale function's translate and rangeBand given the current
   /// state of the viewport.
-  void updateTranslateAndRangeBand(LinearScaleViewportSettings viewportSettings,
-      LinearScaleDomainInfo domainInfo, RangeBandConfig rangeBandConfig) {
+  void updateTranslateAndRangeBand(
+    LinearScaleViewportSettings viewportSettings,
+    LinearScaleDomainInfo domainInfo,
+    RangeBandConfig rangeBandConfig,
+  ) {
     // Assign the rangeTranslate using the current viewportSettings.translatePx
     // and diffs.
     if (domainInfo.domainDiff == 0) {
@@ -131,7 +142,7 @@ class LinearScaleFunction {
       case RangeBandType.fixedPercentOfStep:
         return stepSizePixels * rangeBandConfig.size;
       case RangeBandType.none:
-        return 0.0;
+        return 0;
     }
   }
 
@@ -141,12 +152,13 @@ class LinearScaleFunction {
   /// <p>Scale factor and step size are related closely and should be calculated
   /// together so that we do not lose accuracy due to double arithmetic.
   void _updateStepSizeAndScaleFactor(
-      LinearScaleViewportSettings viewportSettings,
-      LinearScaleDomainInfo domainInfo,
-      double rangeDiff,
-      double reservedRangePercentOfStep,
-      RangeBandConfig rangeBandConfig,
-      StepSizeConfig stepSizeConfig) {
+    LinearScaleViewportSettings viewportSettings,
+    LinearScaleDomainInfo domainInfo,
+    double rangeDiff,
+    double reservedRangePercentOfStep,
+    RangeBandConfig rangeBandConfig,
+    StepSizeConfig stepSizeConfig,
+  ) {
     final domainDiff = domainInfo.domainDiff.toDouble();
 
     // If we are going to have any rangeBands, then ensure that we account for
@@ -156,8 +168,7 @@ class LinearScaleFunction {
         case StepSizeType.autoDetect:
           final minimumDetectedDomainStep =
               domainInfo.minimumDetectedDomainStep.toDouble();
-          if (minimumDetectedDomainStep != null &&
-              minimumDetectedDomainStep.isFinite) {
+          if (minimumDetectedDomainStep.isFinite) {
             scalingFactor = viewportSettings.scalingFactor *
                 (rangeDiff /
                     (domainDiff +

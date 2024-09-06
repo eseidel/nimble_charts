@@ -13,14 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../common/chart_context.dart' show ChartContext;
-import 'axis.dart' show AxisOrientation;
-import 'draw_strategy/tick_draw_strategy.dart' show TickDrawStrategy;
-import 'ordinal_scale.dart' show OrdinalScale;
-import 'tick.dart' show Tick;
-import 'tick_formatter.dart' show TickFormatter;
-import 'tick_provider.dart' show BaseTickProvider, TickHint;
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    show TickDrawStrategy;
+import 'package:charts_common/src/chart/cartesian/axis/ordinal_scale.dart'
+    show OrdinalScale;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show TickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show BaseTickProvider, TickHint;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 /// A strategy for selecting ticks to draw given ordinal domain values.
 class OrdinalTickProvider extends BaseTickProvider<String> {
@@ -37,15 +44,16 @@ class OrdinalTickProvider extends BaseTickProvider<String> {
     required AxisOrientation? orientation,
     bool viewportExtensionEnabled = false,
     TickHint<String>? tickHint,
-  }) {
-    return createTicks(scale.domain.domains,
+  }) =>
+      createTicks(
+        scale.domain.domains,
         context: context,
         graphicsFactory: graphicsFactory,
         scale: scale,
         formatter: formatter,
         formatterValueCache: formatterValueCache,
-        tickDrawStrategy: tickDrawStrategy);
-  }
+        tickDrawStrategy: tickDrawStrategy,
+      );
 
   @override
   bool operator ==(Object other) => other is OrdinalTickProvider;

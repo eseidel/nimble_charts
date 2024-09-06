@@ -20,28 +20,32 @@ import 'package:charts_common/src/chart/common/selection_model/selection_model.d
 import 'package:charts_common/src/chart/common/series_renderer.dart';
 import 'package:charts_common/src/chart/layout/layout_config.dart';
 
-import 'squarified_treemap_renderer.dart';
+import 'package:charts_common/src/chart/treemap/squarified_treemap_renderer.dart';
 
 class TreeMapChart<D> extends BaseChart<D> {
   TreeMapChart({LayoutConfig? layoutConfig})
       : super(layoutConfig: layoutConfig ?? LayoutConfig());
 
   @override
-  void drawInternal(List<MutableSeries<D>> seriesList,
-      {bool? skipAnimation, bool? skipLayout}) {
+  void drawInternal(
+    List<MutableSeries<D>> seriesList, {
+    bool? skipAnimation,
+    bool? skipLayout,
+  }) {
     if (seriesList.length > 1) {
       throw ArgumentError('TreeMapChart can only render a single tree.');
     }
-    super.drawInternal(seriesList,
-        skipAnimation: skipAnimation, skipLayout: skipLayout);
+    super.drawInternal(
+      seriesList,
+      skipAnimation: skipAnimation,
+      skipLayout: skipLayout,
+    );
   }
 
   /// Squarified treemap is used as default renderer.
   @override
-  SeriesRenderer<D> makeDefaultRenderer() {
-    return SquarifiedTreeMapRenderer<D>()
-      ..rendererId = SeriesRenderer.defaultRendererId;
-  }
+  SeriesRenderer<D> makeDefaultRenderer() => SquarifiedTreeMapRenderer<D>()
+    ..rendererId = SeriesRenderer.defaultRendererId;
 
   /// Returns a list of datum details from the selection model of [type].
   @override
@@ -55,13 +59,15 @@ class TreeMapChart<D> extends BaseChart<D> {
       final renderer = getSeriesRenderer(series.getAttr(rendererIdKey));
 
       final datumDetails = renderer.addPositionToDetailsForSeriesDatum(
-          DatumDetails(
-              datum: seriesDatum.datum,
-              domain: series.domainFn(datumIndex),
-              measure: series.measureFn(datumIndex),
-              series: seriesDatum.series,
-              color: series.colorFn!(datumIndex)),
-          seriesDatum);
+        DatumDetails(
+          datum: seriesDatum.datum,
+          domain: series.domainFn(datumIndex),
+          measure: series.measureFn(datumIndex),
+          series: seriesDatum.series,
+          color: series.colorFn!(datumIndex),
+        ),
+        seriesDatum,
+      );
       details.add(datumDetails);
     }
     return details;

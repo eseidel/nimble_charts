@@ -17,7 +17,8 @@ import 'dart:math' as math show max, min;
 
 import 'package:charts_common/src/common/math.dart';
 
-import '../../../common/style/style_factory.dart' show StyleFactory;
+import 'package:charts_common/src/common/style/style_factory.dart'
+    show StyleFactory;
 
 /// Scale used to convert data input domain units to output range units.
 ///
@@ -164,10 +165,9 @@ abstract class MutableScale<D> extends Scale<D> {
 /// It is different from [Extent] because it focuses on start and end and not
 /// min and max, meaning that start could be greater or less than end.
 class ScaleOutputExtent {
+  const ScaleOutputExtent(this.start, this.end);
   final int start;
   final int end;
-
-  const ScaleOutputExtent(this.start, this.end);
 
   int get min => math.min(start, end);
   int get max => math.max(start, end);
@@ -225,11 +225,6 @@ enum RangeBandType {
 ///
 /// <p>RangeBandConfig is immutable, See factory methods for creating one.
 class RangeBandConfig {
-  final RangeBandType type;
-
-  /// The width of the band in units specified by the bandType.
-  final double size;
-
   /// Creates a rangeBand definition of zero, no rangeBand.
   const RangeBandConfig.none()
       : type = RangeBandType.none,
@@ -267,7 +262,7 @@ class RangeBandConfig {
   ///
   /// <p>Note: renderers can detect this setting and update the percent based on
   /// the number of series in their preprocess.
-  RangeBandConfig.styleAssignedPercent([int seriesCount = 1])
+  RangeBandConfig.styleAssignedPercent()
       : type = RangeBandType.styleAssignedPercentOfStep,
         size = StyleFactory.style.rangeBandSize;
 
@@ -278,6 +273,10 @@ class RangeBandConfig {
   const RangeBandConfig.fixedPixelSpaceBetweenStep(double pixels)
       : type = RangeBandType.fixedPixelSpaceFromStep,
         size = pixels;
+  final RangeBandType type;
+
+  /// The width of the band in units specified by the bandType.
+  final double size;
 }
 
 /// Type of step size calculation to use.
@@ -289,9 +288,6 @@ enum StepSizeType { autoDetect, fixedDomain, fixedPixels }
 /// irregular or you only have one data point, then you may want to override the
 /// stepSize detection specifying the exact expected stepSize.
 class StepSizeConfig {
-  final StepSizeType type;
-  final double size;
-
   /// Creates a StepSizeConfig that calculates step size based on incoming data.
   ///
   /// The stepSize is determined is calculated by detecting the smallest
@@ -310,6 +306,8 @@ class StepSizeConfig {
   const StepSizeConfig.fixedDomain(double domainSize)
       : type = StepSizeType.fixedDomain,
         size = domainSize;
+  final StepSizeType type;
+  final double size;
 }
 
 // TODO: make other extent subclasses plural.

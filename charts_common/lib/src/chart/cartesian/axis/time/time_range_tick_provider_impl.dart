@@ -13,24 +13,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../../common/chart_context.dart' show ChartContext;
-import '../axis.dart' show AxisOrientation;
-import '../draw_strategy/tick_draw_strategy.dart' show TickDrawStrategy;
-import '../tick.dart' show Tick;
-import '../tick_formatter.dart' show TickFormatter;
-import '../tick_provider.dart' show TickHint;
-import 'date_time_extents.dart' show DateTimeExtents;
-import 'date_time_scale.dart' show DateTimeScale;
-import 'time_range_tick_provider.dart' show TimeRangeTickProvider;
-import 'time_stepper.dart' show TimeStepper;
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    show TickDrawStrategy;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show TickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show TickHint;
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_extents.dart'
+    show DateTimeExtents;
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_scale.dart'
+    show DateTimeScale;
+import 'package:charts_common/src/chart/cartesian/axis/time/time_range_tick_provider.dart'
+    show TimeRangeTickProvider;
+import 'package:charts_common/src/chart/cartesian/axis/time/time_stepper.dart'
+    show TimeStepper;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 // Contains all the common code for the time range tick providers.
 class TimeRangeTickProviderImpl extends TimeRangeTickProvider {
+  TimeRangeTickProviderImpl(this.timeStepper, {this.requiredMinimumTicks = 3});
   final int requiredMinimumTicks;
   final TimeStepper timeStepper;
-
-  TimeRangeTickProviderImpl(this.timeStepper, {this.requiredMinimumTicks = 3});
 
   @override
   bool providesSufficientTicksForRange(DateTimeExtents domainExtents) {
@@ -40,10 +49,9 @@ class TimeRangeTickProviderImpl extends TimeRangeTickProvider {
 
   /// Find the closet step size, from provided step size, in milliseconds.
   @override
-  int getClosestStepSize(int stepSize) {
-    return timeStepper.typicalStepSizeMs *
-        _getClosestIncrementFromStepSize(stepSize);
-  }
+  int getClosestStepSize(int stepSize) =>
+      timeStepper.typicalStepSizeMs *
+      _getClosestIncrementFromStepSize(stepSize);
 
   // Find the increment that is closest to the step size.
   int _getClosestIncrementFromStepSize(int stepSize) {
@@ -103,14 +111,16 @@ class TimeRangeTickProviderImpl extends TimeRangeTickProvider {
       }
 
       // Create ticks
-      currentTicks = createTicks(tickValues,
-          context: context,
-          graphicsFactory: graphicsFactory,
-          scale: scale,
-          formatter: formatter,
-          formatterValueCache: formatterValueCache,
-          tickDrawStrategy: tickDrawStrategy,
-          stepSize: timeStepper.typicalStepSizeMs * tickIncrement);
+      currentTicks = createTicks(
+        tickValues,
+        context: context,
+        graphicsFactory: graphicsFactory,
+        scale: scale,
+        formatter: formatter,
+        formatterValueCache: formatterValueCache,
+        tickDrawStrategy: tickDrawStrategy,
+        stepSize: timeStepper.typicalStepSizeMs * tickIncrement,
+      );
 
       // Request collision check from draw strategy.
       final collisionReport =

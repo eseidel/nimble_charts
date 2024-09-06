@@ -15,19 +15,31 @@
 
 import 'dart:math' show Point;
 
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart' show Axis;
+import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+    show CartesianChart;
+import 'package:charts_common/src/chart/common/base_chart.dart'
+    show BaseChart, LifecycleListener;
+import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
+    show ChartBehavior;
+import 'package:charts_common/src/common/gesture_listener.dart'
+    show GestureListener;
 import 'package:meta/meta.dart' show protected;
-
-import '../../../../common/gesture_listener.dart' show GestureListener;
-import '../../../cartesian/axis/axis.dart' show Axis;
-import '../../../cartesian/cartesian_chart.dart' show CartesianChart;
-import '../../base_chart.dart' show BaseChart, LifecycleListener;
-import '../chart_behavior.dart' show ChartBehavior;
 
 /// Adds initial hint behavior for [CartesianChart].
 ///
 /// This behavior animates to the final viewport from an initial translate and
 /// or scale factor.
 abstract class InitialHintBehavior<D> implements ChartBehavior<D> {
+  InitialHintBehavior() {
+    _listener = GestureListener(onTapTest: onTapTest);
+
+    _lifecycleListener = LifecycleListener<D>(
+      onAxisConfigured: _onAxisConfigured,
+      onAnimationComplete: _onAnimationComplete,
+    );
+  }
+
   /// Listens for drag gestures.
   late GestureListener _listener;
 
@@ -43,7 +55,7 @@ abstract class InitialHintBehavior<D> implements ChartBehavior<D> {
   @protected
   CartesianChart<D>? get chart => _chart;
 
-  Duration _hintDuration = Duration(milliseconds: 3000);
+  Duration _hintDuration = const Duration(milliseconds: 3000);
 
   /// The amount of time to animate to the desired viewport.
   ///
@@ -55,7 +67,7 @@ abstract class InitialHintBehavior<D> implements ChartBehavior<D> {
     _hintDuration = duration;
   }
 
-  double _maxHintTranslate = 0.0;
+  double _maxHintTranslate = 0;
 
   // TODO: Translation animation only works for ordinal axis.
   /// The maximum amount ordinal values to shift the viewport for the the hint
@@ -103,19 +115,12 @@ abstract class InitialHintBehavior<D> implements ChartBehavior<D> {
   late double _targetViewportTranslatePx;
   late double _targetViewportScalingFactor;
 
-  InitialHintBehavior() {
-    _listener = GestureListener(onTapTest: onTapTest);
-
-    _lifecycleListener = LifecycleListener<D>(
-        onAxisConfigured: _onAxisConfigured,
-        onAnimationComplete: _onAnimationComplete);
-  }
-
   @override
   void attachTo(BaseChart<D> chart) {
     if (chart is! CartesianChart<D>) {
       throw ArgumentError(
-          'InitialHintBehavior can only be attached to a CartesianChart<D>');
+        'InitialHintBehavior can only be attached to a CartesianChart<D>',
+      );
     }
 
     _chart = chart;
@@ -128,7 +133,8 @@ abstract class InitialHintBehavior<D> implements ChartBehavior<D> {
   void removeFrom(BaseChart<D> chart) {
     if (chart is! CartesianChart) {
       throw ArgumentError(
-          'InitialHintBehavior can only be removed from a CartesianChart<D>');
+        'InitialHintBehavior can only be removed from a CartesianChart<D>',
+      );
     }
 
     stopHintAnimation();
@@ -181,8 +187,10 @@ abstract class InitialHintBehavior<D> implements ChartBehavior<D> {
 
       assert(_initialViewportScalingFactor != null);
       domainAxis.setViewportSettings(
-          _initialViewportScalingFactor!, _initialViewportTranslatePx!);
-      chart!.redraw(skipAnimation: true, skipLayout: false);
+        _initialViewportScalingFactor!,
+        _initialViewportTranslatePx!,
+      );
+      chart!.redraw(skipAnimation: true);
     }
   }
 
@@ -228,10 +236,16 @@ abstract class InitialHintBehavior<D> implements ChartBehavior<D> {
     final percent = hintAnimationPercent;
 
     final scaleFactor = _lerpDouble(
-        _initialViewportScalingFactor, _targetViewportScalingFactor, percent);
+      _initialViewportScalingFactor,
+      _targetViewportScalingFactor,
+      percent,
+    );
 
     var translatePx = _lerpDouble(
-        _initialViewportTranslatePx, _targetViewportTranslatePx, percent);
+      _initialViewportTranslatePx,
+      _targetViewportTranslatePx,
+      percent,
+    );
 
     // If there is a scale factor animation, need to scale the translatePx so
     // the animation appears to be zooming in on the viewport when there is no
@@ -245,8 +259,11 @@ abstract class InitialHintBehavior<D> implements ChartBehavior<D> {
 
     final chart = this.chart!;
     final domainAxis = chart.domainAxis!;
-    domainAxis.setViewportSettings(scaleFactor, translatePx,
-        drawAreaWidth: chart.drawAreaBounds.width);
+    domainAxis.setViewportSettings(
+      scaleFactor,
+      translatePx,
+      drawAreaWidth: chart.drawAreaBounds.width,
+    );
 
     if (percent >= 1.0) {
       stopHintAnimation();

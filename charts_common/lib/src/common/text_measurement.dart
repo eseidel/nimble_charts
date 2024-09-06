@@ -15,6 +15,12 @@
 
 /// A measurement result for rendering text.
 class TextMeasurement {
+  TextMeasurement({
+    required this.horizontalSliceWidth,
+    required this.verticalSliceWidth,
+    this.baseline,
+  });
+
   /// Rendered width of the text.
   final double horizontalSliceWidth;
 
@@ -26,10 +32,4 @@ class TextMeasurement {
 
   /// Baseline of the text for text vertical alignment.
   final double? baseline;
-
-  TextMeasurement({
-    required this.horizontalSliceWidth,
-    required this.verticalSliceWidth,
-    this.baseline,
-  });
 }

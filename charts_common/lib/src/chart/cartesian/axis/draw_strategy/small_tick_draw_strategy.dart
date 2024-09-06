@@ -15,55 +15,51 @@
 
 import 'dart:math';
 
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart'
+    show BaseRenderSpec, BaseTickDrawStrategy;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    show TickDrawStrategy;
+import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show LineStyleSpec, TextStyleSpec, TickLabelAnchor, TickLabelJustification;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
+import 'package:charts_common/src/common/line_style.dart' show LineStyle;
+import 'package:charts_common/src/common/style/style_factory.dart'
+    show StyleFactory;
 import 'package:meta/meta.dart' show immutable;
-
-import '../../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../../../common/line_style.dart' show LineStyle;
-import '../../../../common/style/style_factory.dart' show StyleFactory;
-import '../../../common/chart_canvas.dart' show ChartCanvas;
-import '../../../common/chart_context.dart' show ChartContext;
-import '../axis.dart' show AxisOrientation;
-import '../spec/axis_spec.dart'
-    show TextStyleSpec, LineStyleSpec, TickLabelAnchor, TickLabelJustification;
-import '../tick.dart' show Tick;
-import 'base_tick_draw_strategy.dart' show BaseRenderSpec, BaseTickDrawStrategy;
-import 'tick_draw_strategy.dart' show TickDrawStrategy;
 
 @immutable
 class SmallTickRendererSpec<D> extends BaseRenderSpec<D> {
+  const SmallTickRendererSpec({
+    super.labelStyle,
+    this.lineStyle,
+    super.axisLineStyle,
+    super.labelAnchor,
+    super.labelJustification,
+    super.labelOffsetFromAxisPx,
+    super.labelCollisionOffsetFromAxisPx,
+    super.labelOffsetFromTickPx,
+    super.labelCollisionOffsetFromTickPx,
+    this.tickLengthPx,
+    super.minimumPaddingBetweenLabelsPx,
+    super.labelRotation,
+    super.labelCollisionRotation,
+  });
   final LineStyleSpec? lineStyle;
   final int? tickLengthPx;
 
-  const SmallTickRendererSpec({
-    TextStyleSpec? labelStyle,
-    this.lineStyle,
-    LineStyleSpec? axisLineStyle,
-    TickLabelAnchor? labelAnchor,
-    TickLabelJustification? labelJustification,
-    int? labelOffsetFromAxisPx,
-    int? labelCollisionOffsetFromAxisPx,
-    int? labelOffsetFromTickPx,
-    int? labelCollisionOffsetFromTickPx,
-    this.tickLengthPx,
-    int? minimumPaddingBetweenLabelsPx,
-    int? labelRotation,
-    int? labelCollisionRotation,
-  }) : super(
-            labelStyle: labelStyle,
-            labelAnchor: labelAnchor,
-            labelJustification: labelJustification,
-            labelOffsetFromAxisPx: labelOffsetFromAxisPx,
-            labelCollisionOffsetFromAxisPx: labelCollisionOffsetFromAxisPx,
-            labelOffsetFromTickPx: labelOffsetFromTickPx,
-            labelCollisionOffsetFromTickPx: labelCollisionOffsetFromTickPx,
-            minimumPaddingBetweenLabelsPx: minimumPaddingBetweenLabelsPx,
-            labelRotation: labelRotation,
-            labelCollisionRotation: labelCollisionRotation,
-            axisLineStyle: axisLineStyle);
-
   @override
   TickDrawStrategy<D> createDrawStrategy(
-          ChartContext context, GraphicsFactory graphicsFactory) =>
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+  ) =>
       SmallTickDrawStrategy<D>(
         context,
         graphicsFactory,
@@ -83,13 +79,12 @@ class SmallTickRendererSpec<D> extends BaseRenderSpec<D> {
       );
 
   @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is SmallTickRendererSpec &&
-            lineStyle == other.lineStyle &&
-            tickLengthPx == other.tickLengthPx &&
-            super == other);
-  }
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SmallTickRendererSpec &&
+          lineStyle == other.lineStyle &&
+          tickLengthPx == other.tickLengthPx &&
+          super == other);
 
   @override
   int get hashCode {
@@ -102,52 +97,43 @@ class SmallTickRendererSpec<D> extends BaseRenderSpec<D> {
 
 /// Draws small tick lines for each tick. Extends [BaseTickDrawStrategy].
 class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
-  int tickLength;
-  LineStyle lineStyle;
-
   SmallTickDrawStrategy(
-      ChartContext chartContext, GraphicsFactory graphicsFactory,
-      {int? tickLengthPx,
-      LineStyleSpec? lineStyleSpec,
-      TextStyleSpec? labelStyleSpec,
-      LineStyleSpec? axisLineStyleSpec,
-      TickLabelAnchor? labelAnchor,
-      TickLabelJustification? labelJustification,
-      int? labelOffsetFromAxisPx,
-      int? labelCollisionOffsetFromAxisPx,
-      int? labelOffsetFromTickPx,
-      int? labelCollisionOffsetFromTickPx,
-      int? minimumPaddingBetweenLabelsPx,
-      int? labelRotation,
-      int? labelCollisionRotation})
-      : tickLength = tickLengthPx ?? StyleFactory.style.tickLength,
+    super.chartContext,
+    super.graphicsFactory, {
+    int? tickLengthPx,
+    LineStyleSpec? lineStyleSpec,
+    super.labelStyleSpec,
+    LineStyleSpec? axisLineStyleSpec,
+    super.labelAnchor,
+    super.labelJustification,
+    super.labelOffsetFromAxisPx,
+    super.labelCollisionOffsetFromAxisPx,
+    super.labelOffsetFromTickPx,
+    super.labelCollisionOffsetFromTickPx,
+    super.minimumPaddingBetweenLabelsPx,
+    super.labelRotation,
+    super.labelCollisionRotation,
+  })  : tickLength = tickLengthPx ?? StyleFactory.style.tickLength,
         lineStyle = StyleFactory.style
             .createTickLineStyle(graphicsFactory, lineStyleSpec),
         super(
-          chartContext,
-          graphicsFactory,
-          labelStyleSpec: labelStyleSpec,
           axisLineStyleSpec: axisLineStyleSpec ?? lineStyleSpec,
-          labelAnchor: labelAnchor,
-          labelJustification: labelJustification,
-          labelOffsetFromAxisPx: labelOffsetFromAxisPx,
-          labelCollisionOffsetFromAxisPx: labelCollisionOffsetFromAxisPx,
-          labelOffsetFromTickPx: labelOffsetFromTickPx,
-          labelCollisionOffsetFromTickPx: labelCollisionOffsetFromTickPx,
-          minimumPaddingBetweenLabelsPx: minimumPaddingBetweenLabelsPx,
-          labelRotation: labelRotation,
-          labelCollisionRotation: labelCollisionRotation,
         );
+  int tickLength;
+  LineStyle lineStyle;
 
   @override
-  void draw(ChartCanvas canvas, Tick<D> tick,
-      {required AxisOrientation orientation,
-      required Rectangle<int> axisBounds,
-      required Rectangle<int> drawAreaBounds,
-      required bool isFirst,
-      required bool isLast,
-      bool collision = false}) {
-    var tickPositions = calculateTickPositions(
+  void draw(
+    ChartCanvas canvas,
+    Tick<D> tick, {
+    required AxisOrientation orientation,
+    required Rectangle<int> axisBounds,
+    required Rectangle<int> drawAreaBounds,
+    required bool isFirst,
+    required bool isLast,
+    bool collision = false,
+  }) {
+    final tickPositions = calculateTickPositions(
       tick,
       orientation,
       axisBounds,
@@ -165,13 +151,16 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
       strokeWidthPx: lineStyle.strokeWidth.toDouble(),
     );
 
-    drawLabel(canvas, tick,
-        orientation: orientation,
-        axisBounds: axisBounds,
-        drawAreaBounds: drawAreaBounds,
-        isFirst: isFirst,
-        isLast: isLast,
-        collision: collision);
+    drawLabel(
+      canvas,
+      tick,
+      orientation: orientation,
+      axisBounds: axisBounds,
+      drawAreaBounds: drawAreaBounds,
+      isFirst: isFirst,
+      isLast: isLast,
+      collision: collision,
+    );
   }
 
   List<Point<num>> calculateTickPositions(
@@ -189,22 +178,18 @@ class SmallTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
         final x = tickLocationPx;
         tickStart = Point(x, axisBounds.bottom - tickLength);
         tickEnd = Point(x, axisBounds.bottom);
-        break;
       case AxisOrientation.bottom:
         final x = tickLocationPx;
         tickStart = Point(x, axisBounds.top);
         tickEnd = Point(x, axisBounds.top + tickLength);
-        break;
       case AxisOrientation.right:
         final y = tickLocationPx;
         tickStart = Point(axisBounds.left, y);
         tickEnd = Point(axisBounds.left + tickLength, y);
-        break;
       case AxisOrientation.left:
         final y = tickLocationPx;
         tickStart = Point(axisBounds.right - tickLength, y);
         tickEnd = Point(axisBounds.right, y);
-        break;
     }
     return [tickStart, tickEnd];
   }

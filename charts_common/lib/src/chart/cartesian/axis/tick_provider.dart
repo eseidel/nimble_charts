@@ -13,13 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../common/chart_context.dart' show ChartContext;
-import 'axis.dart' show AxisOrientation;
-import 'draw_strategy/tick_draw_strategy.dart' show TickDrawStrategy;
-import 'scale.dart' show MutableScale;
-import 'tick.dart' show Tick;
-import 'tick_formatter.dart' show TickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    show TickDrawStrategy;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+    show MutableScale;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show TickFormatter;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 /// A strategy for selecting values for axis ticks based on the domain values.
 ///
@@ -71,9 +77,10 @@ abstract class BaseTickProvider<D> implements TickProvider<D> {
     for (var i = 0; i < domainValues.length; i++) {
       final value = domainValues[i];
       final tick = Tick(
-          value: value,
-          textElement: graphicsFactory.createTextElement(labels[i]),
-          locationPx: scale[value]?.toDouble());
+        value: value,
+        textElement: graphicsFactory.createTextElement(labels[i]),
+        locationPx: scale[value]?.toDouble(),
+      );
 
       ticks.add(tick);
     }
@@ -87,6 +94,8 @@ abstract class BaseTickProvider<D> implements TickProvider<D> {
 
 /// A hint for the tick provider to determine step size and tick count.
 class TickHint<D> {
+  TickHint(this.start, this.end, {required this.tickCount});
+
   /// The starting hint tick value.
   final D start;
 
@@ -95,6 +104,4 @@ class TickHint<D> {
 
   /// Number of ticks.
   final int tickCount;
-
-  TickHint(this.start, this.end, {required this.tickCount});
 }

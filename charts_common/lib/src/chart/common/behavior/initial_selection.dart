@@ -13,15 +13,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../base_chart.dart' show BaseChart, LifecycleListener;
-import '../processed_series.dart' show MutableSeries;
-import '../selection_model/selection_model.dart'
+import 'package:charts_common/src/chart/common/base_chart.dart'
+    show BaseChart, LifecycleListener;
+import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
+    show ChartBehavior;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show MutableSeries;
+import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
     show SelectionModel, SelectionModelType;
-import '../series_datum.dart' show SeriesDatumConfig;
-import 'chart_behavior.dart' show ChartBehavior;
+import 'package:charts_common/src/chart/common/series_datum.dart'
+    show SeriesDatumConfig;
 
 /// Behavior that sets initial selection.
 class InitialSelection<D> implements ChartBehavior<D> {
+  // TODO : When the series changes, if the user does not also
+  // change the index the wrong item could be highlighted.
+  InitialSelection({
+    this.selectionModelType = SelectionModelType.info,
+    this.selectedDataConfig,
+    this.selectedSeriesConfig,
+    this.shouldPreserveSelectionOnDraw = false,
+  }) {
+    _lifecycleListener = LifecycleListener<D>(onData: _setInitialSelection);
+  }
   final SelectionModelType selectionModelType;
 
   /// List of series id of initially selected series.
@@ -38,16 +52,6 @@ class InitialSelection<D> implements ChartBehavior<D> {
   late LifecycleListener<D> _lifecycleListener;
   bool _firstDraw = true;
 
-  // TODO : When the series changes, if the user does not also
-  // change the index the wrong item could be highlighted.
-  InitialSelection(
-      {this.selectionModelType = SelectionModelType.info,
-      this.selectedDataConfig,
-      this.selectedSeriesConfig,
-      this.shouldPreserveSelectionOnDraw = false}) {
-    _lifecycleListener = LifecycleListener<D>(onData: _setInitialSelection);
-  }
-
   void _setInitialSelection(List<MutableSeries<D>> seriesList) {
     if (!_firstDraw && !shouldPreserveSelectionOnDraw) {
       return;
@@ -55,11 +59,16 @@ class InitialSelection<D> implements ChartBehavior<D> {
     _firstDraw = false;
 
     final immutableModel = SelectionModel<D>.fromConfig(
-        selectedDataConfig, selectedSeriesConfig, seriesList);
+      selectedDataConfig,
+      selectedSeriesConfig,
+      seriesList,
+    );
 
     _chart!.getSelectionModel(selectionModelType).updateSelection(
-        immutableModel.selectedDatum, immutableModel.selectedSeries,
-        notifyListeners: false);
+          immutableModel.selectedDatum,
+          immutableModel.selectedSeries,
+          notifyListeners: false,
+        );
   }
 
   @override

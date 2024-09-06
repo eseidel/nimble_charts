@@ -13,14 +13,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:math' show Point;
+
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show getAnimatedColor;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries;
+import 'package:charts_common/src/common/color.dart' show Color;
 import 'package:meta/meta.dart' show protected;
 
-import 'dart:math' show Point;
-import '../../common/color.dart' show Color;
-import '../common/processed_series.dart' show ImmutableSeries;
-import '../common/chart_canvas.dart' show getAnimatedColor;
-
 class ArcRendererElementList<D> {
+  ArcRendererElementList({
+    required this.arcs,
+    required this.center,
+    required this.innerRadius,
+    required this.radius,
+    required this.startAngle,
+    this.stroke,
+    this.strokeWidthPx,
+  });
   final List<ArcRendererElement<D>> arcs;
   final Point<double> center;
   final double innerRadius;
@@ -32,19 +43,18 @@ class ArcRendererElementList<D> {
 
   /// Stroke width of separator lines between arcs.
   final double? strokeWidthPx;
-
-  ArcRendererElementList({
-    required this.arcs,
-    required this.center,
-    required this.innerRadius,
-    required this.radius,
-    required this.startAngle,
-    this.stroke,
-    this.strokeWidthPx,
-  });
 }
 
 class ArcRendererElement<D> {
+  ArcRendererElement({
+    required this.startAngle,
+    required this.endAngle,
+    required this.series,
+    this.color,
+    this.index,
+    this.key,
+    this.domain,
+  });
   double startAngle;
   double endAngle;
   Color? color;
@@ -53,29 +63,20 @@ class ArcRendererElement<D> {
   D? domain;
   ImmutableSeries<D> series;
 
-  ArcRendererElement({
-    required this.startAngle,
-    required this.endAngle,
-    this.color,
-    this.index,
-    this.key,
-    this.domain,
-    required this.series,
-  });
+  ArcRendererElement<D> clone() => ArcRendererElement<D>(
+        startAngle: startAngle,
+        endAngle: endAngle,
+        color: color == null ? null : Color.fromOther(color: color!),
+        index: index,
+        key: key,
+        series: series,
+      );
 
-  ArcRendererElement<D> clone() {
-    return ArcRendererElement<D>(
-      startAngle: startAngle,
-      endAngle: endAngle,
-      color: color == null ? null : Color.fromOther(color: color!),
-      index: index,
-      key: key,
-      series: series,
-    );
-  }
-
-  void updateAnimationPercent(ArcRendererElement<D> previous,
-      ArcRendererElement<D> target, double animationPercent) {
+  void updateAnimationPercent(
+    ArcRendererElement<D> previous,
+    ArcRendererElement<D> target,
+    double animationPercent,
+  ) {
     startAngle =
         ((target.startAngle - previous.startAngle) * animationPercent) +
             previous.startAngle;
@@ -104,6 +105,7 @@ class AnimatedArcList<D> {
 
 @protected
 class AnimatedArc<D> {
+  AnimatedArc(this.key, this.datum, this.domain);
   final String key;
   Object? datum;
   D? domain;
@@ -115,8 +117,6 @@ class AnimatedArc<D> {
   // Flag indicating whether this arc is being animated out of the chart.
   bool animatingOut = false;
 
-  AnimatedArc(this.key, this.datum, this.domain);
-
   /// Animates a arc that was removed from the series out of the view.
   ///
   /// This should be called in place of "setNewTarget" for arcs that represent
@@ -124,7 +124,7 @@ class AnimatedArc<D> {
   ///
   /// Animates the angle of the arc to [endAngle], in radians.
   void animateOut(double endAngle) {
-    var newTarget = _currentArc!.clone();
+    final newTarget = _currentArc!.clone();
 
     // Animate the arc out by setting the angles to 0.
     newTarget.startAngle = endAngle;

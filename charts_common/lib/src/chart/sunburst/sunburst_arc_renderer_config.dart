@@ -13,23 +13,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show pi;
-
-import '../../common/symbol_renderer.dart' show SymbolRenderer;
-import '../layout/layout_view.dart' show LayoutViewPaintOrder;
-import '../pie/arc_renderer.dart' show ArcRenderer;
-import '../pie/arc_renderer_decorator.dart' show ArcRendererDecorator;
-import 'sunburst_arc_renderer.dart' show SunburstArcRenderer;
-import '../pie/base_arc_renderer_config.dart' show BaseArcRendererConfig;
-import '../../data/tree.dart' show TreeNode;
+import 'package:charts_common/src/chart/pie/arc_renderer.dart' show ArcRenderer;
+import 'package:charts_common/src/chart/pie/base_arc_renderer_config.dart'
+    show BaseArcRendererConfig;
+import 'package:charts_common/src/chart/sunburst/sunburst_arc_renderer.dart'
+    show SunburstArcRenderer;
+import 'package:charts_common/src/data/tree.dart' show TreeNode;
 
 /// Given the selected node and a list of currently expanded node, returns the
 /// new set of node to be expanded (shown beyond the initialDisplayLevel).
-typedef List<TreeNode<dynamic>> ExpandNodeCallback(
-    TreeNode<dynamic> node, List<TreeNode<dynamic>> expandedNode);
+typedef ExpandNodeCallback = List<TreeNode<dynamic>> Function(
+  TreeNode<dynamic> node,
+  List<TreeNode<dynamic>> expandedNode,
+);
 
 /// Configuration for an [ArcRenderer].
 class SunburstArcRendererConfig<D> extends BaseArcRendererConfig<D> {
+  SunburstArcRendererConfig({
+    super.customRendererId,
+    super.arcLength,
+    super.arcRendererDecorators,
+    super.arcRatio,
+    this.arcRatios,
+    super.arcWidth,
+    this.arcWidths,
+    this.colorAssignmentStrategy = SunburstColorStrategy.newShadePerLevel,
+    super.layoutPaintOrder,
+    int? maxDisplayLevel,
+    int? initialDisplayLevel,
+    super.minHoleWidthForCenterContent,
+    super.startAngle,
+    super.strokeWidthPx,
+  })  : maxDisplayLevel = maxDisplayLevel ?? _maxInt32Value,
+        initialDisplayLevel =
+            initialDisplayLevel ?? maxDisplayLevel ?? _maxInt32Value;
   static const _maxInt32Value = 1 << 31;
 
   /// Ratio of the arc widths for each of the ring drawn in the sunburst. The
@@ -61,40 +78,9 @@ class SunburstArcRendererConfig<D> extends BaseArcRendererConfig<D> {
   /// data.
   final int maxDisplayLevel;
 
-  SunburstArcRendererConfig(
-      {String? customRendererId,
-      double arcLength = 2 * pi,
-      List<ArcRendererDecorator<D>> arcRendererDecorators = const [],
-      double? arcRatio,
-      this.arcRatios,
-      int? arcWidth,
-      this.arcWidths,
-      this.colorAssignmentStrategy = SunburstColorStrategy.newShadePerLevel,
-      int layoutPaintOrder = LayoutViewPaintOrder.arc,
-      int? maxDisplayLevel,
-      int? initialDisplayLevel,
-      int minHoleWidthForCenterContent = 30,
-      double startAngle = -pi / 2,
-      double strokeWidthPx = 2.0,
-      SymbolRenderer? symbolRenderer})
-      : this.maxDisplayLevel = maxDisplayLevel ?? _maxInt32Value,
-        this.initialDisplayLevel =
-            initialDisplayLevel ?? maxDisplayLevel ?? _maxInt32Value,
-        super(
-            customRendererId: customRendererId,
-            arcLength: arcLength,
-            arcRatio: arcRatio,
-            arcWidth: arcWidth,
-            layoutPaintOrder: layoutPaintOrder,
-            minHoleWidthForCenterContent: minHoleWidthForCenterContent,
-            startAngle: startAngle,
-            strokeWidthPx: strokeWidthPx,
-            arcRendererDecorators: arcRendererDecorators);
-
   @override
-  SunburstArcRenderer<D> build() {
-    return SunburstArcRenderer<D>(config: this, rendererId: customRendererId);
-  }
+  SunburstArcRenderer<D> build() =>
+      SunburstArcRenderer<D>(config: this, rendererId: customRendererId);
 }
 
 /// Strategies for assinging color to the arcs if colorFn is not provided for

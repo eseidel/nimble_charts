@@ -13,32 +13,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../../common/date_time_factory.dart' show DateTimeFactory;
-import 'base_time_stepper.dart' show BaseTimeStepper;
+import 'package:charts_common/src/chart/cartesian/axis/time/base_time_stepper.dart'
+    show BaseTimeStepper;
+import 'package:charts_common/src/common/date_time_factory.dart'
+    show DateTimeFactory;
 
 /// Hour stepper.
 class HourTimeStepper extends BaseTimeStepper {
+  factory HourTimeStepper(
+    DateTimeFactory dateTimeFactory, {
+    List<int>? allowedTickIncrements,
+  }) {
+    // Set the default increments if null.
+    allowedTickIncrements ??= _defaultIncrements;
+
+    assert(
+      allowedTickIncrements
+          .every((increment) => increment >= 1 && increment <= 24),
+    );
+
+    return HourTimeStepper._internal(dateTimeFactory, allowedTickIncrements);
+  }
+
+  HourTimeStepper._internal(
+    super.dateTimeFactory,
+    List<int> increments,
+  ) : _allowedTickIncrements = increments;
   static const _defaultIncrements = [1, 2, 3, 4, 6, 12, 24];
   static const _hoursInDay = 24;
   static const _millisecondsInHour = 3600 * 1000;
 
   final List<int> _allowedTickIncrements;
-
-  HourTimeStepper._internal(
-      DateTimeFactory dateTimeFactory, List<int> increments)
-      : _allowedTickIncrements = increments,
-        super(dateTimeFactory);
-
-  factory HourTimeStepper(DateTimeFactory dateTimeFactory,
-      {List<int>? allowedTickIncrements}) {
-    // Set the default increments if null.
-    allowedTickIncrements ??= _defaultIncrements;
-
-    assert(allowedTickIncrements
-        .every((increment) => increment >= 1 && increment <= 24));
-
-    return HourTimeStepper._internal(dateTimeFactory, allowedTickIncrements);
-  }
 
   @override
   int get typicalStepSizeMs => _millisecondsInHour;
@@ -55,9 +60,12 @@ class HourTimeStepper extends BaseTimeStepper {
   DateTime getStepTimeBeforeInclusive(DateTime time, int tickIncrement) {
     final nextDay = dateTimeFactory
         .createDateTime(time.year, time.month, time.day)
-        .add(Duration(hours: _hoursInDay + 1));
+        .add(const Duration(hours: _hoursInDay + 1));
     final nextDayStart = dateTimeFactory.createDateTime(
-        nextDay.year, nextDay.month, nextDay.day);
+      nextDay.year,
+      nextDay.month,
+      nextDay.day,
+    );
 
     final hoursToNextDay =
         ((nextDayStart.millisecondsSinceEpoch - time.millisecondsSinceEpoch) /
@@ -68,7 +76,11 @@ class HourTimeStepper extends BaseTimeStepper {
     final rewindHours =
         hoursRemainder == 0 ? 0 : tickIncrement - hoursRemainder;
     final stepBefore = dateTimeFactory.createDateTime(
-        time.year, time.month, time.day, time.hour - rewindHours);
+      time.year,
+      time.month,
+      time.day,
+      time.hour - rewindHours,
+    );
 
     return stepBefore;
   }
@@ -77,7 +89,6 @@ class HourTimeStepper extends BaseTimeStepper {
   ///
   /// [time] is expected to be a [DateTime] with the hour at start of the hour.
   @override
-  DateTime getNextStepTime(DateTime time, int tickIncrement) {
-    return time.add(Duration(hours: tickIncrement));
-  }
+  DateTime getNextStepTime(DateTime time, int tickIncrement) =>
+      time.add(Duration(hours: tickIncrement));
 }

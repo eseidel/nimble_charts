@@ -13,10 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'material_style.dart' show MaterialStyle;
-import 'style.dart' show Style;
+import 'package:charts_common/src/common/style/material_style.dart'
+    show MaterialStyle;
+import 'package:charts_common/src/common/style/style.dart' show Style;
 
 class StyleFactory {
+  StyleFactory._internal();
   static final StyleFactory _styleFactory = StyleFactory._internal();
 
   Style _style = const MaterialStyle();
@@ -27,6 +29,4 @@ class StyleFactory {
   static set style(Style value) {
     _styleFactory._style = value;
   }
-
-  StyleFactory._internal();
 }

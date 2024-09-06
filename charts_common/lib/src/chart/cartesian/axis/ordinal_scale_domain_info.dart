@@ -14,7 +14,10 @@
 // limitations under the License.
 
 import 'dart:collection' show HashMap;
-import 'ordinal_extents.dart' show OrdinalExtents;
+
+import 'package:charts_common/src/chart/cartesian/axis/ordinal_extents.dart'
+    show OrdinalExtents;
+import 'package:charts_common/src/chart/cartesian/axis/ordinal_scale.dart';
 
 /// A domain processor for [OrdinalScale].
 ///
@@ -22,6 +25,7 @@ import 'ordinal_extents.dart' show OrdinalExtents;
 ///
 /// Unique domain values are kept, so duplicates will not increase the extent.
 class OrdinalScaleDomainInfo {
+  OrdinalScaleDomainInfo();
   int _index = 0;
 
   /// A map of domain value and the order it was added.
@@ -30,14 +34,10 @@ class OrdinalScaleDomainInfo {
   /// A list of domain values kept to support [getDomainAtIndex].
   final _domainList = <String>[];
 
-  OrdinalScaleDomainInfo();
-
-  OrdinalScaleDomainInfo copy() {
-    return OrdinalScaleDomainInfo()
-      .._domainsToOrder.addAll(_domainsToOrder)
-      .._index = _index
-      .._domainList.addAll(_domainList);
-  }
+  OrdinalScaleDomainInfo copy() => OrdinalScaleDomainInfo()
+    .._domainsToOrder.addAll(_domainsToOrder)
+    .._index = _index
+    .._domainList.addAll(_domainList);
 
   void add(String domain) {
     if (!_domainsToOrder.containsKey(domain)) {

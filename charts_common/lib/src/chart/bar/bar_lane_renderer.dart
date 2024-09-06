@@ -14,16 +14,12 @@
 // limitations under the License.
 
 import 'dart:collection' show LinkedHashMap;
-import 'package:collection/collection.dart' show IterableExtension;
 
-import '../../data/series.dart' show AttributeKey;
-import '../cartesian/axis/axis.dart'
-    show ImmutableAxis, domainAxisKey, measureAxisKey;
-import '../common/chart_canvas.dart' show ChartCanvas;
-import '../common/processed_series.dart' show ImmutableSeries, MutableSeries;
-import 'bar_lane_renderer_config.dart' show BarLaneRendererConfig;
-import 'bar_renderer.dart' show AnimatedBar, BarRenderer, BarRendererElement;
-import 'base_bar_renderer.dart'
+import 'package:charts_common/src/chart/bar/bar_lane_renderer_config.dart'
+    show BarLaneRendererConfig;
+import 'package:charts_common/src/chart/bar/bar_renderer.dart'
+    show AnimatedBar, BarRenderer, BarRendererElement;
+import 'package:charts_common/src/chart/bar/base_bar_renderer.dart'
     show
         allBarGroupWeightsKey,
         barGroupCountKey,
@@ -31,6 +27,14 @@ import 'base_bar_renderer.dart'
         barGroupWeightKey,
         previousBarGroupWeightKey,
         stackKeyKey;
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show ImmutableAxis, domainAxisKey, measureAxisKey;
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries, MutableSeries;
+import 'package:charts_common/src/data/series.dart' show AttributeKey;
+import 'package:collection/collection.dart' show IterableExtension;
 
 /// Key for storing a list of all domain values that exist in the series data.
 ///
@@ -50,6 +54,20 @@ const domainValuesKey =
 /// swim lanes may optionally be merged together into one wide lane that covers
 /// the full domain range band width.
 class BarLaneRenderer<D> extends BarRenderer<D> {
+  factory BarLaneRenderer({
+    BarLaneRendererConfig? config,
+    String? rendererId,
+  }) {
+    rendererId ??= 'bar';
+    config ??= BarLaneRendererConfig();
+    return BarLaneRenderer._internal(config: config, rendererId: rendererId);
+  }
+
+  BarLaneRenderer._internal({
+    required BarLaneRendererConfig super.config,
+    required super.rendererId,
+  }) : super.internal();
+
   /// Store a map of domain+barGroupIndex+category index to bar lanes in a
   /// stack.
   ///
@@ -69,27 +87,13 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
   // ignore: prefer_collection_literals, https://github.com/dart-lang/linter/issues/1649
   final _allMeasuresForDomainNullMap = LinkedHashMap<D, bool>();
 
-  factory BarLaneRenderer({
-    BarLaneRendererConfig? config,
-    String? rendererId,
-  }) {
-    rendererId ??= 'bar';
-    config ??= BarLaneRendererConfig();
-    return BarLaneRenderer._internal(config: config, rendererId: rendererId);
-  }
-
-  BarLaneRenderer._internal({
-    required BarLaneRendererConfig config,
-    required String rendererId,
-  }) : super.internal(config: config, rendererId: rendererId);
-
   @override
   void preprocessSeries(List<MutableSeries<D>> seriesList) {
     super.preprocessSeries(seriesList);
 
     _allMeasuresForDomainNullMap.clear();
 
-    seriesList.forEach((MutableSeries<D> series) {
+    for (final series in seriesList) {
       final domainFn = series.domainFn;
       final measureFn = series.rawMeasureFn;
 
@@ -113,7 +117,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
       }
 
       series.setAttr(domainValuesKey, domainValues);
-    });
+    }
   }
 
   @override
@@ -121,11 +125,11 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
     super.update(seriesList, isAnimatingThisDraw);
 
     // Add gray bars to render under every bar stack.
-    seriesList.forEach((ImmutableSeries<D> series) {
-      var domainValues = series.getAttr(domainValuesKey) as Set<D>;
+    for (final series in seriesList) {
+      final domainValues = series.getAttr(domainValuesKey)! as Set<D>;
 
-      final domainAxis = series.getAttr(domainAxisKey) as ImmutableAxis<D>;
-      final measureAxis = series.getAttr(measureAxisKey) as ImmutableAxis<num>;
+      final domainAxis = series.getAttr(domainAxisKey)! as ImmutableAxis<D>;
+      final measureAxis = series.getAttr(measureAxisKey)! as ImmutableAxis<num>;
       final seriesStackKey = series.getAttr(stackKeyKey);
       final barGroupCount = series.getAttr(barGroupCountKey)!;
       final barGroupIndex = series.getAttr(barGroupIndexKey)!;
@@ -138,18 +142,18 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
       // Create a fake series for [BarLabelDecorator] to use when looking up the
       // index of each datum.
       final laneSeries =
-          MutableSeries<D>.clone(seriesList[0] as MutableSeries<D>);
-      laneSeries.data = <Object>[];
+          MutableSeries<D>.clone(seriesList[0] as MutableSeries<D>)
+            ..data = <Object>[]
 
-      // Don't render any labels on the swim lanes.
-      laneSeries.labelAccessorFn = (int? index) => '';
+            // Don't render any labels on the swim lanes.
+            ..labelAccessorFn = (index) => '';
 
       var laneSeriesIndex = 0;
-      domainValues.forEach((D domainValue) {
+      for (final domainValue in domainValues) {
         // Skip adding any background bars if they will be covered up by the
         // domain-spanning null bar.
         if (_allMeasuresForDomainNullMap[domainValue] == true) {
-          return;
+          continue;
         }
 
         // Add a fake datum to the series for [BarLabelDecorator].
@@ -162,12 +166,14 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
         // generated for each series in the preprocess step), and bar group
         // index to account for all combinations of grouping and stacking.
         final barStackMapKey =
-            '${domainValue}__${seriesStackKey}__${barGroupIndex}';
+            '${domainValue}__${seriesStackKey}__$barGroupIndex';
 
-        final barKey = barStackMapKey + '0';
+        final barKey = '${barStackMapKey}0';
 
         final barStackList = _barLaneStackMap.putIfAbsent(
-            barStackMapKey, () => <AnimatedBar<D>>[]);
+          barStackMapKey,
+          () => <AnimatedBar<D>>[],
+        );
 
         // If we already have an AnimatingBar for that index, use it.
         var animatingBar =
@@ -179,45 +185,17 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
         final measureValue = measureFn(0);
         final measureIsNegative = measureValue != null && measureValue < 0;
         final maxMeasureValue = _getMaxMeasureValue(
-            measureAxis, measureIsNegative && renderNegativeLanes);
+          measureAxis,
+          measureIsNegative && renderNegativeLanes,
+        );
 
         // If we don't have any existing bar element, create a new bar and have
         // it animate in from the domain axis.
         if (animatingBar == null) {
           animatingBar = makeAnimatedBar(
-              key: barKey,
-              series: laneSeries,
-              datum: datum,
-              barGroupIndex: barGroupIndex,
-              previousBarGroupWeight: previousBarGroupWeight,
-              barGroupWeight: barGroupWeight,
-              allBarGroupWeights: allBarGroupWeights,
-              color: (config as BarLaneRendererConfig).backgroundBarColor,
-              details: BarRendererElement<D>(),
-              domainValue: domainValue,
-              domainAxis: domainAxis,
-              domainWidth: domainAxis.rangeBand.round(),
-              fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
-              measureValue: maxMeasureValue,
-              measureOffsetValue: 0.0,
-              measureAxisPosition: measureAxisPosition,
-              measureAxis: measureAxis,
-              numBarGroups: barGroupCount,
-              strokeWidthPx: config.strokeWidthPx,
-              measureIsNull: false,
-              measureIsNegative: renderNegativeLanes && measureIsNegative);
-
-          barStackList.add(animatingBar);
-        } else {
-          animatingBar
-            ..datum = datum
-            ..series = laneSeries
-            ..domainValue = domainValue;
-        }
-
-        // Get the barElement we are going to setup.
-        // Optimization to prevent allocation in non-animating case.
-        final barElement = makeBarRendererElement(
+            key: barKey,
+            series: laneSeries,
+            datum: datum,
             barGroupIndex: barGroupIndex,
             previousBarGroupWeight: previousBarGroupWeight,
             barGroupWeight: barGroupWeight,
@@ -235,44 +213,76 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
             numBarGroups: barGroupCount,
             strokeWidthPx: config.strokeWidthPx,
             measureIsNull: false,
-            measureIsNegative: renderNegativeLanes && measureIsNegative);
+            measureIsNegative: renderNegativeLanes && measureIsNegative,
+          );
+
+          barStackList.add(animatingBar);
+        } else {
+          animatingBar
+            ..datum = datum
+            ..series = laneSeries
+            ..domainValue = domainValue;
+        }
+
+        // Get the barElement we are going to setup.
+        // Optimization to prevent allocation in non-animating case.
+        final barElement = makeBarRendererElement(
+          barGroupIndex: barGroupIndex,
+          previousBarGroupWeight: previousBarGroupWeight,
+          barGroupWeight: barGroupWeight,
+          allBarGroupWeights: allBarGroupWeights,
+          color: (config as BarLaneRendererConfig).backgroundBarColor,
+          details: BarRendererElement<D>(),
+          domainValue: domainValue,
+          domainAxis: domainAxis,
+          domainWidth: domainAxis.rangeBand.round(),
+          fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
+          measureValue: maxMeasureValue,
+          measureOffsetValue: 0.0,
+          measureAxisPosition: measureAxisPosition,
+          measureAxis: measureAxis,
+          numBarGroups: barGroupCount,
+          strokeWidthPx: config.strokeWidthPx,
+          measureIsNull: false,
+          measureIsNegative: renderNegativeLanes && measureIsNegative,
+        );
 
         animatingBar.setNewTarget(barElement);
 
         laneSeriesIndex++;
-      });
-    });
+      }
+    }
 
     // Add domain-spanning bars to render when every measure value for every
     // datum of a given domain is null.
     if ((config as BarLaneRendererConfig).mergeEmptyLanes) {
       // Use the axes from the first series.
       final domainAxis =
-          seriesList[0].getAttr(domainAxisKey) as ImmutableAxis<D>;
+          seriesList[0].getAttr(domainAxisKey)! as ImmutableAxis<D>;
       final measureAxis =
-          seriesList[0].getAttr(measureAxisKey) as ImmutableAxis<num>;
+          seriesList[0].getAttr(measureAxisKey)! as ImmutableAxis<num>;
 
       final measureAxisPosition = measureAxis.getLocation(0.0);
       final maxMeasureValue = _getMaxMeasureValue(measureAxis, false);
 
-      final barGroupIndex = 0;
-      final previousBarGroupWeight = 0.0;
-      final barGroupWeight = 1.0;
-      final barGroupCount = 1;
+      const barGroupIndex = 0;
+      const previousBarGroupWeight = 0.0;
+      const barGroupWeight = 1.0;
+      const barGroupCount = 1;
 
       // Create a fake series for [BarLabelDecorator] to use when looking up the
       // index of each datum. We don't care about any other series values for
       // the merged lanes, so just clone the first series.
       final mergedSeries =
-          MutableSeries<D>.clone(seriesList[0] as MutableSeries<D>);
-      mergedSeries.data = <Object>[];
+          MutableSeries<D>.clone(seriesList[0] as MutableSeries<D>)
+            ..data = <Object>[]
 
-      // Add a label accessor that returns the empty lane label.
-      mergedSeries.labelAccessorFn =
-          (int? index) => (config as BarLaneRendererConfig).emptyLaneLabel;
+            // Add a label accessor that returns the empty lane label.
+            ..labelAccessorFn =
+                (index) => (config as BarLaneRendererConfig).emptyLaneLabel;
 
       var mergedSeriesIndex = 0;
-      _allMeasuresForDomainNullMap.forEach((D domainValue, bool allNull) {
+      _allMeasuresForDomainNullMap.forEach((domainValue, allNull) {
         if (allNull) {
           // Add a fake datum to the series for [BarLabelDecorator].
           final datum = {'index': mergedSeriesIndex};
@@ -280,51 +290,25 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
 
           final barStackMapKey = '${domainValue}__allNull__';
 
-          final barKey = barStackMapKey + '0';
+          final barKey = '${barStackMapKey}0';
 
           final barStackList = _barLaneStackMap.putIfAbsent(
-              barStackMapKey, () => <AnimatedBar<D>>[]);
+            barStackMapKey,
+            () => <AnimatedBar<D>>[],
+          );
 
           // If we already have an AnimatingBar for that index, use it.
           var animatingBar =
               barStackList.firstWhereOrNull((bar) => bar.key == barKey);
 
-          // If we don't have any existing bar element, create a new bar and have
+          // If we don't have any existing bar element, create a new bar and
+          // have
           // it animate in from the domain axis.
           if (animatingBar == null) {
             animatingBar = makeAnimatedBar(
-                key: barKey,
-                series: mergedSeries,
-                datum: datum,
-                barGroupIndex: barGroupIndex,
-                previousBarGroupWeight: previousBarGroupWeight,
-                barGroupWeight: barGroupWeight,
-                color: (config as BarLaneRendererConfig).backgroundBarColor,
-                details: BarRendererElement<D>(),
-                domainValue: domainValue,
-                domainAxis: domainAxis,
-                domainWidth: domainAxis.rangeBand.round(),
-                fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
-                measureValue: maxMeasureValue,
-                measureOffsetValue: 0.0,
-                measureAxisPosition: measureAxisPosition,
-                measureAxis: measureAxis,
-                numBarGroups: barGroupCount,
-                strokeWidthPx: config.strokeWidthPx,
-                measureIsNull: false,
-                measureIsNegative: false);
-
-            barStackList.add(animatingBar);
-          } else {
-            animatingBar
-              ..datum = datum
-              ..series = mergedSeries
-              ..domainValue = domainValue;
-          }
-
-          // Get the barElement we are going to setup.
-          // Optimization to prevent allocation in non-animating case.
-          final barElement = makeBarRendererElement(
+              key: barKey,
+              series: mergedSeries,
+              datum: datum,
               barGroupIndex: barGroupIndex,
               previousBarGroupWeight: previousBarGroupWeight,
               barGroupWeight: barGroupWeight,
@@ -341,7 +325,38 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
               numBarGroups: barGroupCount,
               strokeWidthPx: config.strokeWidthPx,
               measureIsNull: false,
-              measureIsNegative: false);
+              measureIsNegative: false,
+            );
+
+            barStackList.add(animatingBar);
+          } else {
+            animatingBar
+              ..datum = datum
+              ..series = mergedSeries
+              ..domainValue = domainValue;
+          }
+
+          // Get the barElement we are going to setup.
+          // Optimization to prevent allocation in non-animating case.
+          final barElement = makeBarRendererElement(
+            barGroupIndex: barGroupIndex,
+            previousBarGroupWeight: previousBarGroupWeight,
+            barGroupWeight: barGroupWeight,
+            color: (config as BarLaneRendererConfig).backgroundBarColor,
+            details: BarRendererElement<D>(),
+            domainValue: domainValue,
+            domainAxis: domainAxis,
+            domainWidth: domainAxis.rangeBand.round(),
+            fillColor: (config as BarLaneRendererConfig).backgroundBarColor,
+            measureValue: maxMeasureValue,
+            measureOffsetValue: 0.0,
+            measureAxisPosition: measureAxisPosition,
+            measureAxis: measureAxis,
+            numBarGroups: barGroupCount,
+            strokeWidthPx: config.strokeWidthPx,
+            measureIsNull: false,
+            measureIsNegative: false,
+          );
 
           animatingBar.setNewTarget(barElement);
 
@@ -365,7 +380,7 @@ class BarLaneRenderer<D> extends BarRenderer<D> {
   /// Paints the current bar data on the canvas.
   @override
   void paint(ChartCanvas canvas, double animationPercent) {
-    _barLaneStackMap.forEach((String stackKey, List<AnimatedBar<D>> barStack) {
+    _barLaneStackMap.forEach((stackKey, barStack) {
       // Turn this into a list so that the getCurrentBar isn't called more than
       // once for each animationPercent if the barElements are iterated more
       // than once.

@@ -15,9 +15,12 @@
 
 import 'dart:math' show Rectangle;
 
-import '../../common/graphics_factory.dart' show GraphicsFactory;
-import '../common/chart_canvas.dart' show ChartCanvas;
-import 'point_renderer.dart' show PointRendererElement;
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:charts_common/src/chart/scatter_plot/point_renderer.dart'
+    show PointRendererElement;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 /// Decorates points after the points have already been painted.
 abstract class PointRendererDecorator<D> {
@@ -27,9 +30,12 @@ abstract class PointRendererDecorator<D> {
   /// series data elements.
   bool get renderAbove;
 
-  void decorate(PointRendererElement<D> pointElement, ChartCanvas canvas,
-      GraphicsFactory graphicsFactory,
-      {required Rectangle drawBounds,
-      required double animationPercent,
-      bool rtl = false});
+  void decorate(
+    PointRendererElement<D> pointElement,
+    ChartCanvas canvas,
+    GraphicsFactory graphicsFactory, {
+    required Rectangle drawBounds,
+    required double animationPercent,
+    bool rtl = false,
+  });
 }

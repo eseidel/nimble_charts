@@ -13,32 +13,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:intl/intl.dart' show DateFormat;
-import '../../../../common/date_time_factory.dart';
-import 'time_tick_formatter_impl.dart'
+import 'package:charts_common/src/chart/cartesian/axis/time/time_tick_formatter_impl.dart'
     show CalendarField, TimeTickFormatterImpl;
+import 'package:charts_common/src/common/date_time_factory.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 /// Hour specific tick formatter which will format noon differently.
 class HourTickFormatter extends TimeTickFormatterImpl {
-  late final DateFormat _noonFormat;
-
-  HourTickFormatter(
-      {required DateTimeFactory dateTimeFactory,
-      required String? simpleFormat,
-      required String? transitionFormat,
-      required String? noonFormat})
-      : super(
-            dateTimeFactory: dateTimeFactory,
-            simpleFormat: simpleFormat,
-            transitionFormat: transitionFormat,
-            transitionField: CalendarField.date) {
+  HourTickFormatter({
+    required DateTimeFactory dateTimeFactory,
+    required super.simpleFormat,
+    required super.transitionFormat,
+    required String? noonFormat,
+  }) : super(
+          dateTimeFactory: dateTimeFactory,
+          transitionField: CalendarField.date,
+        ) {
     _noonFormat = dateTimeFactory.createDateFormat(noonFormat);
   }
+  late final DateFormat _noonFormat;
 
   @override
-  String formatSimpleTick(DateTime date) {
-    return (date.hour == 12)
-        ? _noonFormat.format(date)
-        : super.formatSimpleTick(date);
-  }
+  String formatSimpleTick(DateTime date) => (date.hour == 12)
+      ? _noonFormat.format(date)
+      : super.formatSimpleTick(date);
 }

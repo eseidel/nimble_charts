@@ -15,17 +15,117 @@
 
 import 'dart:math';
 
-import '../../common/color.dart' show Color;
-import '../../common/math.dart' show NullablePoint;
-import '../../common/symbol_renderer.dart' show SymbolRenderer;
-import 'chart_canvas.dart' show FillPatternType;
-import 'processed_series.dart' show ImmutableSeries;
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show FillPatternType;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries;
+import 'package:charts_common/src/common/color.dart' show Color;
+import 'package:charts_common/src/common/math.dart' show NullablePoint;
+import 'package:charts_common/src/common/symbol_renderer.dart'
+    show SymbolRenderer;
 
 typedef DomainFormatter<D> = String Function(D domain);
 typedef MeasureFormatter = String Function(num? measure);
 
 /// Represents processed rendering details for a data point from a series.
 class DatumDetails<D> {
+  DatumDetails({
+    this.datum,
+    this.index,
+    this.domain,
+    this.domainFormatter,
+    this.domainLowerBound,
+    this.domainUpperBound,
+    this.measure,
+    this.measureFormatter,
+    this.measureLowerBound,
+    this.measureUpperBound,
+    this.measureOffset,
+    this.rawMeasure,
+    this.rawMeasureLowerBound,
+    this.rawMeasureUpperBound,
+    this.series,
+    this.color,
+    this.fillColor,
+    this.fillPattern,
+    this.areaColor,
+    this.dashPattern,
+    this.chartPosition,
+    this.chartPositionLower,
+    this.chartPositionUpper,
+    this.bounds,
+    this.domainDistance,
+    this.measureDistance,
+    this.relativeDistance,
+    this.radiusPx,
+    this.symbolRenderer,
+    this.strokeWidthPx,
+  });
+
+  factory DatumDetails.from(
+    DatumDetails<D> other, {
+    D? datum,
+    int? index,
+    D? domain,
+    D? domainLowerBound,
+    D? domainUpperBound,
+    num? measure,
+    MeasureFormatter? measureFormatter,
+    num? measureLowerBound,
+    num? measureUpperBound,
+    num? measureOffset,
+    num? rawMeasure,
+    num? rawMeasureLowerBound,
+    num? rawMeasureUpperBound,
+    ImmutableSeries<D>? series,
+    Color? color,
+    Color? fillColor,
+    FillPatternType? fillPattern,
+    Color? areaColor,
+    List<int>? dashPattern,
+    NullablePoint? chartPosition,
+    NullablePoint? chartPositionLower,
+    NullablePoint? chartPositionUpper,
+    Rectangle<int>? bounds,
+    DomainFormatter<D>? domainFormatter,
+    double? domainDistance,
+    double? measureDistance,
+    double? radiusPx,
+    SymbolRenderer? symbolRenderer,
+  }) =>
+      DatumDetails<D>(
+        datum: datum ?? other.datum,
+        index: index ?? other.index,
+        domain: domain ?? other.domain,
+        domainFormatter: domainFormatter ?? other.domainFormatter,
+        domainLowerBound: domainLowerBound ?? other.domainLowerBound,
+        domainUpperBound: domainUpperBound ?? other.domainUpperBound,
+        measure: measure ?? other.measure,
+        measureFormatter: measureFormatter ?? other.measureFormatter,
+        measureLowerBound: measureLowerBound ?? other.measureLowerBound,
+        measureUpperBound: measureUpperBound ?? other.measureUpperBound,
+        measureOffset: measureOffset ?? other.measureOffset,
+        rawMeasure: rawMeasure ?? other.rawMeasure,
+        rawMeasureLowerBound:
+            rawMeasureLowerBound ?? other.rawMeasureLowerBound,
+        rawMeasureUpperBound:
+            rawMeasureUpperBound ?? other.rawMeasureUpperBound,
+        series: series ?? other.series,
+        color: color ?? other.color,
+        fillColor: fillColor ?? other.fillColor,
+        fillPattern: fillPattern ?? other.fillPattern,
+        areaColor: areaColor ?? other.areaColor,
+        dashPattern: dashPattern ?? other.dashPattern,
+        chartPosition: chartPosition ?? other.chartPosition,
+        chartPositionLower: chartPositionLower ?? other.chartPositionLower,
+        chartPositionUpper: chartPositionUpper ?? other.chartPositionUpper,
+        bounds: bounds ?? other.bounds,
+        domainDistance: domainDistance ?? other.domainDistance,
+        measureDistance: measureDistance ?? other.measureDistance,
+        radiusPx: radiusPx ?? other.radiusPx,
+        symbolRenderer: symbolRenderer ?? other.symbolRenderer,
+        strokeWidthPx: radiusPx ?? other.strokeWidthPx,
+      );
   final dynamic datum;
 
   /// The index of the datum in the series.
@@ -141,104 +241,9 @@ class DatumDetails<D> {
   /// Optional formatter for [measure].
   MeasureFormatter? measureFormatter;
 
-  DatumDetails(
-      {this.datum,
-      this.index,
-      this.domain,
-      this.domainFormatter,
-      this.domainLowerBound,
-      this.domainUpperBound,
-      this.measure,
-      this.measureFormatter,
-      this.measureLowerBound,
-      this.measureUpperBound,
-      this.measureOffset,
-      this.rawMeasure,
-      this.rawMeasureLowerBound,
-      this.rawMeasureUpperBound,
-      this.series,
-      this.color,
-      this.fillColor,
-      this.fillPattern,
-      this.areaColor,
-      this.dashPattern,
-      this.chartPosition,
-      this.chartPositionLower,
-      this.chartPositionUpper,
-      this.bounds,
-      this.domainDistance,
-      this.measureDistance,
-      this.relativeDistance,
-      this.radiusPx,
-      this.symbolRenderer,
-      this.strokeWidthPx});
-
-  factory DatumDetails.from(DatumDetails<D> other,
-      {D? datum,
-      int? index,
-      D? domain,
-      D? domainLowerBound,
-      D? domainUpperBound,
-      num? measure,
-      MeasureFormatter? measureFormatter,
-      num? measureLowerBound,
-      num? measureUpperBound,
-      num? measureOffset,
-      num? rawMeasure,
-      num? rawMeasureLowerBound,
-      num? rawMeasureUpperBound,
-      ImmutableSeries<D>? series,
-      Color? color,
-      Color? fillColor,
-      FillPatternType? fillPattern,
-      Color? areaColor,
-      List<int>? dashPattern,
-      NullablePoint? chartPosition,
-      NullablePoint? chartPositionLower,
-      NullablePoint? chartPositionUpper,
-      Rectangle<int>? bounds,
-      DomainFormatter<D>? domainFormatter,
-      double? domainDistance,
-      double? measureDistance,
-      double? radiusPx,
-      SymbolRenderer? symbolRenderer,
-      double? strokeWidthPx}) {
-    return DatumDetails<D>(
-        datum: datum ?? other.datum,
-        index: index ?? other.index,
-        domain: domain ?? other.domain,
-        domainFormatter: domainFormatter ?? other.domainFormatter,
-        domainLowerBound: domainLowerBound ?? other.domainLowerBound,
-        domainUpperBound: domainUpperBound ?? other.domainUpperBound,
-        measure: measure ?? other.measure,
-        measureFormatter: measureFormatter ?? other.measureFormatter,
-        measureLowerBound: measureLowerBound ?? other.measureLowerBound,
-        measureUpperBound: measureUpperBound ?? other.measureUpperBound,
-        measureOffset: measureOffset ?? other.measureOffset,
-        rawMeasure: rawMeasure ?? other.rawMeasure,
-        rawMeasureLowerBound:
-            rawMeasureLowerBound ?? other.rawMeasureLowerBound,
-        rawMeasureUpperBound:
-            rawMeasureUpperBound ?? other.rawMeasureUpperBound,
-        series: series ?? other.series,
-        color: color ?? other.color,
-        fillColor: fillColor ?? other.fillColor,
-        fillPattern: fillPattern ?? other.fillPattern,
-        areaColor: areaColor ?? other.areaColor,
-        dashPattern: dashPattern ?? other.dashPattern,
-        chartPosition: chartPosition ?? other.chartPosition,
-        chartPositionLower: chartPositionLower ?? other.chartPositionLower,
-        chartPositionUpper: chartPositionUpper ?? other.chartPositionUpper,
-        bounds: bounds ?? other.bounds,
-        domainDistance: domainDistance ?? other.domainDistance,
-        measureDistance: measureDistance ?? other.measureDistance,
-        radiusPx: radiusPx ?? other.radiusPx,
-        symbolRenderer: symbolRenderer ?? other.symbolRenderer,
-        strokeWidthPx: radiusPx ?? other.strokeWidthPx);
-  }
-
-  String get formattedDomain =>
-      (domainFormatter != null) ? domainFormatter!(domain!) : domain.toString();
+  String get formattedDomain => (domainFormatter != null)
+      ? domainFormatter!(domain as D)
+      : domain.toString();
 
   String get formattedMeasure => (measureFormatter != null)
       ? measureFormatter!(measure)

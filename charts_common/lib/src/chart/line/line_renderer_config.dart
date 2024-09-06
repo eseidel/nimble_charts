@@ -13,15 +13,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../common/symbol_renderer.dart';
-import '../common/series_renderer_config.dart'
+import 'package:charts_common/src/chart/common/series_renderer_config.dart'
     show RendererAttributes, SeriesRendererConfig;
-import '../layout/layout_view.dart' show LayoutViewConfig, LayoutViewPaintOrder;
-import 'line_renderer.dart' show LineRenderer;
+import 'package:charts_common/src/chart/layout/layout_view.dart'
+    show LayoutViewConfig, LayoutViewPaintOrder;
+import 'package:charts_common/src/chart/line/line_renderer.dart'
+    show LineRenderer;
+import 'package:charts_common/src/common/symbol_renderer.dart';
 
 /// Configuration for a line renderer.
 class LineRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
+  LineRendererConfig({
+    this.customRendererId,
+    this.radiusPx = 3.5,
+    this.stacked = false,
+    this.strokeWidthPx = 2.0,
+    this.dashPattern,
+    this.includeLine = true,
+    this.includePoints = false,
+    this.includeArea = false,
+    this.layoutPaintOrder = LayoutViewPaintOrder.line,
+    this.areaOpacity = 0.1,
+    this.roundEndCaps = false,
+    SymbolRenderer? symbolRenderer,
+  }) : symbolRenderer = symbolRenderer ?? LineSymbolRenderer();
   @override
   final String? customRendererId;
 
@@ -73,23 +89,7 @@ class LineRendererConfig<D> extends LayoutViewConfig
   /// Whether lines should have round end caps, or square if false.
   final bool roundEndCaps;
 
-  LineRendererConfig(
-      {this.customRendererId,
-      this.radiusPx = 3.5,
-      this.stacked = false,
-      this.strokeWidthPx = 2.0,
-      this.dashPattern,
-      this.includeLine = true,
-      this.includePoints = false,
-      this.includeArea = false,
-      this.layoutPaintOrder = LayoutViewPaintOrder.line,
-      this.areaOpacity = 0.1,
-      this.roundEndCaps = false,
-      SymbolRenderer? symbolRenderer})
-      : symbolRenderer = symbolRenderer ?? LineSymbolRenderer();
-
   @override
-  LineRenderer<D> build() {
-    return LineRenderer<D>(config: this, rendererId: customRendererId);
-  }
+  LineRenderer<D> build() =>
+      LineRenderer<D>(config: this, rendererId: customRendererId);
 }

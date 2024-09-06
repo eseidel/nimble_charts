@@ -15,11 +15,15 @@
 
 import 'dart:math';
 
-import '../../../common/chart_canvas.dart' show ChartCanvas;
-import '../../../layout/layout_view.dart' show ViewMeasuredSizes;
-import '../axis.dart' show AxisOrientation;
-import '../collision_report.dart' show CollisionReport;
-import '../tick.dart' show Tick;
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:charts_common/src/chart/cartesian/axis/collision_report.dart'
+    show CollisionReport;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:charts_common/src/chart/layout/layout_view.dart'
+    show ViewMeasuredSizes;
 
 /// Strategy for drawing ticks and checking for collisions.
 abstract class TickDrawStrategy<D> {
@@ -31,22 +35,34 @@ abstract class TickDrawStrategy<D> {
 
   /// Returns a [CollisionReport] indicating if there are any collisions.
   CollisionReport<D> collides(
-      List<Tick<D>>? ticks, AxisOrientation? orientation);
+    List<Tick<D>>? ticks,
+    AxisOrientation? orientation,
+  );
 
   /// Returns measurement of ticks drawn vertically.
   ViewMeasuredSizes measureVerticallyDrawnTicks(
-      List<Tick<D>> ticks, int maxWidth, int maxHeight,
-      {bool collision = false});
+    List<Tick<D>> ticks,
+    int maxWidth,
+    int maxHeight, {
+    bool collision = false,
+  });
 
   /// Returns measurement of ticks drawn horizontally.
   ViewMeasuredSizes measureHorizontallyDrawnTicks(
-      List<Tick<D>> ticks, int maxWidth, int maxHeight,
-      {bool collision = false});
+    List<Tick<D>> ticks,
+    int maxWidth,
+    int maxHeight, {
+    bool collision = false,
+  });
 
   /// Updates max tick width to match fit max size.
-  void updateTickWidth(List<Tick<D>> ticks, int maxWidth, int maxHeight,
-      AxisOrientation orientation,
-      {bool collision = false});
+  void updateTickWidth(
+    List<Tick<D>> ticks,
+    int maxWidth,
+    int maxHeight,
+    AxisOrientation orientation, {
+    bool collision = false,
+  });
 
   /// Draws tick onto [ChartCanvas].
   ///
@@ -55,14 +71,20 @@ abstract class TickDrawStrategy<D> {
   /// [drawAreaBounds] the bounds of the chart draw area adjacent to the axis.
   /// [collision] whether or not this [tick] should be drawn in such a way to
   /// avoid colliding into other ticks.
-  void draw(ChartCanvas canvas, Tick<D> tick,
-      {required AxisOrientation orientation,
-      required Rectangle<int> axisBounds,
-      required Rectangle<int> drawAreaBounds,
-      required bool isFirst,
-      required bool isLast,
-      bool collision = false});
+  void draw(
+    ChartCanvas canvas,
+    Tick<D> tick, {
+    required AxisOrientation orientation,
+    required Rectangle<int> axisBounds,
+    required Rectangle<int> drawAreaBounds,
+    required bool isFirst,
+    required bool isLast,
+    bool collision = false,
+  });
 
-  void drawAxisLine(ChartCanvas canvas, AxisOrientation orientation,
-      Rectangle<int> axisBounds);
+  void drawAxisLine(
+    ChartCanvas canvas,
+    AxisOrientation orientation,
+    Rectangle<int> axisBounds,
+  );
 }

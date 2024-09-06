@@ -15,15 +15,22 @@
 
 import 'dart:math' show Rectangle;
 
-import '../common/base_chart.dart' show BaseChart;
-import '../common/datum_details.dart' show DatumDetails;
-import '../common/processed_series.dart' show MutableSeries;
-import '../common/selection_model/selection_model.dart' show SelectionModelType;
-import '../common/series_renderer.dart' show rendererIdKey, SeriesRenderer;
-import '../layout/layout_config.dart' show LayoutConfig, MarginSpec;
-import 'arc_renderer.dart' show ArcRenderer;
+import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
+import 'package:charts_common/src/chart/common/datum_details.dart'
+    show DatumDetails;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show MutableSeries;
+import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
+    show SelectionModelType;
+import 'package:charts_common/src/chart/common/series_renderer.dart'
+    show SeriesRenderer, rendererIdKey;
+import 'package:charts_common/src/chart/layout/layout_config.dart'
+    show LayoutConfig, MarginSpec;
+import 'package:charts_common/src/chart/pie/arc_renderer.dart' show ArcRenderer;
 
 class PieChart<D> extends BaseChart<D> {
+  PieChart({LayoutConfig? layoutConfig})
+      : super(layoutConfig: layoutConfig ?? _defaultLayoutConfig);
   static final _defaultLayoutConfig = LayoutConfig(
     topSpec: MarginSpec.fromPixel(minPixel: 20),
     bottomSpec: MarginSpec.fromPixel(minPixel: 20),
@@ -31,17 +38,20 @@ class PieChart<D> extends BaseChart<D> {
     rightSpec: MarginSpec.fromPixel(minPixel: 20),
   );
 
-  PieChart({LayoutConfig? layoutConfig})
-      : super(layoutConfig: layoutConfig ?? _defaultLayoutConfig);
-
   @override
-  void drawInternal(List<MutableSeries<D>> seriesList,
-      {bool? skipAnimation, bool? skipLayout}) {
+  void drawInternal(
+    List<MutableSeries<D>> seriesList, {
+    bool? skipAnimation,
+    bool? skipLayout,
+  }) {
     if (seriesList.length > 1) {
       throw ArgumentError('PieChart can only render a single series');
     }
-    super.drawInternal(seriesList,
-        skipAnimation: skipAnimation, skipLayout: skipLayout);
+    super.drawInternal(
+      seriesList,
+      skipAnimation: skipAnimation,
+      skipLayout: skipLayout,
+    );
   }
 
   @override
@@ -50,9 +60,8 @@ class PieChart<D> extends BaseChart<D> {
   }
 
   @override
-  SeriesRenderer<D> makeDefaultRenderer() {
-    return ArcRenderer<D>()..rendererId = SeriesRenderer.defaultRendererId;
-  }
+  SeriesRenderer<D> makeDefaultRenderer() =>
+      ArcRenderer<D>()..rendererId = SeriesRenderer.defaultRendererId;
 
   /// Returns a list of datum details from selection model of [type].
   @override
@@ -70,9 +79,7 @@ class PieChart<D> extends BaseChart<D> {
 
       final details = renderer.getExpandedDatumDetails(seriesDatum);
 
-      if (details != null) {
-        entries.add(details);
-      }
+      entries.add(details);
     }
 
     return entries;

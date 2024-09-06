@@ -13,15 +13,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../../common/chart_context.dart' show ChartContext;
-import '../axis.dart' show AxisOrientation;
-import '../draw_strategy/tick_draw_strategy.dart' show TickDrawStrategy;
-import '../numeric_scale.dart' show NumericScale;
-import '../numeric_tick_provider.dart' show NumericTickProvider;
-import '../tick.dart' show Tick;
-import '../tick_formatter.dart' show SimpleTickFormatterBase, TickFormatter;
-import '../tick_provider.dart' show TickHint;
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    show TickDrawStrategy;
+import 'package:charts_common/src/chart/cartesian/axis/linear/bucketing_numeric_axis.dart';
+import 'package:charts_common/src/chart/cartesian/axis/numeric_scale.dart'
+    show NumericScale;
+import 'package:charts_common/src/chart/cartesian/axis/numeric_tick_provider.dart'
+    show NumericTickProvider;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show SimpleTickFormatterBase, TickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show TickHint;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 /// Tick provider that generates ticks for a [BucketingNumericAxis].
 ///
@@ -73,59 +82,66 @@ class BucketingNumericTickProvider extends NumericTickProvider {
     bool viewportExtensionEnabled = false,
     TickHint<num>? tickHint,
   }) {
-    final _threshold = this._threshold;
-    final _showBucket = this._showBucket;
+    final threshold = _threshold;
+    final showBucket = _showBucket;
 
-    if (_threshold == null) {
+    if (threshold == null) {
       throw ArgumentError(
-          'Bucketing threshold must be set before getting ticks.');
+        'Bucketing threshold must be set before getting ticks.',
+      );
     }
 
-    if (_showBucket == null) {
+    if (showBucket == null) {
       throw ArgumentError(
-          'The showBucket flag must be set before getting ticks.');
+        'The showBucket flag must be set before getting ticks.',
+      );
     }
 
     final localFormatter = _BucketingFormatter(
-        threshold: _threshold,
-        originalFormatter: formatter as SimpleTickFormatterBase<num>);
+      threshold: threshold,
+      originalFormatter: formatter as SimpleTickFormatterBase<num>,
+    );
 
     final ticks = super.getTicks(
-        context: context,
-        graphicsFactory: graphicsFactory,
-        scale: scale,
-        formatter: localFormatter,
-        formatterValueCache: formatterValueCache,
-        tickDrawStrategy: tickDrawStrategy,
-        orientation: orientation,
-        viewportExtensionEnabled: viewportExtensionEnabled);
+      context: context,
+      graphicsFactory: graphicsFactory,
+      scale: scale,
+      formatter: localFormatter,
+      formatterValueCache: formatterValueCache,
+      tickDrawStrategy: tickDrawStrategy,
+      orientation: orientation,
+      viewportExtensionEnabled: viewportExtensionEnabled,
+    );
 
     // Create a tick for the threshold.
     final thresholdTick = Tick<num>(
-        value: _threshold,
-        textElement: graphicsFactory
-            .createTextElement(localFormatter.formatValue(_threshold)),
-        locationPx: (_showBucket ? scale[_threshold] : scale[0])!.toDouble(),
-        labelOffsetPx:
-            _showBucket ? -0.5 * (scale[_threshold]! - scale[0]!) : 0.0);
+      value: threshold,
+      textElement: graphicsFactory
+          .createTextElement(localFormatter.formatValue(threshold)),
+      locationPx: (showBucket ? scale[threshold] : scale[0])!.toDouble(),
+      labelOffsetPx: showBucket ? -0.5 * (scale[threshold]! - scale[0]!) : 0.0,
+    );
     tickDrawStrategy.decorateTicks(<Tick<num>>[thresholdTick]);
 
     // Filter out ticks that sit below the threshold.
-    ticks.removeWhere((Tick<num> tick) =>
-        tick.value <= thresholdTick.value && tick.value != 0.0);
+    ticks..removeWhere(
+      (tick) => tick.value <= thresholdTick.value && tick.value != 0.0,
+    )
 
     // Finally, add our threshold tick to the list.
-    ticks.add(thresholdTick);
+    ..add(thresholdTick)
 
     // Make sure they are sorted by increasing value.
-    ticks.sort((a, b) => a.value.compareTo(b.value));
+    ..sort((a, b) => a.value.compareTo(b.value));
     return ticks;
   }
 }
 
 class _BucketingFormatter extends SimpleTickFormatterBase<num> {
-  _BucketingFormatter(
-      {required this.threshold, required this.originalFormatter});
+  _BucketingFormatter({
+    required this.threshold,
+    required this.originalFormatter,
+  });
 
   /// All values smaller than the threshold will be formatted into an empty
   /// string.
@@ -139,7 +155,7 @@ class _BucketingFormatter extends SimpleTickFormatterBase<num> {
     if (value < threshold) {
       return '';
     } else if (value == threshold) {
-      return '< ' + originalFormatter.formatValue(value);
+      return '< ${originalFormatter.formatValue(value)}';
     } else {
       return originalFormatter.formatValue(value);
     }

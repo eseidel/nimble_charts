@@ -13,13 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts_common/src/chart/layout/layout_manager.dart';
+
 /// Collection of configurations that apply to the [LayoutManager].
 class LayoutConfig {
-  final MarginSpec leftSpec;
-  final MarginSpec rightSpec;
-  final MarginSpec topSpec;
-  final MarginSpec bottomSpec;
-
   /// Create a new [LayoutConfig] used by [DynamicLayoutManager].
   LayoutConfig({
     MarginSpec? leftSpec,
@@ -30,21 +27,20 @@ class LayoutConfig {
         rightSpec = rightSpec ?? MarginSpec.defaultSpec,
         topSpec = topSpec ?? MarginSpec.defaultSpec,
         bottomSpec = bottomSpec ?? MarginSpec.defaultSpec;
+  final MarginSpec leftSpec;
+  final MarginSpec rightSpec;
+  final MarginSpec topSpec;
+  final MarginSpec bottomSpec;
 }
 
 /// Specs that applies to one margin.
 class MarginSpec {
-  /// [MarginSpec] that has max of 50 percent.
-  static const defaultSpec = MarginSpec._internal(null, null, null, 50);
-
-  final int? _minPixel;
-  final int? _maxPixel;
-  final int? _minPercent;
-  final int? _maxPercent;
-
   const MarginSpec._internal(
-      int? minPixel, int? maxPixel, int? minPercent, int? maxPercent)
-      : _minPixel = minPixel,
+    int? minPixel,
+    int? maxPixel,
+    int? minPercent,
+    int? maxPercent,
+  )   : _minPixel = minPixel,
         _maxPixel = maxPixel,
         _minPercent = minPercent,
         _maxPercent = maxPercent;
@@ -95,15 +91,23 @@ class MarginSpec {
     return MarginSpec._internal(null, null, minPercent, maxPercent);
   }
 
+  /// [MarginSpec] that has max of 50 percent.
+  static const defaultSpec = MarginSpec._internal(null, null, null, 50);
+
+  final int? _minPixel;
+  final int? _maxPixel;
+  final int? _minPercent;
+  final int? _maxPercent;
+
   /// Get the min pixels, given the [totalPixels].
   int getMinPixels(int totalPixels) {
-    final _minPixel = this._minPixel;
-    final _minPercent = this._minPercent;
-    if (_minPixel != null) {
-      assert(_minPixel < totalPixels);
-      return _minPixel;
-    } else if (_minPercent != null) {
-      return (totalPixels * (_minPercent / 100)).round();
+    final minPixel = _minPixel;
+    final minPercent = _minPercent;
+    if (minPixel != null) {
+      assert(minPixel < totalPixels);
+      return minPixel;
+    } else if (minPercent != null) {
+      return (totalPixels * (minPercent / 100)).round();
     } else {
       return 0;
     }
@@ -111,13 +115,13 @@ class MarginSpec {
 
   /// Get the max pixels, given the [totalPixels].
   int getMaxPixels(int totalPixels) {
-    final _maxPixel = this._maxPixel;
-    final _maxPercent = this._maxPercent;
-    if (_maxPixel != null) {
-      assert(_maxPixel < totalPixels);
-      return _maxPixel;
-    } else if (_maxPercent != null) {
-      return (totalPixels * (_maxPercent / 100)).round();
+    final maxPixel = _maxPixel;
+    final maxPercent = _maxPercent;
+    if (maxPixel != null) {
+      assert(maxPixel < totalPixels);
+      return maxPixel;
+    } else if (maxPercent != null) {
+      return (totalPixels * (maxPercent / 100)).round();
     } else {
       return totalPixels;
     }

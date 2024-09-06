@@ -13,20 +13,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'axis_spec.dart' show TextStyleSpec;
+import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show TextStyleSpec;
 
 /// Definition for a tick.
 ///
 /// Used to define a tick that is used by static tick provider.
 class TickSpec<D> {
-  final D value;
-  final String? label;
-  final TextStyleSpec? style;
-
   /// [value] the value of this tick
   /// [label] optional label for this tick. If not set, uses the tick formatter
   /// of the axis.
   /// [style] optional style for this tick. If not set, uses the style of the
   /// axis.
   const TickSpec(this.value, {this.label, this.style});
+  final D value;
+  final String? label;
+  final TextStyleSpec? style;
 }

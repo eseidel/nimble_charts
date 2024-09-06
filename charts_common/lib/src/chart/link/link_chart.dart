@@ -27,13 +27,11 @@ class LinkChart<D> extends BaseChart<D> {
 
   /// Uses LinkRenderer as the default renderer.
   @override
-  SeriesRenderer<D> makeDefaultRenderer() {
-    return LinkRenderer<D>()..rendererId = SeriesRenderer.defaultRendererId;
-  }
+  SeriesRenderer<D> makeDefaultRenderer() =>
+      LinkRenderer<D>()..rendererId = SeriesRenderer.defaultRendererId;
 
   /// Returns a list of datum details from the selection model of [type].
   @override
-  List<DatumDetails<D>> getDatumDetails(SelectionModelType type) {
-    return <DatumDetails<D>>[];
-  }
+  List<DatumDetails<D>> getDatumDetails(SelectionModelType type) =>
+      <DatumDetails<D>>[];
 }

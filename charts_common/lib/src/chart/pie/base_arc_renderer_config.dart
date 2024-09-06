@@ -15,17 +15,34 @@
 
 import 'dart:math' show pi;
 
-import '../../common/color.dart' show Color;
-import '../../common/style/style_factory.dart' show StyleFactory;
-import '../../common/symbol_renderer.dart';
-import '../common/series_renderer_config.dart'
+import 'package:charts_common/src/chart/common/series_renderer_config.dart'
     show RendererAttributes, SeriesRendererConfig;
-import '../layout/layout_view.dart' show LayoutViewConfig, LayoutViewPaintOrder;
-import 'arc_renderer_decorator.dart' show ArcRendererDecorator;
+import 'package:charts_common/src/chart/layout/layout_view.dart'
+    show LayoutViewConfig, LayoutViewPaintOrder;
+import 'package:charts_common/src/chart/pie/arc_renderer_decorator.dart'
+    show ArcRendererDecorator;
+import 'package:charts_common/src/common/color.dart' show Color;
+import 'package:charts_common/src/common/style/style_factory.dart'
+    show StyleFactory;
+import 'package:charts_common/src/common/symbol_renderer.dart';
 
 /// The base renderer config for arc renderer and sunburst arc renderer.
 abstract class BaseArcRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
+  BaseArcRendererConfig({
+    this.customRendererId,
+    this.arcLength = 2 * pi,
+    this.arcRendererDecorators = const [],
+    this.arcRatio,
+    this.arcWidth,
+    this.layoutPaintOrder = LayoutViewPaintOrder.arc,
+    this.minHoleWidthForCenterContent = 30,
+    this.startAngle = -pi / 2,
+    this.strokeWidthPx = 2.0,
+    SymbolRenderer? symbolRenderer,
+  })  : noDataColor = StyleFactory.style.noDataColor,
+        stroke = StyleFactory.style.arcStrokeColor,
+        symbolRenderer = symbolRenderer ?? CircleSymbolRenderer();
   @override
   final String? customRendererId;
 
@@ -73,19 +90,4 @@ abstract class BaseArcRendererConfig<D> extends LayoutViewConfig
   /// Color of the "no data" state for the chart, used when an empty series is
   /// drawn.
   final Color noDataColor;
-
-  BaseArcRendererConfig(
-      {this.customRendererId,
-      this.arcLength = 2 * pi,
-      this.arcRendererDecorators = const [],
-      this.arcRatio,
-      this.arcWidth,
-      this.layoutPaintOrder = LayoutViewPaintOrder.arc,
-      this.minHoleWidthForCenterContent = 30,
-      this.startAngle = -pi / 2,
-      this.strokeWidthPx = 2.0,
-      SymbolRenderer? symbolRenderer})
-      : noDataColor = StyleFactory.style.noDataColor,
-        stroke = StyleFactory.style.arcStrokeColor,
-        symbolRenderer = symbolRenderer ?? CircleSymbolRenderer();
 }

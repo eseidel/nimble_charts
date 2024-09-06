@@ -13,19 +13,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show min, max;
+import 'dart:math' show max, min;
 
-import 'package:charts_common/src/common/math.dart';
-
-import 'ordinal_scale.dart' show OrdinalScale;
-import 'ordinal_scale_domain_info.dart' show OrdinalScaleDomainInfo;
-import 'scale.dart'
+import 'package:charts_common/src/chart/cartesian/axis/ordinal_scale.dart'
+    show OrdinalScale;
+import 'package:charts_common/src/chart/cartesian/axis/ordinal_scale_domain_info.dart'
+    show OrdinalScaleDomainInfo;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
     show
         RangeBandConfig,
         RangeBandType,
+        ScaleOutputExtent,
         StepSizeConfig,
-        StepSizeType,
-        ScaleOutputExtent;
+        StepSizeType;
+import 'package:charts_common/src/common/math.dart';
 
 /// Scale that converts ordinal values of type [D] to a given range output.
 ///
@@ -34,11 +35,19 @@ import 'scale.dart'
 /// width of the bar is [rangeBand] and the position of the bar is retrieved
 /// by [[]].
 class SimpleOrdinalScale implements OrdinalScale {
-  final _stepSizeConfig = StepSizeConfig.auto();
+  SimpleOrdinalScale() : _domain = OrdinalScaleDomainInfo();
+
+  SimpleOrdinalScale._copy(SimpleOrdinalScale other)
+      : _domain = other._domain.copy(),
+        _range = ScaleOutputExtent(other._range.start, other._range.end),
+        _viewportScale = other._viewportScale,
+        _viewportTranslatePx = other._viewportTranslatePx,
+        _rangeBandConfig = other._rangeBandConfig;
+  final _stepSizeConfig = const StepSizeConfig.auto();
   final OrdinalScaleDomainInfo _domain;
-  ScaleOutputExtent _range = ScaleOutputExtent(0, 1);
-  double _viewportScale = 1.0;
-  double _viewportTranslatePx = 0.0;
+  ScaleOutputExtent _range = const ScaleOutputExtent(0, 1);
+  double _viewportScale = 1;
+  double _viewportTranslatePx = 0;
   RangeBandConfig _rangeBandConfig = RangeBandConfig.styleAssignedPercent();
 
   bool _scaleChanged = true;
@@ -60,15 +69,6 @@ class SimpleOrdinalScale implements OrdinalScale {
   // bar charts where first series is at the bottom of the chart).
   bool get _isVertical => range.start > range.end;
 
-  SimpleOrdinalScale() : _domain = OrdinalScaleDomainInfo();
-
-  SimpleOrdinalScale._copy(SimpleOrdinalScale other)
-      : _domain = other._domain.copy(),
-        _range = ScaleOutputExtent(other._range.start, other._range.end),
-        _viewportScale = other._viewportScale,
-        _viewportTranslatePx = other._viewportTranslatePx,
-        _rangeBandConfig = other._rangeBandConfig;
-
   @override
   double get rangeBand {
     if (_scaleChanged) {
@@ -88,18 +88,15 @@ class SimpleOrdinalScale implements OrdinalScale {
   }
 
   @override
-  double get domainStepSize => 1.0;
+  double get domainStepSize => 1;
 
   @override
   set rangeBandConfig(RangeBandConfig barGroupWidthConfig) {
-    if (barGroupWidthConfig == null) {
-      throw ArgumentError.notNull('RangeBandConfig must not be null.');
-    }
-
     if (barGroupWidthConfig.type == RangeBandType.fixedDomain ||
         barGroupWidthConfig.type == RangeBandType.none) {
       throw ArgumentError(
-          'barGroupWidthConfig must not be NONE or FIXED_DOMAIN');
+        'barGroupWidthConfig must not be NONE or FIXED_DOMAIN',
+      );
     }
 
     _rangeBandConfig = barGroupWidthConfig;
@@ -113,7 +110,8 @@ class SimpleOrdinalScale implements OrdinalScale {
   set stepSizeConfig(StepSizeConfig? config) {
     if (config != null && config.type != StepSizeType.autoDetect) {
       throw ArgumentError(
-          'Ordinal scales only support StepSizeConfig of type Auto');
+        'Ordinal scales only support StepSizeConfig of type Auto',
+      );
     }
     // Nothing is set because only auto is supported.
   }
@@ -138,7 +136,7 @@ class SimpleOrdinalScale implements OrdinalScale {
           (_cachedStepSizePixels * i);
     }
     // If it wasn't found
-    return 0.0;
+    return 0;
   }
 
   @override
@@ -195,7 +193,7 @@ class SimpleOrdinalScale implements OrdinalScale {
   }
 
   @override
-  int get rangeWidth => (range.start - range.end).abs().toInt();
+  int get rangeWidth => (range.start - range.end).abs();
 
   @override
   double get viewportScalingFactor => _viewportScale;
@@ -208,7 +206,9 @@ class SimpleOrdinalScale implements OrdinalScale {
     _viewportScale = viewportScale;
     if (_isVertical) {
       _viewportTranslatePx = max(
-          min(-(rangeWidth * (1.0 - viewportScale)), viewportTranslatePx), 0);
+        min(-(rangeWidth * (1.0 - viewportScale)), viewportTranslatePx),
+        0,
+      );
     } else {
       _viewportTranslatePx =
           min(max(rangeWidth * (1.0 - viewportScale), viewportTranslatePx), 0);
@@ -232,15 +232,17 @@ class SimpleOrdinalScale implements OrdinalScale {
   /// Update this scale's viewport using settings [_viewportDataSize] and
   /// [_viewportStartingDomain].
   void _updateViewport() {
-    setViewportSettings(1.0, 0.0);
+    setViewportSettings(1, 0);
     _recalculateScale();
     if (_domain.isEmpty) {
       return;
     }
 
     // Update the scale with zoom level to help find the correct translate.
-    setViewportSettings(_domain.size / min(_viewportDataSize!, _domain.size),
-        _isVertical ? double.maxFinite : 0.0);
+    setViewportSettings(
+      _domain.size / min(_viewportDataSize!, _domain.size),
+      _isVertical ? double.maxFinite : 0.0,
+    );
     _recalculateScale();
     final domainIndex = _domain.indexOf(_viewportStartingDomain!);
     if (domainIndex != null) {
@@ -275,29 +277,29 @@ class SimpleOrdinalScale implements OrdinalScale {
     }
     if (_isVertical) {
       // Get topmost visible index.
-      var index = (-(rangeWidth + _viewportTranslatePx) / _cachedStepSizePixels)
-              .ceil()
-              .toInt() -
-          1;
+      final index =
+          (-(rangeWidth + _viewportTranslatePx) / _cachedStepSizePixels)
+                  .ceil() -
+              1;
       return _domain.getDomainAtIndex(index);
     } else {
       return _domain.getDomainAtIndex(
-          (-_viewportTranslatePx / _cachedStepSizePixels).ceil().toInt());
+        (-_viewportTranslatePx / _cachedStepSizePixels).ceil(),
+      );
     }
   }
 
   @override
-  bool isRangeValueWithinViewport(double rangeValue) {
-    return withinBounds(rangeValue, range.min, range.max);
-  }
+  bool isRangeValueWithinViewport(double rangeValue) =>
+      withinBounds(rangeValue, range.min, range.max);
 
   @override
   int compareDomainValueToViewport(String domainValue) {
     // TODO: This currently works because range defaults to 0-1
     // This needs to be looked into further.
-    var i = _domain.indexOf(domainValue);
-    if (i != null && range != null) {
-      var domainPx = this[domainValue];
+    final i = _domain.indexOf(domainValue);
+    if (i != null) {
+      final domainPx = this[domainValue];
       if (domainPx < range.min) {
         return -1;
       }
@@ -313,7 +315,10 @@ class SimpleOrdinalScale implements OrdinalScale {
   SimpleOrdinalScale copy() => SimpleOrdinalScale._copy(this);
 
   void _updateCachedFields(
-      double stepSizePixels, double rangeBandPixels, double rangeBandShift) {
+    double stepSizePixels,
+    double rangeBandPixels,
+    double rangeBandShift,
+  ) {
     _cachedStepSizePixels = stepSizePixels;
     _cachedRangeBandSize = rangeBandPixels;
     _cachedRangeBandShift = rangeBandShift;
@@ -342,17 +347,14 @@ class SimpleOrdinalScale implements OrdinalScale {
 
     switch (rangeBandConfig.type) {
       case RangeBandType.fixedPixel:
-        rangeBandPixels = rangeBandConfig.size.toDouble();
-        break;
+        rangeBandPixels = rangeBandConfig.size;
       case RangeBandType.fixedPixelSpaceFromStep:
-        var spaceInPixels = rangeBandConfig.size.toDouble();
-        rangeBandPixels = max(0.0, stepSizePixels - spaceInPixels);
-        break;
+        final spaceInPixels = rangeBandConfig.size;
+        rangeBandPixels = max(0, stepSizePixels - spaceInPixels);
       case RangeBandType.styleAssignedPercentOfStep:
       case RangeBandType.fixedPercentOfStep:
-        var percent = rangeBandConfig.size.toDouble();
+        final percent = rangeBandConfig.size;
         rangeBandPixels = stepSizePixels * percent;
-        break;
       case RangeBandType.fixedDomain:
       case RangeBandType.none:
         throw StateError('RangeBandType must not be NONE or FIXED_DOMAIN');

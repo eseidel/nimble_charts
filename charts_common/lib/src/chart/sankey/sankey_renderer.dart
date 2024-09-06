@@ -20,30 +20,31 @@ import 'package:charts_common/src/chart/common/datum_details.dart';
 import 'package:charts_common/src/chart/common/processed_series.dart';
 import 'package:charts_common/src/chart/common/series_datum.dart';
 import 'package:charts_common/src/chart/common/series_renderer.dart';
+import 'package:charts_common/src/chart/sankey/sankey_renderer_config.dart';
 import 'package:charts_common/src/common/math.dart' show NullablePoint;
-
-import 'sankey_renderer_config.dart';
 
 /// Sankey Renderer for the Sankey Chart using Graph data structure
 class SankeyRenderer<D> extends BaseSeriesRenderer<D> {
+  factory SankeyRenderer({
+    String? rendererId,
+    SankeyRendererConfig<D>? config,
+  }) =>
+      SankeyRenderer._internal(
+        rendererId: rendererId ?? defaultRendererID,
+        config: config ?? SankeyRendererConfig(),
+      );
+
+  SankeyRenderer._internal({required super.rendererId, required this.config})
+      : super(
+          layoutPaintOrder: config.layoutPaintOrder,
+          symbolRenderer: config.symbolRenderer,
+        );
+
   /// Default renderer ID for the Sankey Chart
   static const defaultRendererID = 'sankey';
 
   /// Sankey Renderer Config
   final SankeyRendererConfig<D> config;
-
-  factory SankeyRenderer(
-      {String? rendererId, SankeyRendererConfig<D>? config}) {
-    return SankeyRenderer._internal(
-        rendererId: rendererId ?? defaultRendererID,
-        config: config ?? SankeyRendererConfig());
-  }
-
-  SankeyRenderer._internal({required String rendererId, required this.config})
-      : super(
-            rendererId: rendererId,
-            layoutPaintOrder: config.layoutPaintOrder,
-            symbolRenderer: config.symbolRenderer);
 
   @override
   void preprocessSeries(List<MutableSeries<D>> seriesList) {
@@ -62,10 +63,14 @@ class SankeyRenderer<D> extends BaseSeriesRenderer<D> {
 
   @override
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
-    final chartPosition = Point<double>(0, 0);
-    return DatumDetails.from(details,
-        chartPosition: NullablePoint.from(chartPosition));
+    DatumDetails<D> details,
+    SeriesDatum<D> seriesDatum,
+  ) {
+    const chartPosition = Point<double>(0, 0);
+    return DatumDetails.from(
+      details,
+      chartPosition: NullablePoint.from(chartPosition),
+    );
   }
 
   /// Datum details of nearest links or nodes in the sankey chart.
@@ -76,7 +81,6 @@ class SankeyRenderer<D> extends BaseSeriesRenderer<D> {
     Rectangle<int>? boundsOverride, {
     bool selectOverlappingPoints = false,
     bool selectExactEventLocation = false,
-  }) {
-    return <DatumDetails<D>>[];
-  }
+  }) =>
+      <DatumDetails<D>>[];
 }

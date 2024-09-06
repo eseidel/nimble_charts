@@ -13,18 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts_common/common.dart';
 import 'package:meta/meta.dart' show immutable;
-
-import '../draw_strategy/small_tick_draw_strategy.dart'
-    show SmallTickRendererSpec;
-import '../time/date_time_extents.dart' show DateTimeExtents;
-import 'axis_spec.dart' show AxisSpec, RenderSpec, TickLabelAnchor;
-import 'date_time_axis_spec.dart'
-    show
-        DateTimeAxisSpec,
-        DateTimeEndPointsTickProviderSpec,
-        DateTimeTickFormatterSpec,
-        DateTimeTickProviderSpec;
 
 /// Default [AxisSpec] used for Timeseries charts.
 @immutable
@@ -43,19 +33,18 @@ class EndPointsTimeAxisSpec extends DateTimeAxisSpec {
   const EndPointsTimeAxisSpec({
     RenderSpec<DateTime>? renderSpec,
     DateTimeTickProviderSpec? tickProviderSpec,
-    DateTimeTickFormatterSpec? tickFormatterSpec,
-    bool? showAxisLine,
-    DateTimeExtents? viewport,
+    super.tickFormatterSpec,
+    super.showAxisLine,
+    super.viewport,
   }) : super(
-            renderSpec: renderSpec ??
-                const SmallTickRendererSpec<DateTime>(
-                    labelAnchor: TickLabelAnchor.inside,
-                    labelOffsetFromTickPx: 0),
-            tickProviderSpec:
-                tickProviderSpec ?? const DateTimeEndPointsTickProviderSpec(),
-            tickFormatterSpec: tickFormatterSpec,
-            showAxisLine: showAxisLine,
-            viewport: viewport);
+          renderSpec: renderSpec ??
+              const SmallTickRendererSpec<DateTime>(
+                labelAnchor: TickLabelAnchor.inside,
+                labelOffsetFromTickPx: 0,
+              ),
+          tickProviderSpec:
+              tickProviderSpec ?? const DateTimeEndPointsTickProviderSpec(),
+        );
 
   @override
   bool operator ==(Object other) =>

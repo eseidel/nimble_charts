@@ -1,0 +1,26 @@
+include: package:austerity/analysis_options.yaml
+
+analyzer:
+  errors:
+    public_member_api_docs: warning
+    avoid_equals_and_hash_code_on_mutable_classes: warning
+    strict_raw_type: warning
+    avoid_setters_without_getters: warning
+    constant_identifier_names: warning
+    use_if_null_to_convert_nulls_to_bools: warning
+    referenced_before_declaration: warning
+    use_to_and_as_if_applicable: warning
+    comment_references: warning
+    prefer_asserts_with_message: warning
+    no_default_cases: warning
+    one_member_abstracts: warning
+    join_return_with_assignment: warning
+    use_setters_to_change_properties: warning
+    no_runtimetype_tostring: warning
+    unnecessary_null_comparison: warning
+    prefer_null_aware_method_calls: warning
+
+    use_late_for_private_fields_and_variables: ignore
+    avoid_catches_without_on_clauses: ignore
+
+  

@@ -13,12 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../cartesian/axis/spec/axis_spec.dart' show TextStyleSpec;
-import '../../datum_details.dart' show MeasureFormatter;
-import '../../selection_model/selection_model.dart' show SelectionModelType;
-import 'legend.dart';
-import 'legend_entry_generator.dart';
-import 'per_datum_legend_entry_generator.dart';
+import 'package:charts_common/src/chart/common/behavior/legend/legend.dart';
+import 'package:charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
+import 'package:charts_common/src/chart/common/behavior/legend/per_datum_legend_entry_generator.dart';
+import 'package:charts_common/src/chart/common/datum_details.dart'
+    show MeasureFormatter;
+import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
+    show SelectionModelType;
 
 /// Datum legend behavior for charts.
 ///
@@ -30,9 +31,6 @@ import 'per_datum_legend_entry_generator.dart';
 ///
 /// TODO: Implement tap to hide individual data in the series.
 class DatumLegend<D> extends Legend<D> {
-  /// Whether or not the series legend should show measures on datum selection.
-  late bool _showMeasures;
-
   DatumLegend({
     SelectionModelType? selectionModelType,
     LegendEntryGenerator<D>? legendEntryGenerator,
@@ -40,18 +38,21 @@ class DatumLegend<D> extends Legend<D> {
     MeasureFormatter? secondaryMeasureFormatter,
     bool? showMeasures,
     LegendDefaultMeasure? legendDefaultMeasure,
-    TextStyleSpec? entryTextStyle,
+    super.entryTextStyle,
   }) : super(
-            selectionModelType: selectionModelType ?? SelectionModelType.info,
-            legendEntryGenerator:
-                legendEntryGenerator ?? PerDatumLegendEntryGenerator(),
-            entryTextStyle: entryTextStyle) {
+          selectionModelType: selectionModelType ?? SelectionModelType.info,
+          legendEntryGenerator:
+              legendEntryGenerator ?? PerDatumLegendEntryGenerator(),
+        ) {
     // Calling the setters will automatically use non-null default values.
     this.showMeasures = showMeasures;
     this.legendDefaultMeasure = legendDefaultMeasure;
     this.measureFormatter = measureFormatter;
     this.secondaryMeasureFormatter = secondaryMeasureFormatter;
   }
+
+  /// Whether or not the series legend should show measures on datum selection.
+  late bool _showMeasures;
 
   /// Whether or not the legend should show measures.
   ///

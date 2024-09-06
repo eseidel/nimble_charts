@@ -13,41 +13,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:meta/meta.dart' show immutable;
-import 'package:intl/intl.dart' show DateFormat;
-
-import '../../../../common/date_time_factory.dart' show DateTimeFactory;
-import '../../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../../common/chart_context.dart' show ChartContext;
-import '../axis.dart' show Axis;
-import '../end_points_tick_provider.dart' show EndPointsTickProvider;
-import '../static_tick_provider.dart' show StaticTickProvider;
-import '../time/auto_adjusting_date_time_tick_provider.dart'
-    show AutoAdjustingDateTimeTickProvider;
-import '../time/date_time_axis.dart' show DateTimeAxis;
-import '../time/date_time_extents.dart' show DateTimeExtents;
-import '../time/date_time_tick_formatter.dart' show DateTimeTickFormatter;
-import '../time/day_time_stepper.dart' show DayTimeStepper;
-import '../time/hour_tick_formatter.dart' show HourTickFormatter;
-import '../time/simple_time_tick_formatter.dart'
+import 'package:charts_common/common.dart';
+import 'package:charts_common/src/chart/cartesian/axis/end_points_tick_provider.dart'
+    show EndPointsTickProvider;
+import 'package:charts_common/src/chart/cartesian/axis/static_tick_provider.dart'
+    show StaticTickProvider;
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_axis.dart'
+    show DateTimeAxis;
+import 'package:charts_common/src/chart/cartesian/axis/time/day_time_stepper.dart'
+    show DayTimeStepper;
+import 'package:charts_common/src/chart/cartesian/axis/time/hour_tick_formatter.dart'
+    show HourTickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/time/simple_time_tick_formatter.dart'
     show DateTimeFormatterFunction, SimpleTimeTickFormatter;
-import '../time/time_range_tick_provider_impl.dart'
-    show TimeRangeTickProviderImpl;
-import '../time/time_tick_formatter.dart' show TimeTickFormatter;
-import '../time/time_tick_formatter_impl.dart'
+import 'package:charts_common/src/chart/cartesian/axis/time/time_tick_formatter.dart'
+    show TimeTickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/time/time_tick_formatter_impl.dart'
     show CalendarField, TimeTickFormatterImpl;
-import 'axis_spec.dart'
-    show AxisSpec, TickProviderSpec, TickFormatterSpec, RenderSpec;
-import 'tick_spec.dart' show TickSpec;
+import 'package:intl/intl.dart' show DateFormat;
+import 'package:meta/meta.dart' show immutable;
 
 /// Generic [AxisSpec] specialized for Timeseries charts.
 @immutable
 class DateTimeAxisSpec extends AxisSpec<DateTime> {
-  /// Sets viewport for this Axis.
-  ///
-  /// If pan / zoom behaviors are set, this is the initial viewport.
-  final DateTimeExtents? viewport;
-
   /// Creates a [AxisSpec] that specialized for timeseries charts.
   ///
   /// [renderSpec] spec used to configure how the ticks and labels
@@ -60,20 +48,24 @@ class DateTimeAxisSpec extends AxisSpec<DateTime> {
   /// [showAxisLine] override to force the axis to draw the axis
   ///     line.
   const DateTimeAxisSpec({
-    RenderSpec<DateTime>? renderSpec,
-    DateTimeTickProviderSpec? tickProviderSpec,
-    DateTimeTickFormatterSpec? tickFormatterSpec,
-    bool? showAxisLine,
+    super.renderSpec,
+    DateTimeTickProviderSpec? super.tickProviderSpec,
+    DateTimeTickFormatterSpec? super.tickFormatterSpec,
+    super.showAxisLine,
     this.viewport,
-  }) : super(
-            renderSpec: renderSpec,
-            tickProviderSpec: tickProviderSpec,
-            tickFormatterSpec: tickFormatterSpec,
-            showAxisLine: showAxisLine);
+  });
+
+  /// Sets viewport for this Axis.
+  ///
+  /// If pan / zoom behaviors are set, this is the initial viewport.
+  final DateTimeExtents? viewport;
 
   @override
-  void configure(Axis<DateTime> axis, ChartContext context,
-      GraphicsFactory graphicsFactory) {
+  void configure(
+    Axis<DateTime> axis,
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+  ) {
     super.configure(axis, context, graphicsFactory);
 
     if (axis is DateTimeAxis && viewport != null) {
@@ -111,23 +103,24 @@ abstract class DateTimeTickFormatterSpec extends TickFormatterSpec<DateTime> {}
 /// on the extents of your data.
 @immutable
 class AutoDateTimeTickProviderSpec implements DateTimeTickProviderSpec {
-  final bool includeTime;
-
   /// Creates a [TickProviderSpec] that dynamically chooses ticks based on the
   /// extents of the data.
   ///
   /// [includeTime] - flag that indicates whether the time should be
   /// included when choosing appropriate tick intervals.
   const AutoDateTimeTickProviderSpec({this.includeTime = true});
+  final bool includeTime;
 
   @override
   AutoAdjustingDateTimeTickProvider createTickProvider(ChartContext context) {
     if (includeTime) {
       return AutoAdjustingDateTimeTickProvider.createDefault(
-          context.dateTimeFactory);
+        context.dateTimeFactory,
+      );
     } else {
       return AutoAdjustingDateTimeTickProvider.createWithoutTime(
-          context.dateTimeFactory);
+        context.dateTimeFactory,
+      );
     }
   }
 
@@ -142,9 +135,8 @@ class AutoDateTimeTickProviderSpec implements DateTimeTickProviderSpec {
 /// [TickProviderSpec] that sets up time ticks with days increments only.
 @immutable
 class DayTickProviderSpec implements DateTimeTickProviderSpec {
-  final List<int>? increments;
-
   const DayTickProviderSpec({this.increments});
+  final List<int>? increments;
 
   /// Creates a [TickProviderSpec] that dynamically chooses ticks based on the
   /// extents of the data, limited to day increments.
@@ -152,12 +144,15 @@ class DayTickProviderSpec implements DateTimeTickProviderSpec {
   /// [increments] specify the number of day increments that can be chosen from
   /// when searching for the appropriate tick intervals.
   @override
-  AutoAdjustingDateTimeTickProvider createTickProvider(ChartContext context) {
-    return AutoAdjustingDateTimeTickProvider.createWith([
-      TimeRangeTickProviderImpl(DayTimeStepper(context.dateTimeFactory,
-          allowedTickIncrements: increments))
-    ]);
-  }
+  AutoAdjustingDateTimeTickProvider createTickProvider(ChartContext context) =>
+      AutoAdjustingDateTimeTickProvider.createWith([
+        TimeRangeTickProviderImpl(
+          DayTimeStepper(
+            context.dateTimeFactory,
+            allowedTickIncrements: increments,
+          ),
+        ),
+      ]);
 
   @override
   bool operator ==(Object other) =>
@@ -176,9 +171,8 @@ class DateTimeEndPointsTickProviderSpec implements DateTimeTickProviderSpec {
   /// Creates a [TickProviderSpec] that dynamically chooses time ticks at the
   /// two end points of the axis range
   @override
-  EndPointsTickProvider<DateTime> createTickProvider(ChartContext context) {
-    return EndPointsTickProvider<DateTime>();
-  }
+  EndPointsTickProvider<DateTime> createTickProvider(ChartContext context) =>
+      EndPointsTickProvider<DateTime>();
 
   @override
   // ignore: hash_and_equals
@@ -188,9 +182,8 @@ class DateTimeEndPointsTickProviderSpec implements DateTimeTickProviderSpec {
 /// [TickProviderSpec] that allows you to specific the ticks to be used.
 @immutable
 class StaticDateTimeTickProviderSpec implements DateTimeTickProviderSpec {
-  final List<TickSpec<DateTime>> tickSpecs;
-
   const StaticDateTimeTickProviderSpec(this.tickSpecs);
+  final List<TickSpec<DateTime>> tickSpecs;
 
   @override
   StaticTickProvider<DateTime> createTickProvider(ChartContext context) =>
@@ -207,10 +200,6 @@ class StaticDateTimeTickProviderSpec implements DateTimeTickProviderSpec {
 /// Formatters for a single level of the [DateTimeTickFormatterSpec].
 @immutable
 class TimeFormatterSpec {
-  final String? format;
-  final String? transitionFormat;
-  final String? noonFormat;
-
   /// Creates a formatter for a particular granularity of data.
   ///
   /// [format] [DateFormat] format string used to format non-transition ticks.
@@ -223,8 +212,14 @@ class TimeFormatterSpec {
   /// [noonFormat] [DateFormat] format string used only for formatting hours
   ///     in the event that you want to format noon differently than other
   ///     hours (ie: [10, 11, 12p, 1, 2, 3]).
-  const TimeFormatterSpec(
-      {this.format, this.transitionFormat, this.noonFormat});
+  const TimeFormatterSpec({
+    this.format,
+    this.transitionFormat,
+    this.noonFormat,
+  });
+  final String? format;
+  final String? transitionFormat;
+  final String? noonFormat;
 
   @override
   bool operator ==(Object other) =>
@@ -246,9 +241,6 @@ class TimeFormatterSpec {
 /// [DateTimeFormatterFunction].
 @immutable
 class BasicDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
-  final DateTimeFormatterFunction? formatter;
-  final DateFormat? dateFormat;
-
   const BasicDateTimeTickFormatterSpec(DateTimeFormatterFunction formatter)
       : formatter = formatter,
         dateFormat = null;
@@ -256,6 +248,8 @@ class BasicDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
   const BasicDateTimeTickFormatterSpec.fromDateFormat(DateFormat dateFormat)
       : formatter = null,
         dateFormat = dateFormat;
+  final DateTimeFormatterFunction? formatter;
+  final DateFormat? dateFormat;
 
   /// A formatter will be created with the [DateFormat] if it is not null.
   /// Otherwise, it will create one with the provided
@@ -263,17 +257,19 @@ class BasicDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
   @override
   DateTimeTickFormatter createTickFormatter(ChartContext context) {
     assert(dateFormat != null || formatter != null);
-    return DateTimeTickFormatter.uniform(SimpleTimeTickFormatter(
-        formatter: dateFormat != null ? dateFormat!.format : formatter!));
+    return DateTimeTickFormatter.uniform(
+      SimpleTimeTickFormatter(
+        formatter: dateFormat != null ? dateFormat!.format : formatter!,
+      ),
+    );
   }
 
   @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is BasicDateTimeTickFormatterSpec &&
-            formatter == other.formatter &&
-            dateFormat == other.dateFormat);
-  }
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BasicDateTimeTickFormatterSpec &&
+          formatter == other.formatter &&
+          dateFormat == other.dateFormat);
 
   @override
   int get hashCode {
@@ -289,20 +285,24 @@ class BasicDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
 /// level.
 @immutable
 class AutoDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
-  final TimeFormatterSpec? minute;
-  final TimeFormatterSpec? hour;
-  final TimeFormatterSpec? day;
-  final TimeFormatterSpec? month;
-  final TimeFormatterSpec? year;
-
   /// Creates a [TickFormatterSpec] that automatically chooses the formatting
   /// given the individual [TimeFormatterSpec] formatters that are set.
   ///
   /// There is a default formatter for each level that is configurable, but
   /// by specifying a level here it replaces the default for that particular
   /// granularity. This is useful for swapping out one or all of the formatters.
-  const AutoDateTimeTickFormatterSpec(
-      {this.minute, this.hour, this.day, this.month, this.year});
+  const AutoDateTimeTickFormatterSpec({
+    this.minute,
+    this.hour,
+    this.day,
+    this.month,
+    this.year,
+  });
+  final TimeFormatterSpec? minute;
+  final TimeFormatterSpec? hour;
+  final TimeFormatterSpec? day;
+  final TimeFormatterSpec? month;
+  final TimeFormatterSpec? year;
 
   @override
   DateTimeTickFormatter createTickFormatter(ChartContext context) {
@@ -332,20 +332,25 @@ class AutoDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
     return DateTimeTickFormatter(context.dateTimeFactory, overrides: map);
   }
 
-  TimeTickFormatterImpl _makeFormatter(TimeFormatterSpec spec,
-      CalendarField transitionField, ChartContext context) {
+  TimeTickFormatterImpl _makeFormatter(
+    TimeFormatterSpec spec,
+    CalendarField transitionField,
+    ChartContext context,
+  ) {
     if (spec.noonFormat != null) {
       return HourTickFormatter(
-          dateTimeFactory: context.dateTimeFactory,
-          simpleFormat: spec.format,
-          transitionFormat: spec.transitionFormat,
-          noonFormat: spec.noonFormat);
+        dateTimeFactory: context.dateTimeFactory,
+        simpleFormat: spec.format,
+        transitionFormat: spec.transitionFormat,
+        noonFormat: spec.noonFormat,
+      );
     } else {
       return TimeTickFormatterImpl(
-          dateTimeFactory: context.dateTimeFactory,
-          simpleFormat: spec.format,
-          transitionFormat: spec.transitionFormat,
-          transitionField: transitionField);
+        dateTimeFactory: context.dateTimeFactory,
+        simpleFormat: spec.format,
+        transitionFormat: spec.transitionFormat,
+        transitionField: transitionField,
+      );
     }
   }
 

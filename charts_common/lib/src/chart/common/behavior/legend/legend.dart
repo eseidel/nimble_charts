@@ -15,34 +15,39 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:meta/meta.dart' show protected;
-import 'package:intl/intl.dart';
-
-import '../../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../../cartesian/axis/spec/axis_spec.dart' show TextStyleSpec;
-import '../../../layout/layout_view.dart'
-    show
-        LayoutPosition,
-        LayoutView,
-        LayoutViewConfig,
-        LayoutViewPositionOrder,
-        LayoutViewPaintOrder,
-        ViewMeasuredSizes,
-        layoutPosition;
-import '../../base_chart.dart' show BaseChart, LifecycleListener;
-import '../../chart_canvas.dart' show ChartCanvas;
-import '../../chart_context.dart' show ChartContext;
-import '../../processed_series.dart' show MutableSeries;
-import '../../selection_model/selection_model.dart'
-    show SelectionModel, SelectionModelType;
-import '../chart_behavior.dart'
+import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show TextStyleSpec;
+import 'package:charts_common/src/chart/common/base_chart.dart'
+    show BaseChart, LifecycleListener;
+import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
     show
         BehaviorPosition,
         ChartBehavior,
         InsideJustification,
         OutsideJustification;
-import 'legend_entry.dart';
-import 'legend_entry_generator.dart';
+import 'package:charts_common/src/chart/common/behavior/legend/legend_entry.dart';
+import 'package:charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show MutableSeries;
+import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
+    show SelectionModel, SelectionModelType;
+import 'package:charts_common/src/chart/layout/layout_view.dart'
+    show
+        LayoutPosition,
+        LayoutView,
+        LayoutViewConfig,
+        LayoutViewPaintOrder,
+        LayoutViewPositionOrder,
+        ViewMeasuredSizes,
+        layoutPosition;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
+import 'package:intl/intl.dart';
+import 'package:meta/meta.dart' show protected;
 
 /// Legend behavior for charts.
 ///
@@ -51,6 +56,21 @@ import 'legend_entry_generator.dart';
 /// to specify customized content for legends using the native platform (ex. for
 /// Flutter, using widgets).
 abstract class Legend<D> implements ChartBehavior<D>, LayoutView {
+  Legend({
+    required this.selectionModelType,
+    required this.legendEntryGenerator,
+    TextStyleSpec? entryTextStyle,
+  }) {
+    _lifecycleListener = LifecycleListener(
+      onPostprocess: _postProcess,
+      onPreprocess: _preProcess,
+      onData: onData,
+    );
+    legendEntryGenerator.entryTextStyle = entryTextStyle;
+
+    // Calling the setter will automatically use a non-null default value.
+    showOverlaySeries = null;
+  }
   final SelectionModelType selectionModelType;
   final legendState = LegendState<D>();
   final LegendEntryGenerator<D> legendEntryGenerator;
@@ -101,22 +121,8 @@ abstract class Legend<D> implements ChartBehavior<D>, LayoutView {
 
   /// Default measure formatter for legends.
   @protected
-  String defaultLegendMeasureFormatter(num? value) {
-    return (value == null) ? '' : _decimalPattern.format(value);
-  }
-
-  Legend({
-    required this.selectionModelType,
-    required this.legendEntryGenerator,
-    TextStyleSpec? entryTextStyle,
-  }) {
-    _lifecycleListener = LifecycleListener(
-        onPostprocess: _postProcess, onPreprocess: _preProcess, onData: onData);
-    legendEntryGenerator.entryTextStyle = entryTextStyle;
-
-    // Calling the setter will automatically use a non-null default value.
-    showOverlaySeries = null;
-  }
+  String defaultLegendMeasureFormatter(num? value) =>
+      (value == null) ? '' : _decimalPattern.format(value);
 
   /// Text style of the legend entry text.
   TextStyleSpec? get entryTextStyle => legendEntryGenerator.entryTextStyle;
@@ -174,20 +180,20 @@ abstract class Legend<D> implements ChartBehavior<D>, LayoutView {
     // Also update legend entries if the series list has changed.
     if (legendState._selectionModel != selectionModel ||
         _postProcessSeriesList != seriesList) {
-      final _customEntryOrder = this._customEntryOrder;
-      if (_customEntryOrder != null) {
+      final customEntryOrder = this._customEntryOrder;
+      if (customEntryOrder != null) {
         _currentSeriesList.sort((a, b) {
-          final a_index = _customEntryOrder.indexOf(a.id);
-          final b_index = _customEntryOrder.indexOf(b.id);
-          if (a_index == -1) {
-            if (a_index == b_index) {
+          final aIndex = customEntryOrder.indexOf(a.id);
+          final bIndex = customEntryOrder.indexOf(b.id);
+          if (aIndex == -1) {
+            if (aIndex == bIndex) {
               return a.displayName!.compareTo(b.displayName!);
             }
             return 1;
-          } else if (b_index == -1) {
+          } else if (bIndex == -1) {
             return -1;
           }
-          return a_index.compareTo(b_index);
+          return aIndex.compareTo(bIndex);
         });
       }
 
@@ -213,8 +219,11 @@ abstract class Legend<D> implements ChartBehavior<D>, LayoutView {
   /// Internally update legend entries, before calling [updateLegend] that
   /// notifies the native platform.
   void _updateLegendEntries({List<MutableSeries<D>>? seriesList}) {
-    legendEntryGenerator.updateLegendEntries(legendState._legendEntries,
-        legendState._selectionModel!, seriesList ?? chart.currentSeriesList);
+    legendEntryGenerator.updateLegendEntries(
+      legendState._legendEntries,
+      legendState._selectionModel!,
+      seriesList ?? chart.currentSeriesList,
+    );
 
     updateLegend();
   }
@@ -254,23 +263,21 @@ abstract class Legend<D> implements ChartBehavior<D>, LayoutView {
   bool get isAxisFlipped => _chart.context.isRtl;
 
   @override
-  LayoutViewConfig get layoutConfig {
-    return LayoutViewConfig(
+  LayoutViewConfig get layoutConfig => LayoutViewConfig(
         position: _layoutPosition,
         positionOrder: LayoutViewPositionOrder.legend,
-        paintOrder: LayoutViewPaintOrder.legend);
-  }
+        paintOrder: LayoutViewPaintOrder.legend,
+      );
 
   /// Get layout position from legend position.
-  LayoutPosition get _layoutPosition {
-    return layoutPosition(behaviorPosition, outsideJustification, isRtl);
-  }
+  LayoutPosition get _layoutPosition =>
+      layoutPosition(behaviorPosition, outsideJustification, isRtl);
 
   @override
   ViewMeasuredSizes measure(int maxWidth, int maxHeight) {
     // Native child classes should override this method to return real
     // measurements.
-    return ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
+    return const ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
   }
 
   @override
@@ -308,43 +315,46 @@ class LegendState<D> {
 ///
 /// If a percent is specified, it takes precedence over a flat pixel value.
 class LegendCellPadding {
-  final double? bottomPct;
-  final double? bottomPx;
-  final double? leftPct;
-  final double? leftPx;
-  final double? rightPct;
-  final double? rightPx;
-  final double? topPct;
-  final double? topPx;
-
   /// Creates padding in percents from the left, top, right, and bottom.
   const LegendCellPadding.fromLTRBPct(
-      this.leftPct, this.topPct, this.rightPct, this.bottomPct)
-      : leftPx = null,
+    this.leftPct,
+    this.topPct,
+    this.rightPct,
+    this.bottomPct,
+  )   : leftPx = null,
         topPx = null,
         rightPx = null,
         bottomPx = null;
 
   /// Creates padding in pixels from the left, top, right, and bottom.
   const LegendCellPadding.fromLTRBPx(
-      this.leftPx, this.topPx, this.rightPx, this.bottomPx)
-      : leftPct = null,
+    this.leftPx,
+    this.topPx,
+    this.rightPx,
+    this.bottomPx,
+  )   : leftPct = null,
         topPct = null,
         rightPct = null,
         bottomPct = null;
 
   /// Creates padding in percents from the top, right, bottom, and left.
   const LegendCellPadding.fromTRBLPct(
-      this.topPct, this.rightPct, this.bottomPct, this.leftPct)
-      : topPx = null,
+    this.topPct,
+    this.rightPct,
+    this.bottomPct,
+    this.leftPct,
+  )   : topPx = null,
         rightPx = null,
         bottomPx = null,
         leftPx = null;
 
   /// Creates padding in pixels from the top, right, bottom, and left.
   const LegendCellPadding.fromTRBLPx(
-      this.topPx, this.rightPx, this.bottomPx, this.leftPx)
-      : topPct = null,
+    this.topPx,
+    this.rightPx,
+    this.bottomPx,
+    this.leftPx,
+  )   : topPct = null,
         rightPct = null,
         bottomPct = null,
         leftPct = null;
@@ -372,6 +382,14 @@ class LegendCellPadding {
   /// ```
   const LegendCellPadding.allPx(double value)
       : this.fromLTRBPx(value, value, value, value);
+  final double? bottomPct;
+  final double? bottomPx;
+  final double? leftPct;
+  final double? leftPx;
+  final double? rightPct;
+  final double? rightPx;
+  final double? topPct;
+  final double? topPx;
 
   double bottom(num height) =>
       bottomPct != null ? bottomPct! * height : bottomPx!;

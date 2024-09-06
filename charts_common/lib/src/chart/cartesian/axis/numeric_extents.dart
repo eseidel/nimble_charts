@@ -13,13 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'scale.dart' show Extents;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart' show Extents;
 
 /// Represents the starting and ending extent of a dataset.
 class NumericExtents implements Extents<num> {
-  final num min;
-  final num max;
-
   /// Precondition: [min] <= [max].
   // TODO: When initializer list asserts are supported everywhere,
   // add the precondition as an initializer list assert. This is supported in
@@ -43,6 +40,8 @@ class NumericExtents implements Extents<num> {
     }
     return NumericExtents(min, max);
   }
+  final num min;
+  final num max;
 
   /// Returns the union of this and other.
   NumericExtents plus(NumericExtents other) {
@@ -79,17 +78,15 @@ class NumericExtents implements Extents<num> {
   bool _containsValue(double value) => compareValue(value) == 0;
 
   // Returns true if these [NumericExtents] collides with [other].
-  bool overlaps(NumericExtents other) {
-    return _containsValue(other.min.toDouble()) ||
-        _containsValue(other.max.toDouble()) ||
-        other._containsValue(min.toDouble()) ||
-        other._containsValue(max.toDouble());
-  }
+  bool overlaps(NumericExtents other) =>
+      _containsValue(other.min.toDouble()) ||
+      _containsValue(other.max.toDouble()) ||
+      other._containsValue(min.toDouble()) ||
+      other._containsValue(max.toDouble());
 
   @override
-  bool operator ==(Object other) {
-    return other is NumericExtents && min == other.min && max == other.max;
-  }
+  bool operator ==(Object other) =>
+      other is NumericExtents && min == other.min && max == other.max;
 
   @override
   int get hashCode => min.hashCode + (max.hashCode * 31);

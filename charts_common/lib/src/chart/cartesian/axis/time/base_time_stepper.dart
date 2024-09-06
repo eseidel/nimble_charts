@@ -13,13 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../../common/date_time_factory.dart';
-import 'date_time_extents.dart' show DateTimeExtents;
-import 'time_stepper.dart'
-    show TimeStepper, TimeStepIteratorFactory, TimeStepIterator;
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_extents.dart'
+    show DateTimeExtents;
+import 'package:charts_common/src/chart/cartesian/axis/time/time_stepper.dart'
+    show TimeStepIterator, TimeStepIteratorFactory, TimeStepper;
+import 'package:charts_common/src/common/date_time_factory.dart';
 
 /// A base stepper for operating with DateTimeFactory and time range steps.
 abstract class BaseTimeStepper implements TimeStepper {
+  BaseTimeStepper(this.dateTimeFactory) {
+    // Must have at least one increment option.
+    assert(allowedTickIncrements.isNotEmpty);
+  }
+
   /// The factory to generate a DateTime object.
   ///
   /// This is needed because Dart's DateTime does not handle time zone.
@@ -28,11 +34,6 @@ abstract class BaseTimeStepper implements TimeStepper {
   final DateTimeFactory dateTimeFactory;
 
   _TimeStepIteratorFactoryImpl? _stepsIterable;
-
-  BaseTimeStepper(this.dateTimeFactory) {
-    // Must have at least one increment option.
-    assert(allowedTickIncrements.isNotEmpty);
-  }
 
   /// Get the step time before or on the given [time] from [tickIncrement].
   DateTime getStepTimeBeforeInclusive(DateTime time, int tickIncrement);
@@ -83,16 +84,18 @@ abstract class BaseTimeStepper implements TimeStepper {
 }
 
 class _TimeStepIteratorImpl implements TimeStepIterator {
+  _TimeStepIteratorImpl(
+    this.extentStartTime,
+    this.extentEndTime,
+    this.stepper,
+  ) {
+    reset(_tickIncrement);
+  }
   final DateTime extentStartTime;
   final DateTime extentEndTime;
   final BaseTimeStepper stepper;
   DateTime? _current;
   int _tickIncrement = 1;
-
-  _TimeStepIteratorImpl(
-      this.extentStartTime, this.extentEndTime, this.stepper) {
-    reset(_tickIncrement);
-  }
 
   @override
   bool moveNext() {
@@ -119,20 +122,24 @@ class _TimeStepIteratorImpl implements TimeStepIterator {
 }
 
 class _TimeStepIteratorFactoryImpl extends TimeStepIteratorFactory {
-  final DateTimeExtents timeExtent;
-  final _TimeStepIteratorImpl _timeStepIterator;
-
-  _TimeStepIteratorFactoryImpl._internal(
-      _TimeStepIteratorImpl timeStepIterator, this.timeExtent)
-      : _timeStepIterator = timeStepIterator;
-
   factory _TimeStepIteratorFactoryImpl(
-      DateTimeExtents timeExtent, BaseTimeStepper stepper) {
+    DateTimeExtents timeExtent,
+    BaseTimeStepper stepper,
+  ) {
     final startTime = timeExtent.start;
     final endTime = timeExtent.end;
     return _TimeStepIteratorFactoryImpl._internal(
-        _TimeStepIteratorImpl(startTime, endTime, stepper), timeExtent);
+      _TimeStepIteratorImpl(startTime, endTime, stepper),
+      timeExtent,
+    );
   }
+
+  _TimeStepIteratorFactoryImpl._internal(
+    _TimeStepIteratorImpl timeStepIterator,
+    this.timeExtent,
+  ) : _timeStepIterator = timeStepIterator;
+  final DateTimeExtents timeExtent;
+  final _TimeStepIteratorImpl _timeStepIterator;
 
   @override
   TimeStepIterator get iterator => _timeStepIterator;

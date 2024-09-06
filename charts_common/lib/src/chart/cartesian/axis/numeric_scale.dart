@@ -13,8 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'numeric_extents.dart' show NumericExtents;
-import 'scale.dart' show MutableScale;
+import 'package:charts_common/src/chart/cartesian/axis/numeric_extents.dart'
+    show NumericExtents;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+    show MutableScale;
 
 /// Scale used to convert numeric domain input units to output range units.
 ///

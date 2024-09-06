@@ -13,16 +13,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../common/symbol_renderer.dart';
-import '../common/series_renderer_config.dart'
+import 'package:charts_common/src/chart/common/series_renderer_config.dart'
     show RendererAttributes, SeriesRendererConfig;
-import '../layout/layout_view.dart' show LayoutViewConfig, LayoutViewPaintOrder;
-import 'point_renderer.dart' show PointRenderer, pointSymbolRendererIdKey;
-import 'point_renderer_decorator.dart' show PointRendererDecorator;
+import 'package:charts_common/src/chart/layout/layout_view.dart'
+    show LayoutViewConfig, LayoutViewPaintOrder;
+import 'package:charts_common/src/chart/scatter_plot/point_renderer.dart'
+    show PointRenderer, pointSymbolRendererIdKey;
+import 'package:charts_common/src/chart/scatter_plot/point_renderer_decorator.dart'
+    show PointRendererDecorator;
+import 'package:charts_common/src/common/symbol_renderer.dart';
 
 /// Configuration for a line renderer.
 class PointRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
+  PointRendererConfig({
+    this.customRendererId,
+    this.layoutPaintOrder = LayoutViewPaintOrder.point,
+    this.pointRendererDecorators = const [],
+    this.radiusPx = 3.5,
+    this.boundsLineRadiusPx,
+    this.strokeWidthPx = 0.0,
+    this.symbolRenderer,
+    this.customSymbolRenderers,
+  });
   @override
   final String? customRendererId;
 
@@ -66,18 +79,7 @@ class PointRendererConfig<D> extends LayoutViewConfig
   /// 3) Final fallback is to use the point radiusPx for the datum.
   final double? boundsLineRadiusPx;
 
-  PointRendererConfig(
-      {this.customRendererId,
-      this.layoutPaintOrder = LayoutViewPaintOrder.point,
-      this.pointRendererDecorators = const [],
-      this.radiusPx = 3.5,
-      this.boundsLineRadiusPx,
-      this.strokeWidthPx = 0.0,
-      this.symbolRenderer,
-      this.customSymbolRenderers});
-
   @override
-  PointRenderer<D> build() {
-    return PointRenderer<D>(config: this, rendererId: customRendererId);
-  }
+  PointRenderer<D> build() =>
+      PointRenderer<D>(config: this, rendererId: customRendererId);
 }

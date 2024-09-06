@@ -13,15 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../../cartesian/axis/axis.dart' show AxisOrientation;
-import '../../../cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
     show TickDrawStrategy;
-import '../../../cartesian/axis/scale.dart' show MutableScale;
-import '../../../cartesian/axis/tick.dart' show Tick;
-import '../../../cartesian/axis/tick_formatter.dart' show TickFormatter;
-import '../../../cartesian/axis/tick_provider.dart' show TickProvider, TickHint;
-import '../../../common/chart_context.dart' show ChartContext;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+    show MutableScale;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show TickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show TickHint, TickProvider;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 enum PanningTickProviderMode {
   /// Return cached ticks.
@@ -38,13 +44,12 @@ enum PanningTickProviderMode {
 /// zoom in/out, return ticks calculated with locked step size during panning,
 /// or just pass through to the existing tick provider.
 class PanningTickProvider<D> implements TickProvider<D> {
+  PanningTickProvider(this.tickProvider);
   final TickProvider<D> tickProvider;
 
   PanningTickProviderMode _mode = PanningTickProviderMode.passThrough;
 
   late List<Tick<D>> _ticks;
-
-  PanningTickProvider(this.tickProvider);
 
   set mode(PanningTickProviderMode mode) {
     _mode = mode;

@@ -17,21 +17,6 @@ import 'package:meta/meta.dart' show immutable;
 
 @immutable
 class Color {
-  static const black = Color(r: 0, g: 0, b: 0);
-  static const white = Color(r: 255, g: 255, b: 255);
-  static const transparent = Color(r: 0, g: 0, b: 0, a: 0);
-
-  static const _darkerPercentOfOrig = 0.7;
-  static const _lighterPercentOfOrig = 0.1;
-
-  final int r;
-  final int g;
-  final int b;
-  final int a;
-
-  final Color? _darker;
-  final Color? _lighter;
-
   const Color({
     required this.r,
     required this.g,
@@ -52,30 +37,46 @@ class Color {
 
   /// Construct the color from a hex code string, of the format #RRGGBB.
   factory Color.fromHex({required String code}) {
-    var str = code.substring(1, 7);
-    var bigint = int.parse(str, radix: 16);
+    final str = code.substring(1, 7);
+    final bigint = int.parse(str, radix: 16);
     final r = (bigint >> 16) & 255;
     final g = (bigint >> 8) & 255;
     final b = bigint & 255;
-    final a = 255;
-    return Color(r: r, g: g, b: b, a: a);
+    const a = 255;
+    return Color(r: r, g: g, b: b);
   }
+  static const black = Color(r: 0, g: 0, b: 0);
+  static const white = Color(r: 255, g: 255, b: 255);
+  static const transparent = Color(r: 0, g: 0, b: 0, a: 0);
+
+  static const _darkerPercentOfOrig = 0.7;
+  static const _lighterPercentOfOrig = 0.1;
+
+  final int r;
+  final int g;
+  final int b;
+  final int a;
+
+  final Color? _darker;
+  final Color? _lighter;
 
   Color get darker =>
       _darker ??
       Color(
-          r: (r * _darkerPercentOfOrig).round(),
-          g: (g * _darkerPercentOfOrig).round(),
-          b: (b * _darkerPercentOfOrig).round(),
-          a: a);
+        r: (r * _darkerPercentOfOrig).round(),
+        g: (g * _darkerPercentOfOrig).round(),
+        b: (b * _darkerPercentOfOrig).round(),
+        a: a,
+      );
 
   Color get lighter =>
       _lighter ??
       Color(
-          r: r + ((255 - r) * _lighterPercentOfOrig).round(),
-          g: g + ((255 - g) * _lighterPercentOfOrig).round(),
-          b: b + ((255 - b) * _lighterPercentOfOrig).round(),
-          a: a);
+        r: r + ((255 - r) * _lighterPercentOfOrig).round(),
+        g: g + ((255 - g) * _lighterPercentOfOrig).round(),
+        b: b + ((255 - b) * _lighterPercentOfOrig).round(),
+        a: a,
+      );
 
   @override
   bool operator ==(Object other) =>
@@ -111,7 +112,7 @@ class Color {
   String _get2CharHex(int num) {
     var str = num.toRadixString(16);
     while (str.length < 2) {
-      str = '0' + str;
+      str = '0$str';
     }
     return str;
   }

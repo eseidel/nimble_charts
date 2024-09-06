@@ -15,35 +15,46 @@
 
 import 'dart:math';
 
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:charts_common/src/chart/cartesian/axis/collision_report.dart'
+    show CollisionReport;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart';
+import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show LineStyleSpec, RenderSpec;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/chart/layout/layout_view.dart'
+    show ViewMeasuredSizes;
+import 'package:charts_common/src/common/color.dart' show Color;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
+import 'package:charts_common/src/common/line_style.dart' show LineStyle;
+import 'package:charts_common/src/common/style/style_factory.dart'
+    show StyleFactory;
+import 'package:charts_common/src/common/text_style.dart' show TextStyle;
 import 'package:meta/meta.dart' show immutable;
-
-import '../../../../common/color.dart' show Color;
-import '../../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../../../common/line_style.dart' show LineStyle;
-import '../../../../common/style/style_factory.dart' show StyleFactory;
-import '../../../../common/text_style.dart' show TextStyle;
-import '../../../common/chart_canvas.dart' show ChartCanvas;
-import '../../../common/chart_context.dart' show ChartContext;
-import '../../../layout/layout_view.dart' show ViewMeasuredSizes;
-import '../axis.dart' show AxisOrientation;
-import '../collision_report.dart' show CollisionReport;
-import '../spec/axis_spec.dart' show RenderSpec, LineStyleSpec;
-import '../tick.dart' show Tick;
-import 'tick_draw_strategy.dart';
 
 /// Renders no ticks no labels, and claims no space in layout.
 /// However, it does render the axis line if asked to by the axis.
 @immutable
 class NoneRenderSpec<D> extends RenderSpec<D> {
-  final LineStyleSpec? axisLineStyle;
-
   const NoneRenderSpec({this.axisLineStyle});
+  final LineStyleSpec? axisLineStyle;
 
   @override
   TickDrawStrategy<D> createDrawStrategy(
-          ChartContext context, GraphicsFactory graphicFactory) =>
-      NoneDrawStrategy<D>(context, graphicFactory,
-          axisLineStyleSpec: axisLineStyle);
+    ChartContext context,
+    GraphicsFactory graphicFactory,
+  ) =>
+      NoneDrawStrategy<D>(
+        context,
+        graphicFactory,
+        axisLineStyleSpec: axisLineStyle,
+      );
 
   @override
   bool operator ==(Object other) =>
@@ -54,11 +65,7 @@ class NoneRenderSpec<D> extends RenderSpec<D> {
 }
 
 class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
-  LineStyle axisLineStyle;
-  TextStyle noneTextStyle;
-
   NoneDrawStrategy(
-    ChartContext chartContext,
     GraphicsFactory graphicsFactory, {
     LineStyleSpec? axisLineStyleSpec,
   })  : axisLineStyle = StyleFactory.style
@@ -66,15 +73,23 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
         noneTextStyle = graphicsFactory.createTextPaint()
           ..color = Color.transparent
           ..fontSize = 0;
+  LineStyle axisLineStyle;
+  TextStyle noneTextStyle;
 
   @override
-  void updateTickWidth(List<Tick<D>> ticks, int maxWidth, int maxHeight,
-      AxisOrientation orientation,
-      {bool collision = false}) {}
+  void updateTickWidth(
+    List<Tick<D>> ticks,
+    int maxWidth,
+    int maxHeight,
+    AxisOrientation orientation, {
+    bool collision = false,
+  }) {}
 
   @override
   CollisionReport<D> collides(
-          List<Tick<D>>? ticks, AxisOrientation? orientation) =>
+    List<Tick<D>>? ticks,
+    AxisOrientation? orientation,
+  ) =>
       CollisionReport(ticksCollide: false, ticks: ticks);
 
   @override
@@ -83,12 +98,17 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
     // still be set to handle the case of the draw strategy being switched to
     // a different draw strategy. The new draw strategy will try to animate
     // the old ticks out and the text style property is used.
-    ticks.forEach((tick) => tick.textElement!.textStyle = noneTextStyle);
+    for (final tick in ticks) {
+      tick.textElement!.textStyle = noneTextStyle;
+    }
   }
 
   @override
-  void drawAxisLine(ChartCanvas canvas, AxisOrientation orientation,
-      Rectangle<int> axisBounds) {
+  void drawAxisLine(
+    ChartCanvas canvas,
+    AxisOrientation orientation,
+    Rectangle<int> axisBounds,
+  ) {
     Point<num> start;
     Point<num> end;
 
@@ -97,19 +117,15 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
         start = axisBounds.bottomLeft;
         end = axisBounds.bottomRight;
 
-        break;
       case AxisOrientation.bottom:
         start = axisBounds.topLeft;
         end = axisBounds.topRight;
-        break;
       case AxisOrientation.right:
         start = axisBounds.topLeft;
         end = axisBounds.bottomLeft;
-        break;
       case AxisOrientation.left:
         start = axisBounds.topRight;
         end = axisBounds.bottomRight;
-        break;
     }
 
     canvas.drawLine(
@@ -122,25 +138,32 @@ class NoneDrawStrategy<D> implements TickDrawStrategy<D> {
   }
 
   @override
-  void draw(ChartCanvas canvas, Tick<D> tick,
-      {required AxisOrientation orientation,
-      required Rectangle<int> axisBounds,
-      required Rectangle<int> drawAreaBounds,
-      required bool isFirst,
-      required bool isLast,
-      bool collision = false}) {}
+  void draw(
+    ChartCanvas canvas,
+    Tick<D> tick, {
+    required AxisOrientation orientation,
+    required Rectangle<int> axisBounds,
+    required Rectangle<int> drawAreaBounds,
+    required bool isFirst,
+    required bool isLast,
+    bool collision = false,
+  }) {}
 
   @override
   ViewMeasuredSizes measureHorizontallyDrawnTicks(
-      List<Tick<D>> ticks, int maxWidth, int maxHeight,
-      {bool collision = false}) {
-    return ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
-  }
+    List<Tick<D>> ticks,
+    int maxWidth,
+    int maxHeight, {
+    bool collision = false,
+  }) =>
+      const ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
 
   @override
   ViewMeasuredSizes measureVerticallyDrawnTicks(
-      List<Tick<D>> ticks, int maxWidth, int maxHeight,
-      {bool collision = false}) {
-    return ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
-  }
+    List<Tick<D>> ticks,
+    int maxWidth,
+    int maxHeight, {
+    bool collision = false,
+  }) =>
+      const ViewMeasuredSizes(preferredWidth: 0, preferredHeight: 0);
 }

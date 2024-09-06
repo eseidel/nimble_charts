@@ -13,11 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../cartesian/cartesian_chart.dart' show CartesianChart;
-import '../base_chart.dart' show BaseChart;
-import '../selection_model/selection_model.dart'
+import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+    show CartesianChart;
+import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
+import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
+    show ChartBehavior;
+import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
     show SelectionModel, SelectionModelType;
-import 'chart_behavior.dart' show ChartBehavior;
 
 /// Chart behavior that centers the viewport on the selected domain.
 ///
@@ -26,14 +28,13 @@ import 'chart_behavior.dart' show ChartBehavior;
 ///
 /// This behavior can only be used on [CartesianChart].
 class SlidingViewport<D> implements ChartBehavior<D> {
+  SlidingViewport([this.selectionModelType = SelectionModelType.info]);
   final SelectionModelType selectionModelType;
 
   late CartesianChart<D> _chart;
 
-  SlidingViewport([this.selectionModelType = SelectionModelType.info]);
-
   void _selectionChanged(SelectionModel<D> selectionModel) {
-    if (selectionModel.hasAnySelection == false) {
+    if (!selectionModel.hasAnySelection) {
       return;
     }
 
@@ -49,7 +50,9 @@ class SlidingViewport<D> implements ChartBehavior<D> {
     final translatePx =
         domainAxis.viewportTranslatePx + (viewportCenter - domainLocation);
     domainAxis.setViewportSettings(
-        domainAxis.viewportScalingFactor, translatePx);
+      domainAxis.viewportScalingFactor,
+      translatePx,
+    );
 
     _chart.redraw();
   }

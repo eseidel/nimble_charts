@@ -13,9 +13,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'tick.dart' show Tick;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
 
 class AxisTicks<D> extends Tick<D> implements Comparable<AxisTicks<D>> {
+  AxisTicks(Tick<D> tick)
+      : // Set the initial target for a new animated tick.
+        _markedForRemoval = false,
+        _targetLocation = tick.locationPx,
+        super(
+          value: tick.value,
+          textElement: tick.textElement,
+          locationPx: tick.locationPx,
+          labelOffsetPx: tick.labelOffsetPx,
+        );
+
   /// This tick is being animated out.
   bool _markedForRemoval;
 
@@ -36,16 +47,6 @@ class AxisTicks<D> extends Tick<D> implements Comparable<AxisTicks<D>> {
 
   /// This tick's target opacity.
   double? _targetOpacity;
-
-  AxisTicks(Tick<D> tick)
-      : // Set the initial target for a new animated tick.
-        _markedForRemoval = false,
-        _targetLocation = tick.locationPx,
-        super(
-            value: tick.value,
-            textElement: tick.textElement,
-            locationPx: tick.locationPx,
-            labelOffsetPx: tick.labelOffsetPx);
 
   bool get markedForRemoval => _markedForRemoval;
 

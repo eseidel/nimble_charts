@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'paint_style.dart' show PaintStyle;
+import 'package:charts_common/src/common/paint_style.dart' show PaintStyle;
 
 abstract class LineStyle extends PaintStyle {
   List<int>? get dashPattern;

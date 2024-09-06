@@ -15,18 +15,27 @@
 
 import 'dart:math' show log, log10e, max, min, pow;
 
-import '../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../common/chart_context.dart' show ChartContext;
-import '../../common/unitconverter/identity_converter.dart'
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    show TickDrawStrategy;
+import 'package:charts_common/src/chart/cartesian/axis/numeric_extents.dart'
+    show NumericExtents;
+import 'package:charts_common/src/chart/cartesian/axis/numeric_scale.dart'
+    show NumericScale;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show TickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show BaseTickProvider, TickHint;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/chart/common/unitconverter/identity_converter.dart'
     show IdentityConverter;
-import '../../common/unitconverter/unit_converter.dart' show UnitConverter;
-import 'axis.dart' show AxisOrientation;
-import 'draw_strategy/tick_draw_strategy.dart' show TickDrawStrategy;
-import 'numeric_extents.dart' show NumericExtents;
-import 'numeric_scale.dart' show NumericScale;
-import 'tick.dart' show Tick;
-import 'tick_formatter.dart' show TickFormatter;
-import 'tick_provider.dart' show BaseTickProvider, TickHint;
+import 'package:charts_common/src/chart/common/unitconverter/unit_converter.dart'
+    show UnitConverter;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 /// Tick provider that allows you to specify how many ticks to present while
 /// also choosing tick values that appear "nice" or "rounded" to the user.  By
@@ -77,7 +86,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
     6.0,
     7.0,
     8.0,
-    9.0
+    9.0,
   ];
 
   // Settings
@@ -151,11 +160,9 @@ class NumericTickProvider extends BaseTickProvider<num> {
   /// [minTickCount] The min tick count must be greater than 1.
   void setTickCount(int maxTickCount, int minTickCount) {
     // Don't allow a single tick, it doesn't make sense. so tickCount > 1
-    if (maxTickCount != null && maxTickCount > 1) {
+    if (maxTickCount > 1) {
       _desiredMaxTickCount = maxTickCount;
-      if (minTickCount != null &&
-          minTickCount > 1 &&
-          minTickCount <= _desiredMaxTickCount!) {
+      if (minTickCount > 1 && minTickCount <= _desiredMaxTickCount!) {
         _desiredMinTickCount = minTickCount;
       } else {
         _desiredMinTickCount = 2;
@@ -180,7 +187,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
   ///
   /// [steps] allowed step sizes in the [1, 10) range.
   set allowedSteps(List<double> steps) {
-    assert(steps != null && steps.isNotEmpty);
+    assert(steps.isNotEmpty);
     steps.sort();
 
     final stepSet = Set.of(steps);
@@ -220,14 +227,16 @@ class NumericTickProvider extends BaseTickProvider<num> {
     final tickValues = _getTickValues(stepInfo, tickHint.tickCount);
 
     // Create ticks from domain values.
-    return createTicks(tickValues,
-        context: context,
-        graphicsFactory: graphicsFactory,
-        scale: scale,
-        formatter: formatter,
-        formatterValueCache: formatterValueCache,
-        tickDrawStrategy: tickDrawStrategy,
-        stepSize: stepInfo.stepSize);
+    return createTicks(
+      tickValues,
+      context: context,
+      graphicsFactory: graphicsFactory,
+      scale: scale,
+      formatter: formatter,
+      formatterValueCache: formatterValueCache,
+      tickDrawStrategy: tickDrawStrategy,
+      stepSize: stepInfo.stepSize,
+    );
   }
 
   @override
@@ -266,7 +275,10 @@ class NumericTickProvider extends BaseTickProvider<num> {
     final axisUnitsLow = dataToAxisUnitConverter.convert(_low);
 
     _updateTickCounts(
-        high: axisUnitsHigh, low: axisUnitsLow, rangeWidth: scale.rangeWidth);
+      high: axisUnitsHigh,
+      low: axisUnitsLow,
+      rangeWidth: scale.rangeWidth,
+    );
 
     // Only create a copy of the scale if [viewportExtensionEnabled].
     final mutableScale =
@@ -297,14 +309,16 @@ class NumericTickProvider extends BaseTickProvider<num> {
         }
 
         // Create ticks from domain values.
-        final preferredTicks = createTicks(tickValues,
-            context: context,
-            graphicsFactory: graphicsFactory,
-            scale: mutableScale ?? scale,
-            formatter: formatter,
-            formatterValueCache: formatterValueCache,
-            tickDrawStrategy: tickDrawStrategy,
-            stepSize: stepInfo.stepSize);
+        final preferredTicks = createTicks(
+          tickValues,
+          context: context,
+          graphicsFactory: graphicsFactory,
+          scale: mutableScale ?? scale,
+          formatter: formatter,
+          formatterValueCache: formatterValueCache,
+          tickDrawStrategy: tickDrawStrategy,
+          stepSize: stepInfo.stepSize,
+        );
 
         // Request collision check from draw strategy.
         final collisionReport =
@@ -383,7 +397,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
     // If the range contains zero, ensure that zero is a tick.
     if (high >= 0 && low <= 0) {
       // determine the ratio of regions that are above the zero axis.
-      final posRegionRatio = high > 0 ? min(1.0, high / (high - low)) : 0.0;
+      final posRegionRatio = high > 0 ? min(1, high / (high - low)) : 0.0;
       var positiveRegionCount = (regionCount * posRegionRatio).ceil();
       var negativeRegionCount = regionCount - positiveRegionCount;
       // Ensure that negative regions are not excluded, unless there are no
@@ -403,7 +417,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
           !(low < 0 &&
               high > 0 &&
               (negativeRegionCount == 0 || positiveRegionCount == 0)),
-          'Numeric tick provider cannot generate ${tickCount} '
+          'Numeric tick provider cannot generate $tickCount '
           'ticks when the axis range contains both positive and negative '
           'values. A minimum of three ticks are required to include zero.');
 
@@ -418,7 +432,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
       final favoredNum = (favorPositive ? high : low).abs();
       final favoredRegionCount =
           favorPositive ? positiveRegionCount : negativeRegionCount;
-      final favoredTensBase = (_getEnclosingPowerOfTen(favoredNum)).abs();
+      final favoredTensBase = _getEnclosingPowerOfTen(favoredNum).abs();
 
       // Check each step size and see if it would contain the "favored" value
       for (final step in _allowedSteps) {
@@ -461,19 +475,19 @@ class NumericTickProvider extends BaseTickProvider<num> {
       }
     }
 
-    return _TickStepInfo(1.0, low.floorToDouble());
+    return _TickStepInfo(1, low.floorToDouble());
   }
 
-  List<double> _getTickValues(_TickStepInfo steps, int tickCount) {
-    // We have our size and start, assign all the tick values to the given array.
-    return [
-      for (int i = 0; i < tickCount; i++)
-        dataToAxisUnitConverter
-            .invert(
-                _removeRoundingErrors(steps.tickStart + (i * steps.stepSize)))
-            .toDouble(),
-    ];
-  }
+  List<double> _getTickValues(_TickStepInfo steps, int tickCount) =>
+      // We have our size and start, assign all the tick values to the given array.
+      [
+        for (int i = 0; i < tickCount; i++)
+          dataToAxisUnitConverter
+              .invert(
+                _removeRoundingErrors(steps.tickStart + (i * steps.stepSize)),
+              )
+              .toDouble(),
+      ];
 
   /// Given the axisDimensions update the tick counts given they are not fixed.
   void _updateTickCounts({
@@ -517,7 +531,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
   /// [number] of 0.63 returns 1
   static double _getEnclosingPowerOfTen(num number) {
     if (number == 0) {
-      return 1.0;
+      return 1;
     }
 
     return pow(10, (log10e * log(number.abs())).ceil()).toDouble() *
@@ -527,7 +541,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
   /// Returns the step numerically less than the number by step increments.
   static double _getStepLessThan(double number, double stepSize) {
     if (number == 0.0 || stepSize == 0.0) {
-      return 0.0;
+      return 0;
     }
     return (stepSize > 0.0
             ? (number / stepSize).floor()
@@ -552,8 +566,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
 }
 
 class _TickStepInfo {
+  _TickStepInfo(this.stepSize, this.tickStart);
   double stepSize;
   double tickStart;
-
-  _TickStepInfo(this.stepSize, this.tickStart);
 }

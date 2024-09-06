@@ -13,20 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../base_chart.dart' show BaseChart;
-import '../selection_model/selection_model.dart'
+import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
+import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
+    show ChartBehavior;
+import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
     show SelectionModel, SelectionModelType;
-import '../../sunburst/sunburst_chart.dart' show SunburstChart;
-import 'chart_behavior.dart' show ChartBehavior;
+import 'package:charts_common/src/chart/sunburst/sunburst_chart.dart'
+    show SunburstChart;
 
 /// Expands the initially displayed outer ring to show subset of data in one
 /// final ring.
 class SunburstRingExpander<D> implements ChartBehavior<D> {
+  SunburstRingExpander([this.selectionModelType = SelectionModelType.action]);
   final SelectionModelType selectionModelType;
 
   late SunburstChart<D> _chart;
-
-  SunburstRingExpander([this.selectionModelType = SelectionModelType.action]);
 
   void _selectionChanged(SelectionModel<D> selectionModel) {
     if (selectionModel.selectedDatum.isNotEmpty) {
@@ -37,9 +38,10 @@ class SunburstRingExpander<D> implements ChartBehavior<D> {
 
   @override
   void attachTo(BaseChart<D> chart) {
-    if (!(chart is SunburstChart)) {
+    if (chart is! SunburstChart) {
       throw ArgumentError(
-          'SunburstRingExpander can only be attached to a Sunburst chart');
+        'SunburstRingExpander can only be attached to a Sunburst chart',
+      );
     }
     _chart = chart as SunburstChart<D>;
     chart

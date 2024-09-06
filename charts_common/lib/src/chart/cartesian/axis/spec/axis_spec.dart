@@ -13,25 +13,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart' show Axis;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    show TickDrawStrategy;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+    show MutableScale, Scale;
+import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show TickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show TickProvider;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/common/color.dart' show Color;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 import 'package:meta/meta.dart' show immutable;
-
-import '../../../../common/color.dart' show Color;
-import '../../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../../common/chart_context.dart' show ChartContext;
-import '../axis.dart' show Axis;
-import '../draw_strategy/tick_draw_strategy.dart' show TickDrawStrategy;
-import '../scale.dart' show Scale, MutableScale;
-import '../tick_formatter.dart' show TickFormatter;
-import '../tick_provider.dart' show TickProvider;
 
 @immutable
 class AxisSpec<D> {
-  final bool? showAxisLine;
-  final RenderSpec<D>? renderSpec;
-  final TickProviderSpec<D>? tickProviderSpec;
-  final TickFormatterSpec<D>? tickFormatterSpec;
-  final ScaleSpec<D>? scaleSpec;
-
   const AxisSpec({
     this.renderSpec,
     this.tickProviderSpec,
@@ -47,18 +46,25 @@ class AxisSpec<D> {
     TickFormatterSpec<D>? tickFormatterSpec,
     bool? showAxisLine,
     ScaleSpec<D>? scaleSpec,
-  }) {
-    return AxisSpec(
-      renderSpec: renderSpec ?? other.renderSpec,
-      tickProviderSpec: tickProviderSpec ?? other.tickProviderSpec,
-      tickFormatterSpec: tickFormatterSpec ?? other.tickFormatterSpec,
-      showAxisLine: showAxisLine ?? other.showAxisLine,
-      scaleSpec: scaleSpec ?? other.scaleSpec,
-    );
-  }
+  }) =>
+      AxisSpec(
+        renderSpec: renderSpec ?? other.renderSpec,
+        tickProviderSpec: tickProviderSpec ?? other.tickProviderSpec,
+        tickFormatterSpec: tickFormatterSpec ?? other.tickFormatterSpec,
+        showAxisLine: showAxisLine ?? other.showAxisLine,
+        scaleSpec: scaleSpec ?? other.scaleSpec,
+      );
+  final bool? showAxisLine;
+  final RenderSpec<D>? renderSpec;
+  final TickProviderSpec<D>? tickProviderSpec;
+  final TickFormatterSpec<D>? tickFormatterSpec;
+  final ScaleSpec<D>? scaleSpec;
 
   void configure(
-      Axis<D> axis, ChartContext context, GraphicsFactory graphicsFactory) {
+    Axis<D> axis,
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+  ) {
     axis.resetDefaultConfiguration();
 
     if (showAxisLine != null) {
@@ -127,34 +133,35 @@ abstract class RenderSpec<D> {
   const RenderSpec();
 
   TickDrawStrategy<D> createDrawStrategy(
-      ChartContext context, GraphicsFactory graphicFactory);
+    ChartContext context,
+    GraphicsFactory graphicFactory,
+  );
 }
 
 @immutable
 class TextStyleSpec {
+  const TextStyleSpec({
+    this.fontFamily,
+    this.fontSize,
+    this.lineHeight,
+    this.color,
+    this.fontWeight,
+  });
   final String? fontFamily;
   final int? fontSize;
   final double? lineHeight;
   final Color? color;
   final String? fontWeight;
 
-  const TextStyleSpec(
-      {this.fontFamily,
-      this.fontSize,
-      this.lineHeight,
-      this.color,
-      this.fontWeight});
-
   @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is TextStyleSpec &&
-            fontFamily == other.fontFamily &&
-            fontSize == other.fontSize &&
-            lineHeight == other.lineHeight &&
-            color == other.color &&
-            fontWeight == other.fontWeight);
-  }
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TextStyleSpec &&
+          fontFamily == other.fontFamily &&
+          fontSize == other.fontSize &&
+          lineHeight == other.lineHeight &&
+          color == other.color &&
+          fontWeight == other.fontWeight);
 
   @override
   int get hashCode {
@@ -169,20 +176,18 @@ class TextStyleSpec {
 
 @immutable
 class LineStyleSpec {
+  const LineStyleSpec({this.color, this.dashPattern, this.thickness});
   final Color? color;
   final List<int>? dashPattern;
   final int? thickness;
 
-  const LineStyleSpec({this.color, this.dashPattern, this.thickness});
-
   @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is LineStyleSpec &&
-            color == other.color &&
-            dashPattern == other.dashPattern &&
-            thickness == other.thickness);
-  }
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LineStyleSpec &&
+          color == other.color &&
+          dashPattern == other.dashPattern &&
+          thickness == other.thickness);
 
   @override
   int get hashCode {

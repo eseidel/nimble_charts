@@ -13,15 +13,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../common/symbol_renderer.dart'
-    show SymbolRenderer, LineSymbolRenderer;
-import '../layout/layout_view.dart' show LayoutViewPaintOrder;
-import 'bar_target_line_renderer.dart' show BarTargetLineRenderer;
-import 'base_bar_renderer_config.dart'
+import 'package:charts_common/src/chart/bar/bar_target_line_renderer.dart'
+    show BarTargetLineRenderer;
+import 'package:charts_common/src/chart/bar/base_bar_renderer_config.dart'
     show BarGroupingType, BaseBarRendererConfig;
+import 'package:charts_common/src/chart/layout/layout_view.dart'
+    show LayoutViewPaintOrder;
+import 'package:charts_common/src/common/symbol_renderer.dart'
+    show LineSymbolRenderer, SymbolRenderer;
 
 /// Configuration for a bar target line renderer.
 class BarTargetLineRendererConfig<D> extends BaseBarRendererConfig<D> {
+  BarTargetLineRendererConfig({
+    super.barGroupInnerPaddingPx,
+    super.customRendererId,
+    super.dashPattern,
+    super.groupingType,
+    int super.layoutPaintOrder = LayoutViewPaintOrder.barTargetLine,
+    super.minBarLengthPx,
+    this.overDrawOuterPx,
+    this.overDrawPx = 0,
+    this.roundEndCaps = true,
+    super.strokeWidthPx = 3.0,
+    SymbolRenderer? symbolRenderer,
+    super.weightPattern,
+  }) : super(
+          symbolRenderer: symbolRenderer ?? LineSymbolRenderer(),
+        );
+
   /// The number of pixels that the line will extend beyond the bandwidth at the
   /// edges of the bar group.
   ///
@@ -38,35 +57,9 @@ class BarTargetLineRendererConfig<D> extends BaseBarRendererConfig<D> {
   /// Whether target lines should have round end caps, or square if false.
   final bool roundEndCaps;
 
-  BarTargetLineRendererConfig(
-      {int barGroupInnerPaddingPx = 2,
-      String? customRendererId,
-      List<int>? dashPattern,
-      BarGroupingType groupingType = BarGroupingType.grouped,
-      int layoutPaintOrder = LayoutViewPaintOrder.barTargetLine,
-      int minBarLengthPx = 0,
-      this.overDrawOuterPx,
-      this.overDrawPx = 0,
-      this.roundEndCaps = true,
-      double strokeWidthPx = 3.0,
-      SymbolRenderer? symbolRenderer,
-      List<int>? weightPattern})
-      : super(
-          barGroupInnerPaddingPx: barGroupInnerPaddingPx,
-          customRendererId: customRendererId,
-          dashPattern: dashPattern,
-          groupingType: groupingType,
-          layoutPaintOrder: layoutPaintOrder,
-          minBarLengthPx: minBarLengthPx,
-          strokeWidthPx: strokeWidthPx,
-          symbolRenderer: symbolRenderer ?? LineSymbolRenderer(),
-          weightPattern: weightPattern,
-        );
-
   @override
-  BarTargetLineRenderer<D> build() {
-    return BarTargetLineRenderer<D>(config: this, rendererId: customRendererId);
-  }
+  BarTargetLineRenderer<D> build() =>
+      BarTargetLineRenderer<D>(config: this, rendererId: customRendererId);
 
   @override
   bool operator ==(Object other) {

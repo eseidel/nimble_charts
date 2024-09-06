@@ -15,16 +15,17 @@
 
 import 'dart:math' show Rectangle;
 
-import '../../common/color.dart' show Color;
-import '../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../common/text_element.dart' show TextElement;
-import '../../common/text_style.dart' show TextStyle;
-import '../cartesian/axis/spec/axis_spec.dart' show TextStyleSpec;
-import '../common/chart_canvas.dart' show ChartCanvas;
-import '../pie/arc_renderer_element.dart'
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:charts_common/src/chart/pie/arc_label_decorator.dart';
+import 'package:charts_common/src/chart/pie/arc_renderer_element.dart'
     show ArcRendererElement, ArcRendererElementList;
-import '../pie/arc_label_decorator.dart';
-import 'sunburst_arc_renderer.dart' show SunburstArcRendererElement;
+import 'package:charts_common/src/chart/sunburst/sunburst_arc_renderer.dart'
+    show SunburstArcRendererElement;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
+import 'package:charts_common/src/common/text_element.dart' show TextElement;
+import 'package:charts_common/src/common/text_style.dart' show TextStyle;
 
 /// Renders labels for sunburst arc renderers. Configures label based on arc's
 /// position via innerRingArcLabelPosition, innerRingLeafArcLabelPosition, and
@@ -34,6 +35,25 @@ import 'sunburst_arc_renderer.dart' show SunburstArcRendererElement;
 ///
 /// TODO: Improve label handling for sunburst chart.
 class SunburstArcLabelDecorator<D> extends ArcLabelDecorator<D> {
+  SunburstArcLabelDecorator({
+    super.insideLabelStyleSpec,
+    super.outsideLabelStyleSpec,
+    super.leaderLineStyleSpec,
+    super.labelPadding,
+    super.showLeaderLines,
+    super.leaderLineColor,
+    this.extendLeaderLine = false,
+    // TODO: Change to auto when we can detect collision of inner
+    // arcs' label with outer arcs.
+    this.innerRingArcLabelPosition = ArcLabelPosition.inside,
+    // TODO: Change to auto when we can detect collision of inner
+    // arcs' label with outer arcs.
+    this.innerRingLeafArcLabelPosition = ArcLabelPosition.inside,
+    this.outerRingArcLabelPosition = ArcLabelPosition.auto,
+  }) : super(
+          labelPosition: ArcLabelPosition.auto,
+        );
+
   /// Configures the [ArcLabelPosition] for the non-leaf arcs in the inner ring.
   /// Label can only be rendered inside, If set to ArcLabelPosition.outside,
   /// label will not be rendered.
@@ -55,36 +75,15 @@ class SunburstArcLabelDecorator<D> extends ArcLabelDecorator<D> {
   /// fields for collision detection when extendLeaderLine is true.
   List<_CollisionDetectionParams> _collisionDetectionParams = [];
 
-  SunburstArcLabelDecorator(
-      {TextStyleSpec? insideLabelStyleSpec,
-      TextStyleSpec? outsideLabelStyleSpec,
-      ArcLabelLeaderLineStyleSpec? leaderLineStyleSpec,
-      int labelPadding = 5,
-      bool showLeaderLines = true,
-      Color? leaderLineColor,
-      this.extendLeaderLine = false,
-      // TODO: Change to auto when we can detect collision of inner
-      // arcs' label with outer arcs.
-      this.innerRingArcLabelPosition = ArcLabelPosition.inside,
-      // TODO: Change to auto when we can detect collision of inner
-      // arcs' label with outer arcs.
-      this.innerRingLeafArcLabelPosition = ArcLabelPosition.inside,
-      this.outerRingArcLabelPosition = ArcLabelPosition.auto})
-      : super(
-            insideLabelStyleSpec: insideLabelStyleSpec,
-            outsideLabelStyleSpec: outsideLabelStyleSpec,
-            leaderLineStyleSpec: leaderLineStyleSpec,
-            labelPosition: ArcLabelPosition.auto,
-            labelPadding: labelPadding,
-            showLeaderLines: showLeaderLines,
-            leaderLineColor: leaderLineColor);
-
   @override
-  void decorate(List<ArcRendererElementList<D>> arcElementsList,
-      ChartCanvas canvas, GraphicsFactory graphicsFactory,
-      {required Rectangle drawBounds,
-      required double animationPercent,
-      bool rtl = false}) {
+  void decorate(
+    List<ArcRendererElementList<D>> arcElementsList,
+    ChartCanvas canvas,
+    GraphicsFactory graphicsFactory, {
+    required Rectangle drawBounds,
+    required double animationPercent,
+    bool rtl = false,
+  }) {
     /// TODO: Improve label handling for sunburst chart. When a
     /// more sophisticated collision detection is in place, we can draw the
     /// label for inner arc outside when it doesn't collide with outer arcs.
@@ -93,7 +92,7 @@ class SunburstArcLabelDecorator<D> extends ArcLabelDecorator<D> {
       _collisionDetectionParams = [];
       // Find the largest of radius in the arcElementList for the leader line.
       _outerMostRadius = 0.0;
-      for (var arcElements in arcElementsList) {
+      for (final arcElements in arcElementsList) {
         if (arcElements.radius > _outerMostRadius!) {
           _outerMostRadius = arcElements.radius;
         }
@@ -102,13 +101,20 @@ class SunburstArcLabelDecorator<D> extends ArcLabelDecorator<D> {
 
     // Do not draw label for arcs on the inner ring if positioned outside.
     if (innerRingArcLabelPosition == ArcLabelPosition.outside) {
-      for (var arcElements in arcElementsList) {
+      for (final arcElements in arcElementsList) {
         arcElements.arcs.retainWhere(
-            (e) => (e as SunburstArcRendererElement).isLeaf == true);
+          (e) => (e as SunburstArcRendererElement).isLeaf == true,
+        );
       }
     }
-    super.decorate(arcElementsList, canvas, graphicsFactory,
-        drawBounds: drawBounds, animationPercent: animationPercent, rtl: rtl);
+    super.decorate(
+      arcElementsList,
+      canvas,
+      graphicsFactory,
+      drawBounds: drawBounds,
+      animationPercent: animationPercent,
+      rtl: rtl,
+    );
   }
 
   @override
@@ -119,15 +125,28 @@ class SunburstArcLabelDecorator<D> extends ArcLabelDecorator<D> {
       leaderLineStyleSpec.length / 2;
 
   @override
-  bool detectOutsideLabelCollision(num labelY, bool labelLeftOfChart,
-      num? previousOutsideLabelY, bool? previousLabelLeftOfChart) {
+  bool detectOutsideLabelCollision(
+    num labelY,
+    bool labelLeftOfChart,
+    num? previousOutsideLabelY,
+    bool? previousLabelLeftOfChart,
+  ) {
     if (!extendLeaderLine) {
-      return super.detectOutsideLabelCollision(labelY, labelLeftOfChart,
-          previousOutsideLabelY, previousLabelLeftOfChart);
+      return super.detectOutsideLabelCollision(
+        labelY,
+        labelLeftOfChart,
+        previousOutsideLabelY,
+        previousLabelLeftOfChart,
+      );
     } else {
-      return _collisionDetectionParams.any((param) => super
-          .detectOutsideLabelCollision(labelY, labelLeftOfChart,
-              param.previousOutsideLabelY, param.previousLabelLeftOfChart));
+      return _collisionDetectionParams.any(
+        (param) => super.detectOutsideLabelCollision(
+          labelY,
+          labelLeftOfChart,
+          param.previousOutsideLabelY,
+          param.previousLabelLeftOfChart,
+        ),
+      );
     }
   }
 
@@ -137,38 +156,41 @@ class SunburstArcLabelDecorator<D> extends ArcLabelDecorator<D> {
       super.updateCollisionDetectionParams(params);
     } else {
       _collisionDetectionParams.add(
-          _CollisionDetectionParams(params.first as bool, params.last as int));
+        _CollisionDetectionParams(params.first as bool, params.last as int),
+      );
     }
   }
 
   @override
   ArcLabelPosition calculateLabelPosition(
-      TextElement labelElement,
-      TextStyle labelStyle,
-      int insideArcWidth,
-      int outsideArcWidth,
-      ArcRendererElement arcRendererElement,
-      ArcLabelPosition labelPosition) {
+    TextElement labelElement,
+    TextStyle labelStyle,
+    int insideArcWidth,
+    int outsideArcWidth,
+    ArcRendererElement arcRendererElement,
+    ArcLabelPosition labelPosition,
+  ) {
     assert(arcRendererElement is SunburstArcRendererElement);
 
     if ((arcRendererElement as SunburstArcRendererElement).isOuterMostRing ==
         true) {
       return super.calculateLabelPosition(
-          labelElement,
-          labelStyle,
-          insideArcWidth,
-          outsideArcWidth,
-          arcRendererElement,
-          outerRingArcLabelPosition);
-    } else if ((arcRendererElement as SunburstArcRendererElement).isLeaf ==
-        true) {
+        labelElement,
+        labelStyle,
+        insideArcWidth,
+        outsideArcWidth,
+        arcRendererElement,
+        outerRingArcLabelPosition,
+      );
+    } else if (arcRendererElement.isLeaf == true) {
       return super.calculateLabelPosition(
-          labelElement,
-          labelStyle,
-          insideArcWidth,
-          outsideArcWidth,
-          arcRendererElement,
-          innerRingLeafArcLabelPosition);
+        labelElement,
+        labelStyle,
+        insideArcWidth,
+        outsideArcWidth,
+        arcRendererElement,
+        innerRingLeafArcLabelPosition,
+      );
     } else {
       /// TODO: Improve label handling for sunburst chart. When a
       /// more sophisticated collision detection is in place, we can draw the
@@ -181,9 +203,10 @@ class SunburstArcLabelDecorator<D> extends ArcLabelDecorator<D> {
 }
 
 class _CollisionDetectionParams {
+  _CollisionDetectionParams(
+    this.previousLabelLeftOfChart,
+    this.previousOutsideLabelY,
+  );
   final bool previousLabelLeftOfChart;
   final num previousOutsideLabelY;
-
-  _CollisionDetectionParams(
-      this.previousLabelLeftOfChart, this.previousOutsideLabelY);
 }

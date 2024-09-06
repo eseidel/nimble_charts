@@ -13,11 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../chart/cartesian/axis/spec/axis_spec.dart' show LineStyleSpec;
-import '../color.dart' show Color;
-import '../graphics_factory.dart' show GraphicsFactory;
-import '../line_style.dart' show LineStyle;
-import '../palette.dart';
+import 'package:charts_common/common.dart';
+import 'package:charts_common/src/common/palette.dart';
 
 // TODO: Implementation of style will change drastically, see bug
 // for more details. This is an intermediate step in order to allow overriding
@@ -40,13 +37,17 @@ abstract class Style {
   ///
   /// Fill missing value(s) with default.
   LineStyle createAxisLineStyle(
-      GraphicsFactory graphicsFactory, LineStyleSpec? spec);
+    GraphicsFactory graphicsFactory,
+    LineStyleSpec? spec,
+  );
 
   /// Creates [LineStyleSpec] for tick lines from spec.
   ///
   /// Fill missing value(s) with default.
   LineStyle createTickLineStyle(
-      GraphicsFactory graphicsFactory, LineStyleSpec? spec);
+    GraphicsFactory graphicsFactory,
+    LineStyleSpec? spec,
+  );
 
   /// Default tick length.
   int get tickLength;
@@ -59,7 +60,9 @@ abstract class Style {
   ///
   /// Fill missing value(s) with default.
   LineStyle createGridlineStyle(
-      GraphicsFactory graphicsFactory, LineStyleSpec? spec);
+    GraphicsFactory graphicsFactory,
+    LineStyleSpec? spec,
+  );
 
   /// Default color for outside label leader lines for [ArcLabelDecorator].
   Color get arcLabelOutsideLeaderLine;

@@ -14,12 +14,10 @@
 // limitations under the License.
 
 import 'dart:collection' show HashSet;
-import 'scale.dart' show Extents;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart' show Extents;
 
 /// A range of ordinals.
 class OrdinalExtents extends Extents<String> {
-  final List<String> _range;
-
   /// The extents representing the ordinal values in [range].
   ///
   /// The elements of [range] must all be unique.
@@ -34,6 +32,7 @@ class OrdinalExtents extends Extents<String> {
   }
 
   factory OrdinalExtents.all(List<String> range) => OrdinalExtents(range);
+  final List<String> _range;
 
   bool get isEmpty => _range.isEmpty;
 

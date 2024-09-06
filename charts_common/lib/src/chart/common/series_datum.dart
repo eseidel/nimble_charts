@@ -13,18 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'processed_series.dart' show ImmutableSeries;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries;
 
 /// Stores datum and the series the datum originated.
 class SeriesDatum<D> {
+  SeriesDatum(this.series, this.datum);
   final ImmutableSeries<D> series;
   final dynamic datum;
 
   /// This is set after [index] getter is called. So accessing this directly is
   /// considered unsafe. Always uses [index] getter instead.
   int? _index;
-
-  SeriesDatum(this.series, this.datum);
 
   /// Returns null if-and-only if [datum] is null.
   int? get index {
@@ -43,17 +43,15 @@ class SeriesDatum<D> {
 
 /// Represents a series datum based on series id and datum index.
 class SeriesDatumConfig<D> {
+  SeriesDatumConfig(this.seriesId, this.domainValue);
   final String seriesId;
   final D domainValue;
 
-  SeriesDatumConfig(this.seriesId, this.domainValue);
-
   @override
-  bool operator ==(Object other) {
-    return other is SeriesDatumConfig &&
-        seriesId == other.seriesId &&
-        domainValue == other.domainValue;
-  }
+  bool operator ==(Object other) =>
+      other is SeriesDatumConfig &&
+      seriesId == other.seriesId &&
+      domainValue == other.domainValue;
 
   @override
   int get hashCode {

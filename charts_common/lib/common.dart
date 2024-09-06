@@ -28,28 +28,28 @@ export 'src/chart/bar/bar_renderer.dart'
 export 'src/chart/bar/bar_renderer_config.dart'
     show
         BarRendererConfig,
-        CornerStrategy,
         ConstCornerStrategy,
+        CornerStrategy,
         NoCornerStrategy;
 export 'src/chart/bar/bar_renderer_decorator.dart' show BarRendererDecorator;
 export 'src/chart/bar/bar_target_line_renderer.dart' show BarTargetLineRenderer;
 export 'src/chart/bar/bar_target_line_renderer_config.dart'
     show BarTargetLineRendererConfig;
 export 'src/chart/bar/base_bar_renderer.dart'
-    show barGroupIndexKey, barGroupCountKey, barGroupWeightKey;
+    show barGroupCountKey, barGroupIndexKey, barGroupWeightKey;
 export 'src/chart/bar/base_bar_renderer_config.dart'
     show BarGroupingType, BaseBarRendererConfig;
 export 'src/chart/cartesian/axis/axis.dart'
     show
-        domainAxisKey,
-        measureAxisIdKey,
-        measureAxisKey,
         Axis,
-        ImmutableAxis,
         AxisOrientation,
+        ImmutableAxis,
         NumericAxis,
         OrdinalAxis,
-        OrdinalViewport;
+        OrdinalViewport,
+        domainAxisKey,
+        measureAxisIdKey,
+        measureAxisKey;
 export 'src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart'
     show BaseRenderSpec, BaseTickDrawStrategy;
 export 'src/chart/cartesian/axis/draw_strategy/gridline_draw_strategy.dart'
@@ -72,46 +72,46 @@ export 'src/chart/cartesian/axis/spec/axis_spec.dart'
         RenderSpec,
         ScaleSpec,
         TextStyleSpec,
+        TickFormatterSpec,
         TickLabelAnchor,
         TickLabelJustification,
-        TickFormatterSpec,
         TickProviderSpec;
 export 'src/chart/cartesian/axis/spec/bucketing_axis_spec.dart'
     show BucketingAxisSpec, BucketingNumericTickProviderSpec;
 export 'src/chart/cartesian/axis/spec/date_time_axis_spec.dart'
     show
-        DateTimeAxisSpec,
-        DayTickProviderSpec,
         AutoDateTimeTickFormatterSpec,
         AutoDateTimeTickProviderSpec,
+        BasicDateTimeTickFormatterSpec,
+        DateTimeAxisSpec,
         DateTimeEndPointsTickProviderSpec,
         DateTimeTickFormatterSpec,
         DateTimeTickProviderSpec,
-        BasicDateTimeTickFormatterSpec,
-        TimeFormatterSpec,
-        StaticDateTimeTickProviderSpec;
+        DayTickProviderSpec,
+        StaticDateTimeTickProviderSpec,
+        TimeFormatterSpec;
 export 'src/chart/cartesian/axis/spec/end_points_time_axis_spec.dart'
     show EndPointsTimeAxisSpec;
 export 'src/chart/cartesian/axis/spec/numeric_axis_spec.dart'
     show
-        NumericAxisSpec,
-        NumericEndPointsTickProviderSpec,
-        NumericTickProviderSpec,
-        NumericTickFormatterSpec,
         BasicNumericTickFormatterSpec,
         BasicNumericTickProviderSpec,
+        NumericAxisSpec,
+        NumericEndPointsTickProviderSpec,
+        NumericTickFormatterSpec,
+        NumericTickProviderSpec,
         StaticNumericTickProviderSpec;
 export 'src/chart/cartesian/axis/spec/ordinal_axis_spec.dart'
     show
         AutoAdjustingStaticOrdinalTickProviderSpec,
-        BasicOrdinalTickProviderSpec,
         BasicOrdinalTickFormatterSpec,
+        BasicOrdinalTickProviderSpec,
         FixedPixelOrdinalScaleSpec,
         FixedPixelSpaceOrdinalScaleSpec,
         OrdinalAxisSpec,
+        OrdinalScaleSpec,
         OrdinalTickFormatterSpec,
         OrdinalTickProviderSpec,
-        OrdinalScaleSpec,
         RangeOrdinalTickProviderSpec,
         SimpleOrdinalScaleSpec,
         StaticOrdinalTickProviderSpec;
@@ -161,9 +161,9 @@ export 'src/chart/common/behavior/legend/datum_legend.dart' show DatumLegend;
 export 'src/chart/common/behavior/legend/legend.dart'
     show Legend, LegendCellPadding, LegendState, LegendTapHandling;
 export 'src/chart/common/behavior/legend/legend_entry.dart'
-    show LegendEntry, LegendCategory, LegendEntryBase;
+    show LegendCategory, LegendEntry, LegendEntryBase;
 export 'src/chart/common/behavior/legend/legend_entry_generator.dart'
-    show LegendEntryGenerator, LegendDefaultMeasure;
+    show LegendDefaultMeasure, LegendEntryGenerator;
 export 'src/chart/common/behavior/legend/series_legend.dart' show SeriesLegend;
 export 'src/chart/common/behavior/line_point_highlighter.dart'
     show LinePointHighlighter, LinePointHighlighterFollowLineType;
@@ -204,7 +204,7 @@ export 'src/chart/common/behavior/zoom/panning_tick_provider.dart'
 export 'src/chart/common/canvas_shapes.dart'
     show CanvasBarStack, CanvasPie, CanvasPieSlice, CanvasRect;
 export 'src/chart/common/chart_canvas.dart'
-    show ChartCanvas, FillPatternType, BlendMode, LinkOrientation, Link;
+    show BlendMode, ChartCanvas, FillPatternType, Link, LinkOrientation;
 export 'src/chart/common/chart_context.dart' show ChartContext;
 export 'src/chart/common/datum_details.dart'
     show DatumDetails, DomainFormatter, MeasureFormatter;
@@ -214,11 +214,11 @@ export 'src/chart/common/selection_model/selection_model.dart'
     show
         MutableSelectionModel,
         SelectionModel,
-        SelectionModelType,
-        SelectionModelListener;
+        SelectionModelListener,
+        SelectionModelType;
 export 'src/chart/common/series_datum.dart' show SeriesDatum, SeriesDatumConfig;
 export 'src/chart/common/series_renderer.dart'
-    show rendererIdKey, rendererKey, SeriesRenderer;
+    show SeriesRenderer, rendererIdKey, rendererKey;
 export 'src/chart/common/series_renderer_config.dart'
     show RendererAttributeKey, SeriesRendererConfig;
 export 'src/chart/layout/layout_config.dart' show LayoutConfig, MarginSpec;
@@ -234,21 +234,25 @@ export 'src/chart/layout/layout_view.dart'
 export 'src/chart/line/line_chart.dart' show LineChart;
 export 'src/chart/line/line_renderer.dart' show LineRenderer;
 export 'src/chart/line/line_renderer_config.dart' show LineRendererConfig;
+export 'src/chart/link/link_chart.dart' show LinkChart;
+export 'src/chart/link/link_renderer_config.dart' show LinkRendererConfig;
 export 'src/chart/pie/arc_label_decorator.dart'
     show ArcLabelDecorator, ArcLabelLeaderLineStyleSpec, ArcLabelPosition;
 export 'src/chart/pie/arc_renderer.dart' show ArcRenderer;
 export 'src/chart/pie/arc_renderer_config.dart' show ArcRendererConfig;
 export 'src/chart/pie/pie_chart.dart' show PieChart;
+export 'src/chart/sankey/sankey_chart.dart' show SankeyChart;
+export 'src/chart/sankey/sankey_renderer_config.dart' show SankeyRendererConfig;
 export 'src/chart/scatter_plot/comparison_points_decorator.dart'
     show ComparisonPointsDecorator;
 export 'src/chart/scatter_plot/point_renderer.dart'
     show
-        boundsLineRadiusPxKey,
-        boundsLineRadiusPxFnKey,
-        pointSymbolRendererFnKey,
-        pointSymbolRendererIdKey,
         PointRenderer,
-        PointRendererElement;
+        PointRendererElement,
+        boundsLineRadiusPxFnKey,
+        boundsLineRadiusPxKey,
+        pointSymbolRendererFnKey,
+        pointSymbolRendererIdKey;
 export 'src/chart/scatter_plot/point_renderer_config.dart'
     show PointRendererConfig;
 export 'src/chart/scatter_plot/point_renderer_decorator.dart'
@@ -256,14 +260,14 @@ export 'src/chart/scatter_plot/point_renderer_decorator.dart'
 export 'src/chart/scatter_plot/scatter_plot_chart.dart' show ScatterPlotChart;
 export 'src/chart/scatter_plot/symbol_annotation_renderer.dart'
     show SymbolAnnotationRenderer;
-export 'src/chart/sunburst/sunburst_chart.dart' show SunburstChart;
+export 'src/chart/scatter_plot/symbol_annotation_renderer_config.dart'
+    show SymbolAnnotationRendererConfig;
+export 'src/chart/sunburst/sunburst_arc_label_decorator.dart'
+    show SunburstArcLabelDecorator;
 export 'src/chart/sunburst/sunburst_arc_renderer.dart' show SunburstArcRenderer;
 export 'src/chart/sunburst/sunburst_arc_renderer_config.dart'
     show SunburstArcRendererConfig, SunburstColorStrategy;
-export 'src/chart/sunburst/sunburst_arc_label_decorator.dart'
-    show SunburstArcLabelDecorator;
-export 'src/chart/scatter_plot/symbol_annotation_renderer_config.dart'
-    show SymbolAnnotationRendererConfig;
+export 'src/chart/sunburst/sunburst_chart.dart' show SunburstChart;
 export 'src/chart/time_series/time_series_chart.dart' show TimeSeriesChart;
 export 'src/chart/treemap/squarified_treemap_renderer.dart'
     show SquarifiedTreeMapRenderer;
@@ -272,11 +276,7 @@ export 'src/chart/treemap/treemap_label_decorator.dart'
     show TreeMapLabelDecorator;
 export 'src/chart/treemap/treemap_renderer_config.dart'
     show TreeMapRendererConfig, TreeMapTileType;
-export 'src/chart/sankey/sankey_chart.dart' show SankeyChart;
-export 'src/chart/sankey/sankey_renderer_config.dart' show SankeyRendererConfig;
 export 'src/common/color.dart' show Color;
-export 'src/chart/link/link_chart.dart' show LinkChart;
-export 'src/chart/link/link_renderer_config.dart' show LinkRendererConfig;
 export 'src/common/date_time_factory.dart'
     show DateTimeFactory, LocalDateTimeFactory, UTCDateTimeFactory;
 export 'src/common/gesture_listener.dart' show GestureListener;
@@ -301,13 +301,13 @@ export 'src/common/symbol_renderer.dart'
         SymbolRenderer,
         TriangleSymbolRenderer;
 export 'src/common/text_element.dart'
-    show TextElement, TextDirection, MaxWidthStrategy;
+    show MaxWidthStrategy, TextDirection, TextElement;
 export 'src/common/text_measurement.dart' show TextMeasurement;
 export 'src/common/text_style.dart' show TextStyle;
-export 'src/data/series.dart' show AttributeKey, Series, TypedAccessorFn;
-export 'src/data/tree.dart' show Tree, TreeNode;
 export 'src/data/graph.dart' show Graph;
 export 'src/data/sankey_graph.dart' show SankeyGraph;
+export 'src/data/series.dart' show AttributeKey, Series, TypedAccessorFn;
+export 'src/data/tree.dart' show Tree, TreeNode;
 //
 // DO NOT ADD ANYTHING BELOW THIS. IT WILL BREAK OPENSOURCE.
 //

@@ -13,8 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts_common/src/chart/common/datum_details.dart'
+    show MeasureFormatter;
 import 'package:intl/intl.dart';
-import '../../common/datum_details.dart' show MeasureFormatter;
 
 // TODO: Break out into separate files.
 
@@ -25,16 +26,22 @@ abstract class TickFormatter<D> {
   const TickFormatter();
 
   /// Formats a list of tick values.
-  List<String> format(List<D> tickValues, Map<D, String> cache,
-      {num? stepSize});
+  List<String> format(
+    List<D> tickValues,
+    Map<D, String> cache, {
+    num? stepSize,
+  });
 }
 
 abstract class SimpleTickFormatterBase<D> implements TickFormatter<D> {
   const SimpleTickFormatterBase();
 
   @override
-  List<String> format(List<D> tickValues, Map<D, String> cache,
-          {num? stepSize}) =>
+  List<String> format(
+    List<D> tickValues,
+    Map<D, String> cache, {
+    num? stepSize,
+  }) =>
       tickValues.map((value) {
         // Try to use the cached formats first.
         var formattedString = cache[value];
@@ -67,10 +74,6 @@ class OrdinalTickFormatter extends SimpleTickFormatterBase<String> {
 ///
 /// The default format is [NumberFormat.decimalPattern].
 class NumericTickFormatter extends SimpleTickFormatterBase<num> {
-  final MeasureFormatter formatter;
-
-  NumericTickFormatter._internal(this.formatter);
-
   /// Construct a a new [NumericTickFormatter].
   ///
   /// [formatter] optionally specify a formatter to be used. Defaults to using
@@ -80,21 +83,22 @@ class NumericTickFormatter extends SimpleTickFormatterBase<num> {
     return NumericTickFormatter._internal(formatter);
   }
 
+  NumericTickFormatter._internal(this.formatter);
+
   /// Constructs a new [NumericTickFormatter] that formats using [numberFormat].
-  factory NumericTickFormatter.fromNumberFormat(NumberFormat numberFormat) {
-    return NumericTickFormatter._internal(_getFormatter(numberFormat));
-  }
+  factory NumericTickFormatter.fromNumberFormat(NumberFormat numberFormat) =>
+      NumericTickFormatter._internal(_getFormatter(numberFormat));
 
   /// Constructs a new formatter that uses [NumberFormat.compactCurrency].
-  factory NumericTickFormatter.compactSimpleCurrency() {
-    return NumericTickFormatter._internal(
-        _getFormatter(NumberFormat.compactCurrency()));
-  }
+  factory NumericTickFormatter.compactSimpleCurrency() =>
+      NumericTickFormatter._internal(
+        _getFormatter(NumberFormat.compactCurrency()),
+      );
+  final MeasureFormatter formatter;
 
   /// Returns a [MeasureFormatter] that calls format on [numberFormat].
-  static MeasureFormatter _getFormatter(NumberFormat numberFormat) {
-    return (num? value) => (value == null) ? '' : numberFormat.format(value);
-  }
+  static MeasureFormatter _getFormatter(NumberFormat numberFormat) =>
+      (value) => (value == null) ? '' : numberFormat.format(value);
 
   @override
   String formatValue(num value) => formatter(value);

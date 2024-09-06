@@ -15,9 +15,12 @@
 
 import 'dart:math' show Rectangle;
 
-import '../../common/graphics_factory.dart' show GraphicsFactory;
-import '../common/chart_canvas.dart' show ChartCanvas;
-import 'arc_renderer_element.dart' show ArcRendererElementList;
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:charts_common/src/chart/pie/arc_renderer_element.dart'
+    show ArcRendererElementList;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 /// Decorates arcs after the arcs have already been painted.
 abstract class ArcRendererDecorator<D> {
@@ -27,9 +30,12 @@ abstract class ArcRendererDecorator<D> {
   /// series data elements.
   bool get renderAbove;
 
-  void decorate(List<ArcRendererElementList<D>> arcElementsList,
-      ChartCanvas canvas, GraphicsFactory graphicsFactory,
-      {required Rectangle drawBounds,
-      required double animationPercent,
-      bool rtl = false});
+  void decorate(
+    List<ArcRendererElementList<D>> arcElementsList,
+    ChartCanvas canvas,
+    GraphicsFactory graphicsFactory, {
+    required Rectangle drawBounds,
+    required double animationPercent,
+    bool rtl = false,
+  });
 }

@@ -13,16 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'axis_spec.dart' show TextStyleSpec;
-import 'tick_spec.dart' show TickSpec;
+import 'package:charts_common/src/chart/cartesian/axis/spec/tick_spec.dart'
+    show TickSpec;
 
 /// Definition for a range tick.
 ///
 /// Used to define a tick that is used by range tick provider.
 class RangeTickSpec<D> extends TickSpec<D> {
-  final D rangeStartValue;
-  final D rangeEndValue;
-
   /// Creates a range tick for [value].
   /// A [label] optionally labels this tick. If not set, the tick formatter
   /// formatter of the axis is used.
@@ -31,10 +28,12 @@ class RangeTickSpec<D> extends TickSpec<D> {
   /// A [rangeStartValue] represents value of this range tick's starting point.
   /// A [rangeEndValue] represents the value of this range tick's ending point.
   const RangeTickSpec(
-    D value, {
-    String? label,
-    TextStyleSpec? style,
+    super.value, {
     required this.rangeStartValue,
     required this.rangeEndValue,
-  }) : super(value, label: label, style: style);
+    super.label,
+    super.style,
+  });
+  final D rangeStartValue;
+  final D rangeEndValue;
 }

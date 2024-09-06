@@ -13,13 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../chart/cartesian/axis/spec/axis_spec.dart' show LineStyleSpec;
-import '../color.dart' show Color;
-import '../graphics_factory.dart' show GraphicsFactory;
-import '../line_style.dart' show LineStyle;
-import '../material_palette.dart' show MaterialPalette;
-import '../palette.dart' show Palette;
-import 'style.dart' show Style;
+import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show LineStyleSpec;
+import 'package:charts_common/src/common/color.dart' show Color;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
+import 'package:charts_common/src/common/line_style.dart' show LineStyle;
+import 'package:charts_common/src/common/material_palette.dart'
+    show MaterialPalette;
+import 'package:charts_common/src/common/palette.dart' show Palette;
+import 'package:charts_common/src/common/style/style.dart' show Style;
 
 class MaterialStyle implements Style {
   const MaterialStyle();
@@ -39,21 +42,23 @@ class MaterialStyle implements Style {
 
   @override
   LineStyle createAxisLineStyle(
-      GraphicsFactory graphicsFactory, LineStyleSpec? spec) {
-    return graphicsFactory.createLinePaint()
-      ..color = spec?.color ?? MaterialPalette.gray.shadeDefault
-      ..dashPattern = spec?.dashPattern
-      ..strokeWidth = spec?.thickness ?? 1;
-  }
+    GraphicsFactory graphicsFactory,
+    LineStyleSpec? spec,
+  ) =>
+      graphicsFactory.createLinePaint()
+        ..color = spec?.color ?? MaterialPalette.gray.shadeDefault
+        ..dashPattern = spec?.dashPattern
+        ..strokeWidth = spec?.thickness ?? 1;
 
   @override
   LineStyle createTickLineStyle(
-      GraphicsFactory graphicsFactory, LineStyleSpec? spec) {
-    return graphicsFactory.createLinePaint()
-      ..color = spec?.color ?? MaterialPalette.gray.shadeDefault
-      ..dashPattern = spec?.dashPattern
-      ..strokeWidth = spec?.thickness ?? 1;
-  }
+    GraphicsFactory graphicsFactory,
+    LineStyleSpec? spec,
+  ) =>
+      graphicsFactory.createLinePaint()
+        ..color = spec?.color ?? MaterialPalette.gray.shadeDefault
+        ..dashPattern = spec?.dashPattern
+        ..strokeWidth = spec?.thickness ?? 1;
 
   @override
   int get tickLength => 3;
@@ -63,12 +68,13 @@ class MaterialStyle implements Style {
 
   @override
   LineStyle createGridlineStyle(
-      GraphicsFactory graphicsFactory, LineStyleSpec? spec) {
-    return graphicsFactory.createLinePaint()
-      ..color = spec?.color ?? MaterialPalette.gray.shade300
-      ..dashPattern = spec?.dashPattern
-      ..strokeWidth = spec?.thickness ?? 1;
-  }
+    GraphicsFactory graphicsFactory,
+    LineStyleSpec? spec,
+  ) =>
+      graphicsFactory.createLinePaint()
+        ..color = spec?.color ?? MaterialPalette.gray.shade300
+        ..dashPattern = spec?.dashPattern
+        ..strokeWidth = spec?.thickness ?? 1;
 
   @override
   Color get arcLabelOutsideLeaderLine => MaterialPalette.gray.shade600;
