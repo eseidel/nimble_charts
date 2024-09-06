@@ -136,22 +136,20 @@ class Graph<N, L, D> {
     final nodeSeries = Series<Node<N, L>, D>(
       id: '${id}_nodes',
       data: nodes,
-      //TODO : reinstate these. It looks like they're necessary
-      // domainFn: nodeDomainFn,
-      // measureFn: nodeMeasureFn,
-      // colorFn: nodeColorFn,
-      // fillColorFn: nodeFillColorFn,
-      // fillPatternFn: nodeFillPatternFn,
-      // strokeWidthPxFn: nodeStrokeWidthPxFn,
+      domainFn: nodeDomainFn,
+      measureFn: nodeMeasureFn,
+      colorFn: nodeColorFn,
+      fillColorFn: nodeFillColorFn,
+      fillPatternFn: nodeFillPatternFn,
+      strokeWidthPxFn: nodeStrokeWidthPxFn,
     )..attributes.mergeFrom(nodeAttributes);
 
     final linkSeries = Series<Link<N, L>, D>(
       id: '${id}_links',
       data: links,
-      //TODO : reinstate these. It looks like they're necessary
-      // domainFn: linkDomainFn,
-      // measureFn: linkMeasureFn,
-      // fillColorFn: linkFillColorFn,
+      domainFn: linkDomainFn,
+      measureFn: linkMeasureFn,
+      fillColorFn: linkFillColorFn,
     )..attributes.mergeFrom(linkAttributes);
     return [nodeSeries, linkSeries];
   }

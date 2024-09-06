@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     show TextStyleSpec;
 import 'package:charts_common/src/chart/common/chart_canvas.dart'
@@ -24,131 +26,6 @@ import 'package:charts_common/src/common/typed_registry.dart'
     show TypedKey, TypedRegistry;
 
 class Series<T, D> {
-  factory Series({
-    required String id,
-    required List<T> data,
-    String? displayName,
-    Color? seriesColor,
-    bool overlaySeries = false,
-    String? seriesCategory,
-  }) {
-    // Wrap typed accessors.
-    dynamic domainFn(int? index) => domainFn(data[index!]);
-    dynamic measureFn(int? index) => measureFn(data[index!]);
-    final areaColorFn = areaColorFn == null
-        ? null
-        : (index) => areaColorFn(data[index!], index);
-    final colorFn =
-        colorFn == null ? null : (index) => colorFn(data[index!], index);
-    final dashPatternFn = dashPatternFn == null
-        ? null
-        : (index) => dashPatternFn(data[index!], index);
-    final domainFormatterFn = domainFormatterFn == null
-        ? null
-        : (index) => domainFormatterFn(data[index!], index);
-    final domainLowerBoundFn = domainLowerBoundFn == null
-        ? null
-        : (index) => domainLowerBoundFn(data[index!], index);
-    final domainUpperBoundFn = domainUpperBoundFn == null
-        ? null
-        : (index) => domainUpperBoundFn(data[index!], index);
-    final fillColorFn = fillColorFn == null
-        ? null
-        : (index) => fillColorFn(data[index!], index);
-    final patternColorFn = patternColorFn == null
-        ? null
-        : (index) => patternColorFn(data[index!], index);
-    final fillPatternFn = fillPatternFn == null
-        ? null
-        : (index) => fillPatternFn(data[index!], index);
-    final labelAccessorFn = labelAccessorFn == null
-        ? null
-        : (index) => labelAccessorFn(data[index!], index);
-    final insideLabelStyleAccessorFn = insideLabelStyleAccessorFn == null
-        ? null
-        : (index) => insideLabelStyleAccessorFn(data[index!], index);
-    final outsideLabelStyleAccessorFn = outsideLabelStyleAccessorFn == null
-        ? null
-        : (index) => outsideLabelStyleAccessorFn(data[index!], index);
-    final measureFormatterFn = measureFormatterFn == null
-        ? null
-        : (index) => measureFormatterFn(data[index!], index);
-    final measureLowerBoundFn = measureLowerBoundFn == null
-        ? null
-        : (index) => measureLowerBoundFn(data[index!], index);
-    final measureUpperBoundFn = measureUpperBoundFn == null
-        ? null
-        : (index) => measureUpperBoundFn(data[index!], index);
-    final measureOffsetFn = measureOffsetFn == null
-        ? null
-        : (index) => measureOffsetFn(data[index!], index);
-    final radiusPxFn =
-        radiusPxFn == null ? null : (index) => radiusPxFn(data[index!], index);
-    final strokeWidthPxFn = strokeWidthPxFn == null
-        ? null
-        : (index) => strokeWidthPxFn(data[index!], index);
-    final keyFn = keyFn == null ? null : (index) => keyFn(data[index!], index);
-
-    return Series._internal(
-      id: id,
-      data: data,
-      domainFn: domainFn,
-      measureFn: measureFn,
-      displayName: displayName,
-      areaColorFn: areaColorFn,
-      colorFn: colorFn,
-      dashPatternFn: dashPatternFn,
-      domainFormatterFn: domainFormatterFn,
-      domainLowerBoundFn: domainLowerBoundFn,
-      domainUpperBoundFn: domainUpperBoundFn,
-      fillColorFn: fillColorFn,
-      fillPatternFn: fillPatternFn,
-      keyFn: keyFn,
-      patternColorFn: patternColorFn,
-      labelAccessorFn: labelAccessorFn,
-      insideLabelStyleAccessorFn: insideLabelStyleAccessorFn,
-      outsideLabelStyleAccessorFn: outsideLabelStyleAccessorFn,
-      measureFormatterFn: measureFormatterFn,
-      measureLowerBoundFn: measureLowerBoundFn,
-      measureUpperBoundFn: measureUpperBoundFn,
-      measureOffsetFn: measureOffsetFn,
-      overlaySeries: overlaySeries,
-      radiusPxFn: radiusPxFn,
-      seriesCategory: seriesCategory,
-      seriesColor: seriesColor,
-      strokeWidthPxFn: strokeWidthPxFn,
-    );
-  }
-
-  Series._internal({
-    required this.id,
-    required this.data,
-    required this.domainFn,
-    required this.measureFn,
-    required this.displayName,
-    required this.areaColorFn,
-    required this.colorFn,
-    required this.dashPatternFn,
-    required this.domainFormatterFn,
-    required this.domainLowerBoundFn,
-    required this.domainUpperBoundFn,
-    required this.fillColorFn,
-    required this.fillPatternFn,
-    required this.patternColorFn,
-    required this.keyFn,
-    required this.labelAccessorFn,
-    required this.insideLabelStyleAccessorFn,
-    required this.outsideLabelStyleAccessorFn,
-    required this.measureFormatterFn,
-    required this.measureLowerBoundFn,
-    required this.measureUpperBoundFn,
-    required this.measureOffsetFn,
-    required this.overlaySeries,
-    required this.radiusPxFn,
-    required this.seriesCategory,
-    required this.seriesColor,
-    required this.strokeWidthPxFn,
-  });
   final String id;
   final String? displayName;
 
@@ -230,6 +107,155 @@ class Series<T, D> {
   // TODO: should this be immutable as well? If not, should any of
   // the non-required ones be final?
   final SeriesAttributes attributes = SeriesAttributes();
+
+  // ignore: sort_constructors_first
+  factory Series({
+    required String id,
+    required List<T> data,
+    required TypedAccessorFn<T, D> domainFn,
+    required TypedAccessorFn<T, num?> measureFn,
+    String? displayName,
+    Color? seriesColor,
+    TypedAccessorFn<T, Color>? areaColorFn,
+    TypedAccessorFn<T, Color>? colorFn,
+    TypedAccessorFn<T, List<int>?>? dashPatternFn,
+    TypedAccessorFn<T, DomainFormatter<D>>? domainFormatterFn,
+    TypedAccessorFn<T, D?>? domainLowerBoundFn,
+    TypedAccessorFn<T, D?>? domainUpperBoundFn,
+    TypedAccessorFn<T, Color?>? fillColorFn,
+    TypedAccessorFn<T, Color>? patternColorFn,
+    TypedAccessorFn<T, FillPatternType>? fillPatternFn,
+    TypedAccessorFn<T, String>? keyFn,
+    TypedAccessorFn<T, String>? labelAccessorFn,
+    TypedAccessorFn<T, TextStyleSpec>? insideLabelStyleAccessorFn,
+    TypedAccessorFn<T, TextStyleSpec>? outsideLabelStyleAccessorFn,
+    TypedAccessorFn<T, MeasureFormatter>? measureFormatterFn,
+    TypedAccessorFn<T, num?>? measureLowerBoundFn,
+    TypedAccessorFn<T, num?>? measureUpperBoundFn,
+    TypedAccessorFn<T, num>? measureOffsetFn,
+    bool overlaySeries = false,
+    TypedAccessorFn<T, num>? radiusPxFn,
+    String? seriesCategory,
+    TypedAccessorFn<T, num?>? strokeWidthPxFn,
+  }) {
+    // Wrap typed accessors.
+    final _domainFn = (int? index) => domainFn(data[index!], index);
+    final _measureFn = (int? index) => measureFn(data[index!], index);
+    final _areaColorFn = areaColorFn == null
+        ? null
+        : (index) => areaColorFn(data[index!], index);
+    final _colorFn =
+        colorFn == null ? null : (index) => colorFn(data[index!], index);
+    final _dashPatternFn = dashPatternFn == null
+        ? null
+        : (index) => dashPatternFn(data[index!], index);
+    final _domainFormatterFn = domainFormatterFn == null
+        ? null
+        : (index) => domainFormatterFn(data[index!], index);
+    final _domainLowerBoundFn = domainLowerBoundFn == null
+        ? null
+        : (index) => domainLowerBoundFn(data[index!], index);
+    final _domainUpperBoundFn = domainUpperBoundFn == null
+        ? null
+        : (index) => domainUpperBoundFn(data[index!], index);
+    final _fillColorFn = fillColorFn == null
+        ? null
+        : (index) => fillColorFn(data[index!], index);
+    final _patternColorFn = patternColorFn == null
+        ? null
+        : (index) => patternColorFn(data[index!], index);
+    final _fillPatternFn = fillPatternFn == null
+        ? null
+        : (index) => fillPatternFn(data[index!], index);
+    final _labelAccessorFn = labelAccessorFn == null
+        ? null
+        : (index) => labelAccessorFn(data[index!], index);
+    final _insideLabelStyleAccessorFn = insideLabelStyleAccessorFn == null
+        ? null
+        : (index) => insideLabelStyleAccessorFn(data[index!], index);
+    final _outsideLabelStyleAccessorFn = outsideLabelStyleAccessorFn == null
+        ? null
+        : (index) => outsideLabelStyleAccessorFn(data[index!], index);
+    final _measureFormatterFn = measureFormatterFn == null
+        ? null
+        : (index) => measureFormatterFn(data[index!], index);
+    final _measureLowerBoundFn = measureLowerBoundFn == null
+        ? null
+        : (index) => measureLowerBoundFn(data[index!], index);
+    final _measureUpperBoundFn = measureUpperBoundFn == null
+        ? null
+        : (index) => measureUpperBoundFn(data[index!], index);
+    final _measureOffsetFn = measureOffsetFn == null
+        ? null
+        : (index) => measureOffsetFn(data[index!], index);
+    final _radiusPxFn =
+        radiusPxFn == null ? null : (index) => radiusPxFn(data[index!], index);
+    final _strokeWidthPxFn = strokeWidthPxFn == null
+        ? null
+        : (index) => strokeWidthPxFn(data[index!], index);
+    final _keyFn = keyFn == null ? null : (index) => keyFn(data[index!], index);
+
+    return Series._internal(
+      id: id,
+      data: data,
+      domainFn: _domainFn,
+      measureFn: _measureFn,
+      displayName: displayName,
+      areaColorFn: _areaColorFn,
+      colorFn: _colorFn,
+      dashPatternFn: _dashPatternFn,
+      domainFormatterFn: _domainFormatterFn,
+      domainLowerBoundFn: _domainLowerBoundFn,
+      domainUpperBoundFn: _domainUpperBoundFn,
+      fillColorFn: _fillColorFn,
+      fillPatternFn: _fillPatternFn,
+      keyFn: _keyFn,
+      patternColorFn: _patternColorFn,
+      labelAccessorFn: _labelAccessorFn,
+      insideLabelStyleAccessorFn: _insideLabelStyleAccessorFn,
+      outsideLabelStyleAccessorFn: _outsideLabelStyleAccessorFn,
+      measureFormatterFn: _measureFormatterFn,
+      measureLowerBoundFn: _measureLowerBoundFn,
+      measureUpperBoundFn: _measureUpperBoundFn,
+      measureOffsetFn: _measureOffsetFn,
+      overlaySeries: overlaySeries,
+      radiusPxFn: _radiusPxFn,
+      seriesCategory: seriesCategory,
+      seriesColor: seriesColor,
+      strokeWidthPxFn: _strokeWidthPxFn,
+    );
+  }
+
+  // ignore: sort_constructors_first
+  Series._internal({
+    required this.id,
+    required this.data,
+    required this.domainFn,
+    required this.measureFn,
+    required this.displayName,
+    required this.areaColorFn,
+    required this.colorFn,
+    required this.dashPatternFn,
+    required this.domainFormatterFn,
+    required this.domainLowerBoundFn,
+    required this.domainUpperBoundFn,
+    required this.fillColorFn,
+    required this.fillPatternFn,
+    required this.patternColorFn,
+    required this.keyFn,
+    required this.labelAccessorFn,
+    required this.insideLabelStyleAccessorFn,
+    required this.outsideLabelStyleAccessorFn,
+    required this.measureFormatterFn,
+    required this.measureLowerBoundFn,
+    required this.measureUpperBoundFn,
+    required this.measureOffsetFn,
+    required this.overlaySeries,
+    required this.radiusPxFn,
+    required this.seriesCategory,
+    required this.seriesColor,
+    required this.strokeWidthPxFn,
+  });
 
   void setAttribute<R>(AttributeKey<R> key, R value) {
     attributes.setAttr(key, value);

@@ -127,16 +127,15 @@ class Tree<T, D> {
     return Series(
       id: id,
       data: data,
-      //TODO: reinstate these
-      // domainFn: domainFn,
-      // measureFn: measureFn,
-      // colorFn: colorFn,
-      // fillColorFn: fillColorFn,
-      // fillPatternFn: fillPatternFn,
-      // patternColorFn: patternColorFn,
-      // strokeWidthPxFn: strokeWidthPxFn,
-      // labelAccessorFn: labelFn,
-      // insideLabelStyleAccessorFn: labelStyleFn,
+      domainFn: domainFn,
+      measureFn: measureFn,
+      colorFn: colorFn,
+      fillColorFn: fillColorFn,
+      fillPatternFn: fillPatternFn,
+      patternColorFn: patternColorFn,
+      strokeWidthPxFn: strokeWidthPxFn,
+      labelAccessorFn: labelFn,
+      insideLabelStyleAccessorFn: labelStyleFn,
     )..attributes.mergeFrom(attributes);
   }
 
