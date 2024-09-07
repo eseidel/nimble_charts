@@ -26,7 +26,7 @@ class SunburstRingExpander<D> implements ChartBehavior<D> {
   void _selectionChanged(SelectionModel<D> selectionModel) {
     if (selectionModel.selectedDatum.isNotEmpty) {
       _chart
-       //TODO: dangerous casts
+        //TODO: dangerous casts
         ..expandNode(selectionModel.selectedDatum.first.datum as TreeNode<D>)
         ..redraw(skipLayout: true, skipAnimation: true);
     }

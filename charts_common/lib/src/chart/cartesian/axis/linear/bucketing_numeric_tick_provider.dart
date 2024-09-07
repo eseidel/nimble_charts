@@ -124,15 +124,16 @@ class BucketingNumericTickProvider extends NumericTickProvider {
     tickDrawStrategy.decorateTicks(<Tick<num>>[thresholdTick]);
 
     // Filter out ticks that sit below the threshold.
-    ticks..removeWhere(
-      (tick) => tick.value <= thresholdTick.value && tick.value != 0.0,
-    )
+    ticks
+      ..removeWhere(
+        (tick) => tick.value <= thresholdTick.value && tick.value != 0.0,
+      )
 
-    // Finally, add our threshold tick to the list.
-    ..add(thresholdTick)
+      // Finally, add our threshold tick to the list.
+      ..add(thresholdTick)
 
-    // Make sure they are sorted by increasing value.
-    ..sort((a, b) => a.value.compareTo(b.value));
+      // Make sure they are sorted by increasing value.
+      ..sort((a, b) => a.value.compareTo(b.value));
     return ticks;
   }
 }

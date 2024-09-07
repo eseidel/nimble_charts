@@ -118,22 +118,24 @@ class PerSeriesLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
           ? secondaryMeasureFormatter!(measureValue)
           : measureFormatter!(measureValue);
 
-      entry..value = measureValue
-      ..formattedValue = formattedValue
-      ..isSelected = selectionModel.selectedSeries
-          .any((selectedSeries) => entry.series.id == selectedSeries.id)
+      entry
+        ..value = measureValue
+        ..formattedValue = formattedValue
+        ..isSelected = selectionModel.selectedSeries
+            .any((selectedSeries) => entry.series.id == selectedSeries.id)
 
-      // Set the current selected model index for legend entry.
-      ..selectedDataIndexes =
-          selectionModel.selectedDatum.map((datum) => datum.index).toList();
+        // Set the current selected model index for legend entry.
+        ..selectedDataIndexes =
+            selectionModel.selectedDatum.map((datum) => datum.index).toList();
     }
   }
 
   void _resetLegendEntryMeasures(List<LegendEntry<D>> legendEntries) {
     for (final entry in legendEntries) {
-      entry..value = null
-      ..formattedValue = null
-      ..isSelected = false;
+      entry
+        ..value = null
+        ..formattedValue = null
+        ..isSelected = false;
     }
   }
 
@@ -189,9 +191,10 @@ class PerSeriesLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
     for (final entry in legendEntries) {
       final seriesId = entry.series.id;
 
-      entry..value = seriesAndMeasure[seriesId]
-      ..formattedValue = seriesAndFormattedMeasure[seriesId]
-      ..isSelected = false;
+      entry
+        ..value = seriesAndMeasure[seriesId]
+        ..formattedValue = seriesAndFormattedMeasure[seriesId]
+        ..isSelected = false;
     }
   }
 

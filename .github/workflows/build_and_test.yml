@@ -17,35 +17,34 @@ jobs:
           channel: "stable"
           architecture: x64
 
-      - name: Get Dependencies for charts_common
+      - name: Get Dependencies
         run: |
-          cd charts_common
-          flutter pub get
-
-      - name: Get Dependencies for charts_flutter
-        run: |
-          cd charts_flutter
-          flutter pub get
-
-      - name: Get Dependencies for charts_flutter/example
-        run: |
-          cd charts_flutter/example
-          flutter pub get
+          for dir in charts_common charts_flutter charts_flutter/example; do
+            cd $dir
+            flutter pub get
+            cd $GITHUB_WORKSPACE
+          done
 
       - name: Analyze
         run: |
-          cd charts_flutter
-          dart analyze --no-fatal-warnings
+          for dir in charts_common charts_flutter charts_flutter/example; do
+            cd $dir
+            dart analyze --no-fatal-warnings
+            cd $GITHUB_WORKSPACE
+          done
 
       - name: Check Formatting
         run: |
-          cd charts_flutter
-          dart format lib test --set-exit-if-changed
+          for dir in charts_common charts_flutter charts_flutter/example; do
+            cd $dir
+            dart format lib test --set-exit-if-changed
+            cd $GITHUB_WORKSPACE
+          done
 
       - name: Run Tests
         run: |
           cd charts_flutter
-          flutter test --coverage --update-goldens
+          flutter test --coverage
 
       - name: Check Test Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v2

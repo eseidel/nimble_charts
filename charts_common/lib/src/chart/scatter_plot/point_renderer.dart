@@ -916,7 +916,7 @@ class AnimatedPoint<D> {
         yUpper: y,
       )
 
-      // Animate the radius and stroke width to 0 so that we don't get a 
+      // Animate the radius and stroke width to 0 so that we don't get a
       // lingering point after animation is done.
       ..radiusPx = 0.0
       ..strokeWidthPx = 0.0;

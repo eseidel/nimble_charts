@@ -245,8 +245,8 @@ class BasicDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
       : dateFormat = null;
 
   const BasicDateTimeTickFormatterSpec.fromDateFormat(
-      DateFormat this.dateFormat,)
-      : formatter = null;
+    DateFormat this.dateFormat,
+  ) : formatter = null;
   final DateTimeFormatterFunction? formatter;
   final DateFormat? dateFormat;
 

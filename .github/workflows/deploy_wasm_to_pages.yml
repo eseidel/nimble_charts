@@ -1,0 +1,77 @@
+name: Deploy WASM to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.2"
+          channel: "stable"
+          architecture: x64
+
+      - name: Get dependencies
+        run: |
+          cd charts_flutter/example
+          flutter pub get
+
+      - name: Build WASM
+        run: |
+          cd charts_flutter/example
+          flutter build web --wasm
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'charts_flutter/example/build/web'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Update COOP and COEP headers
+        run: |
+          echo '
+          {
+            "headers": [
+              {
+                "source": "**/*",
+                "headers": [
+                  {
+                    "key": "Cross-Origin-Embedder-Policy",
+                    "value": "credentialless"
+                  },
+                  {
+                    "key": "Cross-Origin-Opener-Policy",
+                    "value": "same-origin"
+                  }
+                ]
+              }
+            ]
+          }
+          ' > charts_flutter/example/build/web/_headers
+
+      - name: Upload updated artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'charts_flutter/example/build/web'
+
+      - name: Redeploy to GitHub Pages
+        uses: actions/deploy-pages@v4

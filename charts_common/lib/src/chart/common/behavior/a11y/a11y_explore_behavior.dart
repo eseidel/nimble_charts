@@ -50,7 +50,7 @@ abstract class A11yExploreBehavior<D> implements ChartBehavior<D> {
 
   /// The gesture that activates explore mode. Defaults to long press.
   ///
-  /// Turning on explore mode asks this [A11yExploreBehavior] to generate nodes 
+  /// Turning on explore mode asks this [A11yExploreBehavior] to generate nodes
   /// within
   /// this chart.
   final ExploreModeTrigger exploreModeTrigger;
