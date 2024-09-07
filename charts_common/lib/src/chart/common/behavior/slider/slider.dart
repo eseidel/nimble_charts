@@ -797,7 +797,7 @@ class AnimatedSlider<D> {
         bottom - top,
       )
 
-      // Animate the stroke width to 0 so that we don't get a lingering line 
+      // Animate the stroke width to 0 so that we don't get a lingering line
       // after animation is done.
       ..strokeWidthPx = 0.0;
 

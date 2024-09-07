@@ -479,7 +479,7 @@ class NumericTickProvider extends BaseTickProvider<num> {
   }
 
   List<double> _getTickValues(_TickStepInfo steps, int tickCount) =>
-      // We have our size and start, assign all the tick values to the given 
+      // We have our size and start, assign all the tick values to the given
       // array.
       [
         for (int i = 0; i < tickCount; i++)

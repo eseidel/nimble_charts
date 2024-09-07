@@ -225,14 +225,16 @@ class ChartTitle<D> implements ChartBehavior<D> {
       chart: _chart,
     );
 
-    chart..addView(_view!)
-    ..addLifecycleListener(_lifecycleListener);
+    chart
+      ..addView(_view!)
+      ..addLifecycleListener(_lifecycleListener);
   }
 
   @override
   void removeFrom(BaseChart<D> chart) {
-    chart..removeView(_view!)
-    ..removeLifecycleListener(_lifecycleListener);
+    chart
+      ..removeView(_view!)
+      ..removeLifecycleListener(_lifecycleListener);
     _chart = null;
   }
 

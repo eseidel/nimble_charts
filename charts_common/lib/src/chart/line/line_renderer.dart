@@ -934,29 +934,29 @@ class LineRenderer<D> extends BaseCartesianRenderer<D> {
     if (!config.stacked || previousPointList == null) {
       // Start area segments at the bottom of a stack by adding a bottom line
       // segment along the measure axis.
-      areaPointList..add(
-        _getPoint(
-          null,
-          domainFn(end),
-          series,
-          domainAxis,
-          0.0,
-          0.0,
-          measureAxis,
-        ),
-      )
-
-      ..add(
-        _getPoint(
-          null,
-          domainFn(start),
-          series,
-          domainAxis,
-          0.0,
-          0.0,
-          measureAxis,
-        ),
-      );
+      areaPointList
+        ..add(
+          _getPoint(
+            null,
+            domainFn(end),
+            series,
+            domainAxis,
+            0.0,
+            0.0,
+            measureAxis,
+          ),
+        )
+        ..add(
+          _getPoint(
+            null,
+            domainFn(start),
+            series,
+            domainAxis,
+            0.0,
+            0.0,
+            measureAxis,
+          ),
+        );
     } else {
       // Start subsequent area segments in a stack by adding the previous
       // points in reverse order, so that we can get a properly closed
@@ -1515,11 +1515,12 @@ class _AnimatedLine<D> {
       );
     }
 
-    newTarget..points = newPoints
+    newTarget
+      ..points = newPoints
 
-    // Animate the stroke width to 0 so that we don't get a lingering line after
-    // animation is done.
-    ..strokeWidthPx = 0.0;
+      // Animate the stroke width to 0 so that we don't get a lingering line 
+      // after animation is done.
+      ..strokeWidthPx = 0.0;
 
     setNewTarget(newTarget);
     animatingOut = true;

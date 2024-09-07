@@ -497,7 +497,7 @@ class _RangeAnnotationLayoutView<D> extends LayoutView {
               ..maxWidthStrategy = MaxWidthStrategy.ellipsize
               ..textStyle = labelStyle;
 
-            // Measure the label max width once if either type of label is 
+            // Measure the label max width once if either type of label is
             // defined.
             labelElement.maxWidth =
                 _getLabelMaxWidth(bounds, annotationElement, labelElement);

@@ -247,8 +247,8 @@ class SymbolAnnotationRenderer<D> extends PointRenderer<D>
 
   @override
   ViewMeasuredSizes measure(int maxWidth, int maxHeight) =>
-      // The sizing of component is not flexible. It's height is always a 
-      // multiple of the number of series rendered, even if that ends up taking 
+      // The sizing of component is not flexible. It's height is always a
+      // multiple of the number of series rendered, even if that ends up taking
       // all of the available margin space.
       ViewMeasuredSizes(
         preferredWidth: maxWidth,

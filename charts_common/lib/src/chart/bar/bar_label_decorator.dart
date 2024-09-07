@@ -316,14 +316,16 @@ class BarLabelDecorator<D> extends BarRendererDecorator<D> {
 
       // Set the max width and text style.
       if (calculatedLabelPosition == BarLabelPosition.inside) {
-        labelElement..textStyle = datumInsideLabelStyle
-        ..maxWidth = insideBarWidth;
+        labelElement
+          ..textStyle = datumInsideLabelStyle
+          ..maxWidth = insideBarWidth;
       } else {
         // this block for...
         // calculatedLabelPosition == LabelPosition.outside ||
         // calculatedLabelPosition == LabelPosition.right
-        labelElement..textStyle = datumOutsideLabelStyle
-        ..maxWidth = outsideBarWidth;
+        labelElement
+          ..textStyle = datumOutsideLabelStyle
+          ..maxWidth = outsideBarWidth;
       }
 
       // Only calculate and draw label if there's actually space for the label.

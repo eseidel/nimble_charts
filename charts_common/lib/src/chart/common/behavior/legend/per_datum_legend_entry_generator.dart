@@ -133,9 +133,10 @@ class PerDatumLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
       for (final entry in legendEntries) {
         final series = entry.series;
         final measure = series.measureFn(entry.datumIndex);
-        entry..value = measure!.toDouble()
-        ..formattedValue = _getFormattedMeasureValue(series, measure)
-        ..isSelected = false;
+        entry
+          ..value = measure!.toDouble()
+          ..formattedValue = _getFormattedMeasureValue(series, measure)
+          ..isSelected = false;
       }
     }
   }

@@ -54,11 +54,11 @@ class GestureListener {
   /// both will be given the event so they can deselect everything in the
   /// selection model.
   ///
-  /// Defaults to function that returns false allowing other listeners to 
+  /// Defaults to function that returns false allowing other listeners to
   /// preempt.
   final GestureSinglePointCallback onTapTest;
 
-  /// Called if onTapTest was previously called, but listener is being 
+  /// Called if onTapTest was previously called, but listener is being
   /// preempted.
   final GestureCancelCallback onTapCancel;
 

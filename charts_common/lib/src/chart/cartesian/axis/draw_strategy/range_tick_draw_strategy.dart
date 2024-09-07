@@ -325,7 +325,7 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
                 getLabelHeight(labelElements),
                 getLabelWidth(labelElements),
               ),
-            //TODO: possible precission loss
+              //TODO: possible precission loss
             ).toInt() +
             labelOffsetFromAxisPx(collision: collision);
       }
