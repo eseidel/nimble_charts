@@ -32,7 +32,7 @@ jobs:
       - name: Build WASM
         run: |
           cd charts_flutter/example
-          flutter build web --wasm --base-href /charts/
+          flutter build web --wasm --base-href /nimble_charts/
 
       - name: Update COOP and COEP headers
         run: |
