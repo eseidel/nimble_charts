@@ -11,3 +11,5 @@ build/
 **/ios/Runner/GeneratedPluginRegistrant.*
 
 charts_flutter/coverage/
+
+charts_flutter/.DS_Store
