@@ -13,6 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts/src/base_chart_state.dart' show BaseChartState;
+import 'package:nimble_charts/src/chart_canvas.dart' show ChartCanvas;
+import 'package:nimble_charts/src/graphics_factory.dart' show GraphicsFactory;
 import 'package:nimble_charts_common/common.dart' as common
     show
         A11yNode,
@@ -21,24 +28,25 @@ import 'package:nimble_charts_common/common.dart' as common
         ChartContext,
         DateTimeFactory,
         LocalDateTimeFactory,
+        Performance,
         ProxyGestureListener,
         RTLSpec,
         SelectionModelType,
-        Series,
-        Performance;
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
+        Series;
+import 'package:nimble_charts_common/common.dart';
 
-import 'base_chart.dart' show BaseChart;
-import 'base_chart_state.dart' show BaseChartState;
-import 'chart_canvas.dart' show ChartCanvas;
-import 'graphics_factory.dart' show GraphicsFactory;
-import 'time_series_chart.dart' show TimeSeriesChart;
-import 'user_managed_state.dart' show UserManagedState;
-
-/// Widget that inflates to a [CustomPaint] that implements common [ChartContext].
+/// Widget that inflates to a [CustomPaint] that implements common [common.ChartContext].
 class ChartContainer<D> extends CustomPaint {
+  const ChartContainer({
+    required this.chartWidget,
+    required this.chartState,
+    required this.animationValue,
+    required this.rtl,
+    super.key,
+    this.oldChartWidget,
+    this.rtlSpec,
+    this.userManagedState,
+  });
   final BaseChart<D> chartWidget;
   final BaseChart<D>? oldChartWidget;
   final BaseChartState<D> chartState;
@@ -47,28 +55,20 @@ class ChartContainer<D> extends CustomPaint {
   final common.RTLSpec? rtlSpec;
   final UserManagedState<D>? userManagedState;
 
-  ChartContainer(
-      {this.oldChartWidget,
-      required this.chartWidget,
-      required this.chartState,
-      required this.animationValue,
-      required this.rtl,
-      this.rtlSpec,
-      this.userManagedState});
-
   @override
-  RenderCustomPaint createRenderObject(BuildContext context) {
-    return new ChartContainerRenderObject<D>()..reconfigure(this, context);
-  }
+  RenderCustomPaint createRenderObject(BuildContext context) =>
+      ChartContainerRenderObject<D>()..reconfigure(this, context);
 
   @override
   void updateRenderObject(
-      BuildContext context, ChartContainerRenderObject renderObject) {
+    BuildContext context,
+    ChartContainerRenderObject renderObject,
+  ) {
     renderObject.reconfigure(this, context);
   }
 }
 
-/// [RenderCustomPaint] that implements common [ChartContext].
+/// [RenderCustomPaint] that implements common [common.ChartContext].
 class ChartContainerRenderObject<D> extends RenderCustomPaint
     implements common.ChartContext {
   common.BaseChart<D>? _chart;
@@ -86,12 +86,12 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
     _dateTimeFactory = (config.chartWidget is TimeSeriesChart)
         ? (config.chartWidget as TimeSeriesChart).dateTimeFactory
         : null;
-    _dateTimeFactory ??= new common.LocalDateTimeFactory();
+    _dateTimeFactory ??= const common.LocalDateTimeFactory();
 
     if (_chart == null) {
       common.Performance.time('chartsCreate');
       _chart = config.chartWidget.createCommonChart(_chartState);
-      _chart!.init(this, new GraphicsFactory(context));
+      _chart!.init(this, GraphicsFactory(context));
       common.Performance.timeEnd('chartsCreate');
     }
     common.Performance.time('chartsConfig');
@@ -143,14 +143,14 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
 
   /// If user managed state is set, check each setting to see if it is different
   /// than internal chart state and only update if different.
-  _updateUserManagedState(UserManagedState<D>? newState) {
+  void _updateUserManagedState(UserManagedState<D>? newState) {
     if (newState == null) {
       return;
     }
 
     // Only override the selection model if it is different than the existing
     // selection model so update listeners are not unnecessarily triggered.
-    for (common.SelectionModelType type in newState.selectionModels.keys) {
+    for (final type in newState.selectionModels.keys) {
       final model = _chart!.getSelectionModel(type);
 
       final userModel =
@@ -158,7 +158,9 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
 
       if (model != userModel) {
         model.updateSelection(
-            userModel.selectedDatum, userModel.selectedSeries);
+          userModel.selectedDatum,
+          userModel.selectedSeries,
+        );
       }
     }
   }
@@ -202,11 +204,11 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
 
     // Sometimes chart behaviors try to draw the chart outside of a Flutter draw
     // cycle. Schedule a frame manually to handle these cases.
-    if (!SchedulerBinding.instance!.hasScheduledFrame) {
-      SchedulerBinding.instance!.scheduleFrame();
+    if (!SchedulerBinding.instance.hasScheduledFrame) {
+      SchedulerBinding.instance.scheduleFrame();
     }
 
-    SchedulerBinding.instance!.addPostFrameCallback(startAnimationController);
+    SchedulerBinding.instance.addPostFrameCallback(startAnimationController);
   }
 
   /// Request Flutter to rebuild the widget/container of chart.
@@ -229,7 +231,7 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
     // This is needed to request rebuild after the legend has been added in the
     // post process phase of the chart, which happens during the chart widget's
     // build cycle.
-    SchedulerBinding.instance!.addPostFrameCallback(doRebuild);
+    SchedulerBinding.instance.addPostFrameCallback(doRebuild);
   }
 
   /// When Flutter's markNeedsLayout is called, layout and paint are both
@@ -243,7 +245,7 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
   }
 
   @override
-  double get pixelsPerDp => 1.0;
+  double get pixelsPerDp => 1;
 
   @override
   bool get chartContainerIsRtl => _chartContainerIsRtl;
@@ -270,8 +272,10 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
       _chartContainerIsRtl ? TextDirection.rtl : TextDirection.ltr;
 
   @override
-  void enableA11yExploreMode(List<common.A11yNode> nodes,
-      {String? announcement}) {
+  void enableA11yExploreMode(
+    List<common.A11yNode> nodes, {
+    String? announcement,
+  }) {
     _a11yNodes = nodes;
     _exploreMode = true;
     _setNewPainter();
@@ -293,51 +297,54 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
   }
 
   void _setNewPainter() {
-    painter = new ChartContainerCustomPaint(
-        oldPainter: painter as ChartContainerCustomPaint?,
-        chart: _chart!,
-        exploreMode: _exploreMode,
-        a11yNodes: _a11yNodes ?? [],
-        textDirection: textDirection);
+    painter = ChartContainerCustomPaint(
+      oldPainter: painter as ChartContainerCustomPaint?,
+      chart: _chart!,
+      exploreMode: _exploreMode,
+      a11yNodes: _a11yNodes ?? [],
+      textDirection: textDirection,
+    );
   }
 }
 
 class ChartContainerCustomPaint extends CustomPainter {
-  final common.BaseChart chart;
-  final bool exploreMode;
-  final List<common.A11yNode> a11yNodes;
-  final TextDirection textDirection;
-
-  factory ChartContainerCustomPaint(
-      {ChartContainerCustomPaint? oldPainter,
-      required common.BaseChart chart,
-      bool exploreMode = false,
-      List<common.A11yNode> a11yNodes = const [],
-      TextDirection textDirection = TextDirection.ltr}) {
+  factory ChartContainerCustomPaint({
+    required common.BaseChart chart,
+    ChartContainerCustomPaint? oldPainter,
+    bool exploreMode = false,
+    List<common.A11yNode> a11yNodes = const [],
+    TextDirection textDirection = TextDirection.ltr,
+  }) {
     if (oldPainter != null &&
         oldPainter.exploreMode == exploreMode &&
         oldPainter.a11yNodes == a11yNodes &&
         oldPainter.textDirection == textDirection) {
       return oldPainter;
     } else {
-      return new ChartContainerCustomPaint._internal(
-          chart: chart,
-          exploreMode: exploreMode,
-          a11yNodes: a11yNodes,
-          textDirection: textDirection);
+      return ChartContainerCustomPaint._internal(
+        chart: chart,
+        exploreMode: exploreMode,
+        a11yNodes: a11yNodes,
+        textDirection: textDirection,
+      );
     }
   }
 
-  ChartContainerCustomPaint._internal(
-      {required this.chart,
-      required this.exploreMode,
-      required this.a11yNodes,
-      required this.textDirection});
+  ChartContainerCustomPaint._internal({
+    required this.chart,
+    required this.exploreMode,
+    required this.a11yNodes,
+    required this.textDirection,
+  });
+  final common.BaseChart chart;
+  final bool exploreMode;
+  final List<common.A11yNode> a11yNodes;
+  final TextDirection textDirection;
 
   @override
   void paint(Canvas canvas, Size size) {
     common.Performance.time('chartsPaint');
-    final chartsCanvas = new ChartCanvas(canvas, chart.graphicsFactory!);
+    final chartsCanvas = ChartCanvas(canvas, chart.graphicsFactory!);
     chart.paint(chartsCanvas);
     common.Performance.timeEnd('chartsPaint');
   }
@@ -348,11 +355,10 @@ class ChartContainerCustomPaint extends CustomPainter {
 
   /// Rebuild semantics when explore mode is toggled semantic properties change.
   @override
-  bool shouldRebuildSemantics(ChartContainerCustomPaint oldDelegate) {
-    return exploreMode != oldDelegate.exploreMode ||
-        a11yNodes != oldDelegate.a11yNodes ||
-        textDirection != textDirection;
-  }
+  bool shouldRebuildSemantics(ChartContainerCustomPaint oldDelegate) =>
+      exploreMode != oldDelegate.exploreMode ||
+      a11yNodes != oldDelegate.a11yNodes ||
+      textDirection != textDirection;
 
   @override
   SemanticsBuilderCallback get semanticsBuilder => _buildSemantics;
@@ -360,18 +366,23 @@ class ChartContainerCustomPaint extends CustomPainter {
   List<CustomPainterSemantics> _buildSemantics(Size size) {
     final nodes = <CustomPainterSemantics>[];
 
-    for (common.A11yNode node in a11yNodes) {
-      final rect = new Rect.fromLTWH(
-          node.boundingBox.left.toDouble(),
-          node.boundingBox.top.toDouble(),
-          node.boundingBox.width.toDouble(),
-          node.boundingBox.height.toDouble());
-      nodes.add(new CustomPainterSemantics(
+    for (final node in a11yNodes) {
+      final rect = Rect.fromLTWH(
+        node.boundingBox.left.toDouble(),
+        node.boundingBox.top.toDouble(),
+        node.boundingBox.width.toDouble(),
+        node.boundingBox.height.toDouble(),
+      );
+      nodes.add(
+        CustomPainterSemantics(
           rect: rect,
-          properties: new SemanticsProperties(
-              value: node.label,
-              textDirection: textDirection,
-              onDidGainAccessibilityFocus: node.onFocus)));
+          properties: SemanticsProperties(
+            value: node.label,
+            textDirection: textDirection,
+            onDidGainAccessibilityFocus: node.onFocus,
+          ),
+        ),
+      );
     }
 
     return nodes;

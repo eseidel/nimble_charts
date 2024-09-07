@@ -14,34 +14,45 @@
 // limitations under the License.
 
 import 'dart:math' show Rectangle;
+import 'dart:ui' as ui;
+import 'package:flutter/widgets.dart';
+import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts/src/chart_canvas.dart' show ChartCanvas;
+import 'package:nimble_charts/src/graphics_factory.dart' show GraphicsFactory;
 import 'package:nimble_charts_common/common.dart' as common
     show ChartCanvas, Color, FillPatternType, SymbolRenderer;
-import 'package:flutter/widgets.dart';
-import 'chart_canvas.dart' show ChartCanvas;
-import 'graphics_factory.dart' show GraphicsFactory;
 
 /// Flutter widget responsible for painting a common SymbolRenderer from the
 /// chart.
 ///
 /// If you want to customize the symbol, then use [CustomSymbolRenderer].
 class SymbolRendererCanvas implements SymbolRendererBuilder {
+  SymbolRendererCanvas(this.commonSymbolRenderer, this.dashPattern);
   final common.SymbolRenderer commonSymbolRenderer;
   final List<int>? dashPattern;
 
-  SymbolRendererCanvas(this.commonSymbolRenderer, this.dashPattern);
-
   @override
-  Widget build(BuildContext context,
-      {Color? color, required Size size, bool enabled = true}) {
+  Widget build(
+    BuildContext context, {
+    required Size size,
+    common.Color? color,
+    bool enabled = true,
+  }) {
     if (color != null && !enabled) {
       color = color.withOpacity(0.26);
     }
 
-    return new SizedBox.fromSize(
-        size: size,
-        child: new CustomPaint(
-            painter: new _SymbolCustomPaint(
-                context, commonSymbolRenderer, color, dashPattern)));
+    return SizedBox.fromSize(
+      size: size,
+      child: CustomPaint(
+        painter: _SymbolCustomPaint(
+          context,
+          commonSymbolRenderer,
+          color,
+          dashPattern,
+        ),
+      ),
+    );
   }
 }
 
@@ -57,60 +68,78 @@ abstract class CustomSymbolRenderer extends common.SymbolRenderer
   /// Must override this method to build the custom Widget with the given color
   /// as
   @override
-  Widget build(BuildContext context,
-      {Color? color, required Size size, bool enabled = true});
+  Widget build(
+    BuildContext context, {
+    required Size size,
+    Color? color,
+    bool enabled = true,
+  });
 
   @override
-  void paint(common.ChartCanvas canvas, Rectangle<num> bounds,
-      {List<int>? dashPattern,
-      common.Color? fillColor,
-      common.FillPatternType? fillPattern,
-      common.Color? strokeColor,
-      double? strokeWidthPx}) {
+  void paint(
+    common.ChartCanvas canvas,
+    Rectangle<num> bounds, {
+    List<int>? dashPattern,
+    common.Color? fillColor,
+    common.FillPatternType? fillPattern,
+    common.Color? strokeColor,
+    double? strokeWidthPx,
+  }) {
     // Intentionally ignored (never called).
   }
 
   @override
-  bool shouldRepaint(common.SymbolRenderer oldRenderer) {
-    return false; // Repainting is handled directly in Flutter.
-  }
+  bool shouldRepaint(common.SymbolRenderer oldRenderer) =>
+      false; // Repainting is handled directly in Flutter.
 }
 
 /// Common interface for [CustomSymbolRenderer] & [SymbolRendererCanvas] for
 /// convenience for [LegendEntryLayout].
 abstract class SymbolRendererBuilder {
-  Widget build(BuildContext context,
-      {Color? color, required Size size, bool enabled});
+  Widget build(
+    BuildContext context, {
+    required Size size,
+    Color? color,
+    bool enabled,
+  });
 }
 
 /// The Widget which fulfills the guts of [SymbolRendererCanvas] actually
 /// painting the symbol to a canvas using [CustomPainter].
 class _SymbolCustomPaint extends CustomPainter {
+  _SymbolCustomPaint(
+    this.context,
+    this.symbolRenderer,
+    this.color,
+    this.dashPattern,
+  );
   final BuildContext context;
   final common.SymbolRenderer symbolRenderer;
-  final Color? color;
+  final ui.Color? color;
   final List<int>? dashPattern;
-
-  _SymbolCustomPaint(
-      this.context, this.symbolRenderer, this.color, this.dashPattern);
 
   @override
   void paint(Canvas canvas, Size size) {
     final bounds =
-        new Rectangle<num>(0, 0, size.width.toInt(), size.height.toInt());
+        Rectangle<num>(0, 0, size.width.toInt(), size.height.toInt());
     final commonColor = color == null
         ? null
-        : new common.Color(
-            r: color!.red, g: color!.green, b: color!.blue, a: color!.alpha);
+        : common.Color(
+            r: color!.red,
+            g: color!.green,
+            b: color!.blue,
+            a: color!.alpha,
+          );
     symbolRenderer.paint(
-        new ChartCanvas(canvas, GraphicsFactory(context)), bounds,
-        fillColor: commonColor,
-        strokeColor: commonColor,
-        dashPattern: dashPattern);
+      ChartCanvas(canvas, GraphicsFactory(context)),
+      bounds,
+      fillColor: commonColor,
+      strokeColor: commonColor,
+      dashPattern: dashPattern,
+    );
   }
 
   @override
-  bool shouldRepaint(_SymbolCustomPaint oldDelegate) {
-    return symbolRenderer.shouldRepaint(oldDelegate.symbolRenderer);
-  }
+  bool shouldRepaint(_SymbolCustomPaint oldDelegate) =>
+      symbolRenderer.shouldRepaint(oldDelegate.symbolRenderer);
 }

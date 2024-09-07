@@ -6,7 +6,7 @@ import 'test_functions.dart';
 
 void main() {
   group('Chart Widget Tests', () {
-    testWidgets('BarChart renders correctly', (WidgetTester tester) async {
+    testWidgets('BarChart renders correctly', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -24,7 +24,7 @@ void main() {
       await matchesGolden<charts.BarChart>('golden_bar_chart.png');
     });
 
-    testWidgets('LineChart renders correctly', (WidgetTester tester) async {
+    testWidgets('LineChart renders correctly', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -42,8 +42,7 @@ void main() {
       await matchesGolden<charts.LineChart>('golden_line_chart');
     });
 
-    testWidgets('TimeSeriesChart renders correctly',
-        (WidgetTester tester) async {
+    testWidgets('TimeSeriesChart renders correctly', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -59,11 +58,12 @@ void main() {
       );
 
       await matchesGolden<charts.TimeSeriesChart>(
-          'golden_time_series_chart.png');
+        'golden_time_series_chart.png',
+      );
     });
 
     testWidgets('BarChart with custom colors renders correctly',
-        (WidgetTester tester) async {
+        (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -79,11 +79,11 @@ void main() {
       );
 
       await matchesGolden<charts.BarChart>(
-          'golden_bar_chart_custom_colors.png');
+        'golden_bar_chart_custom_colors.png',
+      );
     });
 
-    testWidgets('LineChart with points renders correctly',
-        (WidgetTester tester) async {
+    testWidgets('LineChart with points renders correctly', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -103,7 +103,7 @@ void main() {
     });
 
     testWidgets('TimeSeriesChart with multiple series renders correctly',
-        (WidgetTester tester) async {
+        (tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -119,7 +119,8 @@ void main() {
       );
 
       await matchesGolden<charts.TimeSeriesChart>(
-          'golden_time_series_chart_multiple');
+        'golden_time_series_chart_multiple',
+      );
     });
   });
 }
@@ -134,9 +135,9 @@ List<charts.Series<OrdinalSales, String>> createSampleBarData() => [
           OrdinalSales('2016', 100),
           OrdinalSales('2017', 75),
         ],
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
-      )
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+      ),
     ];
 
 /// Creates sample data for a line chart.
@@ -149,9 +150,9 @@ List<charts.Series<LinearSales, int>> createSampleLineData() => [
           LinearSales(2, 100),
           LinearSales(3, 75),
         ],
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-      )
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+      ),
     ];
 
 /// Creates sample data for a time series chart.
@@ -164,9 +165,9 @@ List<charts.Series<TimeSeriesSales, DateTime>> createSampleTimeSeriesData() => [
           TimeSeriesSales(DateTime(2017, 10, 3), 100),
           TimeSeriesSales(DateTime(2017, 10, 10), 75),
         ],
-        domainFn: (TimeSeriesSales sales, _) => sales.time,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
-      )
+        domainFn: (sales, _) => sales.time,
+        measureFn: (sales, _) => sales.sales,
+      ),
     ];
 
 /// Creates sample data for a bar chart with custom colors.
@@ -180,9 +181,9 @@ List<charts.Series<OrdinalSales, String>>
               OrdinalSales('2016', 100),
               OrdinalSales('2017', 75),
             ],
-            domainFn: (OrdinalSales sales, _) => sales.year,
-            measureFn: (OrdinalSales sales, _) => sales.sales,
-            colorFn: (OrdinalSales sales, _) {
+            domainFn: (sales, _) => sales.year,
+            measureFn: (sales, _) => sales.sales,
+            colorFn: (sales, _) {
               switch (sales.year) {
                 case '2014':
                   return charts.MaterialPalette.blue.shadeDefault;
@@ -196,7 +197,7 @@ List<charts.Series<OrdinalSales, String>>
                   return charts.MaterialPalette.gray.shadeDefault;
               }
             },
-          )
+          ),
         ];
 
 /// Creates sample data for a line chart with points.
@@ -209,9 +210,9 @@ List<charts.Series<LinearSales, int>> createSampleLineDataWithPoints() => [
           LinearSales(2, 100),
           LinearSales(3, 75),
         ],
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-      )
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+      ),
     ];
 
 /// Creates sample data for a time series chart with multiple series.
@@ -225,8 +226,8 @@ List<charts.Series<TimeSeriesSales, DateTime>>
               TimeSeriesSales(DateTime(2017, 10, 3), 100),
               TimeSeriesSales(DateTime(2017, 10, 10), 75),
             ],
-            domainFn: (TimeSeriesSales sales, _) => sales.time,
-            measureFn: (TimeSeriesSales sales, _) => sales.sales,
+            domainFn: (sales, _) => sales.time,
+            measureFn: (sales, _) => sales.sales,
           ),
           charts.Series<TimeSeriesSales, DateTime>(
             id: 'Mobile',
@@ -236,31 +237,28 @@ List<charts.Series<TimeSeriesSales, DateTime>>
               TimeSeriesSales(DateTime(2017, 10, 3), 200),
               TimeSeriesSales(DateTime(2017, 10, 10), 150),
             ],
-            domainFn: (TimeSeriesSales sales, _) => sales.time,
-            measureFn: (TimeSeriesSales sales, _) => sales.sales,
+            domainFn: (sales, _) => sales.time,
+            measureFn: (sales, _) => sales.sales,
           ),
         ];
 
 /// Sample ordinal data type.
 class OrdinalSales {
+  OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }
 
 /// Sample linear data type.
 class LinearSales {
+  LinearSales(this.year, this.sales);
   final int year;
   final int sales;
-
-  LinearSales(this.year, this.sales);
 }
 
 /// Sample time series data type.
 class TimeSeriesSales {
+  TimeSeriesSales(this.time, this.sales);
   final DateTime time;
   final int sales;
-
-  TimeSeriesSales(this.time, this.sales);
 }

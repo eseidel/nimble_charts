@@ -19,6 +19,11 @@ import 'package:nimble_charts_common/common.dart' as common;
 
 @immutable
 class SelectionModelConfig<D> {
+  const SelectionModelConfig({
+    this.type = common.SelectionModelType.info,
+    this.changedListener,
+    this.updatedListener,
+  });
   final common.SelectionModelType type;
 
   /// Listens for change in selection.
@@ -26,9 +31,4 @@ class SelectionModelConfig<D> {
 
   /// Listens anytime update selection is called.
   final common.SelectionModelListener<D>? updatedListener;
-
-  SelectionModelConfig(
-      {this.type = common.SelectionModelType.info,
-      this.changedListener,
-      this.updatedListener});
 }

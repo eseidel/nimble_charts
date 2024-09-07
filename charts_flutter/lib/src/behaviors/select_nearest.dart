@@ -13,21 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/common.dart' as common
-    show
-        ChartBehavior,
-        SelectNearest,
-        SelectionMode,
-        SelectionModelType,
-        SelectionTrigger;
-
-import 'package:meta/meta.dart' show immutable;
-
-import 'chart_behavior.dart' show ChartBehavior, GestureType;
+import 'package:flutter/material.dart';
+import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart';
+import 'package:nimble_charts_common/common.dart' as common;
 
 /// Chart behavior that listens to the given eventTrigger and updates the
-/// specified [SelectionModel]. This is used to pair input events to behaviors
-/// that listen to selection changes.
+/// specified [common.SelectionModel]. This is used to pair input events to
+/// behaviors that listen to selection changes.
 ///
 /// Input event types:
 ///   hover (default) - Mouse over/near data.
@@ -50,6 +43,35 @@ import 'chart_behavior.dart' show ChartBehavior, GestureType;
 /// removed.
 @immutable
 class SelectNearest<D> extends ChartBehavior<D> {
+  factory SelectNearest({
+    common.SelectionModelType selectionModelType =
+        common.SelectionModelType.info,
+    common.SelectionMode selectionMode = common.SelectionMode.expandToDomain,
+    bool selectAcrossAllDrawAreaComponents = false,
+    bool selectClosestSeries = true,
+    common.SelectionTrigger eventTrigger = common.SelectionTrigger.tap,
+    int? maximumDomainDistancePx,
+  }) =>
+      SelectNearest._internal(
+        selectionModelType: selectionModelType,
+        selectionMode: selectionMode,
+        selectAcrossAllDrawAreaComponents: selectAcrossAllDrawAreaComponents,
+        selectClosestSeries: selectClosestSeries,
+        eventTrigger: eventTrigger,
+        desiredGestures: SelectNearest._getDesiredGestures(eventTrigger),
+        maximumDomainDistancePx: maximumDomainDistancePx,
+      );
+
+  SelectNearest._internal({
+    required this.selectionModelType,
+    required this.eventTrigger,
+    required this.desiredGestures,
+    this.selectionMode = common.SelectionMode.expandToDomain,
+    this.selectAcrossAllDrawAreaComponents = false,
+    this.selectClosestSeries = true,
+    this.maximumDomainDistancePx,
+  });
+  @override
   final Set<GestureType> desiredGestures;
 
   final common.SelectionModelType selectionModelType;
@@ -59,69 +81,39 @@ class SelectNearest<D> extends ChartBehavior<D> {
   final bool selectClosestSeries;
   final int? maximumDomainDistancePx;
 
-  SelectNearest._internal(
-      {required this.selectionModelType,
-      this.selectionMode = common.SelectionMode.expandToDomain,
-      this.selectAcrossAllDrawAreaComponents = false,
-      this.selectClosestSeries = true,
-      required this.eventTrigger,
-      required this.desiredGestures,
-      this.maximumDomainDistancePx});
-
-  factory SelectNearest(
-      {common.SelectionModelType selectionModelType =
-          common.SelectionModelType.info,
-      common.SelectionMode selectionMode = common.SelectionMode.expandToDomain,
-      bool selectAcrossAllDrawAreaComponents = false,
-      bool selectClosestSeries = true,
-      common.SelectionTrigger eventTrigger = common.SelectionTrigger.tap,
-      int? maximumDomainDistancePx}) {
-    return new SelectNearest._internal(
-        selectionModelType: selectionModelType,
-        selectionMode: selectionMode,
-        selectAcrossAllDrawAreaComponents: selectAcrossAllDrawAreaComponents,
-        selectClosestSeries: selectClosestSeries,
-        eventTrigger: eventTrigger,
-        desiredGestures: SelectNearest._getDesiredGestures(eventTrigger),
-        maximumDomainDistancePx: maximumDomainDistancePx);
-  }
-
   static Set<GestureType> _getDesiredGestures(
-      common.SelectionTrigger eventTrigger) {
-    final desiredGestures = new Set<GestureType>();
+    common.SelectionTrigger eventTrigger,
+  ) {
+    final desiredGestures = <GestureType>{};
     switch (eventTrigger) {
       case common.SelectionTrigger.tap:
-        desiredGestures..add(GestureType.onTap);
-        break;
+        desiredGestures.add(GestureType.onTap);
       case common.SelectionTrigger.tapAndDrag:
         desiredGestures
           ..add(GestureType.onTap)
           ..add(GestureType.onDrag);
-        break;
       case common.SelectionTrigger.pressHold:
       case common.SelectionTrigger.longPressHold:
         desiredGestures
           ..add(GestureType.onTap)
           ..add(GestureType.onLongPress)
           ..add(GestureType.onDrag);
-        break;
       case common.SelectionTrigger.hover:
       default:
-        desiredGestures..add(GestureType.onHover);
+        desiredGestures.add(GestureType.onHover);
         break;
     }
     return desiredGestures;
   }
 
   @override
-  common.SelectNearest<D> createCommonBehavior() {
-    return new common.SelectNearest<D>(
+  common.SelectNearest<D> createCommonBehavior() => common.SelectNearest<D>(
         selectionModelType: selectionModelType,
         eventTrigger: eventTrigger,
         selectionMode: selectionMode,
         selectClosestSeries: selectClosestSeries,
-        maximumDomainDistancePx: maximumDomainDistancePx);
-  }
+        maximumDomainDistancePx: maximumDomainDistancePx,
+      );
 
   @override
   void updateCommonBehavior(common.ChartBehavior commonBehavior) {}
@@ -129,8 +121,9 @@ class SelectNearest<D> extends ChartBehavior<D> {
   // TODO: Explore the performance impact of calculating this once
   // at the constructor for this and common ChartBehaviors.
   @override
-  String get role => 'SelectNearest-${selectionModelType.toString()}}';
+  String get role => 'SelectNearest-$selectionModelType}';
 
+  @override
   bool operator ==(Object other) {
     if (other is SelectNearest) {
       return (selectionModelType == other.selectionModelType) &&
@@ -143,8 +136,9 @@ class SelectNearest<D> extends ChartBehavior<D> {
     }
   }
 
+  @override
   int get hashCode {
-    int hashcode = selectionModelType.hashCode;
+    var hashcode = selectionModelType.hashCode;
     hashcode = hashcode * 37 + eventTrigger.hashCode;
     hashcode = hashcode * 37 + selectionMode.hashCode;
     hashcode = hashcode * 37 + selectClosestSeries.hashCode;

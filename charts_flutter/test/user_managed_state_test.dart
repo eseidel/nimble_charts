@@ -22,13 +22,13 @@ import 'test_functions.dart';
 
 void main() {
   group('User Managed State Tests', () {
-    testWidgets('selection can be set programmatically',
-        (WidgetTester tester) async {
+    testWidgets('selection can be set programmatically', (tester) async {
       final onTapSelection =
           charts.UserManagedSelectionModel<String>.fromConfig(
-              selectedDataConfig: [
-            charts.SeriesDatumConfig<String>('Sales', '2016')
-          ]);
+        selectedDataConfig: [
+          charts.SeriesDatumConfig<String>('Sales', '2016'),
+        ],
+      );
 
       charts.SelectionModel<String>? currentSelectionModel;
 
@@ -66,44 +66,42 @@ void main() {
 }
 
 class TestChart extends StatefulWidget {
+  const TestChart(this.selectionChangedListener, this.onTapSelection,
+      {super.key});
   final charts.SelectionModelListener<String> selectionChangedListener;
   final charts.UserManagedSelectionModel<String> onTapSelection;
 
-  TestChart(this.selectionChangedListener, this.onTapSelection);
-
   @override
-  TestChartState createState() {
-    return new TestChartState(selectionChangedListener, onTapSelection);
-  }
+  TestChartState createState() =>
+      TestChartState(selectionChangedListener, onTapSelection);
 }
 
 class TestChartState extends State<TestChart> {
+  TestChartState(this.selectionChangedListener, this.onTapSelection);
   final charts.SelectionModelListener<String> selectionChangedListener;
   final charts.UserManagedSelectionModel<String> onTapSelection;
 
   final seriesList = _createSampleData();
-  final myState = new charts.UserManagedState<String>();
-
-  TestChartState(this.selectionChangedListener, this.onTapSelection);
+  final myState = charts.UserManagedState<String>();
 
   @override
   Widget build(BuildContext context) {
-    final chart = new charts.BarChart(
+    final chart = charts.BarChart(
       seriesList,
       userManagedState: myState,
       selectionModels: [
-        new charts.SelectionModelConfig(
-            type: charts.SelectionModelType.info,
-            changedListener: widget.selectionChangedListener)
+        charts.SelectionModelConfig(
+          changedListener: widget.selectionChangedListener,
+        ),
       ],
       // Disable animation and gesture for testing.
       animate: false, //widget.animate,
       defaultInteractions: false,
     );
 
-    return new Directionality(
+    return Directionality(
       textDirection: TextDirection.ltr,
-      child: new GestureDetector(child: chart, onTap: handleOnTap),
+      child: GestureDetector(onTap: handleOnTap, child: chart),
     );
   }
 
@@ -117,27 +115,26 @@ class TestChartState extends State<TestChart> {
 /// Create one series with sample hard coded data.
 List<charts.Series<OrdinalSales, String>> _createSampleData() {
   final data = [
-    new OrdinalSales('2014', 5),
-    new OrdinalSales('2015', 25),
-    new OrdinalSales('2016', 100),
-    new OrdinalSales('2017', 75),
+    OrdinalSales('2014', 5),
+    OrdinalSales('2015', 25),
+    OrdinalSales('2016', 100),
+    OrdinalSales('2017', 75),
   ];
 
   return [
-    new charts.Series<OrdinalSales, String>(
+    charts.Series<OrdinalSales, String>(
       id: 'Sales',
       colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-      domainFn: (OrdinalSales sales, _) => sales.year,
-      measureFn: (OrdinalSales sales, _) => sales.sales,
+      domainFn: (sales, _) => sales.year,
+      measureFn: (sales, _) => sales.sales,
       data: data,
-    )
+    ),
   ];
 }
 
 /// Sample ordinal data type.
 class OrdinalSales {
+  OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }

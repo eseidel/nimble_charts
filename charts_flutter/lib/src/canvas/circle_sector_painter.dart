@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show cos, pi, sin, Point;
+import 'dart:math' show Point, cos, pi, sin;
 import 'package:flutter/material.dart';
 import 'package:nimble_charts_common/common.dart' as common show Color;
 
@@ -42,56 +42,83 @@ class CircleSectorPainter {
     required double endAngle,
     common.Color? fill,
   }) {
-    paint.color = new Color.fromARGB(fill!.a, fill.r, fill.g, fill.b);
-    paint.style = PaintingStyle.fill;
+    paint
+      ..color = Color.fromARGB(fill!.a, fill.r, fill.g, fill.b)
+      ..style = PaintingStyle.fill;
 
-    final innerRadiusStartPoint = new Point<double>(
-        innerRadius * cos(startAngle) + center.x,
-        innerRadius * sin(startAngle) + center.y);
+    final innerRadiusStartPoint = Point<double>(
+      innerRadius * cos(startAngle) + center.x,
+      innerRadius * sin(startAngle) + center.y,
+    );
 
-    final innerRadiusEndPoint = new Point<double>(
-        innerRadius * cos(endAngle) + center.x,
-        innerRadius * sin(endAngle) + center.y);
+    final innerRadiusEndPoint = Point<double>(
+      innerRadius * cos(endAngle) + center.x,
+      innerRadius * sin(endAngle) + center.y,
+    );
 
-    final radiusStartPoint = new Point<double>(
-        radius * cos(startAngle) + center.x,
-        radius * sin(startAngle) + center.y);
+    final radiusStartPoint = Point<double>(
+      radius * cos(startAngle) + center.x,
+      radius * sin(startAngle) + center.y,
+    );
 
-    final centerOffset = new Offset(center.x.toDouble(), center.y.toDouble());
+    final centerOffset = Offset(center.x.toDouble(), center.y.toDouble());
 
-    final isFullCircle = startAngle != null &&
-        endAngle != null &&
-        endAngle - startAngle == 2 * pi;
+    final isFullCircle = endAngle - startAngle == 2 * pi;
 
     final midpointAngle = (endAngle + startAngle) / 2;
 
-    final path = new Path()
-      ..moveTo(innerRadiusStartPoint.x, innerRadiusStartPoint.y);
-
-    path.lineTo(radiusStartPoint.x, radiusStartPoint.y);
+    final path = Path()
+      ..moveTo(innerRadiusStartPoint.x, innerRadiusStartPoint.y)
+      ..lineTo(radiusStartPoint.x, radiusStartPoint.y);
 
     // For full circles, draw the arc in two parts.
     if (isFullCircle) {
-      path.arcTo(new Rect.fromCircle(center: centerOffset, radius: radius),
-          startAngle, midpointAngle - startAngle, true);
-      path.arcTo(new Rect.fromCircle(center: centerOffset, radius: radius),
-          midpointAngle, endAngle - midpointAngle, true);
+      path
+        ..arcTo(
+          Rect.fromCircle(center: centerOffset, radius: radius),
+          startAngle,
+          midpointAngle - startAngle,
+          true,
+        )
+        ..arcTo(
+          Rect.fromCircle(center: centerOffset, radius: radius),
+          midpointAngle,
+          endAngle - midpointAngle,
+          true,
+        );
     } else {
-      path.arcTo(new Rect.fromCircle(center: centerOffset, radius: radius),
-          startAngle, endAngle - startAngle, true);
+      path.arcTo(
+        Rect.fromCircle(center: centerOffset, radius: radius),
+        startAngle,
+        endAngle - startAngle,
+        true,
+      );
     }
 
     path.lineTo(innerRadiusEndPoint.x, innerRadiusEndPoint.y);
 
     // For full circles, draw the arc in two parts.
     if (isFullCircle) {
-      path.arcTo(new Rect.fromCircle(center: centerOffset, radius: innerRadius),
-          endAngle, midpointAngle - endAngle, true);
-      path.arcTo(new Rect.fromCircle(center: centerOffset, radius: innerRadius),
-          midpointAngle, startAngle - midpointAngle, true);
+      path
+        ..arcTo(
+          Rect.fromCircle(center: centerOffset, radius: innerRadius),
+          endAngle,
+          midpointAngle - endAngle,
+          true,
+        )
+        ..arcTo(
+          Rect.fromCircle(center: centerOffset, radius: innerRadius),
+          midpointAngle,
+          startAngle - midpointAngle,
+          true,
+        );
     } else {
-      path.arcTo(new Rect.fromCircle(center: centerOffset, radius: innerRadius),
-          endAngle, startAngle - endAngle, true);
+      path.arcTo(
+        Rect.fromCircle(center: centerOffset, radius: innerRadius),
+        endAngle,
+        startAngle - endAngle,
+        true,
+      );
     }
 
     // Drawing two copies of this line segment, before and after the arcs,

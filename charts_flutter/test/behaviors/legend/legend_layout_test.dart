@@ -15,9 +15,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:mockito/mockito.dart';
-import 'package:test/test.dart';
-
 import 'package:nimble_charts/src/behaviors/legend/legend_layout.dart';
+import 'package:test/test.dart';
 
 // Can't use Mockito annotations with BuildContext yet? Fake it.
 class FakeBuildContext extends Fake implements BuildContext {}
@@ -31,87 +30,106 @@ void main() {
 
   group('TabularLegendLayoutBuilder', () {
     test('builds horizontally', () {
-      final builder = new TabularLegendLayout.horizontalFirst();
-      final widgets = <Widget>[new Text('1'), new Text('2'), new Text('3')];
+      final builder = TabularLegendLayout.horizontalFirst();
+      final widgets = <Widget>[
+        const Text('1'),
+        const Text('2'),
+        const Text('3')
+      ];
 
-      final Table layout = builder.build(context, widgets) as Table;
+      final layout = builder.build(context, widgets) as Table;
       expect(layout.children.length, 1);
-      expect(layout.children.first.children!.length, 3);
+      expect(layout.children.first.children.length, 3);
     });
 
     test('does not build extra columns if max columns exceed widget count', () {
       final builder =
-          new TabularLegendLayout.horizontalFirst(desiredMaxColumns: 10);
-      final widgets = <Widget>[new Text('1'), new Text('2'), new Text('3')];
+          TabularLegendLayout.horizontalFirst(desiredMaxColumns: 10);
+      final widgets = <Widget>[
+        const Text('1'),
+        const Text('2'),
+        const Text('3')
+      ];
 
-      final Table layout = builder.build(context, widgets) as Table;
+      final layout = builder.build(context, widgets) as Table;
       expect(layout.children.length, 1);
-      expect(layout.children.first.children!.length, 3);
+      expect(layout.children.first.children.length, 3);
     });
 
     test('builds horizontally until max column exceeded', () {
-      final builder =
-          new TabularLegendLayout.horizontalFirst(desiredMaxColumns: 2);
+      final builder = TabularLegendLayout.horizontalFirst(desiredMaxColumns: 2);
 
-      final widgets = new List<Widget>.generate(
-          7, (int index) => new Text(index.toString()));
+      final widgets = List<Widget>.generate(
+        7,
+        (index) => Text(index.toString()),
+      );
 
-      final Table layout = builder.build(context, widgets) as Table;
+      final layout = builder.build(context, widgets) as Table;
       expect(layout.children.length, 4);
 
-      expect(layout.children[0].children![0], equals(widgets[0]));
-      expect(layout.children[0].children![1], equals(widgets[1]));
+      expect(layout.children[0].children[0], equals(widgets[0]));
+      expect(layout.children[0].children[1], equals(widgets[1]));
 
-      expect(layout.children[1].children![0], equals(widgets[2]));
-      expect(layout.children[1].children![1], equals(widgets[3]));
+      expect(layout.children[1].children[0], equals(widgets[2]));
+      expect(layout.children[1].children[1], equals(widgets[3]));
 
-      expect(layout.children[2].children![0], equals(widgets[4]));
-      expect(layout.children[2].children![1], equals(widgets[5]));
+      expect(layout.children[2].children[0], equals(widgets[4]));
+      expect(layout.children[2].children[1], equals(widgets[5]));
 
-      expect(layout.children[3].children![0], equals(widgets[6]));
+      expect(layout.children[3].children[0], equals(widgets[6]));
     });
 
     test('builds vertically', () {
-      final builder = new TabularLegendLayout.verticalFirst();
-      final widgets = <Widget>[new Text('1'), new Text('2'), new Text('3')];
+      final builder = TabularLegendLayout.verticalFirst();
+      final widgets = <Widget>[
+        const Text('1'),
+        const Text('2'),
+        const Text('3')
+      ];
 
-      final Table layout = builder.build(context, widgets) as Table;
+      final layout = builder.build(context, widgets) as Table;
       expect(layout.children.length, 3);
-      expect(layout.children[0].children!.length, 1);
-      expect(layout.children[1].children!.length, 1);
-      expect(layout.children[2].children!.length, 1);
+      expect(layout.children[0].children.length, 1);
+      expect(layout.children[1].children.length, 1);
+      expect(layout.children[2].children.length, 1);
     });
 
     test('does not build extra rows if max rows exceed widget count', () {
-      final builder = new TabularLegendLayout.verticalFirst(desiredMaxRows: 10);
-      final widgets = <Widget>[new Text('1'), new Text('2'), new Text('3')];
+      final builder = TabularLegendLayout.verticalFirst(desiredMaxRows: 10);
+      final widgets = <Widget>[
+        const Text('1'),
+        const Text('2'),
+        const Text('3')
+      ];
 
-      final Table layout = builder.build(context, widgets) as Table;
+      final layout = builder.build(context, widgets) as Table;
       expect(layout.children.length, 3);
-      expect(layout.children[0].children!.length, 1);
-      expect(layout.children[1].children!.length, 1);
-      expect(layout.children[2].children!.length, 1);
+      expect(layout.children[0].children.length, 1);
+      expect(layout.children[1].children.length, 1);
+      expect(layout.children[2].children.length, 1);
     });
 
     test('builds vertically until max column exceeded', () {
-      final builder = new TabularLegendLayout.verticalFirst(desiredMaxRows: 2);
+      final builder = TabularLegendLayout.verticalFirst(desiredMaxRows: 2);
 
-      final widgets = new List<Widget>.generate(
-          7, (int index) => new Text(index.toString()));
+      final widgets = List<Widget>.generate(
+        7,
+        (index) => Text(index.toString()),
+      );
 
-      final Table layout = builder.build(context, widgets) as Table;
+      final layout = builder.build(context, widgets) as Table;
       expect(layout.children.length, 2);
 
-      expect(layout.children[0].children![0], equals(widgets[0]));
-      expect(layout.children[1].children![0], equals(widgets[1]));
+      expect(layout.children[0].children[0], equals(widgets[0]));
+      expect(layout.children[1].children[0], equals(widgets[1]));
 
-      expect(layout.children[0].children![1], equals(widgets[2]));
-      expect(layout.children[1].children![1], equals(widgets[3]));
+      expect(layout.children[0].children[1], equals(widgets[2]));
+      expect(layout.children[1].children[1], equals(widgets[3]));
 
-      expect(layout.children[0].children![2], equals(widgets[4]));
-      expect(layout.children[1].children![2], equals(widgets[5]));
+      expect(layout.children[0].children[2], equals(widgets[4]));
+      expect(layout.children[1].children[2], equals(widgets[5]));
 
-      expect(layout.children[0].children![3], equals(widgets[6]));
+      expect(layout.children[0].children[3], equals(widgets[6]));
     });
   });
 }

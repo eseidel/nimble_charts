@@ -13,6 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:collection/collection.dart' show ListEquality;
+import 'package:flutter/widgets.dart' show hashValues;
+import 'package:meta/meta.dart' show immutable;
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart'
+    show ChartBehavior, GestureType;
 import 'package:nimble_charts_common/common.dart' as common
     show
         AnnotationLabelAnchor,
@@ -24,11 +29,6 @@ import 'package:nimble_charts_common/common.dart' as common
         MaterialPalette,
         RangeAnnotation,
         TextStyleSpec;
-import 'package:collection/collection.dart' show ListEquality;
-import 'package:flutter/widgets.dart' show hashValues;
-import 'package:meta/meta.dart' show immutable;
-
-import 'chart_behavior.dart' show ChartBehavior, GestureType;
 
 /// Chart behavior that annotations domain ranges with a solid fill color.
 ///
@@ -38,7 +38,19 @@ import 'chart_behavior.dart' show ChartBehavior, GestureType;
 /// range.
 @immutable
 class RangeAnnotation<D> extends ChartBehavior<D> {
-  final desiredGestures = new Set<GestureType>();
+  RangeAnnotation(
+    this.annotations, {
+    common.Color? defaultColor,
+    this.defaultLabelAnchor,
+    this.defaultLabelDirection,
+    this.defaultLabelPosition,
+    this.defaultLabelStyleSpec,
+    this.extendAxis,
+    this.labelPadding,
+    this.layoutPaintOrder,
+  }) : defaultColor = defaultColor ?? common.MaterialPalette.gray.shade100;
+  @override
+  final desiredGestures = <GestureType>{};
 
   /// List of annotations to render on the chart.
   final List<common.AnnotationSegment<Object>> annotations;
@@ -70,29 +82,18 @@ class RangeAnnotation<D> extends ChartBehavior<D> {
   /// (e.g. LayoutViewPaintOrder.rangeAnnotation + 1)
   final int? layoutPaintOrder;
 
-  RangeAnnotation(this.annotations,
-      {common.Color? defaultColor,
-      this.defaultLabelAnchor,
-      this.defaultLabelDirection,
-      this.defaultLabelPosition,
-      this.defaultLabelStyleSpec,
-      this.extendAxis,
-      this.labelPadding,
-      this.layoutPaintOrder})
-      : this.defaultColor =
-            defaultColor ?? common.MaterialPalette.gray.shade100;
-
   @override
-  common.RangeAnnotation<D> createCommonBehavior() =>
-      new common.RangeAnnotation<D>(annotations,
-          defaultColor: defaultColor,
-          defaultLabelAnchor: defaultLabelAnchor,
-          defaultLabelDirection: defaultLabelDirection,
-          defaultLabelPosition: defaultLabelPosition,
-          defaultLabelStyleSpec: defaultLabelStyleSpec,
-          extendAxis: extendAxis,
-          labelPadding: labelPadding,
-          layoutPaintOrder: layoutPaintOrder);
+  common.RangeAnnotation<D> createCommonBehavior() => common.RangeAnnotation<D>(
+        annotations,
+        defaultColor: defaultColor,
+        defaultLabelAnchor: defaultLabelAnchor,
+        defaultLabelDirection: defaultLabelDirection,
+        defaultLabelPosition: defaultLabelPosition,
+        defaultLabelStyleSpec: defaultLabelStyleSpec,
+        extendAxis: extendAxis,
+        labelPadding: labelPadding,
+        layoutPaintOrder: layoutPaintOrder,
+      );
 
   @override
   void updateCommonBehavior(common.ChartBehavior commonBehavior) {}
@@ -101,28 +102,28 @@ class RangeAnnotation<D> extends ChartBehavior<D> {
   String get role => 'RangeAnnotation';
 
   @override
-  bool operator ==(Object o) {
-    return o is RangeAnnotation &&
-        new ListEquality().equals(annotations, o.annotations) &&
-        defaultColor == o.defaultColor &&
-        extendAxis == o.extendAxis &&
-        defaultLabelAnchor == o.defaultLabelAnchor &&
-        defaultLabelDirection == o.defaultLabelDirection &&
-        defaultLabelPosition == o.defaultLabelPosition &&
-        defaultLabelStyleSpec == o.defaultLabelStyleSpec &&
-        labelPadding == o.labelPadding &&
-        layoutPaintOrder == o.layoutPaintOrder;
-  }
+  bool operator ==(Object other) =>
+      other is RangeAnnotation &&
+      const ListEquality().equals(annotations, other.annotations) &&
+      defaultColor == other.defaultColor &&
+      extendAxis == other.extendAxis &&
+      defaultLabelAnchor == other.defaultLabelAnchor &&
+      defaultLabelDirection == other.defaultLabelDirection &&
+      defaultLabelPosition == other.defaultLabelPosition &&
+      defaultLabelStyleSpec == other.defaultLabelStyleSpec &&
+      labelPadding == other.labelPadding &&
+      layoutPaintOrder == other.layoutPaintOrder;
 
   @override
   int get hashCode => hashValues(
-      annotations,
-      defaultColor,
-      extendAxis,
-      defaultLabelAnchor,
-      defaultLabelDirection,
-      defaultLabelPosition,
-      defaultLabelStyleSpec,
-      labelPadding,
-      layoutPaintOrder);
+        annotations,
+        defaultColor,
+        extendAxis,
+        defaultLabelAnchor,
+        defaultLabelDirection,
+        defaultLabelPosition,
+        defaultLabelStyleSpec,
+        labelPadding,
+        layoutPaintOrder,
+      );
 }

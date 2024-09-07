@@ -9,7 +9,7 @@ Future<void> matchesGolden<T extends Widget>(
   await expectLater(
     find.byType(T),
     matchesGoldenFile(
-      'goldens/${filename}.png',
+      'goldens/$filename.png',
     ),
   );
 }

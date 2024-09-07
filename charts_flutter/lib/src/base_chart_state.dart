@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import 'dart:ui' show TextDirection;
+
 import 'package:flutter/material.dart'
     show
         AnimationController,
@@ -21,23 +22,24 @@ import 'package:flutter/material.dart'
         State,
         TickerProviderStateMixin,
         Widget;
-import 'package:nimble_charts_common/common.dart' as common;
 import 'package:flutter/widgets.dart'
-    show Directionality, LayoutId, CustomMultiChildLayout;
-import 'behaviors/chart_behavior.dart'
+    show CustomMultiChildLayout, Directionality, LayoutId;
+import 'package:nimble_charts/src/base_chart.dart' show BaseChart;
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart'
     show BuildableBehavior, ChartBehavior, ChartStateBehavior;
-import 'base_chart.dart' show BaseChart;
-import 'chart_container.dart' show ChartContainer;
-import 'chart_state.dart' show ChartState;
-import 'chart_gesture_detector.dart' show ChartGestureDetector;
-import 'widget_layout_delegate.dart';
+import 'package:nimble_charts/src/chart_container.dart' show ChartContainer;
+import 'package:nimble_charts/src/chart_gesture_detector.dart'
+    show ChartGestureDetector;
+import 'package:nimble_charts/src/chart_state.dart' show ChartState;
+import 'package:nimble_charts/src/widget_layout_delegate.dart';
+import 'package:nimble_charts_common/common.dart' as common;
 
 class BaseChartState<D> extends State<BaseChart<D>>
     with TickerProviderStateMixin
     implements ChartState {
   // Animation
   late AnimationController _animationController;
-  double _animationValue = 0.0;
+  double _animationValue = 0;
 
   BaseChart<D>? _oldWidget;
 
@@ -62,7 +64,7 @@ class BaseChartState<D> extends State<BaseChart<D>>
   @override
   void initState() {
     super.initState();
-    _animationController = new AnimationController(vsync: this)
+    _animationController = AnimationController(vsync: this)
       ..addListener(_animationTick);
   }
 
@@ -93,7 +95,7 @@ class BaseChartState<D> extends State<BaseChart<D>>
 
   /// Builds the common chart canvas widget.
   Widget _buildChartContainer() {
-    final chartContainer = new ChartContainer<D>(
+    final chartContainer = ChartContainer<D>(
       oldChartWidget: _oldWidget,
       chartWidget: widget,
       chartState: this,
@@ -106,7 +108,7 @@ class BaseChartState<D> extends State<BaseChart<D>>
 
     final desiredGestures = widget.getDesiredGestures(this);
     if (desiredGestures.isNotEmpty) {
-      _chartGestureDetector ??= new ChartGestureDetector();
+      _chartGestureDetector ??= ChartGestureDetector();
       return _chartGestureDetector!
           .makeWidget(context, chartContainer, desiredGestures);
     } else {
@@ -120,8 +122,12 @@ class BaseChartState<D> extends State<BaseChart<D>>
     final idAndBehaviorMap = <String, BuildableBehavior>{};
 
     // Add the common chart canvas widget.
-    chartWidgets.add(new LayoutId(
-        id: chartContainerLayoutID, child: _buildChartContainer()));
+    chartWidgets.add(
+      LayoutId(
+        id: chartContainerLayoutID,
+        child: _buildChartContainer(),
+      ),
+    );
 
     // Add widget for each behavior that can build widgets
     addedCommonBehaviorsByRole.forEach((id, behavior) {
@@ -132,24 +138,28 @@ class BaseChartState<D> extends State<BaseChart<D>>
         idAndBehaviorMap[id] = buildableBehavior;
 
         final widget = buildableBehavior.build(context);
-        chartWidgets.add(new LayoutId(id: id, child: widget));
+        chartWidgets.add(LayoutId(id: id, child: widget));
       }
     });
 
     final isRTL = Directionality.of(context) == TextDirection.rtl;
 
-    return new CustomMultiChildLayout(
-        delegate: new WidgetLayoutDelegate(
-            chartContainerLayoutID, idAndBehaviorMap, isRTL),
-        children: chartWidgets);
+    return CustomMultiChildLayout(
+      delegate: WidgetLayoutDelegate(
+        chartContainerLayoutID,
+        idAndBehaviorMap,
+        isRTL,
+      ),
+      children: chartWidgets,
+    );
   }
 
   @override
   void dispose() {
     _animationController.dispose();
     _behaviorAnimationControllers
-        .forEach((_, controller) => controller.dispose());
-    _behaviorAnimationControllers.clear();
+      ..forEach((_, controller) => controller.dispose())
+      ..clear();
     super.dispose();
   }
 
@@ -159,8 +169,9 @@ class BaseChartState<D> extends State<BaseChart<D>>
   }
 
   void _playAnimation(Duration duration) {
-    _animationController.duration = duration;
-    _animationController.forward(from: (duration == Duration.zero) ? 1.0 : 0.0);
+    _animationController
+      ..duration = duration
+      ..forward(from: (duration == Duration.zero) ? 1.0 : 0.0);
     _animationValue = _animationController.value;
   }
 
@@ -173,7 +184,7 @@ class BaseChartState<D> extends State<BaseChart<D>>
   /// Get animation controller to be used by [behavior].
   AnimationController getAnimationController(ChartStateBehavior behavior) {
     _behaviorAnimationControllers[behavior] ??=
-        new AnimationController(vsync: this);
+        AnimationController(vsync: this);
 
     return _behaviorAnimationControllers[behavior]!;
   }

@@ -55,7 +55,6 @@ class Home extends StatelessWidget {
       this.showPerformanceOverlay = false,
       required this.onShowPerformanceOverlayChanged})
       : super(key: key) {
-    assert(onShowPerformanceOverlayChanged != null);
   }
 
   @override

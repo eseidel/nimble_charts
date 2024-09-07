@@ -13,6 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:flutter/widgets.dart' show hashValues;
+import 'package:meta/meta.dart' show immutable;
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart'
+    show ChartBehavior, GestureType;
 import 'package:nimble_charts_common/common.dart' as common
     show
         BehaviorPosition,
@@ -22,15 +26,52 @@ import 'package:nimble_charts_common/common.dart' as common
         MaxWidthStrategy,
         OutsideJustification,
         TextStyleSpec;
-import 'package:flutter/widgets.dart' show hashValues;
-import 'package:meta/meta.dart' show immutable;
-
-import '../chart_behavior.dart' show ChartBehavior, GestureType;
 
 /// Chart behavior that adds a ChartTitle widget to a chart.
 @immutable
 class ChartTitle<D> extends ChartBehavior<D> {
-  final desiredGestures = new Set<GestureType>();
+  /// Constructs a [ChartTitle].
+  ///
+  /// [title] primary text for the title.
+  ///
+  /// [behaviorPosition] layout position for the title. Defaults to the top of
+  /// the chart.
+  ///
+  /// [innerPadding] space between the "inside" of the chart, and the title
+  /// behavior itself.
+  ///
+  /// [maxWidthStrategy] strategy for handling title text that is too large to
+  /// fit. Defaults to  truncating the text with ellipses.
+  ///
+  /// [titleDirection] direction of the chart title text.
+  ///
+  /// [titleOutsideJustification] Justification of the title text if it is
+  /// positioned outside of the draw. Defaults to the middle of the margin area.
+  ///
+  /// [titlePadding] space between the title and sub-title text, if defined.
+  ///
+  /// [titleStyleSpec] style of the [title] text.
+  ///
+  /// [subTitle] secondary text for the sub-title. Optional.
+  ///
+  /// [subTitleStyleSpec] style of the [subTitle] text.
+  ChartTitle(
+    this.title, {
+    this.behaviorPosition,
+    this.innerPadding,
+    this.layoutMinSize,
+    this.layoutPreferredSize,
+    this.outerPadding,
+    this.maxWidthStrategy,
+    this.titleDirection,
+    this.titleOutsideJustification,
+    this.titlePadding,
+    this.titleStyleSpec,
+    this.subTitle,
+    this.subTitleStyleSpec,
+  });
+  @override
+  final desiredGestures = <GestureType>{};
 
   final common.BehaviorPosition? behaviorPosition;
 
@@ -102,89 +143,48 @@ class ChartTitle<D> extends ChartBehavior<D> {
   /// bottom edge.
   final int? outerPadding;
 
-  /// Constructs a [ChartTitle].
-  ///
-  /// [title] primary text for the title.
-  ///
-  /// [behaviorPosition] layout position for the title. Defaults to the top of
-  /// the chart.
-  ///
-  /// [innerPadding] space between the "inside" of the chart, and the title
-  /// behavior itself.
-  ///
-  /// [maxWidthStrategy] strategy for handling title text that is too large to
-  /// fit. Defaults to  truncating the text with ellipses.
-  ///
-  /// [titleDirection] direction of the chart title text.
-  ///
-  /// [titleOutsideJustification] Justification of the title text if it is
-  /// positioned outside of the draw. Defaults to the middle of the margin area.
-  ///
-  /// [titlePadding] space between the title and sub-title text, if defined.
-  ///
-  /// [titleStyleSpec] style of the [title] text.
-  ///
-  /// [subTitle] secondary text for the sub-title. Optional.
-  ///
-  /// [subTitleStyleSpec] style of the [subTitle] text.
-  ChartTitle(
-    this.title, {
-    this.behaviorPosition,
-    this.innerPadding,
-    this.layoutMinSize,
-    this.layoutPreferredSize,
-    this.outerPadding,
-    this.maxWidthStrategy,
-    this.titleDirection,
-    this.titleOutsideJustification,
-    this.titlePadding,
-    this.titleStyleSpec,
-    this.subTitle,
-    this.subTitleStyleSpec,
-  });
-
   @override
-  common.ChartTitle<D> createCommonBehavior() => new common.ChartTitle<D>(title,
-      behaviorPosition: behaviorPosition,
-      innerPadding: innerPadding,
-      layoutMinSize: layoutMinSize,
-      layoutPreferredSize: layoutPreferredSize,
-      outerPadding: outerPadding,
-      maxWidthStrategy: maxWidthStrategy,
-      titleDirection: titleDirection,
-      titleOutsideJustification: titleOutsideJustification,
-      titlePadding: titlePadding,
-      titleStyleSpec: titleStyleSpec,
-      subTitle: subTitle,
-      subTitleStyleSpec: subTitleStyleSpec);
+  common.ChartTitle<D> createCommonBehavior() => common.ChartTitle<D>(
+        title,
+        behaviorPosition: behaviorPosition,
+        innerPadding: innerPadding,
+        layoutMinSize: layoutMinSize,
+        layoutPreferredSize: layoutPreferredSize,
+        outerPadding: outerPadding,
+        maxWidthStrategy: maxWidthStrategy,
+        titleDirection: titleDirection,
+        titleOutsideJustification: titleOutsideJustification,
+        titlePadding: titlePadding,
+        titleStyleSpec: titleStyleSpec,
+        subTitle: subTitle,
+        subTitleStyleSpec: subTitleStyleSpec,
+      );
 
   @override
   void updateCommonBehavior(common.ChartBehavior commonBehavior) {}
 
   @override
-  String get role => 'ChartTitle-${behaviorPosition.toString()}';
+  String get role => 'ChartTitle-$behaviorPosition';
 
   @override
-  bool operator ==(Object o) {
-    return o is ChartTitle &&
-        behaviorPosition == o.behaviorPosition &&
-        layoutMinSize == o.layoutMinSize &&
-        layoutPreferredSize == o.layoutPreferredSize &&
-        maxWidthStrategy == o.maxWidthStrategy &&
-        title == o.title &&
-        titleDirection == o.titleDirection &&
-        titleOutsideJustification == o.titleOutsideJustification &&
-        titleStyleSpec == o.titleStyleSpec &&
-        subTitle == o.subTitle &&
-        subTitleStyleSpec == o.subTitleStyleSpec &&
-        innerPadding == o.innerPadding &&
-        titlePadding == o.titlePadding &&
-        outerPadding == o.outerPadding;
-  }
+  bool operator ==(Object other) =>
+      other is ChartTitle &&
+      behaviorPosition == other.behaviorPosition &&
+      layoutMinSize == other.layoutMinSize &&
+      layoutPreferredSize == other.layoutPreferredSize &&
+      maxWidthStrategy == other.maxWidthStrategy &&
+      title == other.title &&
+      titleDirection == other.titleDirection &&
+      titleOutsideJustification == other.titleOutsideJustification &&
+      titleStyleSpec == other.titleStyleSpec &&
+      subTitle == other.subTitle &&
+      subTitleStyleSpec == other.subTitleStyleSpec &&
+      innerPadding == other.innerPadding &&
+      titlePadding == other.titlePadding &&
+      outerPadding == other.outerPadding;
 
   @override
-  int get hashCode {
-    return hashValues(
+  int get hashCode => hashValues(
         behaviorPosition,
         layoutMinSize,
         layoutPreferredSize,
@@ -197,6 +197,6 @@ class ChartTitle<D> extends ChartBehavior<D> {
         subTitleStyleSpec,
         innerPadding,
         titlePadding,
-        outerPadding);
-  }
+        outerPadding,
+      );
 }

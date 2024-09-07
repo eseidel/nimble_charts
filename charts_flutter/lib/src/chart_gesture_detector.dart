@@ -26,12 +26,14 @@ import 'package:flutter/material.dart'
         TapDownDetails,
         TapUpDetails;
 
-import 'behaviors/chart_behavior.dart' show GestureType;
-import 'chart_container.dart' show ChartContainer, ChartContainerRenderObject;
-import 'util.dart' show getChartContainerRenderObject;
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart'
+    show GestureType;
+import 'package:nimble_charts/src/chart_container.dart'
+    show ChartContainer, ChartContainerRenderObject;
+import 'package:nimble_charts/src/util.dart' show getChartContainerRenderObject;
 
 // From https://docs.flutter.io/flutter/gestures/kLongPressTimeout-constant.html
-const Duration _kLongPressTimeout = const Duration(milliseconds: 500);
+const Duration _kLongPressTimeout = Duration(milliseconds: 500);
 
 class ChartGestureDetector {
   bool _listeningForLongPress = false;
@@ -42,10 +44,13 @@ class ChartGestureDetector {
   Point<double>? _lastTapPoint;
   double? _lastScale;
 
-  late _ContainerResolver _containerResolver;
+  late ChartContainerRenderObject Function() _containerResolver;
 
-  makeWidget(BuildContext context, ChartContainer chartContainer,
-      Set<GestureType> desiredGestures) {
+  GestureDetector makeWidget(
+    BuildContext context,
+    ChartContainer chartContainer,
+    Set<GestureType> desiredGestures,
+  ) {
     _containerResolver = () {
       final renderObject = context.findRenderObject()!;
 
@@ -62,25 +67,25 @@ class ChartGestureDetector {
     // gestures.
     _listeningForLongPress = desiredGestures.contains(GestureType.onLongPress);
 
-    return new GestureDetector(
-      child: chartContainer,
+    return GestureDetector(
       onTapDown: wantTapDown ? onTapDown : null,
       onTapUp: wantTap ? onTapUp : null,
       onScaleStart: wantDrag ? onScaleStart : null,
       onScaleUpdate: wantDrag ? onScaleUpdate : null,
       onScaleEnd: wantDrag ? onScaleEnd : null,
+      child: chartContainer,
     );
   }
 
   void onTapDown(TapDownDetails d) {
     final container = _containerResolver();
     final localPosition = container.globalToLocal(d.globalPosition);
-    _lastTapPoint = new Point(localPosition.dx, localPosition.dy);
+    _lastTapPoint = Point(localPosition.dx, localPosition.dy);
     container.gestureProxy.onTapTest(_lastTapPoint!);
 
     // Kick off a timer to see if this is a LongPress.
     if (_listeningForLongPress) {
-      _longPressTimer = new Timer(_kLongPressTimeout, () {
+      _longPressTimer = Timer(_kLongPressTimeout, () {
         onLongPress();
         _longPressTimer = null;
       });
@@ -92,7 +97,7 @@ class ChartGestureDetector {
 
     final container = _containerResolver();
     final localPosition = container.globalToLocal(d.globalPosition);
-    _lastTapPoint = new Point(localPosition.dx, localPosition.dy);
+    _lastTapPoint = Point(localPosition.dx, localPosition.dy);
     container.gestureProxy.onTap(_lastTapPoint!);
   }
 
@@ -106,7 +111,7 @@ class ChartGestureDetector {
 
     final container = _containerResolver();
     final localPosition = container.globalToLocal(d.focalPoint);
-    _lastTapPoint = new Point(localPosition.dx, localPosition.dy);
+    _lastTapPoint = Point(localPosition.dx, localPosition.dy);
 
     _isDragging = container.gestureProxy.onDragStart(_lastTapPoint!);
   }
@@ -118,7 +123,7 @@ class ChartGestureDetector {
 
     final container = _containerResolver();
     final localPosition = container.globalToLocal(d.focalPoint);
-    _lastTapPoint = new Point(localPosition.dx, localPosition.dy);
+    _lastTapPoint = Point(localPosition.dx, localPosition.dy);
     _lastScale = d.scale;
 
     container.gestureProxy.onDragUpdate(_lastTapPoint!, d.scale);
@@ -137,4 +142,3 @@ class ChartGestureDetector {
 }
 
 // Exposed for testing.
-typedef ChartContainerRenderObject _ContainerResolver();

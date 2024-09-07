@@ -13,10 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show cos, sin, Point;
+import 'dart:math' show Point, cos, sin;
+
 import 'package:flutter/material.dart';
+import 'package:nimble_charts/src/canvas/circle_sector_painter.dart'
+    show CircleSectorPainter;
 import 'package:nimble_charts_common/common.dart' as common show CanvasPie;
-import 'circle_sector_painter.dart' show CircleSectorPainter;
 
 /// Draws a pie chart, with an optional hole in the center.
 class PiePainter {
@@ -26,56 +28,61 @@ class PiePainter {
     final radius = canvasPie.radius;
     final innerRadius = canvasPie.innerRadius;
 
-    for (var slice in canvasPie.slices) {
+    for (final slice in canvasPie.slices) {
       CircleSectorPainter.draw(
-          canvas: canvas,
-          paint: paint,
-          center: center,
-          radius: radius,
-          innerRadius: innerRadius,
-          startAngle: slice.startAngle,
-          endAngle: slice.endAngle,
-          fill: slice.fill);
+        canvas: canvas,
+        paint: paint,
+        center: center,
+        radius: radius,
+        innerRadius: innerRadius,
+        startAngle: slice.startAngle,
+        endAngle: slice.endAngle,
+        fill: slice.fill,
+      );
     }
 
     // Draw stroke lines between pie slices. This is done after the slices are
     // drawn to ensure that they appear on top.
-    if (canvasPie.stroke != null &&
-        canvasPie.strokeWidthPx != null &&
-        canvasPie.slices.length > 1) {
-      paint.color = new Color.fromARGB(canvasPie.stroke!.a, canvasPie.stroke!.r,
-          canvasPie.stroke!.g, canvasPie.stroke!.b);
+    if (canvasPie.stroke != null && canvasPie.slices.length > 1) {
+      paint
+        ..color = Color.fromARGB(
+          canvasPie.stroke!.a,
+          canvasPie.stroke!.r,
+          canvasPie.stroke!.g,
+          canvasPie.stroke!.b,
+        )
+        ..strokeWidth = canvasPie.strokeWidthPx
+        ..strokeJoin = StrokeJoin.bevel
+        ..style = PaintingStyle.stroke;
 
-      paint.strokeWidth = canvasPie.strokeWidthPx;
-      paint.strokeJoin = StrokeJoin.bevel;
-      paint.style = PaintingStyle.stroke;
+      final path = Path();
 
-      final path = new Path();
+      for (final slice in canvasPie.slices) {
+        final innerRadiusStartPoint = Point<double>(
+          innerRadius * cos(slice.startAngle) + center.x,
+          innerRadius * sin(slice.startAngle) + center.y,
+        );
 
-      for (var slice in canvasPie.slices) {
-        final innerRadiusStartPoint = new Point<double>(
-            innerRadius * cos(slice.startAngle) + center.x,
-            innerRadius * sin(slice.startAngle) + center.y);
+        final innerRadiusEndPoint = Point<double>(
+          innerRadius * cos(slice.endAngle) + center.x,
+          innerRadius * sin(slice.endAngle) + center.y,
+        );
 
-        final innerRadiusEndPoint = new Point<double>(
-            innerRadius * cos(slice.endAngle) + center.x,
-            innerRadius * sin(slice.endAngle) + center.y);
+        final radiusStartPoint = Point<double>(
+          radius * cos(slice.startAngle) + center.x,
+          radius * sin(slice.startAngle) + center.y,
+        );
 
-        final radiusStartPoint = new Point<double>(
-            radius * cos(slice.startAngle) + center.x,
-            radius * sin(slice.startAngle) + center.y);
+        final radiusEndPoint = Point<double>(
+          radius * cos(slice.endAngle) + center.x,
+          radius * sin(slice.endAngle) + center.y,
+        );
 
-        final radiusEndPoint = new Point<double>(
-            radius * cos(slice.endAngle) + center.x,
-            radius * sin(slice.endAngle) + center.y);
-
-        path.moveTo(innerRadiusStartPoint.x, innerRadiusStartPoint.y);
-
-        path.lineTo(radiusStartPoint.x, radiusStartPoint.y);
-
-        path.moveTo(innerRadiusEndPoint.x, innerRadiusEndPoint.y);
-
-        path.lineTo(radiusEndPoint.x, radiusEndPoint.y);
+        path
+          ..moveTo(innerRadiusStartPoint.x, innerRadiusStartPoint.y)
+          ..lineTo(radiusStartPoint.x, radiusStartPoint.y)
+          ..moveTo(innerRadiusEndPoint.x, innerRadiusEndPoint.y)
+          ..lineTo(radiusEndPoint.x, radiusEndPoint.y);
       }
 
       canvas.drawPath(path, paint);

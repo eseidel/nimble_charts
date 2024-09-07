@@ -13,37 +13,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:nimble_charts/src/base_chart.dart' show BaseChart;
+import 'package:nimble_charts/src/base_chart_state.dart' show BaseChartState;
 import 'package:nimble_charts_common/common.dart' as common
-    show ArcRendererConfig, PieChart, RTLSpec, Series;
-import 'behaviors/chart_behavior.dart' show ChartBehavior;
-import 'base_chart.dart' show BaseChart, LayoutConfig;
-import 'base_chart_state.dart' show BaseChartState;
-import 'selection_model_config.dart' show SelectionModelConfig;
+    show ArcRendererConfig, PieChart;
 
 class PieChart<D> extends BaseChart<D> {
-  PieChart(
-    List<common.Series<dynamic, D>> seriesList, {
-    bool? animate,
-    Duration? animationDuration,
-    common.ArcRendererConfig<D>? defaultRenderer,
-    List<ChartBehavior<D>>? behaviors,
-    List<SelectionModelConfig<D>>? selectionModels,
-    common.RTLSpec? rtlSpec,
-    LayoutConfig? layoutConfig,
-    bool defaultInteractions = true,
-  }) : super(
-          seriesList,
-          animate: animate,
-          animationDuration: animationDuration,
-          defaultRenderer: defaultRenderer,
-          behaviors: behaviors,
-          selectionModels: selectionModels,
-          rtlSpec: rtlSpec,
-          layoutConfig: layoutConfig,
-          defaultInteractions: defaultInteractions,
-        );
+  const PieChart(
+    super.seriesList, {
+    super.key,
+    super.animate,
+    super.animationDuration,
+    common.ArcRendererConfig<D>? super.defaultRenderer,
+    super.behaviors,
+    super.selectionModels,
+    super.rtlSpec,
+    super.layoutConfig,
+    super.defaultInteractions,
+  });
 
   @override
   common.PieChart<D> createCommonChart(BaseChartState chartState) =>
-      new common.PieChart<D>(layoutConfig: layoutConfig?.commonLayoutConfig);
+      common.PieChart<D>(layoutConfig: layoutConfig?.commonLayoutConfig);
 }
