@@ -1,5 +1,7 @@
 # Discontinued
 
+[![build_and_test](https://github.com/MelbourneDeveloper/charts/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/MelbourneDeveloper/charts/actions/workflows/build_and_test.yml)
+
 **This project is no longer maintained**, and will not receive further updates. Community members interested in collaborating on a community-maintained fork can coordinate in [this issue](https://github.com/google/charts/issues/798).
 
 ---
@@ -11,8 +13,6 @@ See the [online gallery](https://google.github.io/charts/flutter/gallery.html) f
 types and examples of how to custom components of the chart.
 
 *Note*: This is not an official Google product.
-
-[![Travis CI Build Status](https://travis-ci.org/google/charts.svg?branch=master)](https://travis-ci.org/google/charts)
 
 ## charts_common
 
