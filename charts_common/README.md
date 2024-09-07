@@ -1,9 +1,15 @@
-# Common Charting library
+# nimble_charts_common: Common Charting Library
 
-[![pub package](https://img.shields.io/pub/v/charts_common.svg)](https://pub.dartlang.org/packages/charts_common)
+This package is part of the nimble_charts project, a resurrection of the discontinued [Google Charts Flutter library](https://github.com/google/charts). It provides the core functionality for creating charts in Dart applications.
 
-Common componnets for charting libraries.
+[![build_and_test](https://github.com/MelbourneDeveloper/charts/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/MelbourneDeveloper/charts/actions/workflows/build_and_test.yml)
 
-## Development
-This project is developed internally at Google and published for external
-consumption, external contributions unfortunately cannot be taken at this time.
+## 📊 Features
+
+- Core charting functionality
+- Data processing and manipulation
+- Chart rendering logic
+
+## 🛠️ Installation
+
+Add the following to your `pubspec.yaml`:
