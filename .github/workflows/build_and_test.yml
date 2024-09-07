@@ -1,40 +1,54 @@
 name: build_and_test
-
 on:
   pull_request:
     branches: [main]
-
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
- 
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.24.2"
           channel: "stable"
           architecture: x64
- 
-      - name: Get Dependencies
-        run: flutter pub get
+
+      - name: Get Dependencies for charts_common
+        run: |
+          cd charts_common
+          flutter pub get
+
+      - name: Get Dependencies for charts_flutter
+        run: |
+          cd charts_flutter
+          flutter pub get
+
+      - name: Get Dependencies for charts_flutter/example
+        run: |
+          cd charts_flutter/example
+          flutter pub get
 
       - name: Analyze
-        run: dart analyze --no-fatal-warnings
+        run: |
+          cd charts_flutter
+          dart analyze --no-fatal-warnings
 
       - name: Check Formatting
-        run: dart format lib test --set-exit-if-changed
+        run: |
+          cd charts_flutter
+          dart format lib test --set-exit-if-changed
 
       - name: Run Tests
-        run: flutter test --coverage
+        run: |
+          cd charts_flutter
+          flutter test --coverage
 
       - name: Check Test Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v2
-        
         with:
-          path: 'src/Flutter/coverage/lcov.info'
+          path: 'charts_flutter/coverage/lcov.info'
           min_coverage: 28.9
