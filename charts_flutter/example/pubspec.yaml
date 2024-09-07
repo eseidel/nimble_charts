@@ -1,5 +1,6 @@
 name: example
-description: Charts-Flutter Demo
+description: nimble_charts Demo
+homepage: https://github.com/Nimblesite/nimble_charts
 environment:
   sdk: '>=3.0.0 <4.0.0'
   flutter: '>=3.0.0 <4.0.0'
