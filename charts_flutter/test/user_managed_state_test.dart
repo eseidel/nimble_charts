@@ -18,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:nimble_charts/flutter.dart' as charts;
 
-import 'chart_widget_test.dart';
+
 import 'test_functions.dart';
 
 void main() {
