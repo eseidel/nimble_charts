@@ -19,8 +19,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:nimble_charts_common/common.dart' as common
     show BehaviorPosition, InsideJustification, OutsideJustification;
-import 'package:charts_flutter/src/behaviors/chart_behavior.dart';
-import 'package:charts_flutter/src/widget_layout_delegate.dart';
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart';
+import 'package:nimble_charts/src/widget_layout_delegate.dart';
 
 const chartContainerLayoutID = 'chartContainer';
 

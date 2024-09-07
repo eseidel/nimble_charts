@@ -6,7 +6,7 @@ Example:
 
 ```
 /// Line chart with line annotations example.
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:nimble_charts/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class LineLineAnnotationChart extends StatelessWidget {
