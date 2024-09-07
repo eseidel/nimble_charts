@@ -1,0 +1,40 @@
+name: build_and_test
+
+on:
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+ 
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.2"
+          channel: "stable"
+          architecture: x64
+ 
+      - name: Get Dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: dart analyze --no-fatal-warnings
+
+      - name: Check Formatting
+        run: dart format lib test --set-exit-if-changed
+
+      - name: Run Tests
+        run: flutter test --coverage
+
+      - name: Check Test Coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v2
+        
+        with:
+          path: 'src/Flutter/coverage/lcov.info'
+          min_coverage: 28.9
