@@ -21,81 +21,59 @@ import 'dart:math';
 import 'package:nimble_charts/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
+/// Creates a partial pie chart where the data does not cover a full revolution.
 class PartialPieChart extends StatelessWidget {
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
-  PartialPieChart(this.seriesList, {this.animate = false});
+  const PartialPieChart(this.seriesList, {this.animate = false});
 
-  /// Creates a [PieChart] with sample data and no transition.
-  factory PartialPieChart.withSampleData() {
-    return new PartialPieChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [PartialPieChart] with sample data and no transition.
+  factory PartialPieChart.withSampleData() =>
+      PartialPieChart(_createSampleData(), animate: false);
 
-  // EXCLUDE_FROM_GALLERY_DOCS_START
-  // This section is excluded from being copied to the gallery.
-  // It is used for creating random series data to demonstrate animation in
-  // the example app only.
-  factory PartialPieChart.withRandomData() {
-    return new PartialPieChart(_createRandomData());
-  }
-
-  /// Create random data.
-  static List<charts.Series<LinearSales, int>> _createRandomData() {
-    final random = new Random();
-
-    final data = [
-      new LinearSales(0, random.nextInt(100)),
-      new LinearSales(1, random.nextInt(100)),
-      new LinearSales(2, random.nextInt(100)),
-      new LinearSales(3, random.nextInt(100)),
-    ];
-
-    return [
-      new charts.Series<LinearSales, int>(
-        id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        data: data,
-      )
-    ];
-  }
-  // EXCLUDE_FROM_GALLERY_DOCS_END
+  /// Creates a [PartialPieChart] with random data.
+  factory PartialPieChart.withRandomData() =>
+      PartialPieChart(_createRandomData());
 
   @override
-  Widget build(BuildContext context) {
-    // Configure the pie to display the data across only 3/4 instead of the full
-    // revolution.
-    return new charts.PieChart(seriesList,
+  Widget build(BuildContext context) => charts.PieChart<num>(
+        seriesList,
         animate: animate,
-        defaultRenderer: new charts.ArcRendererConfig(arcLength: 3 / 2 * pi));
-  }
+        defaultRenderer: charts.ArcRendererConfig(arcLength: 3 / 2 * pi),
+      );
 
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
-    final data = [
-      new LinearSales(0, 100),
-      new LinearSales(1, 75),
-      new LinearSales(2, 25),
-      new LinearSales(3, 5),
-    ];
+  /// Creates one series with sample hard coded data.
+  static List<charts.Series<LinearSales, int>> _createSampleData() => [
+        charts.Series<LinearSales, int>(
+          id: 'Sales',
+          domainFn: (LinearSales sales, _) => sales.year,
+          measureFn: (LinearSales sales, _) => sales.sales,
+          data: [
+            LinearSales(0, 100),
+            LinearSales(1, 75),
+            LinearSales(2, 25),
+            LinearSales(3, 5),
+          ],
+        )
+      ];
 
+  /// Creates random data.
+  static List<charts.Series<LinearSales, int>> _createRandomData() {
+    final random = Random();
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
-        data: data,
+        data: List.generate(
+            4, (index) => LinearSales(index, random.nextInt(100))),
       )
     ];
   }
 }
 
-/// Sample linear data type.
+/// Represents linear sales data.
 class LinearSales {
   final int year;
   final int sales;
