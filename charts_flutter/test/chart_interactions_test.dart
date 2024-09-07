@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
+import 'test_functions.dart';
+
 void main() {
   group('Chart Interactions', () {
     testWidgets('Supports tap selection', (WidgetTester tester) async {
@@ -44,18 +46,18 @@ void main() {
         ),
       );
 
+      await matchesGolden<charts.BarChart>('golden_bar_chart_before_selection');
+
       await tester.tap(find.byType(charts.BarChart));
       await tester.pump();
 
       expect(selectionModel, isNotNull);
       expect(selectionModel!.selectedDatum, isNotEmpty);
-      // Add more specific expectations about the selection
+
+      await matchesGolden<charts.BarChart>('golden_bar_chart_after_selection');
     });
 
-    // Add more interaction tests:
-    // - Test pan and zoom behaviors
-    // - Test tooltip display
-    // - Test legend interactions
+    // Add more interaction tests here
   });
 }
 

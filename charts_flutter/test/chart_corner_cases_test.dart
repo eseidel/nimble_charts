@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
+import 'test_functions.dart';
+
 void main() {
   group('Chart Corner Cases', () {
     testWidgets('Handles empty data', (WidgetTester tester) async {
@@ -30,7 +32,8 @@ void main() {
       );
 
       expect(find.byType(charts.BarChart), findsOneWidget);
-      // Add expectations for empty chart behavior
+
+      await matchesGolden<charts.BarChart>('golden_empty_bar_chart.png');
     });
 
     testWidgets('Handles large datasets', (WidgetTester tester) async {
@@ -40,7 +43,8 @@ void main() {
           colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
-          data: List.generate(1000, (index) => OrdinalSales(index.toString(), index)),
+          data: List.generate(
+              1000, (index) => OrdinalSales(index.toString(), index)),
         )
       ];
 
@@ -59,14 +63,12 @@ void main() {
       );
 
       expect(find.byType(charts.BarChart), findsOneWidget);
-      // Add expectations for large dataset behavior
+
+      await matchesGolden<charts.BarChart>(
+          'golden_large_dataset_bar_chart.png');
     });
 
-    // Add more corner case tests:
-    // - Test with negative values
-    // - Test with very small or very large values
-    // - Test with non-uniform data (e.g., some null values)
-    // - Test responsiveness to different screen sizes
+    // Add more corner case tests here
   });
 }
 

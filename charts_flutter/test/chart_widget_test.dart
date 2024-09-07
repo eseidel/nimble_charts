@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
+import 'test_functions.dart';
+
 void main() {
   group('Chart Widget Tests', () {
     testWidgets('BarChart renders correctly', (WidgetTester tester) async {
@@ -19,10 +21,7 @@ void main() {
         ),
       );
 
-      await expectLater(
-        find.byType(charts.BarChart),
-        matchesGoldenFile('golden_bar_chart.png'),
-      );
+      await matchesGolden<charts.BarChart>('golden_bar_chart.png');
     });
 
     testWidgets('LineChart renders correctly', (WidgetTester tester) async {
@@ -40,10 +39,7 @@ void main() {
         ),
       );
 
-      await expectLater(
-        find.byType(charts.LineChart),
-        matchesGoldenFile('golden_line_chart.png'),
-      );
+      await matchesGolden<charts.LineChart>('golden_line_chart');
     });
 
     testWidgets('TimeSeriesChart renders correctly',
@@ -62,10 +58,8 @@ void main() {
         ),
       );
 
-      await expectLater(
-        find.byType(charts.TimeSeriesChart),
-        matchesGoldenFile('golden_time_series_chart.png'),
-      );
+      await matchesGolden<charts.TimeSeriesChart>(
+          'golden_time_series_chart.png');
     });
 
     testWidgets('BarChart with custom colors renders correctly',
@@ -84,10 +78,8 @@ void main() {
         ),
       );
 
-      await expectLater(
-        find.byType(charts.BarChart),
-        matchesGoldenFile('golden_bar_chart_custom_colors.png'),
-      );
+      await matchesGolden<charts.BarChart>(
+          'golden_bar_chart_custom_colors.png');
     });
 
     testWidgets('LineChart with points renders correctly',
@@ -107,10 +99,7 @@ void main() {
         ),
       );
 
-      await expectLater(
-        find.byType(charts.LineChart),
-        matchesGoldenFile('golden_line_chart_with_points.png'),
-      );
+      await matchesGolden<charts.LineChart>('golden_line_chart_with_points');
     });
 
     testWidgets('TimeSeriesChart with multiple series renders correctly',
@@ -129,10 +118,8 @@ void main() {
         ),
       );
 
-      await expectLater(
-        find.byType(charts.TimeSeriesChart),
-        matchesGoldenFile('golden_time_series_chart_multiple.png'),
-      );
+      await matchesGolden<charts.TimeSeriesChart>(
+          'golden_time_series_chart_multiple');
     });
   });
 }

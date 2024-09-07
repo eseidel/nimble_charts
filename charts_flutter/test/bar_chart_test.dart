@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
+import 'test_functions.dart';
+
 void main() {
   group('BarChart Widget Tests', () {
     testWidgets('Renders basic bar chart', (WidgetTester tester) async {
@@ -35,11 +37,10 @@ void main() {
       );
 
       expect(find.byType(charts.BarChart), findsOneWidget);
-      
-      // Add more specific expectations here, e.g.:
-      // - Check if the correct number of bars are rendered
-      // - Verify the height of bars corresponds to the data
-      // - Check if axes are properly labeled
+
+      await matchesGolden<charts.BarChart>(
+        'golden_bar_chart',
+      );
     });
 
     // Add more test cases here, e.g.:

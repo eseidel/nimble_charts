@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
+import 'test_functions.dart';
+
 void main() {
   group('Chart Customization', () {
-    testWidgets('Applies custom axis specifications', (WidgetTester tester) async {
+    testWidgets('Applies custom axis specifications',
+        (WidgetTester tester) async {
       final seriesList = [
         charts.Series<OrdinalSales, String>(
           id: 'Sales',
@@ -48,13 +51,11 @@ void main() {
       );
 
       expect(find.byType(charts.BarChart), findsOneWidget);
-      // Add expectations to verify custom axis specifications are applied
+
+      await matchesGolden<charts.BarChart>('golden_customized_bar_chart.png');
     });
 
-    // Add more customization tests:
-    // - Test with custom renderers
-    // - Test with custom behaviors
-    // - Test with different chart orientations (vertical vs horizontal)
+    // Add more customization tests here
   });
 }
 
