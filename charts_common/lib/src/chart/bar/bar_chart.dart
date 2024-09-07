@@ -13,7 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/src/chart/bar/bar_renderer.dart' show BarRenderer;
+import 'package:nimble_charts_common/src/chart/bar/bar_renderer.dart'
+    show BarRenderer;
 import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart'
     show OrdinalCartesianChart;
 import 'package:nimble_charts_common/src/chart/common/series_renderer.dart'
