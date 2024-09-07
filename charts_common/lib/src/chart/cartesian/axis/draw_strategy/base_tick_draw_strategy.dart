@@ -223,11 +223,11 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
       } else {
         // Fill in whatever is missing
         textElement.textStyle!
-        ..color ??= labelStyle.color
-        ..fontFamily ??= labelStyle.fontFamily
-        ..fontSize ??= labelStyle.fontSize
-        ..fontWeight ??= labelStyle.fontWeight
-        ..lineHeight ??= labelStyle.lineHeight;
+          ..color ??= labelStyle.color
+          ..fontFamily ??= labelStyle.fontFamily
+          ..fontSize ??= labelStyle.fontSize
+          ..fontWeight ??= labelStyle.fontWeight
+          ..lineHeight ??= labelStyle.lineHeight;
       }
     }
   }
@@ -288,9 +288,9 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
         if (tick.locationPx != null) tick,
     ]
 
-    // First sort ticks by smallest locationPx first (NOT sorted by value).
-    // This allows us to only check if a tick collides with the previous tick.
-    ..sort((a, b) => a.locationPx!.compareTo(b.locationPx!));
+      // First sort ticks by smallest locationPx first (NOT sorted by value).
+      // This allows us to only check if a tick collides with the previous tick.
+      ..sort((a, b) => a.locationPx!.compareTo(b.locationPx!));
 
     var previousEnd = double.negativeInfinity;
     var collides = false;
@@ -381,14 +381,15 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
       final labelElements = splitLabel(tick.textElement!);
 
       return max(
-        prevMax,
+        prevMax.toDouble(),
         calculateWidthForRotatedLabel(
               labelRotation(collision: collision),
               getLabelHeight(labelElements),
               getLabelWidth(labelElements),
             ) +
             labelOffsetFromAxisPx(collision: collision),
-      );
+        //TODO: possible precision loss
+      ).toInt();
     });
 
     return ViewMeasuredSizes(
@@ -408,13 +409,14 @@ abstract class BaseTickDrawStrategy<D> implements TickDrawStrategy<D> {
       final labelElements = splitLabel(tick.textElement!);
 
       return max(
-        prevMax,
+        prevMax.toDouble(),
         calculateHeightForRotatedLabel(
           labelRotation(collision: collision),
           getLabelHeight(labelElements),
           getLabelWidth(labelElements),
         ),
-      );
+        //TODO: possible precision loss
+      ).toInt();
     });
 
     return ViewMeasuredSizes(

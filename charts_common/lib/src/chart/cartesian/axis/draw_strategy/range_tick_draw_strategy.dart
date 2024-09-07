@@ -260,26 +260,28 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
         // labelOffsetFromAxisPx + rangeShadeHeightPx.
         return max(
           max(
-            prevMax,
+            prevMax.toDouble(),
             calculateWidthForRotatedLabel(
                   labelRotation(collision: collision),
                   getLabelHeight(labelElements),
                   getLabelWidth(labelElements),
                 ) +
                 labelOffsetFromAxisPx(collision: collision),
-          ),
+            //TODO: possible precission loss
+          ).toInt(),
           labelOffsetFromAxisPx(collision: collision) + rangeShadeHeightPx,
         );
       } else {
         return max(
-          prevMax,
+          prevMax.toDouble(),
           calculateWidthForRotatedLabel(
                 labelRotation(collision: collision),
                 getLabelHeight(labelElements),
                 getLabelWidth(labelElements),
               ) +
               labelOffsetFromAxisPx(collision: collision),
-        );
+          //TODO: possible precission loss
+        ).toInt();
       }
     });
 
@@ -304,25 +306,27 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
         // labelOffsetFromAxisPx + rangeShadeHeightPx.
         return max(
           max(
-            prevMax,
+            prevMax.toDouble(),
             calculateHeightForRotatedLabel(
                   labelRotation(collision: collision),
                   getLabelHeight(labelElements),
                   getLabelWidth(labelElements),
                 ) +
                 rangeShadeOffsetFromAxisPx,
-          ),
+            //TODO: possible precission loss
+          ).toInt(),
           rangeShadeOffsetFromAxisPx + rangeShadeHeightPx,
         );
       } else {
         return max(
-              prevMax,
+              prevMax.toDouble(),
               calculateHeightForRotatedLabel(
                 labelRotation(collision: collision),
                 getLabelHeight(labelElements),
                 getLabelWidth(labelElements),
               ),
-            ) +
+            //TODO: possible precission loss
+            ).toInt() +
             labelOffsetFromAxisPx(collision: collision);
       }
     });
@@ -419,13 +423,13 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
         stroke: lineStyle.color,
         strokeWidthPx: lineStyle.strokeWidth.toDouble(),
       )
-    ..drawLine(
-      points: [rangeEndTickStart, rangeEndTickEnd],
-      dashPattern: lineStyle.dashPattern,
-      fill: lineStyle.color,
-      stroke: lineStyle.color,
-      strokeWidthPx: lineStyle.strokeWidth.toDouble(),
-    );
+      ..drawLine(
+        points: [rangeEndTickStart, rangeEndTickEnd],
+        dashPattern: lineStyle.dashPattern,
+        fill: lineStyle.color,
+        stroke: lineStyle.color,
+        strokeWidthPx: lineStyle.strokeWidth.toDouble(),
+      );
 
     // Prepare range label.
     final rangeLabelTextElement = tick.textElement!

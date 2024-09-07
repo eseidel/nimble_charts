@@ -208,7 +208,10 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
         .forEach((decorator) {
       decorator.decorate(
         arcLists
-            .map<ArcRendererElementList<D>>((e) => arcListToElementsList[e])
+            .map<ArcRendererElementList<D>>(
+              //TODO: dangerous casts
+              (e) => arcListToElementsList[e] as ArcRendererElementList<D>,
+            )
             .toList(),
         canvas,
         graphicsFactory!,
@@ -252,7 +255,10 @@ abstract class BaseArcRenderer<D> extends BaseSeriesRenderer<D> {
         .forEach((decorator) {
       decorator.decorate(
         arcLists
-            .map<ArcRendererElementList<D>>((e) => arcListToElementsList[e])
+            .map<ArcRendererElementList<D>>(
+              //TODO: dangerous casts
+              (e) => arcListToElementsList[e] as ArcRendererElementList<D>,
+            )
             .toList(),
         canvas,
         graphicsFactory!,

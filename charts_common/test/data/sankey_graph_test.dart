@@ -14,8 +14,10 @@
 // limitations under the License.
 
 import 'package:charts_common/common.dart';
+import 'package:charts_common/src/data/graph.dart' as graph;
 import 'package:charts_common/src/data/graph.dart' as graph_structure
     show Node, indexNotRelevant;
+import 'package:charts_common/src/data/graph.dart';
 import 'package:charts_common/src/data/sankey_graph.dart';
 import 'package:test/test.dart';
 
@@ -391,14 +393,14 @@ void main() {
       expect(mySeriesList[1].id, 'MyGraph_links');
       expect(
         myGraph.nodeDomainFn(
-          mySeriesList[1].data[0].source,
+          mySeriesList[1].data[0].source as Node<MyNode, MyLink>,
           graph_structure.indexNotRelevant,
         ),
         'Node 1',
       );
       expect(
         myGraph.nodeDomainFn(
-          mySeriesList[1].data[0].target,
+          mySeriesList[1].data[0].target as Node<MyNode, MyLink>,
           graph_structure.indexNotRelevant,
         ),
         'Node 2',
@@ -407,7 +409,8 @@ void main() {
       expect(mySeriesList[1].data[0].secondaryLinkMeasure, 1);
       expect(
         myGraph.linkDomainFn(
-          mySeriesList[0].data[0].outgoingLinks[0],
+          mySeriesList[0].data[0].outgoingLinks[0]
+              as graph.Link<MyNode, MyLink>,
           graph_structure.indexNotRelevant,
         ),
         myGraph.linkDomainFn(
@@ -417,7 +420,8 @@ void main() {
       );
       expect(
         myGraph.linkDomainFn(
-          mySeriesList[0].data[1].incomingLinks[0],
+          mySeriesList[0].data[1].incomingLinks[0]
+              as graph.Link<MyNode, MyLink>,
           graph_structure.indexNotRelevant,
         ),
         myGraph.linkDomainFn(

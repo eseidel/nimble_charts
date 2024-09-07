@@ -13,7 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers,
+// ignore_for_file: avoid_types_on_closure_parameters
 
 import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     show TextStyleSpec;
@@ -139,61 +140,65 @@ class Series<T, D> {
     TypedAccessorFn<T, num?>? strokeWidthPxFn,
   }) {
     // Wrap typed accessors.
+    // ignore: prefer_function_declarations_over_variables
     final _domainFn = (int? index) => domainFn(data[index!], index);
+    // ignore: prefer_function_declarations_over_variables
     final _measureFn = (int? index) => measureFn(data[index!], index);
     final _areaColorFn = areaColorFn == null
         ? null
-        : (index) => areaColorFn(data[index!], index);
+        : (int? index) => areaColorFn(data[index!], index);
     final _colorFn =
-        colorFn == null ? null : (index) => colorFn(data[index!], index);
+        colorFn == null ? null : (int? index) => colorFn(data[index!], index);
     final _dashPatternFn = dashPatternFn == null
         ? null
-        : (index) => dashPatternFn(data[index!], index);
+        : (int? index) => dashPatternFn(data[index!], index);
     final _domainFormatterFn = domainFormatterFn == null
         ? null
-        : (index) => domainFormatterFn(data[index!], index);
+        : (int? index) => domainFormatterFn(data[index!], index);
     final _domainLowerBoundFn = domainLowerBoundFn == null
         ? null
-        : (index) => domainLowerBoundFn(data[index!], index);
+        : (int? index) => domainLowerBoundFn(data[index!], index);
     final _domainUpperBoundFn = domainUpperBoundFn == null
         ? null
-        : (index) => domainUpperBoundFn(data[index!], index);
+        : (int? index) => domainUpperBoundFn(data[index!], index);
     final _fillColorFn = fillColorFn == null
         ? null
-        : (index) => fillColorFn(data[index!], index);
+        : (int? index) => fillColorFn(data[index!], index);
     final _patternColorFn = patternColorFn == null
         ? null
-        : (index) => patternColorFn(data[index!], index);
+        : (int? index) => patternColorFn(data[index!], index);
     final _fillPatternFn = fillPatternFn == null
         ? null
-        : (index) => fillPatternFn(data[index!], index);
+        : (int? index) => fillPatternFn(data[index!], index);
     final _labelAccessorFn = labelAccessorFn == null
         ? null
-        : (index) => labelAccessorFn(data[index!], index);
+        : (int? index) => labelAccessorFn(data[index!], index);
     final _insideLabelStyleAccessorFn = insideLabelStyleAccessorFn == null
         ? null
-        : (index) => insideLabelStyleAccessorFn(data[index!], index);
+        : (int? index) => insideLabelStyleAccessorFn(data[index!], index);
     final _outsideLabelStyleAccessorFn = outsideLabelStyleAccessorFn == null
         ? null
-        : (index) => outsideLabelStyleAccessorFn(data[index!], index);
+        : (int? index) => outsideLabelStyleAccessorFn(data[index!], index);
     final _measureFormatterFn = measureFormatterFn == null
         ? null
-        : (index) => measureFormatterFn(data[index!], index);
+        : (int? index) => measureFormatterFn(data[index!], index);
     final _measureLowerBoundFn = measureLowerBoundFn == null
         ? null
-        : (index) => measureLowerBoundFn(data[index!], index);
+        : (int? index) => measureLowerBoundFn(data[index!], index);
     final _measureUpperBoundFn = measureUpperBoundFn == null
         ? null
-        : (index) => measureUpperBoundFn(data[index!], index);
+        : (int? index) => measureUpperBoundFn(data[index!], index);
     final _measureOffsetFn = measureOffsetFn == null
         ? null
-        : (index) => measureOffsetFn(data[index!], index);
-    final _radiusPxFn =
-        radiusPxFn == null ? null : (index) => radiusPxFn(data[index!], index);
+        : (int? index) => measureOffsetFn(data[index!], index);
+    final _radiusPxFn = radiusPxFn == null
+        ? null
+        : (int? index) => radiusPxFn(data[index!], index);
     final _strokeWidthPxFn = strokeWidthPxFn == null
         ? null
-        : (index) => strokeWidthPxFn(data[index!], index);
-    final _keyFn = keyFn == null ? null : (index) => keyFn(data[index!], index);
+        : (int? index) => strokeWidthPxFn(data[index!], index);
+    final _keyFn =
+        keyFn == null ? null : (int? index) => keyFn(data[index!], index);
 
     return Series._internal(
       id: id,

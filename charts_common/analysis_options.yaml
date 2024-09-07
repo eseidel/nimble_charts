@@ -3,8 +3,11 @@ include: package:austerity/analysis_options.yaml
 analyzer:
   errors:
 
+    # Can't ignore these
+    #argument_type_not_assignable: warning
+    #return_of_invalid_type_from_closure: warning
+
     # Dangerous
-    argument_type_not_assignable: warning
     no_runtimetype_tostring: warning
     strict_raw_type: warning
     avoid_equals_and_hash_code_on_mutable_classes: warning
@@ -12,7 +15,6 @@ analyzer:
     inference_failure_on_collection_literal: warning
     type_annotate_public_apis: warning
     inference_failure_on_untyped_parameter: warning
-    return_of_invalid_type_from_closure: warning
     inference_failure_on_instance_creation: warning
     inference_failure_on_function_invocation: warning
 

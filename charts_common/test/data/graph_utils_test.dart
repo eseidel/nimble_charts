@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts_common/common.dart';
 import 'package:charts_common/src/data/graph.dart' as graph_structure
     show Link, Node, indexNotRelevant;
 import 'package:charts_common/src/data/graph_utils.dart';
@@ -77,8 +78,12 @@ void main() {
     });
 
     test('returns data for non-null functions', () {
-      dynamic getDomain(node, _) => node.domainId;
-      dynamic getMeasure(node, _) => node.measure;
+      // ignore: prefer_function_declarations_over_variables, omit_local_variable_types
+      final TypedAccessorFn<MyNode, String> getDomain =
+          (node, _) => node.domainId;
+
+      // ignore: omit_local_variable_types
+      final TypedAccessorFn<MyNode, num> getMeasure = (node, _) => node.measure;
       final domainFn = actOnNodeData<MyNode, MyLink, String>(getDomain)!;
       final measureFn = actOnNodeData<MyNode, MyLink, num>(getMeasure)!;
 
@@ -107,8 +112,11 @@ void main() {
     });
 
     test('returns data for non-null functions', () {
-      dynamic getDomain(link, _) => link.domainId;
-      dynamic getMeasure(link, _) => link.measure;
+      // ignore: omit_local_variable_types
+      final TypedAccessorFn<MyLink, String> getDomain =
+          (link, _) => link.domainId;
+      // ignore: omit_local_variable_types
+      final TypedAccessorFn<MyLink, num> getMeasure = (link, _) => link.measure;
       final domainFn = actOnLinkData<MyNode, MyLink, String>(getDomain)!;
       final measureFn = actOnLinkData<MyNode, MyLink, num>(getMeasure)!;
       final firstLink = graph_structure.Link<MyNode, MyLink>(

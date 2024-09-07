@@ -202,15 +202,37 @@ void main() {
       expect(mySeriesList[1].domainFn(0), linkIds[1]);
       expect(mySeriesList[1].measureFn(0), 1);
       expect(mySeriesList[1].id, 'MyGraph_links');
-      expect(nodeDomain(myGraph, mySeriesList[1].data[0].source), nodeIds[1]);
-      expect(nodeDomain(myGraph, mySeriesList[1].data[0].target), nodeIds[2]);
+      expect(
+        nodeDomain(
+          myGraph,
+          mySeriesList[1].data[0].source
+              as graph_structure.Node<MyNode, MyLink>,
+        ),
+        nodeIds[1],
+      );
+      expect(
+        nodeDomain(
+          myGraph,
+          mySeriesList[1].data[0].target
+              as graph_structure.Node<MyNode, MyLink>,
+        ),
+        nodeIds[2],
+      );
       expect(mySeriesList[0].data[0].incomingLinks.length, 0);
       expect(
-        linkDomain(myGraph, mySeriesList[0].data[0].outgoingLinks[0]),
+        linkDomain(
+          myGraph,
+          mySeriesList[0].data[0].outgoingLinks[0]
+              as graph_structure.Link<MyNode, MyLink>,
+        ),
         linkDomain(myGraph, myGraph.links[0]),
       );
       expect(
-        linkDomain(myGraph, mySeriesList[0].data[1].incomingLinks[0]),
+        linkDomain(
+          myGraph,
+          mySeriesList[0].data[1].incomingLinks[0]
+              as graph_structure.Link<MyNode, MyLink>,
+        ),
         linkDomain(myGraph, myGraph.links[0]),
       );
       expect(mySeriesList[0].data[1].outgoingLinks.length, 0);

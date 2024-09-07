@@ -13,13 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
-import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
-    show ChartBehavior;
-import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
-    show SelectionModel, SelectionModelType;
-import 'package:charts_common/src/chart/sunburst/sunburst_chart.dart'
-    show SunburstChart;
+import 'package:charts_common/common.dart';
 
 /// Expands the initially displayed outer ring to show subset of data in one
 /// final ring.
@@ -32,7 +26,8 @@ class SunburstRingExpander<D> implements ChartBehavior<D> {
   void _selectionChanged(SelectionModel<D> selectionModel) {
     if (selectionModel.selectedDatum.isNotEmpty) {
       _chart
-        ..expandNode(selectionModel.selectedDatum.first.datum)
+       //TODO: dangerous casts
+        ..expandNode(selectionModel.selectedDatum.first.datum as TreeNode<D>)
         ..redraw(skipLayout: true, skipAnimation: true);
     }
   }

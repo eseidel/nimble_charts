@@ -332,8 +332,12 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
             // angle. If there were no previous arcs, then animate everything in
             // from 0.
             if (animatingArc == null) {
-              animatingArc = AnimatedArc<D>(arcKey, datum, domainValue)
-                ..setNewTarget(
+              animatingArc = AnimatedArc<D>(
+                arcKey,
+                datum,
+                //TODO: dangerous casts
+                domainValue as D?,
+              )..setNewTarget(
                   SunburstArcRendererElement<D>(
                     color: colorFn!(arcIndex),
                     startAngle: previousEndAngle,
@@ -512,7 +516,9 @@ class SunburstArcRenderer<D> extends BaseArcRenderer<D> {
           }
         }
         series.colorFn ??=
-            (index) => nodeToColorMap[series.data[index!]] ?? Color.black;
+            //TODO: dangerous casts
+            (index) =>
+                nodeToColorMap[series.data[index!]] as Color? ?? Color.black;
       }
     }
   }

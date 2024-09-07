@@ -56,9 +56,10 @@ class LinkRenderer<D> extends BaseSeriesRenderer<D> {
       final elements = <LinkRendererElement>[];
       for (var linkIndex = 0; linkIndex < series.data.length; linkIndex++) {
         final element = LinkRendererElement(
-          series.data[linkIndex].link,
-          series.data[linkIndex].orientation,
-          series.data[linkIndex].fillColor,
+          //TODO: dangerous casts
+          series.data[linkIndex].link as Link,
+          series.data[linkIndex].orientation as LinkOrientation,
+          series.data[linkIndex].fillColor as Color,
         );
         elements.add(element);
       }
