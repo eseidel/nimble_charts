@@ -32,19 +32,7 @@ jobs:
       - name: Build WASM
         run: |
           cd charts_flutter/example
-          flutter build web --wasm
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: 'charts_flutter/example/build/web'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          flutter build web --wasm --base-href /charts/
 
       - name: Update COOP and COEP headers
         run: |
@@ -68,10 +56,14 @@ jobs:
           }
           ' > charts_flutter/example/build/web/_headers
 
-      - name: Upload updated artifact
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'charts_flutter/example/build/web'
 
-      - name: Redeploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
