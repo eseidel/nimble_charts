@@ -44,7 +44,7 @@ jobs:
       - name: Run Tests
         run: |
           cd charts_flutter
-          flutter test --coverage --update-goldens
+          flutter test --coverage
 
       - name: Check Test Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v2
