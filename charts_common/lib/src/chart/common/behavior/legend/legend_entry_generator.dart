@@ -13,11 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../cartesian/axis/spec/axis_spec.dart' show TextStyleSpec;
-import '../../datum_details.dart' show MeasureFormatter;
-import '../../processed_series.dart' show MutableSeries;
-import '../../selection_model/selection_model.dart';
-import 'legend_entry.dart';
+import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show TextStyleSpec;
+import 'package:charts_common/src/chart/common/behavior/legend/legend_entry.dart';
+import 'package:charts_common/src/chart/common/datum_details.dart'
+    show MeasureFormatter;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show MutableSeries;
+import 'package:charts_common/src/chart/common/selection_model/selection_model.dart';
 
 /// A strategy for generating a list of [LegendEntry] based on the series drawn.
 ///
@@ -33,8 +36,11 @@ abstract class LegendEntryGenerator<D> {
   /// [legendEntries] Existing legend entries to update.
   /// [selectionModel] Selection model to query selected state.
   /// [seriesList] Processed series list.
-  void updateLegendEntries(List<LegendEntry<D>> legendEntries,
-      SelectionModel<D> selectionModel, List<MutableSeries<D>> seriesList);
+  void updateLegendEntries(
+    List<LegendEntry<D>> legendEntries,
+    SelectionModel<D> selectionModel,
+    List<MutableSeries<D>> seriesList,
+  );
 
   MeasureFormatter? get measureFormatter;
 

@@ -15,23 +15,23 @@
 
 import 'dart:math' show Rectangle;
 
-import '../common/base_chart.dart' show BaseChart;
-import '../common/datum_details.dart' show DatumDetails;
-import '../common/selection_model/selection_model.dart' show SelectionModelType;
-import '../common/series_renderer.dart' show rendererIdKey, SeriesRenderer;
-import '../layout/layout_config.dart' show LayoutConfig;
-import '../../data/tree.dart' show TreeNode;
-import 'sunburst_arc_renderer.dart' show SunburstArcRenderer;
+import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
+import 'package:charts_common/src/chart/common/datum_details.dart'
+    show DatumDetails;
+import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
+    show SelectionModelType;
+import 'package:charts_common/src/chart/common/series_renderer.dart'
+    show SeriesRenderer, rendererIdKey;
+import 'package:charts_common/src/chart/sunburst/sunburst_arc_renderer.dart'
+    show SunburstArcRenderer;
+import 'package:charts_common/src/data/tree.dart' show TreeNode;
 
 class SunburstChart<D> extends BaseChart<D> {
-  SunburstChart({LayoutConfig? layoutConfig})
-      : super(layoutConfig: layoutConfig);
+  SunburstChart({super.layoutConfig});
 
   @override
-  SeriesRenderer<D> makeDefaultRenderer() {
-    return SunburstArcRenderer<D>()
-      ..rendererId = SeriesRenderer.defaultRendererId;
-  }
+  SeriesRenderer<D> makeDefaultRenderer() =>
+      SunburstArcRenderer<D>()..rendererId = SeriesRenderer.defaultRendererId;
 
   /// Returns a list of datum details from selection model of [type].
   @override
@@ -47,9 +47,7 @@ class SunburstChart<D> extends BaseChart<D> {
       final details = (renderer as SunburstArcRenderer<D>)
           .getExpandedDatumDetails(seriesDatum);
 
-      if (details != null) {
-        entries.add(details);
-      }
+      entries.add(details);
     }
 
     return entries;

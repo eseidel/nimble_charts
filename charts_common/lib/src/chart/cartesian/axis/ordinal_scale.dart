@@ -13,8 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'ordinal_scale_domain_info.dart' show OrdinalScaleDomainInfo;
-import 'scale.dart' show MutableScale;
+import 'package:charts_common/src/chart/cartesian/axis/ordinal_scale_domain_info.dart'
+    show OrdinalScaleDomainInfo;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+    show MutableScale;
 
 abstract class OrdinalScale extends MutableScale<String> {
   /// The current domain collection with all added unique values.

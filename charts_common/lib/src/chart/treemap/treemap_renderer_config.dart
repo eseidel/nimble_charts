@@ -15,20 +15,32 @@
 
 import 'package:charts_common/src/chart/common/series_renderer_config.dart';
 import 'package:charts_common/src/chart/layout/layout_view.dart';
+import 'package:charts_common/src/chart/treemap/base_treemap_renderer.dart';
+import 'package:charts_common/src/chart/treemap/dice_treemap_renderer.dart';
+import 'package:charts_common/src/chart/treemap/slice_dice_treemap_renderer.dart';
+import 'package:charts_common/src/chart/treemap/slice_treemap_renderer.dart';
+import 'package:charts_common/src/chart/treemap/squarified_treemap_renderer.dart';
+import 'package:charts_common/src/chart/treemap/treemap_label_decorator.dart';
 import 'package:charts_common/src/common/color.dart';
 import 'package:charts_common/src/common/style/style_factory.dart';
 import 'package:charts_common/src/common/symbol_renderer.dart';
 
-import 'base_treemap_renderer.dart';
-import 'dice_treemap_renderer.dart';
-import 'slice_dice_treemap_renderer.dart';
-import 'slice_treemap_renderer.dart';
-import 'squarified_treemap_renderer.dart';
-import 'treemap_label_decorator.dart';
-
 /// Configuration for a [BaseTreeMapRenderer].
 class TreeMapRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
+  TreeMapRendererConfig({
+    this.customRendererId,
+    this.patternStrokeWidthPx = 1.0,
+    this.strokeWidthPx = 1.0,
+    this.layoutPaintOrder = LayoutViewPaintOrder.treeMap,
+    this.rectPaddingPx = _defaultRectPadding,
+    this.tileType = TreeMapTileType.squarified,
+    this.labelDecorator,
+    Color? strokeColor,
+    SymbolRenderer? symbolRenderer,
+  })  : strokeColor = strokeColor ?? StyleFactory.style.black,
+        symbolRenderer = symbolRenderer ?? RectSymbolRenderer();
+
   /// Default padding of a treemap rectangle.
   static const _defaultRectPadding =
       ViewMargin(topPx: 26, leftPx: 4, rightPx: 4, bottomPx: 4);
@@ -64,34 +76,29 @@ class TreeMapRendererConfig<D> extends LayoutViewConfig
   /// Decorator for optionally decorating treemap rectangle label.
   final TreeMapLabelDecorator<D>? labelDecorator;
 
-  TreeMapRendererConfig(
-      {this.customRendererId,
-      this.patternStrokeWidthPx = 1.0,
-      this.strokeWidthPx = 1.0,
-      this.layoutPaintOrder = LayoutViewPaintOrder.treeMap,
-      this.rectPaddingPx = _defaultRectPadding,
-      this.tileType = TreeMapTileType.squarified,
-      this.labelDecorator,
-      Color? strokeColor,
-      SymbolRenderer? symbolRenderer})
-      : strokeColor = strokeColor ?? StyleFactory.style.black,
-        symbolRenderer = symbolRenderer ?? RectSymbolRenderer();
-
   @override
   BaseTreeMapRenderer<D> build() {
     switch (tileType) {
       case TreeMapTileType.dice:
         return DiceTreeMapRenderer<D>(
-            config: this, rendererId: customRendererId);
+          config: this,
+          rendererId: customRendererId,
+        );
       case TreeMapTileType.slice:
         return SliceTreeMapRenderer<D>(
-            config: this, rendererId: customRendererId);
+          config: this,
+          rendererId: customRendererId,
+        );
       case TreeMapTileType.sliceDice:
         return SliceDiceTreeMapRenderer<D>(
-            config: this, rendererId: customRendererId);
+          config: this,
+          rendererId: customRendererId,
+        );
       default:
         return SquarifiedTreeMapRenderer<D>(
-            config: this, rendererId: customRendererId);
+          config: this,
+          rendererId: customRendererId,
+        );
     }
   }
 }

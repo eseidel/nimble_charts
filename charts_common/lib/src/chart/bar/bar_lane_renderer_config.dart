@@ -13,19 +13,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../common/color.dart' show Color;
-import '../../common/style/style_factory.dart' show StyleFactory;
-import '../../common/symbol_renderer.dart';
-import '../common/chart_canvas.dart' show FillPatternType;
-import '../layout/layout_view.dart' show LayoutViewPaintOrder;
-import 'bar_label_decorator.dart' show BarLabelDecorator;
-import 'bar_lane_renderer.dart' show BarLaneRenderer;
-import 'bar_renderer_config.dart' show BarRendererConfig, CornerStrategy;
-import 'bar_renderer_decorator.dart' show BarRendererDecorator;
-import 'base_bar_renderer_config.dart' show BarGroupingType;
+import 'package:charts_common/src/chart/bar/bar_label_decorator.dart'
+    show BarLabelDecorator;
+import 'package:charts_common/src/chart/bar/bar_lane_renderer.dart'
+    show BarLaneRenderer;
+import 'package:charts_common/src/chart/bar/bar_renderer_config.dart'
+    show BarRendererConfig, CornerStrategy;
+import 'package:charts_common/src/chart/bar/base_bar_renderer_config.dart'
+    show BarGroupingType;
+import 'package:charts_common/src/common/color.dart' show Color;
+import 'package:charts_common/src/common/style/style_factory.dart'
+    show StyleFactory;
 
 /// Configuration for a bar lane renderer.
 class BarLaneRendererConfig extends BarRendererConfig<String> {
+  BarLaneRendererConfig({
+    super.customRendererId,
+    super.cornerStrategy,
+    this.emptyLaneLabel = 'No data',
+    super.fillPattern,
+    BarGroupingType? groupingType,
+    super.layoutPaintOrder,
+    this.mergeEmptyLanes = false,
+    super.minBarLengthPx,
+    this.renderNegativeLanes = false,
+    super.stackedBarPaddingPx,
+    super.strokeWidthPx,
+    super.barRendererDecorator,
+    super.symbolRenderer,
+    Color? backgroundBarColor,
+    super.weightPattern,
+  })  : backgroundBarColor =
+            backgroundBarColor ?? StyleFactory.style.noDataColor,
+        super(
+          groupingType: groupingType ?? BarGroupingType.grouped,
+        );
+
   /// The color of background bars.
   final Color backgroundBarColor;
 
@@ -45,43 +68,9 @@ class BarLaneRendererConfig extends BarRendererConfig<String> {
   /// Whether or not to render negative bar lanes on bars with negative values
   final bool renderNegativeLanes;
 
-  BarLaneRendererConfig({
-    String? customRendererId,
-    CornerStrategy? cornerStrategy,
-    this.emptyLaneLabel = 'No data',
-    FillPatternType? fillPattern,
-    BarGroupingType? groupingType,
-    int layoutPaintOrder = LayoutViewPaintOrder.bar,
-    this.mergeEmptyLanes = false,
-    int minBarLengthPx = 0,
-    bool renderNegativeLanes = false,
-    int stackedBarPaddingPx = 1,
-    double strokeWidthPx = 0.0,
-    BarRendererDecorator<String>? barRendererDecorator,
-    SymbolRenderer? symbolRenderer,
-    Color? backgroundBarColor,
-    List<int>? weightPattern,
-  })  : backgroundBarColor =
-            backgroundBarColor ?? StyleFactory.style.noDataColor,
-        renderNegativeLanes = renderNegativeLanes,
-        super(
-          barRendererDecorator: barRendererDecorator,
-          cornerStrategy: cornerStrategy,
-          customRendererId: customRendererId,
-          groupingType: groupingType ?? BarGroupingType.grouped,
-          layoutPaintOrder: layoutPaintOrder,
-          minBarLengthPx: minBarLengthPx,
-          fillPattern: fillPattern,
-          stackedBarPaddingPx: stackedBarPaddingPx,
-          strokeWidthPx: strokeWidthPx,
-          symbolRenderer: symbolRenderer,
-          weightPattern: weightPattern,
-        );
-
   @override
-  BarLaneRenderer<String> build() {
-    return BarLaneRenderer<String>(config: this, rendererId: customRendererId);
-  }
+  BarLaneRenderer<String> build() =>
+      BarLaneRenderer<String>(config: this, rendererId: customRendererId);
 
   @override
   bool operator ==(Object other) {

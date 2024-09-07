@@ -13,24 +13,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../common/chart_context.dart' show ChartContext;
-import 'axis.dart' show AxisOrientation;
-import 'draw_strategy/tick_draw_strategy.dart' show TickDrawStrategy;
-import 'numeric_scale.dart' show NumericScale;
-import 'range_tick.dart' show RangeTick;
-import 'scale.dart' show MutableScale;
-import 'spec/range_tick_spec.dart' show RangeTickSpec;
-import 'spec/tick_spec.dart' show TickSpec;
-import 'tick.dart' show Tick;
-import 'tick_formatter.dart' show TickFormatter;
-import 'tick_provider.dart' show TickProvider, TickHint;
-import 'time/date_time_scale.dart' show DateTimeScale;
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    show TickDrawStrategy;
+import 'package:charts_common/src/chart/cartesian/axis/numeric_scale.dart'
+    show NumericScale;
+import 'package:charts_common/src/chart/cartesian/axis/range_tick.dart'
+    show RangeTick;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+    show MutableScale;
+import 'package:charts_common/src/chart/cartesian/axis/spec/range_tick_spec.dart'
+    show RangeTickSpec;
+import 'package:charts_common/src/chart/cartesian/axis/spec/tick_spec.dart'
+    show TickSpec;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show TickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show TickHint, TickProvider;
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_scale.dart'
+    show DateTimeScale;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 /// A strategy that provides normal ticks and range ticks.
 class RangeTickProvider<D> extends TickProvider<D> {
-  final List<TickSpec<D>> tickSpec;
   RangeTickProvider(this.tickSpec);
+  final List<TickSpec<D>> tickSpec;
 
   @override
   List<Tick<D>> getTicks({
@@ -54,8 +66,9 @@ class RangeTickProvider<D> extends TickProvider<D> {
       if (scale is NumericScale || scale is DateTimeScale) {
         scale.addDomain(spec.value);
         if (spec is RangeTickSpec<D>) {
-          scale.addDomain(spec.rangeStartValue);
-          scale.addDomain(spec.rangeEndValue);
+          scale
+            ..addDomain(spec.rangeStartValue)
+            ..addDomain(spec.rangeEndValue);
         }
       }
 
@@ -67,8 +80,10 @@ class RangeTickProvider<D> extends TickProvider<D> {
     List<String>? formattedValues;
     if (!allTicksHaveLabels) {
       formattedValues = formatter.format(
-          tickSpec.map((spec) => spec.value).toList(), formatterValueCache,
-          stepSize: scale.domainStepSize);
+        tickSpec.map((spec) => spec.value).toList(),
+        formatterValueCache,
+        stepSize: scale.domainStepSize,
+      );
     }
 
     for (var i = 0; i < tickSpec.length; i++) {
@@ -85,11 +100,8 @@ class RangeTickProvider<D> extends TickProvider<D> {
             value: spec.value,
             textElement: graphicsFactory
                 .createTextElement(spec.label ?? formattedValues![i]),
-            locationPx: (scale[spec.rangeStartValue]! +
-                    (scale[spec.rangeEndValue]! -
-                            scale[spec.rangeStartValue]!) /
-                        2)
-                .toDouble(),
+            locationPx: scale[spec.rangeStartValue]! +
+                (scale[spec.rangeEndValue]! - scale[spec.rangeStartValue]!) / 2,
             rangeStartValue: spec.rangeStartValue,
             rangeStartLocationPx: scale[spec.rangeStartValue]!.toDouble(),
             rangeEndValue: spec.rangeEndValue,

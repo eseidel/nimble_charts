@@ -13,18 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../scale.dart' show Extents;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart' show Extents;
 
 class DateTimeExtents extends Extents<DateTime> {
+  DateTimeExtents({required this.start, required this.end});
   final DateTime start;
   final DateTime end;
 
-  DateTimeExtents({required this.start, required this.end});
-
   @override
-  bool operator ==(Object other) {
-    return other is DateTimeExtents && start == other.start && end == other.end;
-  }
+  bool operator ==(Object other) =>
+      other is DateTimeExtents && start == other.start && end == other.end;
 
   @override
   int get hashCode => start.hashCode + (end.hashCode * 37);

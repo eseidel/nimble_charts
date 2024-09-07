@@ -15,13 +15,17 @@
 
 import 'package:charts_common/src/chart/common/series_renderer_config.dart';
 import 'package:charts_common/src/chart/layout/layout_view.dart';
+import 'package:charts_common/src/chart/sankey/sankey_renderer.dart';
 import 'package:charts_common/src/common/symbol_renderer.dart';
-
-import 'sankey_renderer.dart';
 
 /// Configuration for a [SankeyRenderer].
 class SankeyRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
+  SankeyRendererConfig({
+    this.customRendererId,
+    this.layoutPaintOrder = LayoutViewPaintOrder.sankey,
+    SymbolRenderer? symbolRenderer,
+  }) : symbolRenderer = symbolRenderer ?? RectSymbolRenderer();
   @override
   final String? customRendererId;
 
@@ -34,14 +38,7 @@ class SankeyRendererConfig<D> extends LayoutViewConfig
   /// The order to paint this renderer on the canvas.
   final int layoutPaintOrder;
 
-  SankeyRendererConfig(
-      {this.customRendererId,
-      this.layoutPaintOrder = LayoutViewPaintOrder.sankey,
-      SymbolRenderer? symbolRenderer})
-      : symbolRenderer = symbolRenderer ?? RectSymbolRenderer();
-
   @override
-  SankeyRenderer<D> build() {
-    return SankeyRenderer<D>(config: this, rendererId: customRendererId);
-  }
+  SankeyRenderer<D> build() =>
+      SankeyRenderer<D>(config: this, rendererId: customRendererId);
 }

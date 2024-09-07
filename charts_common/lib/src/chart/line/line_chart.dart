@@ -13,30 +13,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:collection' show LinkedHashMap;
-
-import '../cartesian/axis/axis.dart' show NumericAxis;
-import '../cartesian/cartesian_chart.dart' show NumericCartesianChart;
-import '../common/series_renderer.dart' show SeriesRenderer;
-import '../layout/layout_config.dart' show LayoutConfig;
-import '../line/line_renderer.dart' show LineRenderer;
+import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+    show NumericCartesianChart;
+import 'package:charts_common/src/chart/common/series_renderer.dart'
+    show SeriesRenderer;
+import 'package:charts_common/src/chart/line/line_renderer.dart'
+    show LineRenderer;
 
 class LineChart extends NumericCartesianChart {
-  LineChart(
-      {bool? vertical,
-      LayoutConfig? layoutConfig,
-      NumericAxis? primaryMeasureAxis,
-      NumericAxis? secondaryMeasureAxis,
-      LinkedHashMap<String, NumericAxis>? disjointMeasureAxes})
-      : super(
-            vertical: vertical,
-            layoutConfig: layoutConfig,
-            primaryMeasureAxis: primaryMeasureAxis,
-            secondaryMeasureAxis: secondaryMeasureAxis,
-            disjointMeasureAxes: disjointMeasureAxes);
+  LineChart({
+    super.vertical,
+    super.layoutConfig,
+    super.primaryMeasureAxis,
+    super.secondaryMeasureAxis,
+    super.disjointMeasureAxes,
+  });
 
   @override
-  SeriesRenderer<num> makeDefaultRenderer() {
-    return LineRenderer<num>()..rendererId = SeriesRenderer.defaultRendererId;
-  }
+  SeriesRenderer<num> makeDefaultRenderer() =>
+      LineRenderer<num>()..rendererId = SeriesRenderer.defaultRendererId;
 }

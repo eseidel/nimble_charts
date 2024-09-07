@@ -13,10 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../numeric_extents.dart' show NumericExtents;
+import 'package:charts_common/common.dart';
 
 /// Encapsulation of all the domain processing logic for the [LinearScale].
 class LinearScaleDomainInfo {
+  LinearScaleDomainInfo();
+
+  LinearScaleDomainInfo.copy(LinearScaleDomainInfo other) {
+    if (other.domainOverride != null) {
+      domainOverride = other.domainOverride;
+    }
+    _dataDomainStart = other._dataDomainStart;
+    _dataDomainEnd = other._dataDomainEnd;
+    _previouslyAddedDomain = other._previouslyAddedDomain;
+    _minimumDetectedDomainStep = other._minimumDetectedDomainStep;
+  }
+
   /// User (or axis) overridden extent in domain units.
   NumericExtents? domainOverride;
 
@@ -39,18 +51,6 @@ class LinearScaleDomainInfo {
 
   ///The diff of the nicedDomain extent.
   num get domainDiff => extent.width;
-
-  LinearScaleDomainInfo();
-
-  LinearScaleDomainInfo.copy(LinearScaleDomainInfo other) {
-    if (other.domainOverride != null) {
-      domainOverride = other.domainOverride;
-    }
-    _dataDomainStart = other._dataDomainStart;
-    _dataDomainEnd = other._dataDomainEnd;
-    _previouslyAddedDomain = other._previouslyAddedDomain;
-    _minimumDetectedDomainStep = other._minimumDetectedDomainStep;
-  }
 
   /// Resets everything back to initial state.
   void reset() {

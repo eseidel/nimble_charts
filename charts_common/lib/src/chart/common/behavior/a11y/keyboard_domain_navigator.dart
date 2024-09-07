@@ -13,14 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+    show CartesianChart;
+import 'package:charts_common/src/chart/common/base_chart.dart'
+    show BaseChart, LifecycleListener;
+import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
+    show ChartBehavior;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show MutableSeries;
+import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
+    show SelectionModelType;
+import 'package:charts_common/src/chart/common/series_datum.dart'
+    show SeriesDatum;
 import 'package:meta/meta.dart' show protected;
-
-import '../../../cartesian/cartesian_chart.dart' show CartesianChart;
-import '../../base_chart.dart' show BaseChart, LifecycleListener;
-import '../../processed_series.dart' show MutableSeries;
-import '../../selection_model/selection_model.dart' show SelectionModelType;
-import '../../series_datum.dart' show SeriesDatum;
-import '../chart_behavior.dart' show ChartBehavior;
 
 /// Enable keyboard navigation of the chart when focused using the directional
 /// keys.
@@ -41,6 +46,9 @@ import '../chart_behavior.dart' show ChartBehavior;
 /// the natural order of the page, but you have the option to use whatever
 /// fine-tuned order works best.
 abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D> {
+  KeyboardDomainNavigator() {
+    _lifecycleListener = LifecycleListener<D>(onData: onData);
+  }
   late BaseChart<D> _chart;
   late final LifecycleListener<D> _lifecycleListener;
 
@@ -53,10 +61,6 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D> {
 
   /// Currently selected domain index.
   int _currentIndex = NO_SELECTION;
-
-  KeyboardDomainNavigator() {
-    _lifecycleListener = LifecycleListener<D>(onData: onData);
-  }
 
   @override
   void attachTo(BaseChart<D> chart) {
@@ -167,11 +171,10 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D> {
   /// no-op.
   @protected
   bool _selectDomainIndex(
-      SelectionModelType selectionModelType, int domainIndex) {
+    SelectionModelType selectionModelType,
+    int domainIndex,
+  ) {
     final selectionModel = _chart.getSelectionModel(selectionModelType);
-    if (selectionModel == null) {
-      return false;
-    }
 
     if (domainIndex == NO_SELECTION) {
       selectionModel.clearSelection();
@@ -200,8 +203,8 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D> {
   int _getActiveHoverDomainIndex() {
     // If enter is pressed before an arrow key, we don't have any selection
     // domains available. Bail out.
-    final _domains = this._domains;
-    if (_domains == null || _domains.isEmpty) {
+    final domains = this._domains;
+    if (domains == null || domains.isEmpty) {
       return NO_SELECTION;
     }
 
@@ -219,15 +222,15 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D> {
 
     // If the currentIndex is the same as the firstSelectedDetail we don't have
     // to do a linear seach to find the domain.
-    final firstDomain = details.first.domain!;
+    final firstDomain = details.first.domain as D;
 
     if (0 <= _currentIndex &&
-        _currentIndex <= _domains.length - 1 &&
-        _domains[_currentIndex] == firstDomain) {
+        _currentIndex <= domains.length - 1 &&
+        domains[_currentIndex] == firstDomain) {
       return _currentIndex;
     }
 
-    return _domains.indexOf(firstDomain);
+    return domains.indexOf(firstDomain);
   }
 
   /// Processes chart data and generates a mapping of domain index to datum
@@ -265,7 +268,7 @@ abstract class KeyboardDomainNavigator<D> implements ChartBehavior<D> {
       // all data after a datum with null measure not accessible by keyboard.
       // LINT.IfChange
       if (datumDetails.measure != null) {
-        final domain = datumDetails.domain!;
+        final domain = datumDetails.domain as D;
 
         if (detailsByDomain[domain] == null) {
           _domains!.add(domain);

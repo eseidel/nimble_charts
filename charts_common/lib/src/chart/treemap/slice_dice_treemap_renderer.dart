@@ -13,19 +13,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts_common/src/chart/treemap/base_treemap_renderer.dart';
+import 'package:charts_common/src/chart/treemap/treemap_renderer_config.dart';
 import 'package:charts_common/src/data/tree.dart';
-
-import 'base_treemap_renderer.dart';
-import 'treemap_renderer_config.dart';
 
 /// A treemap renderer that renders a treemap with slice-and-dice layout.
 class SliceDiceTreeMapRenderer<D> extends BaseTreeMapRenderer<D> {
-  SliceDiceTreeMapRenderer(
-      {String? rendererId, TreeMapRendererConfig<D>? config})
-      : super(
-            config: config ??
-                TreeMapRendererConfig(tileType: TreeMapTileType.sliceDice),
-            rendererId: rendererId ?? BaseTreeMapRenderer.defaultRendererId);
+  SliceDiceTreeMapRenderer({
+    String? rendererId,
+    TreeMapRendererConfig<D>? config,
+  }) : super(
+          config: config ??
+              TreeMapRendererConfig(tileType: TreeMapTileType.sliceDice),
+          rendererId: rendererId ?? BaseTreeMapRenderer.defaultRendererId,
+        );
 
   /// Uses slice-and-dice as the tiling algorithm for this tree map.
   @override
@@ -36,8 +37,12 @@ class SliceDiceTreeMapRenderer<D> extends BaseTreeMapRenderer<D> {
       final measure = measureForTreeNode(node);
       final scaleFactor = measure == 0 ? 0 : areaForRectangle(rect) / measure;
       scaleArea(children, scaleFactor);
-      position(children, rect, node.depth & 1 == 1 ? rect.height : rect.width,
-          areaForRectangle(rect));
+      position(
+        children,
+        rect,
+        node.depth & 1 == 1 ? rect.height : rect.width,
+        areaForRectangle(rect),
+      );
     }
   }
 }

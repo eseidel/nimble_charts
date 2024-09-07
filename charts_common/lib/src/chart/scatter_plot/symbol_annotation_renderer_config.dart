@@ -13,11 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../common/symbol_renderer.dart';
-import 'comparison_points_decorator.dart' show ComparisonPointsDecorator;
-import 'point_renderer_config.dart' show PointRendererConfig;
-import 'point_renderer_decorator.dart' show PointRendererDecorator;
-import 'symbol_annotation_renderer.dart' show SymbolAnnotationRenderer;
+import 'package:charts_common/src/chart/scatter_plot/comparison_points_decorator.dart'
+    show ComparisonPointsDecorator;
+import 'package:charts_common/src/chart/scatter_plot/point_renderer_config.dart'
+    show PointRendererConfig;
+import 'package:charts_common/src/chart/scatter_plot/point_renderer_decorator.dart'
+    show PointRendererDecorator;
+import 'package:charts_common/src/chart/scatter_plot/symbol_annotation_renderer.dart'
+    show SymbolAnnotationRenderer;
+import 'package:charts_common/src/common/symbol_renderer.dart';
 
 /// Configuration for [SymbolAnnotationRenderer].
 ///
@@ -27,6 +31,25 @@ import 'symbol_annotation_renderer.dart' show SymbolAnnotationRenderer;
 /// (domainUpperBound, measureUpperBound), beneath the primary point for each
 /// series.
 class SymbolAnnotationRendererConfig<D> extends PointRendererConfig<D> {
+  SymbolAnnotationRendererConfig({
+    super.customRendererId,
+    List<PointRendererDecorator<D>>? pointRendererDecorators,
+    super.radiusPx = 5.0,
+    super.symbolRenderer,
+    super.customSymbolRenderers,
+    this.showBottomSeparatorLine = false,
+    this.showSeparatorLines = true,
+    this.verticalSymbolBottomPaddingPx = 5.0,
+    this.verticalSymbolTopPaddingPx = 5.0,
+  }) : super(
+          pointRendererDecorators: pointRendererDecorators ??
+              [
+                ComparisonPointsDecorator<D>(
+                  symbolRenderer: RectangleRangeSymbolRenderer(),
+                ),
+              ],
+        );
+
   /// Whether a separator line should be drawn between the bottom row of
   /// rendered symbols and the axis ticks/labels.
   final bool showBottomSeparatorLine;
@@ -43,30 +66,9 @@ class SymbolAnnotationRendererConfig<D> extends PointRendererConfig<D> {
   /// into.
   final double verticalSymbolTopPaddingPx;
 
-  SymbolAnnotationRendererConfig(
-      {String? customRendererId,
-      List<PointRendererDecorator<D>>? pointRendererDecorators,
-      double radiusPx = 5.0,
-      SymbolRenderer? symbolRenderer,
-      Map<String, SymbolRenderer>? customSymbolRenderers,
-      this.showBottomSeparatorLine = false,
-      this.showSeparatorLines = true,
-      this.verticalSymbolBottomPaddingPx = 5.0,
-      this.verticalSymbolTopPaddingPx = 5.0})
-      : super(
-            customRendererId: customRendererId,
-            pointRendererDecorators: pointRendererDecorators ??
-                [
-                  ComparisonPointsDecorator<D>(
-                      symbolRenderer: RectangleRangeSymbolRenderer())
-                ],
-            radiusPx: radiusPx,
-            symbolRenderer: symbolRenderer,
-            customSymbolRenderers: customSymbolRenderers);
-
   @override
-  SymbolAnnotationRenderer<D> build() {
-    return SymbolAnnotationRenderer<D>(
-        config: this, rendererId: customRendererId);
-  }
+  SymbolAnnotationRenderer<D> build() => SymbolAnnotationRenderer<D>(
+        config: this,
+        rendererId: customRendererId,
+      );
 }

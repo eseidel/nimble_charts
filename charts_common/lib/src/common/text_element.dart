@@ -13,8 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'text_measurement.dart' show TextMeasurement;
-import 'text_style.dart' show TextStyle;
+import 'package:charts_common/src/common/text_measurement.dart'
+    show TextMeasurement;
+import 'package:charts_common/src/common/text_style.dart' show TextStyle;
 
 /// Interface for accessing text measurement and painter.
 abstract class TextElement {
@@ -58,13 +59,12 @@ abstract class TextElement {
   /// native [TextElement] to layout, which is expensive. We want to avoid the
   /// layout by comparing with another [TextElement] to see if they have the
   /// same settings.
-  static bool elementSettingsSame(TextElement a, TextElement b) {
-    return a.textStyle == b.textStyle &&
-        a.maxWidth == b.maxWidth &&
-        a.maxWidthStrategy == b.maxWidthStrategy &&
-        a.text == b.text &&
-        a.textDirection == b.textDirection;
-  }
+  static bool elementSettingsSame(TextElement a, TextElement b) =>
+      a.textStyle == b.textStyle &&
+      a.maxWidth == b.maxWidth &&
+      a.maxWidthStrategy == b.maxWidthStrategy &&
+      a.text == b.text &&
+      a.textDirection == b.textDirection;
 }
 
 enum TextDirection {

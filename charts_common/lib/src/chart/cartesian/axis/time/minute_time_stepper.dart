@@ -13,31 +13,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../../common/date_time_factory.dart' show DateTimeFactory;
-import 'base_time_stepper.dart';
+import 'package:charts_common/src/chart/cartesian/axis/time/base_time_stepper.dart';
+import 'package:charts_common/src/common/date_time_factory.dart'
+    show DateTimeFactory;
 
 /// Minute stepper where ticks generated aligns with the hour.
 class MinuteTimeStepper extends BaseTimeStepper {
+  factory MinuteTimeStepper(
+    DateTimeFactory dateTimeFactory, {
+    List<int>? allowedTickIncrements,
+  }) {
+    // Set the default increments if null.
+    allowedTickIncrements ??= _defaultIncrements;
+
+    assert(
+      allowedTickIncrements
+          .every((increment) => increment >= 1 && increment <= 60),
+    );
+
+    return MinuteTimeStepper._internal(dateTimeFactory, allowedTickIncrements);
+  }
+
+  MinuteTimeStepper._internal(
+    super.dateTimeFactory,
+    List<int> increments,
+  ) : _allowedTickIncrements = increments;
   static const _defaultIncrements = [5, 10, 15, 20, 30];
   static const _millisecondsInMinute = 60 * 1000;
 
   final List<int> _allowedTickIncrements;
-
-  MinuteTimeStepper._internal(
-      DateTimeFactory dateTimeFactory, List<int> increments)
-      : _allowedTickIncrements = increments,
-        super(dateTimeFactory);
-
-  factory MinuteTimeStepper(DateTimeFactory dateTimeFactory,
-      {List<int>? allowedTickIncrements}) {
-    // Set the default increments if null.
-    allowedTickIncrements ??= _defaultIncrements;
-
-    assert(allowedTickIncrements
-        .every((increment) => increment >= 1 && increment <= 60));
-
-    return MinuteTimeStepper._internal(dateTimeFactory, allowedTickIncrements);
-  }
 
   @override
   int get typicalStepSizeMs => _millisecondsInMinute;
@@ -62,13 +66,13 @@ class MinuteTimeStepper extends BaseTimeStepper {
     final rewindMinutes = minRemainder == 0 ? 0 : tickIncrement - minRemainder;
 
     final stepBefore = dateTimeFactory.createDateTimeFromMilliSecondsSinceEpoch(
-        time.millisecondsSinceEpoch - rewindMinutes * _millisecondsInMinute);
+      time.millisecondsSinceEpoch - rewindMinutes * _millisecondsInMinute,
+    );
 
     return stepBefore;
   }
 
   @override
-  DateTime getNextStepTime(DateTime time, int tickIncrement) {
-    return time.add(Duration(minutes: tickIncrement));
-  }
+  DateTime getNextStepTime(DateTime time, int tickIncrement) =>
+      time.add(Duration(minutes: tickIncrement));
 }

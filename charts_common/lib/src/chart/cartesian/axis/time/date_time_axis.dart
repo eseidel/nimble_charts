@@ -13,21 +13,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../../common/date_time_factory.dart' show DateTimeFactory;
-import '../axis.dart' show Axis;
-import '../tick_formatter.dart' show TickFormatter;
-import '../tick_provider.dart' show TickProvider;
-import 'auto_adjusting_date_time_tick_provider.dart'
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart' show Axis;
+import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show TickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show TickProvider;
+import 'package:charts_common/src/chart/cartesian/axis/time/auto_adjusting_date_time_tick_provider.dart'
     show AutoAdjustingDateTimeTickProvider;
-import 'date_time_extents.dart' show DateTimeExtents;
-import 'date_time_scale.dart' show DateTimeScale;
-import 'date_time_tick_formatter.dart' show DateTimeTickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_extents.dart'
+    show DateTimeExtents;
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_scale.dart'
+    show DateTimeScale;
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_tick_formatter.dart'
+    show DateTimeTickFormatter;
+import 'package:charts_common/src/common/date_time_factory.dart'
+    show DateTimeFactory;
 
 class DateTimeAxis extends Axis<DateTime> {
-  DateTimeAxis(DateTimeFactory dateTimeFactory,
-      {TickProvider<DateTime>? tickProvider,
-      TickFormatter<DateTime>? tickFormatter})
-      : super(
+  DateTimeAxis(
+    DateTimeFactory dateTimeFactory, {
+    TickProvider<DateTime>? tickProvider,
+    TickFormatter<DateTime>? tickFormatter,
+  }) : super(
           tickProvider: tickProvider ??
               AutoAdjustingDateTimeTickProvider.createDefault(dateTimeFactory),
           tickFormatter:
@@ -37,6 +44,6 @@ class DateTimeAxis extends Axis<DateTime> {
 
   void setScaleViewport(DateTimeExtents viewport) {
     autoViewport = false;
-    (mutableScale as DateTimeScale).viewportDomain = viewport;
+    (mutableScale! as DateTimeScale).viewportDomain = viewport;
   }
 }

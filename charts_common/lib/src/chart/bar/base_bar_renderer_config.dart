@@ -13,14 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:collection/collection.dart' show ListEquality;
-
-import '../../common/symbol_renderer.dart'
-    show SymbolRenderer, RoundedRectSymbolRenderer;
-import '../common/chart_canvas.dart' show FillPatternType;
-import '../common/series_renderer_config.dart'
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show FillPatternType;
+import 'package:charts_common/src/chart/common/series_renderer_config.dart'
     show RendererAttributes, SeriesRendererConfig;
-import '../layout/layout_view.dart' show LayoutViewConfig;
+import 'package:charts_common/src/chart/layout/layout_view.dart'
+    show LayoutViewConfig;
+import 'package:charts_common/src/common/symbol_renderer.dart'
+    show RoundedRectSymbolRenderer, SymbolRenderer;
+import 'package:collection/collection.dart' show ListEquality;
 
 /// Shared configuration for bar chart renderers.
 ///
@@ -42,6 +43,21 @@ import '../layout/layout_view.dart' show LayoutViewConfig;
 ///   series.
 abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
     implements SeriesRendererConfig<D> {
+  BaseBarRendererConfig({
+    this.barGroupInnerPaddingPx = 2,
+    this.customRendererId,
+    this.dashPattern,
+    this.groupingType = BarGroupingType.grouped,
+    this.layoutPaintOrder,
+    this.minBarLengthPx = 0,
+    this.maxBarWidthPx,
+    this.fillPattern,
+    this.stackedBarPaddingPx = 1,
+    this.strokeWidthPx = 0.0,
+    SymbolRenderer? symbolRenderer,
+    this.weightPattern,
+  }) : symbolRenderer = symbolRenderer ?? RoundedRectSymbolRenderer();
+
   /// Spacing between the bars in a group.
   final int barGroupInnerPaddingPx;
 
@@ -95,21 +111,6 @@ abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
   @override
   final rendererAttributes = RendererAttributes();
 
-  BaseBarRendererConfig(
-      {this.barGroupInnerPaddingPx = 2,
-      this.customRendererId,
-      this.dashPattern,
-      this.groupingType = BarGroupingType.grouped,
-      this.layoutPaintOrder,
-      this.minBarLengthPx = 0,
-      this.maxBarWidthPx,
-      this.fillPattern,
-      this.stackedBarPaddingPx = 1,
-      this.strokeWidthPx = 0.0,
-      SymbolRenderer? symbolRenderer,
-      this.weightPattern})
-      : symbolRenderer = symbolRenderer ?? RoundedRectSymbolRenderer();
-
   /// Whether or not the bars should be organized into groups.
   bool get grouped =>
       groupingType == BarGroupingType.grouped ||
@@ -135,7 +136,7 @@ abstract class BaseBarRendererConfig<D> extends LayoutViewConfig
         other.stackedBarPaddingPx == stackedBarPaddingPx &&
         other.strokeWidthPx == strokeWidthPx &&
         other.symbolRenderer == symbolRenderer &&
-        ListEquality<int>().equals(other.weightPattern, weightPattern);
+        const ListEquality<int>().equals(other.weightPattern, weightPattern);
   }
 
   @override

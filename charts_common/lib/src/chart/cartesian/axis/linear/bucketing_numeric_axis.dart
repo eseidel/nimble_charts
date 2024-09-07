@@ -13,8 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../axis.dart' show NumericAxis;
-import 'bucketing_numeric_tick_provider.dart' show BucketingNumericTickProvider;
+import 'package:charts_common/common.dart';
+
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show Axis, NumericAxis;
+import 'package:charts_common/src/chart/cartesian/axis/linear/bucketing_numeric_tick_provider.dart'
+    show BucketingNumericTickProvider;
 
 /// A numeric [Axis] that positions all values beneath a certain [threshold]
 /// into a reserved space on the axis range. The label for the bucket line will
@@ -37,6 +41,8 @@ import 'bucketing_numeric_tick_provider.dart' show BucketingNumericTickProvider;
 ///
 /// This axis will format numbers as percents by default.
 class BucketingNumericAxis extends NumericAxis {
+  BucketingNumericAxis() : super(tickProvider: BucketingNumericTickProvider());
+
   /// All values smaller than the threshold will be bucketed into the same
   /// position in the reserved space on the axis.
   num? _threshold;
@@ -48,16 +54,14 @@ class BucketingNumericAxis extends NumericAxis {
   /// [threshold] will be rendered at the baseline of the chart. The
   bool? _showBucket;
 
-  BucketingNumericAxis() : super(tickProvider: BucketingNumericTickProvider());
-
   set threshold(num threshold) {
     _threshold = threshold;
-    (tickProvider as BucketingNumericTickProvider).threshold = threshold;
+    (tickProvider! as BucketingNumericTickProvider).threshold = threshold;
   }
 
   set showBucket(bool showBucket) {
     _showBucket = showBucket;
-    (tickProvider as BucketingNumericTickProvider).showBucket = showBucket;
+    (tickProvider! as BucketingNumericTickProvider).showBucket = showBucket;
   }
 
   /// Gets the location of [domain] on the axis, repositioning any value less

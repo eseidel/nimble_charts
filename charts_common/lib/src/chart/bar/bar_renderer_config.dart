@@ -13,55 +13,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../common/symbol_renderer.dart';
-import '../common/chart_canvas.dart' show FillPatternType;
-import '../layout/layout_view.dart' show LayoutViewPaintOrder;
-import 'bar_renderer.dart' show BarRenderer;
-import 'bar_renderer_decorator.dart' show BarRendererDecorator;
-import 'base_bar_renderer_config.dart'
+import 'package:charts_common/src/chart/bar/bar_renderer.dart' show BarRenderer;
+import 'package:charts_common/src/chart/bar/bar_renderer_decorator.dart'
+    show BarRendererDecorator;
+import 'package:charts_common/src/chart/bar/base_bar_renderer_config.dart'
     show BarGroupingType, BaseBarRendererConfig;
+import 'package:charts_common/src/chart/layout/layout_view.dart'
+    show LayoutViewPaintOrder;
 
 /// Configuration for a bar renderer.
 class BarRendererConfig<D> extends BaseBarRendererConfig<D> {
+  BarRendererConfig({
+    super.barGroupInnerPaddingPx,
+    super.customRendererId,
+    CornerStrategy? cornerStrategy,
+    super.fillPattern,
+    BarGroupingType? groupingType,
+    int super.layoutPaintOrder = LayoutViewPaintOrder.bar,
+    super.minBarLengthPx,
+    super.maxBarWidthPx,
+    super.stackedBarPaddingPx,
+    super.strokeWidthPx,
+    this.barRendererDecorator,
+    super.symbolRenderer,
+    super.weightPattern,
+  })  : cornerStrategy = cornerStrategy ?? const ConstCornerStrategy(2),
+        super(
+          groupingType: groupingType ?? BarGroupingType.grouped,
+        );
+
   /// Strategy for determining the corner radius of a bar.
   final CornerStrategy cornerStrategy;
 
   /// Decorator for optionally decorating painted bars.
   final BarRendererDecorator<D>? barRendererDecorator;
 
-  BarRendererConfig({
-    int barGroupInnerPaddingPx = 2,
-    String? customRendererId,
-    CornerStrategy? cornerStrategy,
-    FillPatternType? fillPattern,
-    BarGroupingType? groupingType,
-    int layoutPaintOrder = LayoutViewPaintOrder.bar,
-    int minBarLengthPx = 0,
-    int? maxBarWidthPx,
-    int stackedBarPaddingPx = 1,
-    double strokeWidthPx = 0.0,
-    this.barRendererDecorator,
-    SymbolRenderer? symbolRenderer,
-    List<int>? weightPattern,
-  })  : cornerStrategy = cornerStrategy ?? const ConstCornerStrategy(2),
-        super(
-          barGroupInnerPaddingPx: barGroupInnerPaddingPx,
-          customRendererId: customRendererId,
-          groupingType: groupingType ?? BarGroupingType.grouped,
-          layoutPaintOrder: layoutPaintOrder,
-          minBarLengthPx: minBarLengthPx,
-          maxBarWidthPx: maxBarWidthPx,
-          fillPattern: fillPattern,
-          stackedBarPaddingPx: stackedBarPaddingPx,
-          strokeWidthPx: strokeWidthPx,
-          symbolRenderer: symbolRenderer,
-          weightPattern: weightPattern,
-        );
-
   @override
-  BarRenderer<D> build() {
-    return BarRenderer<D>(config: this, rendererId: customRendererId);
-  }
+  BarRenderer<D> build() =>
+      BarRenderer<D>(config: this, rendererId: customRendererId);
 
   @override
   bool operator ==(Object other) {
@@ -88,9 +77,8 @@ abstract class CornerStrategy {
 
 /// Strategy for constant corner radius.
 class ConstCornerStrategy implements CornerStrategy {
-  final int radius;
-
   const ConstCornerStrategy(this.radius);
+  final int radius;
 
   @override
   int getRadius(_) => radius;
@@ -112,7 +100,7 @@ class NoCornerStrategy extends ConstCornerStrategy {
   const NoCornerStrategy() : super(0);
 
   @override
-  bool operator ==(other) => other is NoCornerStrategy;
+  bool operator ==(Object other) => other is NoCornerStrategy;
 
   @override
   int get hashCode => 31;

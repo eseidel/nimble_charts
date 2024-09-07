@@ -13,12 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../numeric_extents.dart' show NumericExtents;
-import '../numeric_scale.dart' show NumericScale;
-import '../scale.dart' show RangeBandConfig, ScaleOutputExtent, StepSizeConfig;
-import 'linear_scale_domain_info.dart' show LinearScaleDomainInfo;
-import 'linear_scale_function.dart' show LinearScaleFunction;
-import 'linear_scale_viewport.dart' show LinearScaleViewportSettings;
+import 'package:charts_common/src/chart/cartesian/axis/linear/linear_scale_domain_info.dart'
+    show LinearScaleDomainInfo;
+import 'package:charts_common/src/chart/cartesian/axis/linear/linear_scale_function.dart'
+    show LinearScaleFunction;
+import 'package:charts_common/src/chart/cartesian/axis/linear/linear_scale_viewport.dart'
+    show LinearScaleViewportSettings;
+import 'package:charts_common/src/chart/cartesian/axis/numeric_extents.dart'
+    show NumericExtents;
+import 'package:charts_common/src/chart/cartesian/axis/numeric_scale.dart'
+    show NumericScale;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+    show RangeBandConfig, Scale, ScaleOutputExtent, StepSizeConfig;
 
 /// [NumericScale] that lays out the domain linearly across the range.
 ///
@@ -32,7 +38,7 @@ import 'linear_scale_viewport.dart' show LinearScaleViewportSettings;
 /// [domainOverride] to define the extent of the data.
 ///
 /// <p>The scale can be zoomed & panned by calling either [setViewportSettings]
-/// with a zoom and translate, or by setting [viewportExtent] with the domain
+/// with a zoom and translate, or by setting viewportExtent with the domain
 /// extent to show in the output range.
 ///
 /// <p>[rangeBandConfig]: By default, this scale will map the domain extent
@@ -47,6 +53,16 @@ import 'linear_scale_viewport.dart' show LinearScaleViewportSettings;
 /// datum.  If you don't assign a [RangeBandConfig], then changing the
 /// [stepSizeConfig] is a no-op.
 class LinearScale implements NumericScale {
+  LinearScale()
+      : _domainInfo = LinearScaleDomainInfo(),
+        _viewportSettings = LinearScaleViewportSettings();
+
+  LinearScale._copy(LinearScale other)
+      : _domainInfo = LinearScaleDomainInfo.copy(other._domainInfo),
+        _viewportSettings =
+            LinearScaleViewportSettings.copy(other._viewportSettings),
+        rangeBandConfig = other.rangeBandConfig,
+        stepSizeConfig = other.stepSizeConfig;
   final LinearScaleDomainInfo _domainInfo;
   final LinearScaleViewportSettings _viewportSettings;
   final LinearScaleFunction _scaleFunction = LinearScaleFunction();
@@ -58,17 +74,6 @@ class LinearScale implements NumericScale {
   StepSizeConfig stepSizeConfig = const StepSizeConfig.auto();
 
   bool _scaleReady = false;
-
-  LinearScale()
-      : _domainInfo = LinearScaleDomainInfo(),
-        _viewportSettings = LinearScaleViewportSettings();
-
-  LinearScale._copy(LinearScale other)
-      : _domainInfo = LinearScaleDomainInfo.copy(other._domainInfo),
-        _viewportSettings =
-            LinearScaleViewportSettings.copy(other._viewportSettings),
-        rangeBandConfig = other.rangeBandConfig,
-        stepSizeConfig = other.stepSizeConfig;
 
   @override
   LinearScale copy() => LinearScale._copy(this);
@@ -203,7 +208,7 @@ class LinearScale implements NumericScale {
   double get domainStepSize => _domainInfo.minimumDetectedDomainStep.toDouble();
 
   @override
-  int get rangeWidth => (range!.end - range!.start).abs().toInt();
+  int get rangeWidth => (range!.end - range!.start).abs();
 
   @override
   bool isRangeValueWithinViewport(double rangeValue) =>
@@ -225,22 +230,33 @@ class LinearScale implements NumericScale {
     // Now that the viewport's scalingFactor is setup, set it on the scale
     // function.
     _scaleFunction.updateScaleFactor(
-        _viewportSettings, _domainInfo, rangeBandConfig, stepSizeConfig);
+      _viewportSettings,
+      _domainInfo,
+      rangeBandConfig,
+      stepSizeConfig,
+    );
 
     // If the viewport's domainExtent are set, then we can calculate the
     // viewport's translate now that the scaleFactor has been loaded.
     // The viewport also has a chance to correct the translate.
     _viewportSettings.updateViewportTranslatePx(
-        _domainInfo, _scaleFunction.scalingFactor);
+      _domainInfo,
+      _scaleFunction.scalingFactor,
+    );
     // Now that the viewport has a chance to update the translate, set it on the
     // scale function.
     _scaleFunction.updateTranslateAndRangeBand(
-        _viewportSettings, _domainInfo, rangeBandConfig);
+      _viewportSettings,
+      _domainInfo,
+      rangeBandConfig,
+    );
 
     // Now that the viewport's scaleFactor and translate have been updated
     // set the effective domainExtent of the viewport.
     _viewportSettings.updateViewportDomainExtent(
-        _domainInfo, _scaleFunction.scalingFactor);
+      _domainInfo,
+      _scaleFunction.scalingFactor,
+    );
 
     // Cached computed values are updated.
     _scaleReady = true;

@@ -13,12 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../common/text_element.dart';
+import 'package:charts_common/src/common/text_element.dart';
 
 /// A labeled point on an axis.
 ///
 /// [D] is the type of the value this tick is associated with.
 class Tick<D> {
+  Tick({
+    required this.value,
+    required this.textElement,
+    this.locationPx,
+    this.labelOffsetPx,
+  });
+
   /// The value that this tick represents
   final D value;
 
@@ -33,12 +40,6 @@ class Tick<D> {
   /// This is a vertical offset for ticks on a vertical axis, or horizontal
   /// offset for ticks on a horizontal axis.
   double? labelOffsetPx;
-
-  Tick(
-      {required this.value,
-      required this.textElement,
-      this.locationPx,
-      this.labelOffsetPx});
 
   @override
   String toString() => 'Tick(value: $value, locationPx: $locationPx, '

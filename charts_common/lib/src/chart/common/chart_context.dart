@@ -13,9 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../common/date_time_factory.dart';
-import '../../common/rtl_spec.dart' show RTLSpec;
-import '../common/behavior/a11y/a11y_node.dart' show A11yNode;
+import 'package:charts_common/src/chart/common/behavior/a11y/a11y_node.dart'
+    show A11yNode;
+import 'package:charts_common/src/common/date_time_factory.dart';
+import 'package:charts_common/src/common/rtl_spec.dart' show RTLSpec;
 
 abstract class ChartContext {
   /// Flag indicating whether or not the chart's container was configured in
@@ -35,7 +36,8 @@ abstract class ChartContext {
   /// mode.
   ///
   /// This will only be true if the container for the chart component was
-  /// configured with the rtl direction setting ([chartContainerIsRtl] == true), and the chart's
+  /// configured with the rtl direction setting ([chartContainerIsRtl] == true)
+  /// , and the chart's
   /// [RTLSpec] is set to reverse the axis direction in rtl mode.
   bool get isRtl;
 

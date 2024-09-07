@@ -14,13 +14,17 @@
 // limitations under the License.
 
 //import 'dart:collection' show HashSet;
-import '../../../cartesian/axis/axis.dart' show Axis, measureAxisIdKey;
-import '../../../cartesian/axis/spec/axis_spec.dart' show TextStyleSpec;
-import '../../datum_details.dart' show MeasureFormatter;
-import '../../processed_series.dart' show ImmutableSeries, MutableSeries;
-import '../../selection_model/selection_model.dart';
-import 'legend_entry.dart';
-import 'legend_entry_generator.dart';
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show Axis, measureAxisIdKey;
+import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show TextStyleSpec;
+import 'package:charts_common/src/chart/common/behavior/legend/legend_entry.dart';
+import 'package:charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
+import 'package:charts_common/src/chart/common/datum_details.dart'
+    show MeasureFormatter;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries, MutableSeries;
+import 'package:charts_common/src/chart/common/selection_model/selection_model.dart';
 
 /// A strategy for generating a list of [LegendEntry] per series data drawn.
 ///
@@ -48,11 +52,16 @@ class PerDatumLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
 
     final series = seriesList[0];
     for (var i = 0; i < series.data.length; i++) {
-      legendEntries.add(LegendEntry<D>(series, series.domainFn(i).toString(),
+      legendEntries.add(
+        LegendEntry<D>(
+          series,
+          series.domainFn(i).toString(),
           color: series.colorFn!(i),
           datum: series.data[i],
           datumIndex: i,
-          textStyle: entryTextStyle));
+          textStyle: entryTextStyle,
+        ),
+      );
     }
 
     // Update with measures only if showing measure on no selection.
@@ -64,8 +73,11 @@ class PerDatumLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
   }
 
   @override
-  void updateLegendEntries(List<LegendEntry<D>> legendEntries,
-      SelectionModel<D> selectionModel, List<MutableSeries<D>> seriesList) {
+  void updateLegendEntries(
+    List<LegendEntry<D>> legendEntries,
+    SelectionModel<D> selectionModel,
+    List<MutableSeries<D>> seriesList,
+  ) {
     if (selectionModel.hasAnySelection) {
       _updateFromSelection(legendEntries, selectionModel);
     } else {
@@ -80,28 +92,31 @@ class PerDatumLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
 
   /// Update legend entries with measures of the selected datum
   void _updateFromSelection(
-      List<LegendEntry<D>> legendEntries, SelectionModel<D> selectionModel) {
+    List<LegendEntry<D>> legendEntries,
+    SelectionModel<D> selectionModel,
+  ) {
     // Given that each legend entry only has one datum associated with it, any
     // option for [legendDefaultMeasure] essentially boils down to just showing
     // the measure value.
     if (legendDefaultMeasure != LegendDefaultMeasure.none) {
-      for (var entry in legendEntries) {
+      for (final entry in legendEntries) {
         final series = entry.series;
         final measure = series.measureFn(entry.datumIndex);
-        entry.value = measure!.toDouble();
-        entry.formattedValue = _getFormattedMeasureValue(series, measure);
-
-        entry.isSelected = selectionModel.selectedSeries
-            .any((selectedSeries) => series.id == selectedSeries.id);
+        entry
+          ..value = measure!.toDouble()
+          ..formattedValue = _getFormattedMeasureValue(series, measure)
+          ..isSelected = selectionModel.selectedSeries
+              .any((selectedSeries) => series.id == selectedSeries.id);
       }
     }
   }
 
   void _resetLegendEntryMeasures(List<LegendEntry<D>> legendEntries) {
     for (final entry in legendEntries) {
-      entry.value = null;
-      entry.formattedValue = null;
-      entry.isSelected = false;
+      entry
+        ..value = null
+        ..formattedValue = null
+        ..isSelected = false;
     }
   }
 
@@ -115,32 +130,30 @@ class PerDatumLegendEntryGenerator<D> implements LegendEntryGenerator<D> {
     // option for [legendDefaultMeasure] essentially boils down to just showing
     // the measure value.
     if (legendDefaultMeasure != LegendDefaultMeasure.none) {
-      for (var entry in legendEntries) {
+      for (final entry in legendEntries) {
         final series = entry.series;
         final measure = series.measureFn(entry.datumIndex);
-        entry.value = measure!.toDouble();
-        entry.formattedValue = _getFormattedMeasureValue(series, measure);
-        entry.isSelected = false;
+        entry..value = measure!.toDouble()
+        ..formattedValue = _getFormattedMeasureValue(series, measure)
+        ..isSelected = false;
       }
     }
   }
 
   /// Formats the measure value using the appropriate measure formatter
   /// function for the series.
-  String _getFormattedMeasureValue(ImmutableSeries<D> series, num measure) {
-    return (series.getAttr(measureAxisIdKey) == Axis.secondaryMeasureAxisId)
-        ? secondaryMeasureFormatter!(measure)
-        : measureFormatter!(measure);
-  }
+  String _getFormattedMeasureValue(ImmutableSeries<D> series, num measure) =>
+      (series.getAttr(measureAxisIdKey) == Axis.secondaryMeasureAxisId)
+          ? secondaryMeasureFormatter!(measure)
+          : measureFormatter!(measure);
 
   @override
-  bool operator ==(Object other) {
-    return other is PerDatumLegendEntryGenerator &&
-        measureFormatter == other.measureFormatter &&
-        secondaryMeasureFormatter == other.secondaryMeasureFormatter &&
-        legendDefaultMeasure == other.legendDefaultMeasure &&
-        entryTextStyle == other.entryTextStyle;
-  }
+  bool operator ==(Object other) =>
+      other is PerDatumLegendEntryGenerator &&
+      measureFormatter == other.measureFormatter &&
+      secondaryMeasureFormatter == other.secondaryMeasureFormatter &&
+      legendDefaultMeasure == other.legendDefaultMeasure &&
+      entryTextStyle == other.entryTextStyle;
 
   @override
   int get hashCode {

@@ -13,11 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../base_chart.dart' show BaseChart, LifecycleListener;
-import '../processed_series.dart' show MutableSeries;
-import '../selection_model/selection_model.dart'
+import 'package:charts_common/src/chart/common/base_chart.dart'
+    show BaseChart, LifecycleListener;
+import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
+    show ChartBehavior;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show MutableSeries;
+import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
     show SelectionModel, SelectionModelType;
-import 'chart_behavior.dart' show ChartBehavior;
 
 /// Chart behavior that monitors the specified [SelectionModel] and darkens the
 /// color for selected data.
@@ -27,29 +30,28 @@ import 'chart_behavior.dart' show ChartBehavior;
 /// It is used in combination with SelectNearest to update the selection model
 /// and expand selection out to the domain value.
 class DomainHighlighter<D> implements ChartBehavior<D> {
+  DomainHighlighter([this.selectionModelType = SelectionModelType.info]) {
+    _lifecycleListener =
+        LifecycleListener<D>(onPostprocess: _updateColorFunctions);
+  }
   final SelectionModelType selectionModelType;
 
   late BaseChart<D> _chart;
 
   late LifecycleListener<D> _lifecycleListener;
 
-  DomainHighlighter([this.selectionModelType = SelectionModelType.info]) {
-    _lifecycleListener =
-        LifecycleListener<D>(onPostprocess: _updateColorFunctions);
-  }
-
   void _selectionChanged(SelectionModel<D> selectionModel) {
     _chart.redraw(skipLayout: true, skipAnimation: true);
   }
 
   void _updateColorFunctions(List<MutableSeries<D>> seriesList) {
-    SelectionModel<D> selectionModel =
+    final SelectionModel<D> selectionModel =
         _chart.getSelectionModel(selectionModelType);
-    seriesList.forEach((MutableSeries<D> series) {
+    for (final series in seriesList) {
       final origColorFn = series.colorFn;
 
       if (origColorFn != null) {
-        series.colorFn = (int? index) {
+        series.colorFn = (index) {
           final origColor = origColorFn(index);
           if (selectionModel.isDatumSelected(series, index)) {
             return origColor.darker;
@@ -58,7 +60,7 @@ class DomainHighlighter<D> implements ChartBehavior<D> {
           }
         };
       }
-    });
+    }
   }
 
   @override

@@ -13,31 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts_common/common.dart';
+import 'package:charts_common/src/chart/cartesian/axis/end_points_tick_provider.dart'
+    show EndPointsTickProvider;
+import 'package:charts_common/src/chart/cartesian/axis/numeric_tick_provider.dart'
+    show NumericTickProvider;
+import 'package:charts_common/src/chart/cartesian/axis/static_tick_provider.dart'
+    show StaticTickProvider;
+import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show NumericTickFormatter;
 import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart' show immutable;
 
-import '../../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../../common/chart_context.dart' show ChartContext;
-import '../../../common/datum_details.dart' show MeasureFormatter;
-import '../axis.dart' show Axis, NumericAxis;
-import '../end_points_tick_provider.dart' show EndPointsTickProvider;
-import '../numeric_extents.dart' show NumericExtents;
-import '../numeric_tick_provider.dart' show NumericTickProvider;
-import '../static_tick_provider.dart' show StaticTickProvider;
-import '../tick_formatter.dart' show NumericTickFormatter;
-import 'axis_spec.dart'
-    show AxisSpec, TickProviderSpec, TickFormatterSpec, RenderSpec, ScaleSpec;
-import 'tick_spec.dart' show TickSpec;
-
 /// [AxisSpec] specialized for numeric/continuous axes like the measure axis.
 @immutable
 class NumericAxisSpec extends AxisSpec<num> {
-  /// Sets viewport for this Axis.
-  ///
-  /// If pan / zoom behaviors are set, this is the initial viewport.
-  final NumericExtents? viewport;
-
   /// Creates a [AxisSpec] that specialized for numeric data.
   ///
   /// [renderSpec] spec used to configure how the ticks and labels
@@ -49,18 +40,13 @@ class NumericAxisSpec extends AxisSpec<num> {
   ///     formatted.
   /// [showAxisLine] override to force the axis to draw the axis line.
   const NumericAxisSpec({
-    RenderSpec<num>? renderSpec,
-    NumericTickProviderSpec? tickProviderSpec,
-    NumericTickFormatterSpec? tickFormatterSpec,
-    bool? showAxisLine,
-    ScaleSpec<num>? scaleSpec,
+    super.renderSpec,
+    NumericTickProviderSpec? super.tickProviderSpec,
+    NumericTickFormatterSpec? super.tickFormatterSpec,
+    super.showAxisLine,
+    super.scaleSpec,
     this.viewport,
-  }) : super(
-            renderSpec: renderSpec,
-            tickProviderSpec: tickProviderSpec,
-            tickFormatterSpec: tickFormatterSpec,
-            showAxisLine: showAxisLine,
-            scaleSpec: scaleSpec);
+  });
 
   factory NumericAxisSpec.from(
     NumericAxisSpec other, {
@@ -70,22 +56,29 @@ class NumericAxisSpec extends AxisSpec<num> {
     bool? showAxisLine,
     ScaleSpec<num>? scaleSpec,
     NumericExtents? viewport,
-  }) {
-    return NumericAxisSpec(
-      renderSpec: renderSpec ?? other.renderSpec,
-      tickProviderSpec: (tickProviderSpec ?? other.tickProviderSpec)
-          as NumericTickProviderSpec?,
-      tickFormatterSpec: (tickFormatterSpec ?? other.tickFormatterSpec)
-          as NumericTickFormatterSpec?,
-      showAxisLine: showAxisLine ?? other.showAxisLine,
-      scaleSpec: scaleSpec ?? other.scaleSpec,
-      viewport: viewport ?? other.viewport,
-    );
-  }
+  }) =>
+      NumericAxisSpec(
+        renderSpec: renderSpec ?? other.renderSpec,
+        tickProviderSpec: (tickProviderSpec ?? other.tickProviderSpec)
+            as NumericTickProviderSpec?,
+        tickFormatterSpec: (tickFormatterSpec ?? other.tickFormatterSpec)
+            as NumericTickFormatterSpec?,
+        showAxisLine: showAxisLine ?? other.showAxisLine,
+        scaleSpec: scaleSpec ?? other.scaleSpec,
+        viewport: viewport ?? other.viewport,
+      );
+
+  /// Sets viewport for this Axis.
+  ///
+  /// If pan / zoom behaviors are set, this is the initial viewport.
+  final NumericExtents? viewport;
 
   @override
   void configure(
-      Axis<num> axis, ChartContext context, GraphicsFactory graphicsFactory) {
+    Axis<num> axis,
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+  ) {
     super.configure(axis, context, graphicsFactory);
 
     if (axis is NumericAxis && viewport != null) {
@@ -114,12 +107,6 @@ abstract class NumericTickFormatterSpec extends TickFormatterSpec<num> {}
 
 @immutable
 class BasicNumericTickProviderSpec implements NumericTickProviderSpec {
-  final bool? zeroBound;
-  final bool? dataIsInWholeNumbers;
-  final int? desiredTickCount;
-  final int? desiredMinTickCount;
-  final int? desiredMaxTickCount;
-
   /// Creates a [TickProviderSpec] that dynamically chooses the number of
   /// ticks based on the extents of the data.
   ///
@@ -135,12 +122,18 @@ class BasicNumericTickProviderSpec implements NumericTickProviderSpec {
   /// [desiredMaxTickCount] automatically choose the best tick
   ///     count to produce the 'nicest' ticks but make sure we don't have more
   ///     than this many.
-  const BasicNumericTickProviderSpec(
-      {this.zeroBound,
-      this.dataIsInWholeNumbers,
-      this.desiredTickCount,
-      this.desiredMinTickCount,
-      this.desiredMaxTickCount});
+  const BasicNumericTickProviderSpec({
+    this.zeroBound,
+    this.dataIsInWholeNumbers,
+    this.desiredTickCount,
+    this.desiredMinTickCount,
+    this.desiredMaxTickCount,
+  });
+  final bool? zeroBound;
+  final bool? dataIsInWholeNumbers;
+  final int? desiredTickCount;
+  final int? desiredMinTickCount;
+  final int? desiredMaxTickCount;
 
   @override
   NumericTickProvider createTickProvider(ChartContext context) {
@@ -155,8 +148,10 @@ class BasicNumericTickProviderSpec implements NumericTickProviderSpec {
     if (desiredMinTickCount != null ||
         desiredMaxTickCount != null ||
         desiredTickCount != null) {
-      provider.setTickCount(desiredMaxTickCount ?? desiredTickCount ?? 10,
-          desiredMinTickCount ?? desiredTickCount ?? 2);
+      provider.setTickCount(
+        desiredMaxTickCount ?? desiredTickCount ?? 10,
+        desiredMinTickCount ?? desiredTickCount ?? 2,
+      );
     }
     return provider;
   }
@@ -190,9 +185,8 @@ class NumericEndPointsTickProviderSpec implements NumericTickProviderSpec {
   const NumericEndPointsTickProviderSpec();
 
   @override
-  EndPointsTickProvider<num> createTickProvider(ChartContext context) {
-    return EndPointsTickProvider<num>();
-  }
+  EndPointsTickProvider<num> createTickProvider(ChartContext context) =>
+      EndPointsTickProvider<num>();
 
   @override
   // ignore: hash_and_equals
@@ -202,9 +196,8 @@ class NumericEndPointsTickProviderSpec implements NumericTickProviderSpec {
 /// [TickProviderSpec] that allows you to specific the ticks to be used.
 @immutable
 class StaticNumericTickProviderSpec implements NumericTickProviderSpec {
-  final List<TickSpec<num>> tickSpecs;
-
   const StaticNumericTickProviderSpec(this.tickSpecs);
+  final List<TickSpec<num>> tickSpecs;
 
   @override
   StaticTickProvider<num> createTickProvider(ChartContext context) =>
@@ -221,32 +214,29 @@ class StaticNumericTickProviderSpec implements NumericTickProviderSpec {
 
 @immutable
 class BasicNumericTickFormatterSpec implements NumericTickFormatterSpec {
-  final MeasureFormatter? formatter;
-  final NumberFormat? numberFormat;
-
   /// Simple [TickFormatterSpec] that delegates formatting to the given
   /// [NumberFormat].
   const BasicNumericTickFormatterSpec(this.formatter) : numberFormat = null;
 
   const BasicNumericTickFormatterSpec.fromNumberFormat(this.numberFormat)
       : formatter = null;
+  final MeasureFormatter? formatter;
+  final NumberFormat? numberFormat;
 
   /// A formatter will be created with the number format if it is not null.
   /// Otherwise, it will create one with the [MeasureFormatter] callback.
   @override
-  NumericTickFormatter createTickFormatter(ChartContext context) {
-    return numberFormat != null
-        ? NumericTickFormatter.fromNumberFormat(numberFormat!)
-        : NumericTickFormatter(formatter: formatter);
-  }
+  NumericTickFormatter createTickFormatter(ChartContext context) =>
+      numberFormat != null
+          ? NumericTickFormatter.fromNumberFormat(numberFormat!)
+          : NumericTickFormatter(formatter: formatter);
 
   @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is BasicNumericTickFormatterSpec &&
-            formatter == other.formatter &&
-            numberFormat == other.numberFormat);
-  }
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BasicNumericTickFormatterSpec &&
+          formatter == other.formatter &&
+          numberFormat == other.numberFormat);
 
   @override
   int get hashCode {

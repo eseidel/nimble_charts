@@ -15,10 +15,13 @@
 
 import 'dart:math' show Rectangle;
 
-import '../common/behavior/chart_behavior.dart'
+import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
     show BehaviorPosition, OutsideJustification;
-import '../../common/graphics_factory.dart' show GraphicsFactory;
-import '../common/chart_canvas.dart' show ChartCanvas;
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:charts_common/src/chart/layout/layout_manager.dart';
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 /// Position of a [LayoutView].
 enum LayoutPosition {
@@ -82,6 +85,12 @@ class LayoutViewPositionOrder {
 
 /// A configuration for margin (empty space) around a layout child view.
 class ViewMargin {
+  const ViewMargin({int? topPx, int? bottomPx, int? rightPx, int? leftPx})
+      : topPx = topPx ?? 0,
+        bottomPx = bottomPx ?? 0,
+        rightPx = rightPx ?? 0,
+        leftPx = leftPx ?? 0;
+
   /// A [ViewMargin] with all zero px.
   static const empty = ViewMargin(topPx: 0, bottomPx: 0, rightPx: 0, leftPx: 0);
 
@@ -89,12 +98,6 @@ class ViewMargin {
   final int bottomPx;
   final int rightPx;
   final int leftPx;
-
-  const ViewMargin({int? topPx, int? bottomPx, int? rightPx, int? leftPx})
-      : topPx = topPx ?? 0,
-        bottomPx = bottomPx ?? 0,
-        rightPx = rightPx ?? 0,
-        leftPx = leftPx ?? 0;
 
   /// Total width.
   int get width => leftPx + rightPx;
@@ -105,6 +108,18 @@ class ViewMargin {
 
 /// Configuration of a [LayoutView].
 class LayoutViewConfig {
+  /// Creates new [LayoutParams].
+  ///
+  /// [paintOrder] the order that this component will be drawn.
+  /// [position] the [ComponentPosition] of this component.
+  /// [positionOrder] the order of this component in a chart margin.
+  LayoutViewConfig({
+    this.paintOrder,
+    this.position,
+    this.positionOrder,
+    ViewMargin? viewMargin,
+  }) : viewMargin = viewMargin ?? ViewMargin.empty;
+
   /// Unique identifier for the [LayoutView].
   String? id;
 
@@ -129,18 +144,6 @@ class LayoutViewConfig {
   /// Defines the space around a layout component.
   ViewMargin viewMargin;
 
-  /// Creates new [LayoutParams].
-  ///
-  /// [paintOrder] the order that this component will be drawn.
-  /// [position] the [ComponentPosition] of this component.
-  /// [positionOrder] the order of this component in a chart margin.
-  LayoutViewConfig({
-    this.paintOrder,
-    this.position,
-    this.positionOrder,
-    ViewMargin? viewMargin,
-  }) : viewMargin = viewMargin ?? ViewMargin.empty;
-
   /// Returns true if it is a full position.
   bool get isFullPosition =>
       position == LayoutPosition.FullBottom ||
@@ -153,28 +156,32 @@ class LayoutViewConfig {
 ///
 /// The measurement is tight to the component, without adding [ComponentBuffer].
 class ViewMeasuredSizes {
-  /// All zeroes component size.
-  static const zero = ViewMeasuredSizes(
-      preferredWidth: 0, preferredHeight: 0, minWidth: 0, minHeight: 0);
-
-  final int preferredWidth;
-  final int preferredHeight;
-  final int minWidth;
-  final int minHeight;
-
   /// Create a new [ViewSizes].
   ///
   /// [preferredWidth] the component's preferred width.
   /// [preferredHeight] the component's preferred width.
   /// [minWidth] the component's minimum width. If not set, default to 0.
   /// [minHeight] the component's minimum height. If not set, default to 0.
-  const ViewMeasuredSizes(
-      {required this.preferredWidth,
-      required this.preferredHeight,
-      int? minWidth,
-      int? minHeight})
-      : minWidth = minWidth ?? 0,
+  const ViewMeasuredSizes({
+    required this.preferredWidth,
+    required this.preferredHeight,
+    int? minWidth,
+    int? minHeight,
+  })  : minWidth = minWidth ?? 0,
         minHeight = minHeight ?? 0;
+
+  /// All zeroes component size.
+  static const zero = ViewMeasuredSizes(
+    preferredWidth: 0,
+    preferredHeight: 0,
+    minWidth: 0,
+    minHeight: 0,
+  );
+
+  final int preferredWidth;
+  final int preferredHeight;
+  final int minWidth;
+  final int minHeight;
 }
 
 /// A component that measures its size and accepts bounds to complete layout.
@@ -212,25 +219,23 @@ abstract class LayoutView {
 /// Translates a component's [BehaviorPosition] and [OutsideJustification] into
 /// a [LayoutPosition] that a [LayoutManager] can use to place components on the
 /// chart.
-LayoutPosition layoutPosition(BehaviorPosition behaviorPosition,
-    OutsideJustification outsideJustification, bool isRtl) {
+LayoutPosition layoutPosition(
+  BehaviorPosition behaviorPosition,
+  OutsideJustification outsideJustification,
+  bool isRtl,
+) {
   LayoutPosition position;
   switch (behaviorPosition) {
     case BehaviorPosition.bottom:
       position = LayoutPosition.Bottom;
-      break;
     case BehaviorPosition.end:
       position = isRtl ? LayoutPosition.Left : LayoutPosition.Right;
-      break;
     case BehaviorPosition.inside:
       position = LayoutPosition.DrawArea;
-      break;
     case BehaviorPosition.start:
       position = isRtl ? LayoutPosition.Right : LayoutPosition.Left;
-      break;
     case BehaviorPosition.top:
       position = LayoutPosition.Top;
-      break;
   }
 
   // If we have a "full" [OutsideJustification], convert the layout position
@@ -241,16 +246,12 @@ LayoutPosition layoutPosition(BehaviorPosition behaviorPosition,
     switch (position) {
       case LayoutPosition.Bottom:
         position = LayoutPosition.FullBottom;
-        break;
       case LayoutPosition.Left:
         position = LayoutPosition.FullLeft;
-        break;
       case LayoutPosition.Top:
         position = LayoutPosition.FullTop;
-        break;
       case LayoutPosition.Right:
         position = LayoutPosition.FullRight;
-        break;
 
       // Ignore other positions, like DrawArea.
       default:

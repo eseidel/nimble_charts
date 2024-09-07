@@ -13,30 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:collection' show LinkedHashMap;
-
-import '../bar/bar_renderer.dart' show BarRenderer;
-import '../cartesian/axis/axis.dart' show NumericAxis;
-import '../cartesian/cartesian_chart.dart' show OrdinalCartesianChart;
-import '../common/series_renderer.dart' show SeriesRenderer;
-import '../layout/layout_config.dart' show LayoutConfig;
+import 'package:charts_common/src/chart/bar/bar_renderer.dart' show BarRenderer;
+import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+    show OrdinalCartesianChart;
+import 'package:charts_common/src/chart/common/series_renderer.dart'
+    show SeriesRenderer;
 
 class BarChart extends OrdinalCartesianChart {
-  BarChart(
-      {bool? vertical,
-      LayoutConfig? layoutConfig,
-      NumericAxis? primaryMeasureAxis,
-      NumericAxis? secondaryMeasureAxis,
-      LinkedHashMap<String, NumericAxis>? disjointMeasureAxes})
-      : super(
-            vertical: vertical,
-            layoutConfig: layoutConfig,
-            primaryMeasureAxis: primaryMeasureAxis,
-            secondaryMeasureAxis: secondaryMeasureAxis,
-            disjointMeasureAxes: disjointMeasureAxes);
+  BarChart({
+    super.vertical,
+    super.layoutConfig,
+    super.primaryMeasureAxis,
+    super.secondaryMeasureAxis,
+    super.disjointMeasureAxes,
+  });
 
   @override
-  SeriesRenderer<String> makeDefaultRenderer() {
-    return BarRenderer<String>()..rendererId = SeriesRenderer.defaultRendererId;
-  }
+  SeriesRenderer<String> makeDefaultRenderer() =>
+      BarRenderer<String>()..rendererId = SeriesRenderer.defaultRendererId;
 }

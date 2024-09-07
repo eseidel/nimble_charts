@@ -15,11 +15,7 @@
 
 import 'dart:math';
 
-import '../../../../common/gesture_listener.dart' show GestureListener;
-import '../../base_chart.dart' show BaseChart;
-import '../../behavior/chart_behavior.dart' show ChartBehavior;
-import '../../selection_model/selection_model.dart' show SelectionModelType;
-import 'selection_trigger.dart' show SelectionTrigger;
+import 'package:charts_common/common.dart';
 
 /// Chart behavior that listens to tap event trigges and locks the specified
 /// [SelectionModel]. This is used to prevent further updates to the selection
@@ -33,6 +29,16 @@ import 'selection_trigger.dart' show SelectionTrigger;
 /// Any previous LockSelection behavior for that selection model will be
 /// removed.
 class LockSelection<D> implements ChartBehavior<D> {
+  LockSelection({this.selectionModelType = SelectionModelType.info}) {
+    // Setup the appropriate gesture listening.
+    switch (eventTrigger) {
+      case SelectionTrigger.tap:
+        _listener = GestureListener(onTapTest: _onTapTest, onTap: _onSelect);
+      default:
+        throw ArgumentError('LockSelection does not support the event '
+            'trigger "$eventTrigger"');
+    }
+  }
   late GestureListener _listener;
 
   /// Type of selection model that should be updated by input events.
@@ -43,22 +49,9 @@ class LockSelection<D> implements ChartBehavior<D> {
 
   BaseChart<D>? _chart;
 
-  LockSelection({this.selectionModelType = SelectionModelType.info}) {
-    // Setup the appropriate gesture listening.
-    switch (eventTrigger) {
-      case SelectionTrigger.tap:
-        _listener = GestureListener(onTapTest: _onTapTest, onTap: _onSelect);
-        break;
-      default:
-        throw ArgumentError('LockSelection does not support the event '
-            'trigger "$eventTrigger"');
-    }
-  }
-
-  bool _onTapTest(Point<double> chartPoint) {
-    // If the tap is within the drawArea, then claim the event from others.
-    return _chart!.pointWithinRenderer(chartPoint);
-  }
+  bool _onTapTest(Point<double> chartPoint) =>
+      // If the tap is within the drawArea, then claim the event from others.
+      _chart!.pointWithinRenderer(chartPoint);
 
   bool _onSelect(Point<double> chartPoint, [double? ignored]) {
     // Skip events that occur outside the drawArea for any series renderer.
@@ -67,11 +60,6 @@ class LockSelection<D> implements ChartBehavior<D> {
     }
 
     final selectionModel = _chart!.getSelectionModel(selectionModelType);
-
-    // Do nothing if the chart has no selection model.
-    if (selectionModel == null) {
-      return false;
-    }
 
     // Do not lock the selection model if there is no selection. Locking nothing
     // would result in a very confusing user interface as the user tries to
@@ -105,7 +93,6 @@ class LockSelection<D> implements ChartBehavior<D> {
       case SelectionTrigger.pressHold:
       case SelectionTrigger.longPressHold:
         chart.registerTappable(this);
-        break;
       case SelectionTrigger.hover:
       default:
         chart.unregisterTappable(this);
@@ -115,8 +102,9 @@ class LockSelection<D> implements ChartBehavior<D> {
 
   @override
   void removeFrom(BaseChart<D> chart) {
-    chart.removeGestureListener(_listener);
-    chart.unregisterTappable(this);
+    chart
+      ..removeGestureListener(_listener)
+      ..unregisterTappable(this);
     _chart = null;
   }
 

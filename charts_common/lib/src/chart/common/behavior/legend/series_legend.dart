@@ -13,15 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts_common/src/chart/common/behavior/legend/legend.dart';
+import 'package:charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
+import 'package:charts_common/src/chart/common/behavior/legend/per_series_legend_entry_generator.dart';
+import 'package:charts_common/src/chart/common/datum_details.dart'
+    show MeasureFormatter;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show MutableSeries;
+import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
+    show SelectionModelType;
 import 'package:meta/meta.dart' show protected;
-
-import '../../../cartesian/axis/spec/axis_spec.dart' show TextStyleSpec;
-import '../../datum_details.dart' show MeasureFormatter;
-import '../../processed_series.dart' show MutableSeries;
-import '../../selection_model/selection_model.dart' show SelectionModelType;
-import 'legend.dart';
-import 'legend_entry_generator.dart';
-import 'per_series_legend_entry_generator.dart';
 
 // TODO: Allows for hovering over a series in legend to highlight
 // corresponding series in draw area.
@@ -30,6 +31,26 @@ import 'per_series_legend_entry_generator.dart';
 ///
 /// By default this behavior creates a legend entry per series.
 class SeriesLegend<D> extends Legend<D> {
+  SeriesLegend({
+    SelectionModelType? selectionModelType,
+    LegendEntryGenerator<D>? legendEntryGenerator,
+    MeasureFormatter? measureFormatter,
+    MeasureFormatter? secondaryMeasureFormatter,
+    bool? showMeasures,
+    LegendDefaultMeasure? legendDefaultMeasure,
+    super.entryTextStyle,
+  }) : super(
+          selectionModelType: selectionModelType ?? SelectionModelType.info,
+          legendEntryGenerator:
+              legendEntryGenerator ?? PerSeriesLegendEntryGenerator(),
+        ) {
+    // Calling the setters will automatically use non-null default values.
+    this.showMeasures = showMeasures;
+    this.legendDefaultMeasure = legendDefaultMeasure;
+    this.measureFormatter = measureFormatter;
+    this.secondaryMeasureFormatter = secondaryMeasureFormatter;
+  }
+
   /// List of currently hidden series, by ID.
   final _hiddenSeriesList = <String>{};
 
@@ -41,26 +62,6 @@ class SeriesLegend<D> extends Legend<D> {
 
   /// Whether or not the series legend should show measures on datum selection.
   late bool _showMeasures;
-
-  SeriesLegend({
-    SelectionModelType? selectionModelType,
-    LegendEntryGenerator<D>? legendEntryGenerator,
-    MeasureFormatter? measureFormatter,
-    MeasureFormatter? secondaryMeasureFormatter,
-    bool? showMeasures,
-    LegendDefaultMeasure? legendDefaultMeasure,
-    TextStyleSpec? entryTextStyle,
-  }) : super(
-            selectionModelType: selectionModelType ?? SelectionModelType.info,
-            legendEntryGenerator:
-                legendEntryGenerator ?? PerSeriesLegendEntryGenerator(),
-            entryTextStyle: entryTextStyle) {
-    // Calling the setters will automatically use non-null default values.
-    this.showMeasures = showMeasures;
-    this.legendDefaultMeasure = legendDefaultMeasure;
-    this.measureFormatter = measureFormatter;
-    this.secondaryMeasureFormatter = secondaryMeasureFormatter;
-  }
 
   /// Sets a list of series IDs that should be hidden by default on first chart
   /// draw.
@@ -148,16 +149,14 @@ class SeriesLegend<D> extends Legend<D> {
   void onData(List<MutableSeries<D>> seriesList) {
     // If a series was removed from the chart, remove it from our current list
     // of hidden series.
-    final seriesIds = seriesList.map((MutableSeries<D> series) => series.id);
+    final seriesIds = seriesList.map((series) => series.id);
 
-    _hiddenSeriesList.removeWhere((String id) => !seriesIds.contains(id));
+    _hiddenSeriesList.removeWhere((id) => !seriesIds.contains(id));
   }
 
   @override
   void preProcessSeriesList(List<MutableSeries<D>> seriesList) {
-    seriesList.removeWhere((MutableSeries<D> series) {
-      return _hiddenSeriesList.contains(series.id);
-    });
+    seriesList.removeWhere((series) => _hiddenSeriesList.contains(series.id));
   }
 
   /// Hides the data for a series on the chart by [seriesId].
@@ -177,17 +176,13 @@ class SeriesLegend<D> extends Legend<D> {
   /// color if it was previously hidden.
   @protected
   void showSeries(String seriesId) {
-    _hiddenSeriesList.removeWhere((String id) => id == seriesId);
+    _hiddenSeriesList.removeWhere((id) => id == seriesId);
   }
 
   /// Returns whether or not a given series [seriesId] is currently hidden.
-  bool isSeriesHidden(String seriesId) {
-    return _hiddenSeriesList.contains(seriesId);
-  }
+  bool isSeriesHidden(String seriesId) => _hiddenSeriesList.contains(seriesId);
 
   /// Returns whether or not a given series is always visible.
-  bool isSeriesAlwaysVisible(String seriesId) {
-    return _alwaysVisibleSeries != null &&
-        _alwaysVisibleSeries!.contains(seriesId);
-  }
+  bool isSeriesAlwaysVisible(String seriesId) =>
+      _alwaysVisibleSeries != null && _alwaysVisibleSeries!.contains(seriesId);
 }

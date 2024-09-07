@@ -16,9 +16,7 @@
 class TypedRegistry {
   final _registry = <TypedKey<Object?>, Object?>{};
 
-  R? getAttr<R>(TypedKey<R> key) {
-    return _registry[key] as R?;
-  }
+  R? getAttr<R>(TypedKey<R> key) => _registry[key] as R?;
 
   void setAttr<R>(TypedKey<R> key, R value) {
     _registry[key] = value;
@@ -30,8 +28,8 @@ class TypedRegistry {
 }
 
 class TypedKey<R> {
-  final String uniqueKey;
   const TypedKey(this.uniqueKey);
+  final String uniqueKey;
 
   @override
   int get hashCode => uniqueKey.hashCode;

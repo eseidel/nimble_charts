@@ -13,11 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/common/base_chart.dart';
-import 'package:charts_common/src/chart/common/processed_series.dart';
-import 'package:charts_common/src/chart/common/selection_model/selection_model.dart';
-
-import 'chart_behavior.dart' show ChartBehavior;
+import 'package:charts_common/common.dart';
 
 /// Chart behavior that monitors the specified [SelectionModel] and outlines the
 /// selected data.
@@ -25,6 +21,14 @@ import 'chart_behavior.dart' show ChartBehavior;
 /// This is typically used for treemap charts to highlight nodes.
 /// For bars and pies, prefers to use [DomainHighlighter] for UX consistency.
 class DomainOutliner<D> implements ChartBehavior<D> {
+  DomainOutliner({
+    this.selectionType = SelectionModelType.info,
+    double? defaultStrokePx,
+    double? strokePaddingPx,
+  })  : defaultStrokePx = defaultStrokePx ?? 2.0,
+        strokePaddingPx = strokePaddingPx ?? 1.0 {
+    _lifecycleListener = LifecycleListener<D>(onPostprocess: _outline);
+  }
   final SelectionModelType selectionType;
 
   /// Default stroke width of the outline if the series has no stroke width
@@ -44,15 +48,6 @@ class DomainOutliner<D> implements ChartBehavior<D> {
 
   late LifecycleListener<D> _lifecycleListener;
 
-  DomainOutliner({
-    this.selectionType = SelectionModelType.info,
-    double? defaultStrokePx,
-    double? strokePaddingPx,
-  })  : defaultStrokePx = defaultStrokePx ?? 2.0,
-        strokePaddingPx = strokePaddingPx ?? 1.0 {
-    _lifecycleListener = LifecycleListener<D>(onPostprocess: _outline);
-  }
-
   void _selectionChange(SelectionModel<D> selectionModel) {
     _chart.redraw(skipLayout: true, skipAnimation: true);
   }
@@ -60,12 +55,12 @@ class DomainOutliner<D> implements ChartBehavior<D> {
   void _outline(List<MutableSeries<D>> seriesList) {
     final selectionModel = _chart.getSelectionModel(selectionType);
 
-    for (var series in seriesList) {
+    for (final series in seriesList) {
       final strokeWidthPxFn = series.strokeWidthPxFn;
       final colorFn = series.colorFn;
 
       if (colorFn != null) {
-        series.colorFn = (int? index) {
+        series.colorFn = (index) {
           final color = colorFn(index);
           return selectionModel.isDatumSelected(series, index)
               ? color.darker
@@ -74,7 +69,7 @@ class DomainOutliner<D> implements ChartBehavior<D> {
       }
 
       if (strokeWidthPxFn != null) {
-        series.strokeWidthPxFn = (int? index) {
+        series.strokeWidthPxFn = (index) {
           final strokeWidthPx = strokeWidthPxFn(index);
           if (!selectionModel.isDatumSelected(series, index)) {
             return strokeWidthPx;

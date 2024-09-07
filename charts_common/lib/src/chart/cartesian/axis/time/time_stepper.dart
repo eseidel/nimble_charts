@@ -13,7 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'date_time_extents.dart' show DateTimeExtents;
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_extents.dart'
+    show DateTimeExtents;
 
 /// Represents the step/tick information for the given time range.
 abstract class TimeStepper {

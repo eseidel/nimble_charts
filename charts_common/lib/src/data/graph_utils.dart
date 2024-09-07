@@ -13,30 +13,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'graph.dart';
-import 'series.dart' show TypedAccessorFn;
+import 'package:charts_common/src/data/graph.dart';
+import 'package:charts_common/src/data/series.dart' show TypedAccessorFn;
 
 const graphCycleErrorMsg = 'The given graph contains a cycle.';
 
 /// If the node accessor is not null return a function to act on a graph [Node].
 TypedAccessorFn<Node<N, L>, R>? actOnNodeData<N, L, R>(
-    TypedAccessorFn<N, R>? f) {
-  return f == null
-      ? null
-      : (Node<N, L> node, int? index) => f(node.data, index);
-}
+  TypedAccessorFn<N, R>? f,
+) =>
+    f == null ? null : (node, index) => f(node.data, index);
 
 /// If the node accessor is not null return a function to act on a graph [Link].
 TypedAccessorFn<Link<N, L>, R>? actOnLinkData<N, L, R>(
-    TypedAccessorFn<L, R>? f) {
-  return f == null
-      ? null
-      : (Link<N, L> link, int? index) => f(link.data, index);
-}
+  TypedAccessorFn<L, R>? f,
+) =>
+    f == null ? null : (link, index) => f(link.data, index);
 
 /// Add an incoming or outgoing link to a [Node].
-Node<N, L> addLinkToNode<N, L>(Node<N, L> node, Link<N, L> link,
-    {required bool isIncomingLink}) {
+Node<N, L> addLinkToNode<N, L>(
+  Node<N, L> node,
+  Link<N, L> link, {
+  required bool isIncomingLink,
+}) {
   if (isIncomingLink) {
     node.incomingLinks.add(link);
   } else {
@@ -47,14 +46,15 @@ Node<N, L> addLinkToNode<N, L>(Node<N, L> node, Link<N, L> link,
 }
 
 /// Construct a new [Node] with the added [Link].
-Node<N, L> addLinkToAbsentNode<N, L>(Link<N, L> link,
-    {required bool isIncomingLink}) {
-  Node<N, L> node = isIncomingLink ? link.target : link.source;
+Node<N, L> addLinkToAbsentNode<N, L>(
+  Link<N, L> link, {
+  required bool isIncomingLink,
+}) {
+  final node = isIncomingLink ? link.target : link.source;
 
   return addLinkToNode(node, link, isIncomingLink: isIncomingLink);
 }
 
 /// Call an accessor if it exists on input else return null.
-R? accessorIfExists<T, R>(TypedAccessorFn<T, R>? method, T input, int index) {
-  return method == null ? null : method(input, index);
-}
+R? accessorIfExists<T, R>(TypedAccessorFn<T, R>? method, T input, int index) =>
+    method == null ? null : method(input, index);

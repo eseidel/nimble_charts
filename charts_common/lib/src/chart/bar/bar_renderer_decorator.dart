@@ -15,18 +15,24 @@
 
 import 'dart:math' show Rectangle;
 
-import '../../common/graphics_factory.dart' show GraphicsFactory;
-import '../common/chart_canvas.dart' show ChartCanvas;
-import 'bar_renderer.dart' show ImmutableBarRendererElement;
+import 'package:charts_common/src/chart/bar/bar_renderer.dart'
+    show ImmutableBarRendererElement;
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 /// Decorates bars after the bars have already been painted.
 abstract class BarRendererDecorator<D> {
   const BarRendererDecorator();
 
-  void decorate(Iterable<ImmutableBarRendererElement<D>> barElements,
-      ChartCanvas canvas, GraphicsFactory graphicsFactory,
-      {required Rectangle<int> drawBounds,
-      required double animationPercent,
-      required bool renderingVertically,
-      bool rtl = false});
+  void decorate(
+    Iterable<ImmutableBarRendererElement<D>> barElements,
+    ChartCanvas canvas,
+    GraphicsFactory graphicsFactory, {
+    required Rectangle<int> drawBounds,
+    required double animationPercent,
+    required bool renderingVertically,
+    bool rtl = false,
+  });
 }

@@ -19,12 +19,53 @@ import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart';
 import 'package:charts_common/src/chart/common/chart_canvas.dart';
 import 'package:charts_common/src/common/color.dart';
 import 'package:charts_common/src/common/typed_registry.dart';
+import 'package:charts_common/src/data/series.dart'
+    show AttributeKey, Series, TypedAccessorFn;
 import 'package:meta/meta.dart';
-
-import 'series.dart' show AttributeKey, Series, TypedAccessorFn;
 
 /// A tree structure that contains metadata of a rendering tree.
 class Tree<T, D> {
+  factory Tree({
+    required String id,
+    required TreeNode<T> root,
+    required TypedAccessorFn<T, D> domainFn,
+    required TypedAccessorFn<T, num?> measureFn,
+    TypedAccessorFn<T, Color>? colorFn,
+    TypedAccessorFn<T, Color>? fillColorFn,
+    TypedAccessorFn<T, Color>? patternColorFn,
+    TypedAccessorFn<T, FillPatternType>? fillPatternFn,
+    TypedAccessorFn<T, num>? strokeWidthPxFn,
+    TypedAccessorFn<T, String>? labelFn,
+    TypedAccessorFn<T, TextStyleSpec>? labelStyleFn,
+  }) =>
+      Tree._(
+        id: id,
+        root: root,
+        domainFn: _castFrom<T, D>(domainFn)!,
+        measureFn: _castFrom<T, num?>(measureFn)!,
+        colorFn: _castFrom<T, Color>(colorFn),
+        fillColorFn: _castFrom<T, Color>(fillColorFn),
+        fillPatternFn: _castFrom<T, FillPatternType>(fillPatternFn),
+        patternColorFn: _castFrom<T, Color>(patternColorFn),
+        strokeWidthPxFn: _castFrom<T, num>(strokeWidthPxFn),
+        labelFn: _castFrom<T, String>(labelFn),
+        labelStyleFn: _castFrom<T, TextStyleSpec>(labelStyleFn),
+      );
+
+  Tree._({
+    required this.id,
+    required this.root,
+    required this.domainFn,
+    required this.measureFn,
+    required this.colorFn,
+    required this.fillColorFn,
+    required this.fillPatternFn,
+    required this.patternColorFn,
+    required this.strokeWidthPxFn,
+    required this.labelFn,
+    required this.labelStyleFn,
+  });
+
   /// Unique identifier for this [tree].
   final String id;
 
@@ -64,48 +105,6 @@ class Tree<T, D> {
   /// associated with (e.g. rendererIdKey to renderer).
   final TreeAttributes attributes = TreeAttributes();
 
-  factory Tree({
-    required String id,
-    required TreeNode<T> root,
-    required TypedAccessorFn<T, D> domainFn,
-    required TypedAccessorFn<T, num?> measureFn,
-    TypedAccessorFn<T, Color>? colorFn,
-    TypedAccessorFn<T, Color>? fillColorFn,
-    TypedAccessorFn<T, Color>? patternColorFn,
-    TypedAccessorFn<T, FillPatternType>? fillPatternFn,
-    TypedAccessorFn<T, num>? strokeWidthPxFn,
-    TypedAccessorFn<T, String>? labelFn,
-    TypedAccessorFn<T, TextStyleSpec>? labelStyleFn,
-  }) {
-    return Tree._(
-      id: id,
-      root: root,
-      domainFn: _castFrom<T, D>(domainFn)!,
-      measureFn: _castFrom<T, num?>(measureFn)!,
-      colorFn: _castFrom<T, Color>(colorFn),
-      fillColorFn: _castFrom<T, Color>(fillColorFn),
-      fillPatternFn: _castFrom<T, FillPatternType>(fillPatternFn),
-      patternColorFn: _castFrom<T, Color>(patternColorFn),
-      strokeWidthPxFn: _castFrom<T, num>(strokeWidthPxFn),
-      labelFn: _castFrom<T, String>(labelFn),
-      labelStyleFn: _castFrom<T, TextStyleSpec>(labelStyleFn),
-    );
-  }
-
-  Tree._({
-    required this.id,
-    required this.root,
-    required this.domainFn,
-    required this.measureFn,
-    required this.colorFn,
-    required this.fillColorFn,
-    required this.fillPatternFn,
-    required this.patternColorFn,
-    required this.strokeWidthPxFn,
-    required this.labelFn,
-    required this.labelStyleFn,
-  });
-
   /// Creates a [Series] that contains all [TreeNode]s traversing from the
   /// [root] of this tree.
   ///
@@ -144,12 +143,12 @@ class Tree<T, D> {
     attributes.setAttr(key, value);
   }
 
-  R? getAttribute<R>(AttributeKey<R> key) {
-    return attributes.getAttr<R>(key);
-  }
+  R? getAttribute<R>(AttributeKey<R> key) => attributes.getAttr<R>(key);
 }
 
 class TreeNode<T> {
+  TreeNode(this.data);
+
   /// Associated data this node stores.
   final T data;
 
@@ -158,8 +157,6 @@ class TreeNode<T> {
   int _depth = 0;
 
   TreeNode<T>? parent;
-
-  TreeNode(this.data);
 
   /// Distance between this node and the root node.
   int get depth => _depth;
@@ -205,8 +202,5 @@ class TreeNode<T> {
 class TreeAttributes extends TypedRegistry {}
 
 /// Adapts a TypedAccessorFn<T, R> type to a TypedAccessorFn<TreeNode<T>, R>.
-TypedAccessorFn<TreeNode<T>, R>? _castFrom<T, R>(TypedAccessorFn<T, R>? f) {
-  return f == null
-      ? null
-      : (TreeNode<T> node, int? index) => f(node.data, index);
-}
+TypedAccessorFn<TreeNode<T>, R>? _castFrom<T, R>(TypedAccessorFn<T, R>? f) =>
+    f == null ? null : (node, index) => f(node.data, index);

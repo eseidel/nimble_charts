@@ -14,10 +14,14 @@
 // limitations under the License.
 
 import 'dart:math' show Point;
-import '../../../../common/gesture_listener.dart' show GestureListener;
-import '../../base_chart.dart' show BaseChart;
-import '../chart_behavior.dart' show ChartBehavior;
-import 'a11y_node.dart' show A11yNode;
+
+import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
+import 'package:charts_common/src/chart/common/behavior/a11y/a11y_node.dart'
+    show A11yNode;
+import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
+    show ChartBehavior;
+import 'package:charts_common/src/common/gesture_listener.dart'
+    show GestureListener;
 
 /// The gesture to use for triggering explore mode.
 enum ExploreModeTrigger {
@@ -27,9 +31,27 @@ enum ExploreModeTrigger {
 
 /// Chart behavior for adding A11y information.
 abstract class A11yExploreBehavior<D> implements ChartBehavior<D> {
+  A11yExploreBehavior({
+    ExploreModeTrigger? exploreModeTrigger,
+    double? minimumWidth,
+    this.exploreModeEnabledAnnouncement,
+    this.exploreModeDisabledAnnouncement,
+  })  : exploreModeTrigger = exploreModeTrigger ?? ExploreModeTrigger.pressHold,
+        minimumWidth = minimumWidth ?? 1.0 {
+    assert(this.minimumWidth >= 1.0);
+
+    switch (this.exploreModeTrigger) {
+      case ExploreModeTrigger.pressHold:
+        _listener = GestureListener(onLongPress: _toggleExploreMode);
+      case ExploreModeTrigger.tap:
+        _listener = GestureListener(onTap: _toggleExploreMode);
+    }
+  }
+
   /// The gesture that activates explore mode. Defaults to long press.
   ///
-  /// Turning on explore mode asks this [A11yExploreBehavior] to generate nodes within
+  /// Turning on explore mode asks this [A11yExploreBehavior] to generate nodes 
+  /// within
   /// this chart.
   final ExploreModeTrigger exploreModeTrigger;
 
@@ -48,36 +70,20 @@ abstract class A11yExploreBehavior<D> implements ChartBehavior<D> {
   late GestureListener _listener;
   bool _exploreModeOn = false;
 
-  A11yExploreBehavior({
-    ExploreModeTrigger? exploreModeTrigger,
-    double? minimumWidth,
-    this.exploreModeEnabledAnnouncement,
-    this.exploreModeDisabledAnnouncement,
-  })  : exploreModeTrigger = exploreModeTrigger ?? ExploreModeTrigger.pressHold,
-        minimumWidth = minimumWidth ?? 1.0 {
-    assert(this.minimumWidth >= 1.0);
-
-    switch (this.exploreModeTrigger) {
-      case ExploreModeTrigger.pressHold:
-        _listener = GestureListener(onLongPress: _toggleExploreMode);
-        break;
-      case ExploreModeTrigger.tap:
-        _listener = GestureListener(onTap: _toggleExploreMode);
-        break;
-    }
-  }
-
   bool _toggleExploreMode(Point<double> _) {
     if (_exploreModeOn) {
       _exploreModeOn = false;
       // Ask native platform to turn off explore mode.
       _chart!.context.disableA11yExploreMode(
-          announcement: exploreModeDisabledAnnouncement);
+        announcement: exploreModeDisabledAnnouncement,
+      );
     } else {
       _exploreModeOn = true;
       // Ask native platform to turn on explore mode.
-      _chart!.context.enableA11yExploreMode(createA11yNodes(),
-          announcement: exploreModeEnabledAnnouncement);
+      _chart!.context.enableA11yExploreMode(
+        createA11yNodes(),
+        announcement: exploreModeEnabledAnnouncement,
+      );
     }
 
     return true;

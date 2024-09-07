@@ -22,24 +22,32 @@ import 'package:charts_common/src/chart/common/datum_details.dart';
 import 'package:charts_common/src/chart/common/processed_series.dart';
 import 'package:charts_common/src/chart/common/series_datum.dart';
 import 'package:charts_common/src/chart/common/series_renderer.dart';
+import 'package:charts_common/src/chart/treemap/treemap_label_decorator.dart';
+import 'package:charts_common/src/chart/treemap/treemap_renderer_config.dart';
+import 'package:charts_common/src/chart/treemap/treemap_renderer_element.dart';
 import 'package:charts_common/src/common/math.dart' show NullablePoint;
 import 'package:charts_common/src/common/style/style_factory.dart';
 import 'package:charts_common/src/data/series.dart';
 import 'package:charts_common/src/data/tree.dart';
 import 'package:meta/meta.dart';
 
-import 'treemap_label_decorator.dart';
-import 'treemap_renderer_config.dart';
-import 'treemap_renderer_element.dart';
-
 /// Key for storing a list of treemap renderer elements.
 ///
 /// Each element contains a bounding rectangle for rendering.
 const treeMapElementsKey =
     AttributeKey<Iterable<TreeMapRendererElement<Object>>>(
-        'TreeMapRenderer.elements');
+  'TreeMapRenderer.elements',
+);
 
 abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
+  BaseTreeMapRenderer({required this.config, String? rendererId})
+      : labelDecorator = config.labelDecorator,
+        super(
+          rendererId: rendererId ?? defaultRendererId,
+          layoutPaintOrder: config.layoutPaintOrder,
+          symbolRenderer: config.symbolRenderer,
+        );
+
   /// Default renderer ID for treemap.
   static const defaultRendererId = 'treemap';
 
@@ -59,14 +67,6 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   final TreeMapLabelDecorator<D>? labelDecorator;
 
   BaseChart<D>? _chart;
-
-  BaseTreeMapRenderer({required this.config, String? rendererId})
-      : labelDecorator = config.labelDecorator,
-        super(
-          rendererId: rendererId ?? defaultRendererId,
-          layoutPaintOrder: config.layoutPaintOrder,
-          symbolRenderer: config.symbolRenderer,
-        );
 
   @override
   void onAttach(BaseChart<D> chart) {
@@ -113,7 +113,7 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
     // _visibleTreeMapRectKeys is used to remove any [_AnimatedTreeMapRect]s
     // that were rendered in the previous draw cycles, but no longer have a
     // corresponding datum in the new series data.
-    final _visibleTreeMapRectKeys = <D>{};
+    final visibleTreeMapRectKeys = <D>{};
 
     for (final series in seriesList) {
       if (series.data.isNotEmpty) {
@@ -127,13 +127,13 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
           tile(node);
           final element = _getRendererElement(node)..refreshPaintProperties();
           final rect = _createAnimatedTreeMapRect(element);
-          _visibleTreeMapRectKeys.add(rect.key);
+          visibleTreeMapRectKeys.add(rect.key);
         }
       }
     }
 
     _animatedTreeMapRects.forEach((_, rect) {
-      if (!_visibleTreeMapRectKeys.contains(rect.key)) {
+      if (!visibleTreeMapRectKeys.contains(rect.key)) {
         rect.animateOut();
       }
     });
@@ -160,20 +160,18 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
         stroke: element.strokeColor,
         strokeWidthPx: element.strokeWidthPx!.toDouble(),
         radius: 0,
-        roundTopLeft: false,
-        roundTopRight: false,
-        roundBottomLeft: false,
-        roundBottomRight: false,
       );
 
       // Paint label.
-      labelDecorator?.decorate(element, canvas, graphicsFactory!,
-          drawBounds: drawBounds!,
-          animationPercent: animationPercent,
-          rtl: isRtl,
-          // only leaf node could possibly render label vertically.
-          renderVertically: element.isLeaf && rect.width < rect.height,
-          renderMultiline: element.isLeaf);
+      labelDecorator?.decorate(
+        element, canvas, graphicsFactory!,
+        drawBounds: drawBounds!,
+        animationPercent: animationPercent,
+        rtl: isRtl,
+        // only leaf node could possibly render label vertically.
+        renderVertically: element.isLeaf && rect.width < rect.height,
+        renderMultiline: element.isLeaf,
+      );
     });
   }
 
@@ -199,21 +197,24 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
       final element = _getRendererElement(node);
 
       if (element.boundingRect.containsPoint(chartPoint)) {
-        nearest.add(DatumDetails<D>(
-          index: element.index,
-          series: element.series,
-          datum: node,
-          domain: element.domain,
-          measure: element.measure,
-          domainDistance: 0.0,
-          measureDistance: 0.0,
-        ));
+        nearest.add(
+          DatumDetails<D>(
+            index: element.index,
+            series: element.series,
+            datum: node,
+            domain: element.domain,
+            measure: element.measure,
+            domainDistance: 0,
+            measureDistance: 0,
+          ),
+        );
         // No need to verify remaining siblings.
-        queue.clear();
+        queue
+          ..clear()
 
-        // Only processes nodes whose parents contain the [chartPoint].
-        // This reduces the number of nodes to verify.
-        queue.addAll(node.children);
+          // Only processes nodes whose parents contain the [chartPoint].
+          // This reduces the number of nodes to verify.
+          ..addAll(node.children);
       }
     }
 
@@ -228,29 +229,36 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
 
   @override
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
+    DatumDetails<D> details,
+    SeriesDatum<D> seriesDatum,
+  ) {
     final bounds =
         _getRendererElement(seriesDatum.datum as TreeNode<Object>).boundingRect;
     final chartPosition = Point<double>(
-        (isRtl ? bounds.left : bounds.right).toDouble(),
-        (bounds.top + (bounds.height / 2)).toDouble());
-    return DatumDetails.from(details,
-        chartPosition: NullablePoint.from(chartPosition));
+      (isRtl ? bounds.left : bounds.right).toDouble(),
+      bounds.top + (bounds.height / 2),
+    );
+    return DatumDetails.from(
+      details,
+      chartPosition: NullablePoint.from(chartPosition),
+    );
   }
 
   /// Assigns missing colors in case when color accessor functions are not set.
   ///
   /// Assigned color is based on the depth of each node.
   @override
-  void assignMissingColors(Iterable<MutableSeries<D>> seriesList,
-      {required bool emptyCategoryUsesSinglePalette}) {
+  void assignMissingColors(
+    Iterable<MutableSeries<D>> seriesList, {
+    required bool emptyCategoryUsesSinglePalette,
+  }) {
     for (final series in seriesList) {
       final colorPalettes =
           StyleFactory.style.getOrderedPalettes(series.data.length);
       final count = colorPalettes.length;
 
-      series.fillColorFn ??= (int? index) {
-        var node = series.data[index!] as TreeNode<Object>;
+      series.fillColorFn ??= (index) {
+        final node = series.data[index!] as TreeNode<Object>;
         return colorPalettes[node.depth % count].shadeDefault;
       };
 
@@ -338,8 +346,12 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   ///                 width
   /// ```
   @protected
-  void position(Iterable<TreeNode<Object>> nodes, MutableRectangle boundingRect,
-      num side, num layoutArea) {
+  void position(
+    Iterable<TreeNode<Object>> nodes,
+    MutableRectangle boundingRect,
+    num side,
+    num layoutArea,
+  ) {
     var top = boundingRect.top;
     var left = boundingRect.left;
     var length = side > 0 ? (layoutArea / side) : 0;
@@ -351,25 +363,31 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
       if (length > boundingRect.width) length = boundingRect.width.toInt();
       for (final node in nodes) {
         final element = _getRendererElement(node);
-        final height = min(boundingRect.top + boundingRect.height - top,
-            length > 0 ? (element.area / length) : 0);
+        final height = min(
+          boundingRect.top + boundingRect.height - top,
+          length > 0 ? (element.area / length) : 0,
+        );
         element.boundingRect = Rectangle(left, top, length, height);
         top += height;
       }
-      boundingRect.left += length;
-      boundingRect.width -= length;
+      boundingRect
+        ..left += length
+        ..width -= length;
     } else {
       // Positions rectangles horizontally.
       if (length > boundingRect.height) length = boundingRect.height.toInt();
       for (final node in nodes) {
         final element = _getRendererElement(node);
-        final width = min(boundingRect.left + boundingRect.width - left,
-            length > 0 ? (element.area / length) : 0);
+        final width = min(
+          boundingRect.left + boundingRect.width - left,
+          length > 0 ? (element.area / length) : 0,
+        );
         element.boundingRect = Rectangle(left, top, width, length);
         left += width;
       }
-      boundingRect.top += length;
-      boundingRect.height -= length;
+      boundingRect
+        ..top += length
+        ..height -= length;
     }
   }
 
@@ -386,7 +404,8 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   /// This object contains previous, current, and target animation state of
   /// treemap renderer [element].
   _AnimatedTreeMapRect<D> _createAnimatedTreeMapRect(
-      TreeMapRendererElement<D> element) {
+    TreeMapRendererElement<D> element,
+  ) {
     final key = element.domain;
     // Creates a new _AnimatedTreeMapRect if not exists. Otherwise, moves the
     // existing one to the end of the list so that the iteration order of
@@ -419,18 +438,23 @@ abstract class BaseTreeMapRenderer<D> extends BaseSeriesRenderer<D> {
   TreeMapRendererElement<D> _getRendererElement(TreeNode<Object> node) {
     final element = _treeNodeToRendererElement[node];
     assert(
-        element != null, 'There is no associated renderer element for $node.');
+      element != null,
+      'There is no associated renderer element for $node.',
+    );
     return element!;
   }
 
   void _ensureSingleTree(List<ImmutableSeries<D>> seriesList) {
-    assert(seriesList.length <= 1,
-        'TreeMapRenderer only supports a single series at most.');
+    assert(
+      seriesList.length <= 1,
+      'TreeMapRenderer only supports a single series at most.',
+    );
   }
 }
 
 /// A representation of the animation state of [TreeMapRendererElement].
 class _AnimatedTreeMapRect<D> {
+  _AnimatedTreeMapRect({required this.key});
   final D key;
 
   /// A previous [TreeMapRendererElement] before animation.
@@ -445,8 +469,6 @@ class _AnimatedTreeMapRect<D> {
   // Flag indicating whether this rect is being animated out of the chart.
   bool animatingOut = false;
 
-  _AnimatedTreeMapRect({required this.key});
-
   /// Animates a rect that was removed from the tree out of the view.
   ///
   /// Animates the height and width of the rect down to zero, centered in the
@@ -454,9 +476,14 @@ class _AnimatedTreeMapRect<D> {
   void animateOut() {
     final newTarget = _currentRect!.clone();
     final rect = newTarget.boundingRect;
-    newTarget.boundingRect = Rectangle(
-        rect.left + (rect.width / 2), rect.top + (rect.height / 2), 0, 0);
-    newTarget.strokeWidthPx = 0.0;
+    newTarget
+      ..boundingRect = Rectangle(
+        rect.left + (rect.width / 2),
+        rect.top + (rect.height / 2),
+        0,
+        0,
+      )
+      ..strokeWidthPx = 0.0;
 
     setNewTarget(newTarget);
     animatingOut = true;

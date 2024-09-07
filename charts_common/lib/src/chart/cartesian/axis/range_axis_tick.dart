@@ -13,10 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'axis_tick.dart' show AxisTicks;
-import 'range_tick.dart' show RangeTick;
+import 'package:charts_common/src/chart/cartesian/axis/axis_tick.dart'
+    show AxisTicks;
+import 'package:charts_common/src/chart/cartesian/axis/range_tick.dart'
+    show RangeTick;
 
 class RangeAxisTicks<D> extends AxisTicks<D> {
+  RangeAxisTicks(RangeTick<D> super.tick)
+      : rangeStartValue = tick.rangeStartValue,
+        rangeStartLocationPx = tick.rangeStartLocationPx,
+        rangeEndValue = tick.rangeEndValue,
+        rangeEndLocationPx = tick.rangeEndLocationPx;
+
   /// The value that this range tick starting point represents
   final D rangeStartValue;
 
@@ -28,11 +36,4 @@ class RangeAxisTicks<D> extends AxisTicks<D> {
 
   /// Position of the range tick ending point.
   double rangeEndLocationPx;
-
-  RangeAxisTicks(RangeTick<D> tick)
-      : rangeStartValue = tick.rangeStartValue,
-        rangeStartLocationPx = tick.rangeStartLocationPx,
-        rangeEndValue = tick.rangeEndValue,
-        rangeEndLocationPx = tick.rangeEndLocationPx,
-        super(tick);
 }

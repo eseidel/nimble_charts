@@ -13,12 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../chart/cartesian/axis/spec/axis_spec.dart' show TextStyleSpec;
-import '../chart/common/chart_canvas.dart' show FillPatternType;
-import '../chart/common/datum_details.dart'
+// ignore_for_file: no_leading_underscores_for_local_identifiers,
+// ignore_for_file: avoid_types_on_closure_parameters
+
+import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show TextStyleSpec;
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show FillPatternType;
+import 'package:charts_common/src/chart/common/datum_details.dart'
     show DomainFormatter, MeasureFormatter;
-import '../common/color.dart' show Color;
-import '../common/typed_registry.dart' show TypedRegistry, TypedKey;
+import 'package:charts_common/src/common/color.dart' show Color;
+import 'package:charts_common/src/common/typed_registry.dart'
+    show TypedKey, TypedRegistry;
 
 class Series<T, D> {
   final String id;
@@ -103,36 +109,40 @@ class Series<T, D> {
   // the non-required ones be final?
   final SeriesAttributes attributes = SeriesAttributes();
 
-  factory Series(
-      {required String id,
-      required List<T> data,
-      required TypedAccessorFn<T, D> domainFn,
-      required TypedAccessorFn<T, num?> measureFn,
-      String? displayName,
-      Color? seriesColor,
-      TypedAccessorFn<T, Color>? areaColorFn,
-      TypedAccessorFn<T, Color>? colorFn,
-      TypedAccessorFn<T, List<int>?>? dashPatternFn,
-      TypedAccessorFn<T, DomainFormatter<D>>? domainFormatterFn,
-      TypedAccessorFn<T, D?>? domainLowerBoundFn,
-      TypedAccessorFn<T, D?>? domainUpperBoundFn,
-      TypedAccessorFn<T, Color?>? fillColorFn,
-      TypedAccessorFn<T, Color>? patternColorFn,
-      TypedAccessorFn<T, FillPatternType>? fillPatternFn,
-      TypedAccessorFn<T, String>? keyFn,
-      TypedAccessorFn<T, String>? labelAccessorFn,
-      TypedAccessorFn<T, TextStyleSpec>? insideLabelStyleAccessorFn,
-      TypedAccessorFn<T, TextStyleSpec>? outsideLabelStyleAccessorFn,
-      TypedAccessorFn<T, MeasureFormatter>? measureFormatterFn,
-      TypedAccessorFn<T, num?>? measureLowerBoundFn,
-      TypedAccessorFn<T, num?>? measureUpperBoundFn,
-      TypedAccessorFn<T, num>? measureOffsetFn,
-      bool overlaySeries = false,
-      TypedAccessorFn<T, num>? radiusPxFn,
-      String? seriesCategory,
-      TypedAccessorFn<T, num?>? strokeWidthPxFn}) {
+  // ignore: sort_constructors_first
+  factory Series({
+    required String id,
+    required List<T> data,
+    required TypedAccessorFn<T, D> domainFn,
+    required TypedAccessorFn<T, num?> measureFn,
+    String? displayName,
+    Color? seriesColor,
+    TypedAccessorFn<T, Color>? areaColorFn,
+    TypedAccessorFn<T, Color>? colorFn,
+    TypedAccessorFn<T, List<int>?>? dashPatternFn,
+    TypedAccessorFn<T, DomainFormatter<D>>? domainFormatterFn,
+    TypedAccessorFn<T, D?>? domainLowerBoundFn,
+    TypedAccessorFn<T, D?>? domainUpperBoundFn,
+    TypedAccessorFn<T, Color?>? fillColorFn,
+    TypedAccessorFn<T, Color>? patternColorFn,
+    TypedAccessorFn<T, FillPatternType>? fillPatternFn,
+    TypedAccessorFn<T, String>? keyFn,
+    TypedAccessorFn<T, String>? labelAccessorFn,
+    TypedAccessorFn<T, TextStyleSpec>? insideLabelStyleAccessorFn,
+    TypedAccessorFn<T, TextStyleSpec>? outsideLabelStyleAccessorFn,
+    TypedAccessorFn<T, MeasureFormatter>? measureFormatterFn,
+    TypedAccessorFn<T, num?>? measureLowerBoundFn,
+    TypedAccessorFn<T, num?>? measureUpperBoundFn,
+    TypedAccessorFn<T, num>? measureOffsetFn,
+    bool overlaySeries = false,
+    TypedAccessorFn<T, num>? radiusPxFn,
+    String? seriesCategory,
+    TypedAccessorFn<T, num?>? strokeWidthPxFn,
+  }) {
     // Wrap typed accessors.
+    // ignore: prefer_function_declarations_over_variables
     final _domainFn = (int? index) => domainFn(data[index!], index);
+    // ignore: prefer_function_declarations_over_variables
     final _measureFn = (int? index) => measureFn(data[index!], index);
     final _areaColorFn = areaColorFn == null
         ? null
@@ -221,6 +231,7 @@ class Series<T, D> {
     );
   }
 
+  // ignore: sort_constructors_first
   Series._internal({
     required this.id,
     required this.data,
@@ -255,9 +266,7 @@ class Series<T, D> {
     attributes.setAttr(key, value);
   }
 
-  R? getAttribute<R>(AttributeKey<R> key) {
-    return attributes.getAttr<R>(key);
-  }
+  R? getAttribute<R>(AttributeKey<R> key) => attributes.getAttr<R>(key);
 }
 
 /// Computed property on series.
@@ -272,7 +281,7 @@ typedef AccessorFn<R> = R Function(int? index);
 typedef TypedAccessorFn<T, R> = R Function(T datum, int? index);
 
 class AttributeKey<R> extends TypedKey<R> {
-  const AttributeKey(String uniqueKey) : super(uniqueKey);
+  const AttributeKey(super.uniqueKey);
 }
 
 class SeriesAttributes extends TypedRegistry {}

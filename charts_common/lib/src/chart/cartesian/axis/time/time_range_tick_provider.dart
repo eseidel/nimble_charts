@@ -13,8 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../tick_provider.dart' show BaseTickProvider;
-import '../time/date_time_extents.dart' show DateTimeExtents;
+import 'package:charts_common/common.dart';
+import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show BaseTickProvider;
 
 /// Provides ticks for a particular time unit.
 ///

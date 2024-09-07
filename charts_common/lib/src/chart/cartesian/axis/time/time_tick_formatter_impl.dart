@@ -13,16 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts_common/src/chart/cartesian/axis/time/time_tick_formatter.dart'
+    show TimeTickFormatter;
+import 'package:charts_common/src/common/date_time_factory.dart'
+    show DateTimeFactory;
 import 'package:intl/intl.dart' show DateFormat;
-import '../../../../common/date_time_factory.dart' show DateTimeFactory;
-import 'time_tick_formatter.dart' show TimeTickFormatter;
 
 /// Formatter that can format simple and transition time ticks differently.
 class TimeTickFormatterImpl implements TimeTickFormatter {
-  final DateFormat _simpleFormat;
-  final DateFormat _transitionFormat;
-  final CalendarField? transitionField;
-
   /// Create time tick formatter.
   ///
   /// [dateTimeFactory] factory to use to generate the [DateFormat].
@@ -37,6 +35,9 @@ class TimeTickFormatterImpl implements TimeTickFormatter {
     this.transitionField,
   })  : _simpleFormat = dateTimeFactory.createDateFormat(simpleFormat),
         _transitionFormat = dateTimeFactory.createDateFormat(transitionFormat);
+  final DateFormat _simpleFormat;
+  final DateFormat _transitionFormat;
+  final CalendarField? transitionField;
 
   @override
   String formatFirstTick(DateTime date) => _transitionFormat.format(date);

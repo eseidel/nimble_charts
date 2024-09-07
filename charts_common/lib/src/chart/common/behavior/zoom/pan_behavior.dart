@@ -15,20 +15,31 @@
 
 import 'dart:math' show Point;
 
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart' show Axis;
+import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+    show CartesianChart;
+import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
+import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
+    show ChartBehavior;
+import 'package:charts_common/src/chart/common/behavior/zoom/panning_tick_provider.dart';
+import 'package:charts_common/src/common/gesture_listener.dart'
+    show GestureListener;
 import 'package:meta/meta.dart' show protected;
-
-import '../../../../common/gesture_listener.dart' show GestureListener;
-import '../../../cartesian/axis/axis.dart' show Axis;
-import '../../../cartesian/cartesian_chart.dart' show CartesianChart;
-import '../../base_chart.dart' show BaseChart;
-import '../chart_behavior.dart' show ChartBehavior;
-import 'panning_tick_provider.dart';
 
 /// Adds domain axis panning support to a chart.
 ///
 /// Panning is supported by clicking and dragging the mouse for web, or tapping
 /// and dragging on the chart for mobile devices.
 class PanBehavior<D> implements ChartBehavior<D> {
+  PanBehavior() {
+    _listener = GestureListener(
+      onTapTest: onTapTest,
+      onDragStart: onDragStart,
+      onDragUpdate: onDragUpdate,
+      onDragEnd: onDragEnd,
+    );
+  }
+
   /// Listens for drag gestures.
   late GestureListener _listener;
 
@@ -67,20 +78,13 @@ class PanBehavior<D> implements ChartBehavior<D> {
     _panningCompletedCallback = callback;
   }
 
-  PanBehavior() {
-    _listener = GestureListener(
-        onTapTest: onTapTest,
-        onDragStart: onDragStart,
-        onDragUpdate: onDragUpdate,
-        onDragEnd: onDragEnd);
-  }
-
   /// Injects the behavior into a chart.
   @override
   void attachTo(BaseChart<D> chart) {
     if (chart is! CartesianChart<D>) {
       throw ArgumentError(
-          'PanBehavior can only be attached to a CartesianChart<D>');
+        'PanBehavior can only be attached to a CartesianChart<D>',
+      );
     }
 
     _chart = chart;
@@ -100,7 +104,8 @@ class PanBehavior<D> implements ChartBehavior<D> {
   void removeFrom(BaseChart<D> chart) {
     if (chart is! CartesianChart<D>) {
       throw ArgumentError(
-          'PanBehavior can only be attached to a CartesianChart<D>');
+        'PanBehavior can only be attached to a CartesianChart<D>',
+      );
     }
 
     _chart = chart;
@@ -174,9 +179,12 @@ class PanBehavior<D> implements ChartBehavior<D> {
     }
 
     final chart = this.chart!;
-    domainAxis.setViewportSettings(domainScalingFactor, domainChange,
-        drawAreaWidth: chart.drawAreaBounds.width,
-        drawAreaHeight: chart.drawAreaBounds.height);
+    domainAxis.setViewportSettings(
+      domainScalingFactor,
+      domainChange,
+      drawAreaWidth: chart.drawAreaBounds.width,
+      drawAreaHeight: chart.drawAreaBounds.height,
+    );
 
     _lastPosition = localPosition;
 
@@ -186,7 +194,10 @@ class PanBehavior<D> implements ChartBehavior<D> {
 
   @protected
   bool onDragEnd(
-      Point<double> localPosition, double scale, double pixelsPerSec) {
+    Point<double> localPosition,
+    double scale,
+    double pixelsPerSec,
+  ) {
     onPanEnd();
     return true;
   }
@@ -210,10 +221,10 @@ class PanBehavior<D> implements ChartBehavior<D> {
     // request redraw.
     _domainAxisTickProvider.mode = PanningTickProviderMode.passThrough;
 
-    final _chart = this._chart!;
-    _chart.getMeasureAxis().lockAxis = false;
-    _chart.getMeasureAxis(axisId: Axis.secondaryMeasureAxisId).lockAxis = false;
-    _chart.redraw();
+    final chart = this._chart!;
+    chart.getMeasureAxis().lockAxis = false;
+    chart.getMeasureAxis(axisId: Axis.secondaryMeasureAxisId).lockAxis = false;
+    chart.redraw();
 
     _panningCompletedCallback?.call();
   }

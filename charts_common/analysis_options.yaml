@@ -1,0 +1,46 @@
+include: package:austerity/analysis_options.yaml
+
+analyzer:
+  errors:
+
+    # Can't ignore these
+    #argument_type_not_assignable: warning
+    #return_of_invalid_type_from_closure: warning
+
+    # Dangerous
+    no_runtimetype_tostring: warning
+    strict_raw_type: warning
+    avoid_equals_and_hash_code_on_mutable_classes: warning
+    avoid_dynamic_calls: warning
+    inference_failure_on_collection_literal: warning
+    type_annotate_public_apis: warning
+    inference_failure_on_untyped_parameter: warning
+    inference_failure_on_instance_creation: warning
+    inference_failure_on_function_invocation: warning
+
+    # Probably OK
+    prefer_asserts_in_initializer_lists: warning
+    avoid_classes_with_only_static_members: warning
+    prefer_function_declarations_over_variables: warning
+    overridden_fields: warning
+    public_member_api_docs: warning
+    avoid_setters_without_getters: warning
+    constant_identifier_names: warning
+    use_if_null_to_convert_nulls_to_bools: warning
+    referenced_before_declaration: warning
+    use_to_and_as_if_applicable: warning
+    comment_references: warning
+    prefer_asserts_with_message: warning
+    no_default_cases: warning
+    one_member_abstracts: warning
+    join_return_with_assignment: warning
+    use_setters_to_change_properties: warning
+    unnecessary_null_comparison: warning
+    prefer_null_aware_method_calls: warning
+    parameter_assignments: warning
+
+
+    use_late_for_private_fields_and_variables: ignore
+    avoid_catches_without_on_clauses: ignore
+
+  

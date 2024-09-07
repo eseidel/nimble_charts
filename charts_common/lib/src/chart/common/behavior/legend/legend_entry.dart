@@ -13,14 +13,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../../common/color.dart';
-import '../../../../common/symbol_renderer.dart';
-import '../../../cartesian/axis/spec/axis_spec.dart' show TextStyleSpec;
-import '../../processed_series.dart' show ImmutableSeries;
-import '../../series_renderer.dart' show rendererKey;
+import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show TextStyleSpec;
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries;
+import 'package:charts_common/src/chart/common/series_renderer.dart'
+    show rendererKey;
+import 'package:charts_common/src/common/color.dart';
+import 'package:charts_common/src/common/symbol_renderer.dart';
 
 /// The most basic possible legend entry - just a display name and positioning.
 class LegendEntryBase {
+  LegendEntryBase(
+    this.label, {
+    this.textStyle,
+    this.rowNumber,
+    this.columnNumber,
+    this.rowCount,
+    this.columnCount,
+    this.inFirstRow,
+    this.inFirstColumn,
+    this.inLastRow,
+    this.inLastColumn,
+  });
   final String label;
   final TextStyleSpec? textStyle;
 
@@ -47,47 +62,27 @@ class LegendEntryBase {
 
   /// Indicates whether this is in the last column of a tabular layout.
   bool? inLastColumn;
-
-  LegendEntryBase(this.label,
-      {this.textStyle,
-      this.rowNumber,
-      this.columnNumber,
-      this.rowCount,
-      this.columnCount,
-      this.inFirstRow,
-      this.inFirstColumn,
-      this.inLastRow,
-      this.inLastColumn});
 }
 
 /// When the legend groups by category it will create additional legend entries
 /// that track styling and grouping on a per category basis.
 class LegendCategory<D> extends LegendEntryBase {
+  LegendCategory(
+    super.label,
+    this.entries, {
+    super.textStyle,
+    super.rowNumber,
+    super.columnNumber,
+    super.rowCount,
+    super.columnCount,
+    super.inFirstRow,
+    super.inFirstColumn,
+    super.inLastRow,
+    super.inLastColumn,
+  });
+
   /// The list of entries that should be displayed within this category.
   final List<LegendEntry<D>>? entries;
-
-  LegendCategory(
-    String label,
-    this.entries, {
-    TextStyleSpec? textStyle,
-    int? rowNumber,
-    int? columnNumber,
-    int? rowCount,
-    int? columnCount,
-    bool? inFirstRow,
-    bool? inFirstColumn,
-    bool? inLastRow,
-    bool? inLastColumn,
-  }) : super(label,
-            textStyle: textStyle,
-            rowNumber: rowNumber,
-            columnNumber: columnNumber,
-            rowCount: rowCount,
-            columnCount: columnCount,
-            inFirstRow: inFirstRow,
-            inFirstColumn: inFirstColumn,
-            inLastRow: inLastRow,
-            inLastColumn: inLastColumn);
 }
 
 /// Holder for the information used for a legend row.
@@ -95,16 +90,6 @@ class LegendCategory<D> extends LegendEntryBase {
 /// [T] the datum class type for the series passed in.
 /// [D] the domain class type for the datum.
 class LegendEntry<D> extends LegendEntryBase {
-  final ImmutableSeries<D> series;
-  final dynamic datum;
-  final int? datumIndex;
-  final D? domain;
-  final Color? color;
-  double? value;
-  List<int?>? selectedDataIndexes;
-  String? formattedValue;
-  bool isSelected;
-
   // TODO: Forward the default formatters from series and allow for
   // native legends to provide separate formatters.
 
@@ -127,16 +112,27 @@ class LegendEntry<D> extends LegendEntryBase {
     bool? inFirstColumn,
     bool? inLastRow,
     bool? inLastColumn,
-  }) : super(label,
-            textStyle: textStyle,
-            rowNumber: rowNumber,
-            columnNumber: columnNumber,
-            rowCount: rowCount,
-            columnCount: columnCount,
-            inFirstRow: inFirstRow,
-            inFirstColumn: inFirstColumn,
-            inLastRow: inLastRow,
-            inLastColumn: inLastColumn);
+  }) : super(
+          label,
+          textStyle: textStyle,
+          rowNumber: rowNumber,
+          columnNumber: columnNumber,
+          rowCount: rowCount,
+          columnCount: columnCount,
+          inFirstRow: inFirstRow,
+          inFirstColumn: inFirstColumn,
+          inLastRow: inLastRow,
+          inLastColumn: inLastColumn,
+        );
+  final ImmutableSeries<D> series;
+  final dynamic datum;
+  final int? datumIndex;
+  final D? domain;
+  final Color? color;
+  double? value;
+  List<int?>? selectedDataIndexes;
+  String? formattedValue;
+  bool isSelected;
 
   /// Get the native symbol renderer stored in the series.
   SymbolRenderer? get symbolRenderer =>

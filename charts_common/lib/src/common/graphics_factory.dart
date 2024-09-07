@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'line_style.dart' show LineStyle;
-import 'text_element.dart' show TextElement;
-import 'text_style.dart' show TextStyle;
+import 'package:charts_common/src/common/line_style.dart' show LineStyle;
+import 'package:charts_common/src/common/text_element.dart' show TextElement;
+import 'package:charts_common/src/common/text_style.dart' show TextStyle;
 
 /// Interface to native platform graphics functions.
 abstract class GraphicsFactory {

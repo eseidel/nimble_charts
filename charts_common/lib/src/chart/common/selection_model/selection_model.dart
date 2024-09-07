@@ -13,10 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries;
+import 'package:charts_common/src/chart/common/series_datum.dart'
+    show SeriesDatum, SeriesDatumConfig;
 import 'package:collection/collection.dart' show ListEquality;
-
-import '../processed_series.dart' show ImmutableSeries;
-import '../series_datum.dart' show SeriesDatum, SeriesDatumConfig;
 
 /// Holds the state of interaction or selection for the chart to coordinate
 /// between various event sources and things that wish to act upon the selection
@@ -31,13 +32,11 @@ import '../series_datum.dart' show SeriesDatum, SeriesDatumConfig;
 /// for each datum for a given domain/time, but highlights the closest entry to
 /// match up with highlighting/bolding of the line and legend.
 class SelectionModel<D> {
-  var _selectedDatum = <SeriesDatum<D>>[];
-  var _selectedSeries = <ImmutableSeries<D>>[];
-
   /// Create selection model with the desired selection.
-  SelectionModel(
-      {List<SeriesDatum<D>>? selectedData,
-      List<ImmutableSeries<D>>? selectedSeries}) {
+  SelectionModel({
+    List<SeriesDatum<D>>? selectedData,
+    List<ImmutableSeries<D>>? selectedSeries,
+  }) {
     if (selectedData != null) {
       _selectedDatum = selectedData;
     }
@@ -53,19 +52,25 @@ class SelectionModel<D> {
   }
 
   /// Create selection model from configuration.
-  SelectionModel.fromConfig(List<SeriesDatumConfig<D>>? selectedDataConfig,
-      List<String>? selectedSeriesConfig, List<ImmutableSeries<D>> seriesList) {
+  SelectionModel.fromConfig(
+    List<SeriesDatumConfig<D>>? selectedDataConfig,
+    List<String>? selectedSeriesConfig,
+    List<ImmutableSeries<D>> seriesList,
+  ) {
     final selectedDataMap = <String, List<D>>{};
 
     if (selectedDataConfig != null) {
       for (final config in selectedDataConfig) {
         selectedDataMap[config.seriesId] ??= <D>[];
-        selectedDataMap[config.seriesId]!.add(config.domainValue as D);
+        selectedDataMap[config.seriesId]!.add(config.domainValue);
       }
 
       // Add to list of selected series.
-      _selectedSeries.addAll(seriesList.where((ImmutableSeries<D> series) =>
-          selectedDataMap.keys.contains(series.id)));
+      _selectedSeries.addAll(
+        seriesList.where(
+          (series) => selectedDataMap.keys.contains(series.id),
+        ),
+      );
 
       // Add to list of selected data.
       for (final series in seriesList) {
@@ -90,13 +95,18 @@ class SelectionModel<D> {
       };
 
       final remainingSeriesToAdd = selectedSeriesConfig
-          .where((String seriesId) => !existingSeriesIds.contains(seriesId))
+          .where((seriesId) => !existingSeriesIds.contains(seriesId))
           .toSet();
 
-      _selectedSeries.addAll(seriesList.where((ImmutableSeries<D> series) =>
-          remainingSeriesToAdd.contains(series.id)));
+      _selectedSeries.addAll(
+        seriesList.where(
+          (series) => remainingSeriesToAdd.contains(series.id),
+        ),
+      );
     }
   }
+  var _selectedDatum = <SeriesDatum<D>>[];
+  var _selectedSeries = <ImmutableSeries<D>>[];
 
   /// Returns true if this [SelectionModel] has a selected datum.
   bool get hasDatumSelection => _selectedDatum.isNotEmpty;
@@ -125,13 +135,12 @@ class SelectionModel<D> {
       _selectedDatum.isNotEmpty || selectedSeries.isNotEmpty;
 
   @override
-  bool operator ==(Object other) {
-    return other is SelectionModel<D> &&
-        ListEquality<SeriesDatum<D>>()
-            .equals(_selectedDatum, other.selectedDatum) &&
-        ListEquality<ImmutableSeries<D>>()
-            .equals(_selectedSeries, other.selectedSeries);
-  }
+  bool operator ==(Object other) =>
+      other is SelectionModel<D> &&
+      ListEquality<SeriesDatum<D>>()
+          .equals(_selectedDatum, other.selectedDatum) &&
+      ListEquality<ImmutableSeries<D>>()
+          .equals(_selectedSeries, other.selectedSeries);
 
   @override
   int get hashCode {
@@ -156,22 +165,24 @@ class MutableSelectionModel<D> extends SelectionModel<D> {
   /// When set to true, prevents the model from being updated.
   set locked(bool locked) {
     _locked = locked;
-    _lockChangedListeners
-        .forEach((listener) => listener(SelectionModel.fromOther(this)));
+    for (final listener in _lockChangedListeners) {
+      listener(SelectionModel.fromOther(this));
+    }
   }
 
   bool get locked => _locked;
 
   /// Clears the selection state.
-  bool clearSelection({bool notifyListeners = true}) {
-    return updateSelection([], [], notifyListeners: notifyListeners);
-  }
+  bool clearSelection({bool notifyListeners = true}) =>
+      updateSelection([], [], notifyListeners: notifyListeners);
 
   /// Updates the selection state. If mouse driven, [datumSelection] should be
   /// ordered by distance from mouse, closest first.
   bool updateSelection(
-      List<SeriesDatum<D>> datumSelection, List<ImmutableSeries<D>> seriesList,
-      {bool notifyListeners = true}) {
+    List<SeriesDatum<D>> datumSelection,
+    List<ImmutableSeries<D>> seriesList, {
+    bool notifyListeners = true,
+  }) {
     if (_locked) return false;
 
     final origSelectedDatum = _selectedDatum;
@@ -182,14 +193,18 @@ class MutableSelectionModel<D> extends SelectionModel<D> {
 
     // Provide a copy, so listeners get an immutable model.
     final copyOfSelectionModel = SelectionModel.fromOther(this);
-    _updatedListeners.forEach((listener) => listener(copyOfSelectionModel));
+    for (final listener in _updatedListeners) {
+      listener(copyOfSelectionModel);
+    }
 
     final changed = !ListEquality<SeriesDatum<D>>()
             .equals(origSelectedDatum, _selectedDatum) ||
         !ListEquality<ImmutableSeries<D>>()
             .equals(origSelectedSeries, _selectedSeries);
     if (notifyListeners && changed) {
-      _changedListeners.forEach((listener) => listener(copyOfSelectionModel));
+      for (final listener in _changedListeners) {
+        listener(copyOfSelectionModel);
+      }
     }
     return changed;
   }

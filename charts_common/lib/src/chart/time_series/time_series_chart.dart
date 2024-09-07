@@ -13,53 +13,49 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:collection' show LinkedHashMap;
-
-import '../../common/date_time_factory.dart'
-    show DateTimeFactory, LocalDateTimeFactory;
-import '../cartesian/axis/axis.dart' show Axis, NumericAxis;
-import '../cartesian/axis/draw_strategy/small_tick_draw_strategy.dart'
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show Axis, NumericAxis;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/small_tick_draw_strategy.dart'
     show SmallTickRendererSpec;
-import '../cartesian/axis/spec/axis_spec.dart' show AxisSpec;
-import '../cartesian/axis/spec/date_time_axis_spec.dart' show DateTimeAxisSpec;
-import '../cartesian/axis/time/date_time_axis.dart' show DateTimeAxis;
-import '../cartesian/cartesian_chart.dart' show CartesianChart;
-import '../common/series_renderer.dart' show SeriesRenderer;
-import '../layout/layout_config.dart' show LayoutConfig;
-import '../line/line_renderer.dart' show LineRenderer;
+import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show AxisSpec;
+import 'package:charts_common/src/chart/cartesian/axis/spec/date_time_axis_spec.dart'
+    show DateTimeAxisSpec;
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_axis.dart'
+    show DateTimeAxis;
+import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+    show CartesianChart;
+import 'package:charts_common/src/chart/common/series_renderer.dart'
+    show SeriesRenderer;
+import 'package:charts_common/src/chart/line/line_renderer.dart'
+    show LineRenderer;
+import 'package:charts_common/src/common/date_time_factory.dart'
+    show DateTimeFactory, LocalDateTimeFactory;
 
 class TimeSeriesChart extends CartesianChart<DateTime> {
+  TimeSeriesChart({
+    super.vertical,
+    super.layoutConfig,
+    super.primaryMeasureAxis,
+    super.secondaryMeasureAxis,
+    super.disjointMeasureAxes,
+    this.dateTimeFactory = const LocalDateTimeFactory(),
+  }) : super(
+          domainAxis: DateTimeAxis(dateTimeFactory),
+        );
   final DateTimeFactory dateTimeFactory;
-
-  TimeSeriesChart(
-      {bool? vertical,
-      LayoutConfig? layoutConfig,
-      NumericAxis? primaryMeasureAxis,
-      NumericAxis? secondaryMeasureAxis,
-      LinkedHashMap<String, NumericAxis>? disjointMeasureAxes,
-      this.dateTimeFactory = const LocalDateTimeFactory()})
-      : super(
-            vertical: vertical,
-            layoutConfig: layoutConfig,
-            domainAxis: DateTimeAxis(dateTimeFactory),
-            primaryMeasureAxis: primaryMeasureAxis,
-            secondaryMeasureAxis: secondaryMeasureAxis,
-            disjointMeasureAxes: disjointMeasureAxes);
 
   @override
   void initDomainAxis() {
-    domainAxis!.tickDrawStrategy = SmallTickRendererSpec<DateTime>()
+    domainAxis!.tickDrawStrategy = const SmallTickRendererSpec<DateTime>()
         .createDrawStrategy(context, graphicsFactory!);
   }
 
   @override
-  SeriesRenderer<DateTime> makeDefaultRenderer() {
-    return LineRenderer<DateTime>()
-      ..rendererId = SeriesRenderer.defaultRendererId;
-  }
+  SeriesRenderer<DateTime> makeDefaultRenderer() =>
+      LineRenderer<DateTime>()..rendererId = SeriesRenderer.defaultRendererId;
 
   @override
-  Axis<DateTime> createDomainAxisFromSpec(AxisSpec<DateTime> axisSpec) {
-    return (axisSpec as DateTimeAxisSpec).createDateTimeAxis(dateTimeFactory);
-  }
+  Axis<DateTime> createDomainAxisFromSpec(AxisSpec<DateTime> axisSpec) =>
+      (axisSpec as DateTimeAxisSpec).createDateTimeAxis(dateTimeFactory);
 }

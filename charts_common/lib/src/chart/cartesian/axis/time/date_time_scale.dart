@@ -13,25 +13,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../../common/date_time_factory.dart' show DateTimeFactory;
-import '../linear/linear_scale.dart' show LinearScale;
-import '../numeric_extents.dart' show NumericExtents;
-import '../scale.dart'
-    show MutableScale, StepSizeConfig, RangeBandConfig, ScaleOutputExtent;
-import 'date_time_extents.dart' show DateTimeExtents;
+import 'package:charts_common/src/chart/cartesian/axis/linear/linear_scale.dart'
+    show LinearScale;
+import 'package:charts_common/src/chart/cartesian/axis/numeric_extents.dart'
+    show NumericExtents;
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+    show MutableScale, RangeBandConfig, ScaleOutputExtent, StepSizeConfig;
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_extents.dart'
+    show DateTimeExtents;
+import 'package:charts_common/src/common/date_time_factory.dart'
+    show DateTimeFactory;
 
 /// [DateTimeScale] is a wrapper for [LinearScale].
 /// [DateTime] values are converted to millisecondsSinceEpoch and passed to the
 /// [LinearScale].
 class DateTimeScale extends MutableScale<DateTime> {
-  final DateTimeFactory dateTimeFactory;
-  final LinearScale _linearScale;
-
   DateTimeScale(this.dateTimeFactory) : _linearScale = LinearScale();
 
   DateTimeScale._copy(DateTimeScale other)
       : dateTimeFactory = other.dateTimeFactory,
         _linearScale = other._linearScale.copy();
+  final DateTimeFactory dateTimeFactory;
+  final LinearScale _linearScale;
 
   @override
   num operator [](DateTime domainValue) =>
@@ -40,7 +43,8 @@ class DateTimeScale extends MutableScale<DateTime> {
   @override
   DateTime reverse(double pixelLocation) =>
       dateTimeFactory.createDateTimeFromMilliSecondsSinceEpoch(
-          _linearScale.reverse(pixelLocation).round());
+        _linearScale.reverse(pixelLocation).round(),
+      );
 
   @override
   void resetDomain() {
@@ -83,16 +87,18 @@ class DateTimeScale extends MutableScale<DateTime> {
   DateTimeExtents get viewportDomain {
     final extents = _linearScale.viewportDomain;
     return DateTimeExtents(
-        start: dateTimeFactory
-            .createDateTimeFromMilliSecondsSinceEpoch(extents.min.toInt()),
-        end: dateTimeFactory
-            .createDateTimeFromMilliSecondsSinceEpoch(extents.max.toInt()));
+      start: dateTimeFactory
+          .createDateTimeFromMilliSecondsSinceEpoch(extents.min.toInt()),
+      end: dateTimeFactory
+          .createDateTimeFromMilliSecondsSinceEpoch(extents.max.toInt()),
+    );
   }
 
   set viewportDomain(DateTimeExtents extents) {
     _linearScale.viewportDomain = NumericExtents(
-        extents.start.millisecondsSinceEpoch,
-        extents.end.millisecondsSinceEpoch);
+      extents.start.millisecondsSinceEpoch,
+      extents.end.millisecondsSinceEpoch,
+    );
   }
 
   @override

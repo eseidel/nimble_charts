@@ -22,6 +22,19 @@ import 'dart:math' show Point;
 /// Each gesture returns true if the event is consumed or false if it should
 /// continue to alert other listeners.
 class GestureListener {
+  GestureListener({
+    GestureSinglePointCallback? onTapTest,
+    GestureCancelCallback? onTapCancel,
+    this.onLongPress,
+    this.onTap,
+    this.onHover,
+    this.onDragStart,
+    this.onDragUpdate,
+    this.onDragEnd,
+    this.onFocus,
+    this.onBlur,
+  })  : onTapTest = onTapTest ?? defaultTapTest,
+        onTapCancel = onTapCancel ?? defaultTapCancel;
   static final GestureCancelCallback defaultTapCancel = () {};
   static final GestureSinglePointCallback defaultTapTest = (_) => false;
 
@@ -41,10 +54,12 @@ class GestureListener {
   /// both will be given the event so they can deselect everything in the
   /// selection model.
   ///
-  /// Defaults to function that returns false allowing other listeners to preempt.
+  /// Defaults to function that returns false allowing other listeners to 
+  /// preempt.
   final GestureSinglePointCallback onTapTest;
 
-  /// Called if onTapTest was previously called, but listener is being preempted.
+  /// Called if onTapTest was previously called, but listener is being 
+  /// preempted.
   final GestureCancelCallback onTapCancel;
 
   /// Called after the tap event has been going on for a period of time (500ms)
@@ -87,20 +102,6 @@ class GestureListener {
   final GestureDragStartCallback? onDragStart;
   final GestureDragUpdateCallback? onDragUpdate;
   final GestureDragEndCallback? onDragEnd;
-
-  GestureListener({
-    GestureSinglePointCallback? onTapTest,
-    GestureCancelCallback? onTapCancel,
-    this.onLongPress,
-    this.onTap,
-    this.onHover,
-    this.onDragStart,
-    this.onDragUpdate,
-    this.onDragEnd,
-    this.onFocus,
-    this.onBlur,
-  })  : onTapTest = onTapTest ?? defaultTapTest,
-        onTapCancel = onTapCancel ?? defaultTapCancel;
 }
 
 typedef GestureCancelCallback = void Function();
@@ -109,6 +110,11 @@ typedef GestureSinglePointCallback = bool Function(Point<double> localPosition);
 
 typedef GestureDragStartCallback = bool Function(Point<double> localPosition);
 typedef GestureDragUpdateCallback = bool Function(
-    Point<double> localPosition, double scale);
+  Point<double> localPosition,
+  double scale,
+);
 typedef GestureDragEndCallback = bool Function(
-    Point<double> localPosition, double scale, double pixelsPerSec);
+  Point<double> localPosition,
+  double scale,
+  double pixelsPerSec,
+);

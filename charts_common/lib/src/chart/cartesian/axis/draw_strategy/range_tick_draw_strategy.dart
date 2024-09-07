@@ -15,25 +15,34 @@
 
 import 'dart:math';
 
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart'
+    show BaseTickDrawStrategy;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/small_tick_draw_strategy.dart'
+    show SmallTickDrawStrategy, SmallTickRendererSpec;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    show TickDrawStrategy;
+import 'package:charts_common/src/chart/cartesian/axis/range_axis_tick.dart'
+    show RangeAxisTicks;
+import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show LineStyleSpec, TextStyleSpec, TickLabelAnchor, TickLabelJustification;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/chart/layout/layout_view.dart'
+    show ViewMeasuredSizes;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
+import 'package:charts_common/src/common/line_style.dart' show LineStyle;
+import 'package:charts_common/src/common/material_palette.dart'
+    show MaterialPalette;
+import 'package:charts_common/src/common/style/style_factory.dart'
+    show StyleFactory;
+import 'package:charts_common/src/common/text_style.dart' show TextStyle;
 import 'package:meta/meta.dart' show immutable;
-
-import '../../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../../../common/line_style.dart' show LineStyle;
-import '../../../../common/material_palette.dart' show MaterialPalette;
-import '../../../../common/style/style_factory.dart' show StyleFactory;
-import '../../../../common/text_style.dart' show TextStyle;
-import '../../../common/chart_canvas.dart' show ChartCanvas;
-import '../../../common/chart_context.dart' show ChartContext;
-import '../../../layout/layout_view.dart' show ViewMeasuredSizes;
-import '../axis.dart' show AxisOrientation;
-import '../range_axis_tick.dart' show RangeAxisTicks;
-import '../spec/axis_spec.dart'
-    show TextStyleSpec, LineStyleSpec, TickLabelAnchor, TickLabelJustification;
-import '../tick.dart' show Tick;
-import 'base_tick_draw_strategy.dart' show BaseTickDrawStrategy;
-import 'small_tick_draw_strategy.dart'
-    show SmallTickRendererSpec, SmallTickDrawStrategy;
-import 'tick_draw_strategy.dart' show TickDrawStrategy;
 
 /// Displays individual ticks and range ticks and with a shade for ranges.
 /// Sample ticks looks like:
@@ -43,6 +52,34 @@ import 'tick_draw_strategy.dart' show TickDrawStrategy;
 ///  |///////Range Label/////////|///////////Range Label///////////|
 @immutable
 class RangeTickRendererSpec<D> extends SmallTickRendererSpec<D> {
+  RangeTickRendererSpec({
+    super.labelStyle,
+    LineStyleSpec? lineStyle,
+    super.labelAnchor,
+    super.labelJustification,
+    int? labelOffsetFromAxisPx,
+    super.labelCollisionOffsetFromAxisPx,
+    int? labelOffsetFromTickPx,
+    super.labelCollisionOffsetFromTickPx,
+    this.rangeShadeHeightPx,
+    this.rangeShadeOffsetFromAxisPx,
+    this.rangeShadeStyle,
+    this.rangeTickLengthPx,
+    this.rangeTickOffsetPx,
+    this.rangeLabelStyle,
+    super.tickLengthPx,
+    super.minimumPaddingBetweenLabelsPx,
+    super.labelRotation,
+    super.labelCollisionRotation,
+  })  : defaultLabelStyleSpec =
+            TextStyleSpec(fontSize: 9, color: StyleFactory.style.tickColor),
+        super(
+          axisLineStyle: lineStyle,
+          labelOffsetFromAxisPx:
+              labelOffsetFromAxisPx ?? defaultLabelOffsetFromAxis,
+          labelOffsetFromTickPx:
+              labelOffsetFromTickPx ?? defaultLabelOffsetFromTick,
+        );
   // Specifies range shade's style.
   final LineStyleSpec? rangeShadeStyle;
   // Specifies range label text style.
@@ -62,59 +99,74 @@ class RangeTickRendererSpec<D> extends SmallTickRendererSpec<D> {
   static const int defaultLabelOffsetFromAxis = 2;
   static const int defaultLabelOffsetFromTick = -4;
 
-  RangeTickRendererSpec(
-      {TextStyleSpec? labelStyle,
-      LineStyleSpec? lineStyle,
-      TickLabelAnchor? labelAnchor,
-      TickLabelJustification? labelJustification,
-      int? labelOffsetFromAxisPx,
-      int? labelCollisionOffsetFromAxisPx,
-      int? labelOffsetFromTickPx,
-      int? labelCollisionOffsetFromTickPx,
-      this.rangeShadeHeightPx,
-      this.rangeShadeOffsetFromAxisPx,
-      this.rangeShadeStyle,
-      this.rangeTickLengthPx,
-      this.rangeTickOffsetPx,
-      this.rangeLabelStyle,
-      int? tickLengthPx,
-      int? minimumPaddingBetweenLabelsPx,
-      int? labelRotation,
-      int? labelCollisionRotation})
-      : defaultLabelStyleSpec =
-            TextStyleSpec(fontSize: 9, color: StyleFactory.style.tickColor),
-        super(
-          axisLineStyle: lineStyle,
-          labelStyle: labelStyle,
-          labelAnchor: labelAnchor,
-          labelJustification: labelJustification,
-          labelOffsetFromAxisPx:
-              labelOffsetFromAxisPx ?? defaultLabelOffsetFromAxis,
-          labelCollisionOffsetFromAxisPx: labelCollisionOffsetFromAxisPx,
-          labelOffsetFromTickPx:
-              labelOffsetFromTickPx ?? defaultLabelOffsetFromTick,
-          labelCollisionOffsetFromTickPx: labelCollisionOffsetFromTickPx,
-          tickLengthPx: tickLengthPx,
-          minimumPaddingBetweenLabelsPx: minimumPaddingBetweenLabelsPx,
-          labelRotation: labelRotation,
-          labelCollisionRotation: labelCollisionRotation,
-        );
-
   @override
   TickDrawStrategy<D> createDrawStrategy(
-          ChartContext context, GraphicsFactory graphicsFactory) =>
-      RangeTickDrawStrategy<D>(context, graphicsFactory,
-          tickLength: tickLengthPx,
-          rangeLabelTextStyleSpec: rangeLabelStyle,
-          rangeTickLength: rangeTickLengthPx,
-          rangeShadeHeight: rangeShadeHeightPx,
-          rangeShadeOffsetFromAxis: rangeShadeOffsetFromAxisPx,
-          rangeTickOffset: rangeTickOffsetPx,
-          lineStyleSpec: lineStyle,
-          labelStyleSpec: labelStyle ?? defaultLabelStyleSpec,
-          axisLineStyleSpec: axisLineStyle,
-          rangeShadeStyleSpec: rangeShadeStyle,
-          labelAnchor: labelAnchor,
+    ChartContext context,
+    GraphicsFactory graphicsFactory,
+  ) =>
+      RangeTickDrawStrategy<D>(
+        context,
+        graphicsFactory,
+        tickLength: tickLengthPx,
+        rangeLabelTextStyleSpec: rangeLabelStyle,
+        rangeTickLength: rangeTickLengthPx,
+        rangeShadeHeight: rangeShadeHeightPx,
+        rangeShadeOffsetFromAxis: rangeShadeOffsetFromAxisPx,
+        rangeTickOffset: rangeTickOffsetPx,
+        lineStyleSpec: lineStyle,
+        labelStyleSpec: labelStyle ?? defaultLabelStyleSpec,
+        axisLineStyleSpec: axisLineStyle,
+        rangeShadeStyleSpec: rangeShadeStyle,
+        labelAnchor: labelAnchor,
+        labelJustification: labelJustification,
+        labelOffsetFromAxisPx: labelOffsetFromAxisPx,
+        labelCollisionOffsetFromAxisPx: labelCollisionOffsetFromAxisPx,
+        labelOffsetFromTickPx: labelOffsetFromTickPx,
+        labelCollisionOffsetFromTickPx: labelCollisionOffsetFromTickPx,
+        minimumPaddingBetweenLabelsPx: minimumPaddingBetweenLabelsPx,
+        labelRotation: labelRotation,
+        labelCollisionRotation: labelCollisionRotation,
+      );
+
+  @override
+  // ignore: hash_and_equals
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RangeTickRendererSpec && super == other);
+}
+
+/// Draws small tick lines for each tick. Extends [BaseTickDrawStrategy].
+class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
+  RangeTickDrawStrategy(
+    ChartContext chartContext,
+    GraphicsFactory graphicsFactory, {
+    int? tickLength,
+    int? rangeTickLength,
+    int? rangeShadeHeight,
+    int? rangeShadeOffsetFromAxis,
+    int? rangeTickOffset,
+    TextStyleSpec? rangeLabelTextStyleSpec,
+    LineStyleSpec? lineStyleSpec,
+    LineStyleSpec? rangeShadeStyleSpec,
+    TextStyleSpec? labelStyleSpec,
+    LineStyleSpec? axisLineStyleSpec,
+    TickLabelAnchor? labelAnchor,
+    int? labelOffsetFromAxisPx,
+    int? labelCollisionOffsetFromAxisPx,
+    int? labelOffsetFromTickPx,
+    int? labelCollisionOffsetFromTickPx,
+    TickLabelJustification? labelJustification,
+    int? minimumPaddingBetweenLabelsPx,
+    int? labelRotation,
+    int? labelCollisionRotation,
+  }) : super(
+          chartContext,
+          graphicsFactory,
+          tickLengthPx: tickLength,
+          axisLineStyleSpec: axisLineStyleSpec,
+          labelStyleSpec: labelStyleSpec,
+          lineStyleSpec: lineStyleSpec,
+          labelAnchor: labelAnchor ?? TickLabelAnchor.after,
           labelJustification: labelJustification,
           labelOffsetFromAxisPx: labelOffsetFromAxisPx,
           labelCollisionOffsetFromAxisPx: labelCollisionOffsetFromAxisPx,
@@ -122,60 +174,8 @@ class RangeTickRendererSpec<D> extends SmallTickRendererSpec<D> {
           labelCollisionOffsetFromTickPx: labelCollisionOffsetFromTickPx,
           minimumPaddingBetweenLabelsPx: minimumPaddingBetweenLabelsPx,
           labelRotation: labelRotation,
-          labelCollisionRotation: labelCollisionRotation);
-
-  @override
-  // ignore: hash_and_equals
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is RangeTickRendererSpec && super == other);
-  }
-}
-
-/// Draws small tick lines for each tick. Extends [BaseTickDrawStrategy].
-class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
-  int rangeTickLengthPx = 24;
-  int rangeShadeHeightPx = 12;
-  int rangeShadeOffsetFromAxisPx = 12;
-  int rangeTickOffsetPx = 12;
-  late LineStyle rangeShadeStyle;
-  late TextStyle rangeLabelStyle;
-
-  RangeTickDrawStrategy(
-      ChartContext chartContext, GraphicsFactory graphicsFactory,
-      {int? tickLength,
-      int? rangeTickLength,
-      int? rangeShadeHeight,
-      int? rangeShadeOffsetFromAxis,
-      int? rangeTickOffset,
-      TextStyleSpec? rangeLabelTextStyleSpec,
-      LineStyleSpec? lineStyleSpec,
-      LineStyleSpec? rangeShadeStyleSpec,
-      TextStyleSpec? labelStyleSpec,
-      LineStyleSpec? axisLineStyleSpec,
-      TickLabelAnchor? labelAnchor,
-      int? labelOffsetFromAxisPx,
-      int? labelCollisionOffsetFromAxisPx,
-      int? labelOffsetFromTickPx,
-      int? labelCollisionOffsetFromTickPx,
-      TickLabelJustification? labelJustification,
-      int? minimumPaddingBetweenLabelsPx,
-      int? labelRotation,
-      int? labelCollisionRotation})
-      : super(chartContext, graphicsFactory,
-            tickLengthPx: tickLength,
-            axisLineStyleSpec: axisLineStyleSpec,
-            labelStyleSpec: labelStyleSpec,
-            lineStyleSpec: lineStyleSpec,
-            labelAnchor: labelAnchor ?? TickLabelAnchor.after,
-            labelJustification: labelJustification,
-            labelOffsetFromAxisPx: labelOffsetFromAxisPx,
-            labelCollisionOffsetFromAxisPx: labelCollisionOffsetFromAxisPx,
-            labelOffsetFromTickPx: labelOffsetFromTickPx,
-            labelCollisionOffsetFromTickPx: labelCollisionOffsetFromTickPx,
-            minimumPaddingBetweenLabelsPx: minimumPaddingBetweenLabelsPx,
-            labelRotation: labelRotation,
-            labelCollisionRotation: labelCollisionRotation) {
+          labelCollisionRotation: labelCollisionRotation,
+        ) {
     rangeTickOffsetPx = rangeTickOffset ?? rangeTickOffsetPx;
     rangeTickLengthPx = rangeTickLength ?? rangeTickLengthPx;
     rangeShadeHeightPx = rangeShadeHeight ?? rangeShadeHeightPx;
@@ -200,103 +200,141 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
           ..fontSize = rangeLabelTextStyleSpec.fontSize
           ..lineHeight = rangeLabelTextStyleSpec.lineHeight);
   }
+  int rangeTickLengthPx = 24;
+  int rangeShadeHeightPx = 12;
+  int rangeShadeOffsetFromAxisPx = 12;
+  int rangeTickOffsetPx = 12;
+  late LineStyle rangeShadeStyle;
+  late TextStyle rangeLabelStyle;
 
   @override
-  void draw(ChartCanvas canvas, Tick<D> tick,
-      {required AxisOrientation orientation,
-      required Rectangle<int> axisBounds,
-      required Rectangle<int> drawAreaBounds,
-      required bool isFirst,
-      required bool isLast,
-      bool collision = false}) {
+  void draw(
+    ChartCanvas canvas,
+    Tick<D> tick, {
+    required AxisOrientation orientation,
+    required Rectangle<int> axisBounds,
+    required Rectangle<int> drawAreaBounds,
+    required bool isFirst,
+    required bool isLast,
+    bool collision = false,
+  }) {
     if (tick is RangeAxisTicks<D>) {
-      drawRangeShadeAndRangeLabel(tick, canvas, orientation, axisBounds,
-          drawAreaBounds, isFirst, isLast);
+      drawRangeShadeAndRangeLabel(
+        tick,
+        canvas,
+        orientation,
+        axisBounds,
+        drawAreaBounds,
+        isFirst,
+        isLast,
+      );
     } else {
-      super.draw(canvas, tick,
-          orientation: orientation,
-          axisBounds: axisBounds,
-          drawAreaBounds: drawAreaBounds,
-          isFirst: isFirst,
-          isLast: isLast,
-          collision: collision);
+      super.draw(
+        canvas,
+        tick,
+        orientation: orientation,
+        axisBounds: axisBounds,
+        drawAreaBounds: drawAreaBounds,
+        isFirst: isFirst,
+        isLast: isLast,
+        collision: collision,
+      );
     }
   }
 
   @override
   ViewMeasuredSizes measureVerticallyDrawnTicks(
-      List<Tick<D>> ticks, int maxWidth, int maxHeight,
-      {bool collision = false}) {
+    List<Tick<D>> ticks,
+    int maxWidth,
+    int maxHeight, {
+    bool collision = false,
+  }) {
     // TODO: Add spacing to account for the distance between the
     // text and the axis baseline (even if it isn't drawn).
 
-    final maxHorizontalSliceWidth = ticks.fold(0.0, (num prevMax, tick) {
+    final maxHorizontalSliceWidth = ticks.fold(0, (prevMax, tick) {
       assert(tick.textElement != null);
       final labelElements = splitLabel(tick.textElement!);
       if (tick is RangeAxisTicks) {
         // Find the maximum within prevMax, label total height and
         // labelOffsetFromAxisPx + rangeShadeHeightPx.
         return max(
-            max(
-                prevMax,
-                calculateWidthForRotatedLabel(
-                      labelRotation(collision: collision),
-                      getLabelHeight(labelElements),
-                      getLabelWidth(labelElements),
-                    ) +
-                    labelOffsetFromAxisPx(collision: collision)),
-            labelOffsetFromAxisPx(collision: collision) + rangeShadeHeightPx);
-      } else {
-        return max(
-            prevMax,
+          max(
+            prevMax.toDouble(),
             calculateWidthForRotatedLabel(
                   labelRotation(collision: collision),
                   getLabelHeight(labelElements),
                   getLabelWidth(labelElements),
                 ) +
-                labelOffsetFromAxisPx(collision: collision));
+                labelOffsetFromAxisPx(collision: collision),
+            //TODO: possible precission loss
+          ).toInt(),
+          labelOffsetFromAxisPx(collision: collision) + rangeShadeHeightPx,
+        );
+      } else {
+        return max(
+          prevMax.toDouble(),
+          calculateWidthForRotatedLabel(
+                labelRotation(collision: collision),
+                getLabelHeight(labelElements),
+                getLabelWidth(labelElements),
+              ) +
+              labelOffsetFromAxisPx(collision: collision),
+          //TODO: possible precission loss
+        ).toInt();
       }
-    }).round();
+    });
 
     return ViewMeasuredSizes(
-        preferredWidth: maxHorizontalSliceWidth, preferredHeight: maxHeight);
+      preferredWidth: maxHorizontalSliceWidth,
+      preferredHeight: maxHeight,
+    );
   }
 
   @override
   ViewMeasuredSizes measureHorizontallyDrawnTicks(
-      List<Tick<D>> ticks, int maxWidth, int maxHeight,
-      {bool collision = false}) {
-    var maxVerticalSliceWidth = ticks.fold(0.0, (num prevMax, tick) {
+    List<Tick<D>> ticks,
+    int maxWidth,
+    int maxHeight, {
+    bool collision = false,
+  }) {
+    final maxVerticalSliceWidth = ticks.fold(0, (prevMax, tick) {
       final labelElements = splitLabel(tick.textElement!);
 
       if (tick is RangeAxisTicks) {
         // Find the maximum within prevMax, label total height and
         // labelOffsetFromAxisPx + rangeShadeHeightPx.
         return max(
-            max(
-              prevMax,
-              calculateHeightForRotatedLabel(
-                    labelRotation(collision: collision),
-                    getLabelHeight(labelElements),
-                    getLabelWidth(labelElements),
-                  ) +
-                  rangeShadeOffsetFromAxisPx,
-            ),
-            rangeShadeOffsetFromAxisPx + rangeShadeHeightPx);
-      } else {
-        return max(
-                prevMax,
-                calculateHeightForRotatedLabel(
+          max(
+            prevMax.toDouble(),
+            calculateHeightForRotatedLabel(
                   labelRotation(collision: collision),
                   getLabelHeight(labelElements),
                   getLabelWidth(labelElements),
-                )) +
+                ) +
+                rangeShadeOffsetFromAxisPx,
+            //TODO: possible precission loss
+          ).toInt(),
+          rangeShadeOffsetFromAxisPx + rangeShadeHeightPx,
+        );
+      } else {
+        return max(
+              prevMax.toDouble(),
+              calculateHeightForRotatedLabel(
+                labelRotation(collision: collision),
+                getLabelHeight(labelElements),
+                getLabelWidth(labelElements),
+              ),
+            //TODO: possible precission loss
+            ).toInt() +
             labelOffsetFromAxisPx(collision: collision);
       }
-    }).round();
+    });
 
     return ViewMeasuredSizes(
-        preferredWidth: maxWidth, preferredHeight: maxVerticalSliceWidth);
+      preferredWidth: maxWidth,
+      preferredHeight: maxVerticalSliceWidth,
+    );
   }
 
   void drawRangeShadeAndRangeLabel(
@@ -309,12 +347,12 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
     bool isLast,
   ) {
     // Create virtual range start and end ticks for position calculation.
-    var rangeStartTick = Tick<D>(
+    final rangeStartTick = Tick<D>(
       value: tick.rangeStartValue,
       locationPx: tick.rangeStartLocationPx - rangeTickOffsetPx,
       textElement: null,
     );
-    var rangeEndTick = Tick<D>(
+    final rangeEndTick = Tick<D>(
       value: tick.rangeEndValue,
       locationPx: isLast
           ? tick.rangeEndLocationPx + rangeTickOffsetPx
@@ -322,16 +360,26 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
       textElement: null,
     );
     // Calculate range start positions.
-    var rangeStartPositions = calculateTickPositions(rangeStartTick,
-        orientation, axisBounds, drawAreaBounds, rangeTickLengthPx);
-    var rangeStartTickStart = rangeStartPositions.first;
-    var rangeStartTickEnd = rangeStartPositions.last;
+    final rangeStartPositions = calculateTickPositions(
+      rangeStartTick,
+      orientation,
+      axisBounds,
+      drawAreaBounds,
+      rangeTickLengthPx,
+    );
+    final rangeStartTickStart = rangeStartPositions.first;
+    final rangeStartTickEnd = rangeStartPositions.last;
 
     // Calculate range end positions.
-    var rangeEndPositions = calculateTickPositions(rangeEndTick, orientation,
-        axisBounds, drawAreaBounds, rangeTickLengthPx);
-    var rangeEndTickStart = rangeEndPositions.first;
-    var rangeEndTickEnd = rangeEndPositions.last;
+    final rangeEndPositions = calculateTickPositions(
+      rangeEndTick,
+      orientation,
+      axisBounds,
+      drawAreaBounds,
+      rangeTickLengthPx,
+    );
+    final rangeEndTickStart = rangeEndPositions.first;
+    final rangeEndTickEnd = rangeEndPositions.last;
 
     // Draw range shade.
     Rectangle rangeShade;
@@ -339,48 +387,49 @@ class RangeTickDrawStrategy<D> extends SmallTickDrawStrategy<D> {
       case AxisOrientation.top:
       case AxisOrientation.bottom:
         rangeShade = Rectangle(
-            rangeStartTickStart.x,
-            rangeStartTickStart.y + rangeShadeOffsetFromAxisPx,
-            rangeEndTickStart.x - rangeStartTickStart.x,
-            rangeShadeHeightPx);
-        break;
+          rangeStartTickStart.x,
+          rangeStartTickStart.y + rangeShadeOffsetFromAxisPx,
+          rangeEndTickStart.x - rangeStartTickStart.x,
+          rangeShadeHeightPx,
+        );
       case AxisOrientation.right:
         rangeShade = Rectangle(
-            rangeEndTickStart.x + rangeShadeOffsetFromAxisPx,
-            rangeEndTickStart.y,
-            rangeShadeHeightPx,
-            rangeEndTickStart.y - rangeEndTickStart.y);
-        break;
+          rangeEndTickStart.x + rangeShadeOffsetFromAxisPx,
+          rangeEndTickStart.y,
+          rangeShadeHeightPx,
+          rangeEndTickStart.y - rangeEndTickStart.y,
+        );
       case AxisOrientation.left:
         rangeShade = Rectangle(
-            rangeEndTickStart.x -
-                rangeShadeOffsetFromAxisPx -
-                rangeShadeHeightPx,
-            rangeEndTickStart.y,
-            rangeShadeHeightPx,
-            rangeEndTickStart.y - rangeEndTickStart.y);
-        break;
+          rangeEndTickStart.x - rangeShadeOffsetFromAxisPx - rangeShadeHeightPx,
+          rangeEndTickStart.y,
+          rangeShadeHeightPx,
+          rangeEndTickStart.y - rangeEndTickStart.y,
+        );
     }
-    canvas.drawRect(rangeShade,
+    canvas
+      ..drawRect(
+        rangeShade,
         fill: rangeShadeStyle.color,
         stroke: rangeShadeStyle.color,
-        strokeWidthPx: rangeShadeStyle.strokeWidth.toDouble());
+        strokeWidthPx: rangeShadeStyle.strokeWidth.toDouble(),
+      )
 
-    // Draw the start and end boundaries of the range.
-    canvas.drawLine(
-      points: [rangeStartTickStart, rangeStartTickEnd],
-      dashPattern: lineStyle.dashPattern,
-      fill: lineStyle.color,
-      stroke: lineStyle.color,
-      strokeWidthPx: lineStyle.strokeWidth.toDouble(),
-    );
-    canvas.drawLine(
-      points: [rangeEndTickStart, rangeEndTickEnd],
-      dashPattern: lineStyle.dashPattern,
-      fill: lineStyle.color,
-      stroke: lineStyle.color,
-      strokeWidthPx: lineStyle.strokeWidth.toDouble(),
-    );
+      // Draw the start and end boundaries of the range.
+      ..drawLine(
+        points: [rangeStartTickStart, rangeStartTickEnd],
+        dashPattern: lineStyle.dashPattern,
+        fill: lineStyle.color,
+        stroke: lineStyle.color,
+        strokeWidthPx: lineStyle.strokeWidth.toDouble(),
+      )
+      ..drawLine(
+        points: [rangeEndTickStart, rangeEndTickEnd],
+        dashPattern: lineStyle.dashPattern,
+        fill: lineStyle.color,
+        stroke: lineStyle.color,
+        strokeWidthPx: lineStyle.strokeWidth.toDouble(),
+      );
 
     // Prepare range label.
     final rangeLabelTextElement = tick.textElement!

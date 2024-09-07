@@ -13,7 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'unit_converter.dart' show UnitConverter;
+import 'package:charts_common/src/chart/common/unitconverter/unit_converter.dart'
+    show UnitConverter;
 
 /// A No op unit converter.
 class IdentityConverter<U extends num> implements UnitConverter<U, U> {

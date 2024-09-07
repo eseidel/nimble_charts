@@ -13,22 +13,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../../common/date_time_factory.dart' show DateTimeFactory;
-import '../../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../../common/chart_context.dart' show ChartContext;
-import '../axis.dart' show AxisOrientation;
-import '../draw_strategy/tick_draw_strategy.dart' show TickDrawStrategy;
-import '../tick.dart' show Tick;
-import '../tick_formatter.dart' show TickFormatter;
-import '../tick_provider.dart' show TickProvider, TickHint;
-import 'date_time_scale.dart' show DateTimeScale;
-import 'day_time_stepper.dart' show DayTimeStepper;
-import 'hour_time_stepper.dart' show HourTimeStepper;
-import 'minute_time_stepper.dart' show MinuteTimeStepper;
-import 'month_time_stepper.dart' show MonthTimeStepper;
-import 'time_range_tick_provider.dart' show TimeRangeTickProvider;
-import 'time_range_tick_provider_impl.dart' show TimeRangeTickProviderImpl;
-import 'year_time_stepper.dart' show YearTimeStepper;
+import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    show TickDrawStrategy;
+import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show TickFormatter;
+import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show TickHint, TickProvider;
+import 'package:charts_common/src/chart/cartesian/axis/time/date_time_scale.dart'
+    show DateTimeScale;
+import 'package:charts_common/src/chart/cartesian/axis/time/day_time_stepper.dart'
+    show DayTimeStepper;
+import 'package:charts_common/src/chart/cartesian/axis/time/hour_time_stepper.dart'
+    show HourTimeStepper;
+import 'package:charts_common/src/chart/cartesian/axis/time/minute_time_stepper.dart'
+    show MinuteTimeStepper;
+import 'package:charts_common/src/chart/cartesian/axis/time/month_time_stepper.dart'
+    show MonthTimeStepper;
+import 'package:charts_common/src/chart/cartesian/axis/time/time_range_tick_provider.dart'
+    show TimeRangeTickProvider;
+import 'package:charts_common/src/chart/cartesian/axis/time/time_range_tick_provider_impl.dart'
+    show TimeRangeTickProviderImpl;
+import 'package:charts_common/src/chart/cartesian/axis/time/year_time_stepper.dart'
+    show YearTimeStepper;
+import 'package:charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:charts_common/src/common/date_time_factory.dart'
+    show DateTimeFactory;
+import 'package:charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 /// Tick provider for date and time.
 ///
@@ -42,48 +57,49 @@ import 'year_time_stepper.dart' show YearTimeStepper;
 /// Once a tick provider is chosen the selection of ticks is done by the child
 /// tick provider.
 class AutoAdjustingDateTimeTickProvider implements TickProvider<DateTime> {
-  /// List of tick providers to be selected from.
-  final List<TimeRangeTickProvider> _potentialTickProviders;
-
   AutoAdjustingDateTimeTickProvider._internal(
-      List<TimeRangeTickProvider> tickProviders)
-      : assert(tickProviders.isNotEmpty),
+    List<TimeRangeTickProvider> tickProviders,
+  )   : assert(tickProviders.isNotEmpty),
         _potentialTickProviders = tickProviders;
 
   /// Creates a default [AutoAdjustingDateTimeTickProvider] for day and time.
   factory AutoAdjustingDateTimeTickProvider.createDefault(
-      DateTimeFactory dateTimeFactory) {
-    return AutoAdjustingDateTimeTickProvider._internal([
-      createYearTickProvider(dateTimeFactory),
-      createMonthTickProvider(dateTimeFactory),
-      createDayTickProvider(dateTimeFactory),
-      createHourTickProvider(dateTimeFactory),
-      createMinuteTickProvider(dateTimeFactory)
-    ]);
-  }
+    DateTimeFactory dateTimeFactory,
+  ) =>
+      AutoAdjustingDateTimeTickProvider._internal([
+        createYearTickProvider(dateTimeFactory),
+        createMonthTickProvider(dateTimeFactory),
+        createDayTickProvider(dateTimeFactory),
+        createHourTickProvider(dateTimeFactory),
+        createMinuteTickProvider(dateTimeFactory),
+      ]);
 
   /// Creates a default [AutoAdjustingDateTimeTickProvider] for day only.
   factory AutoAdjustingDateTimeTickProvider.createWithoutTime(
-      DateTimeFactory dateTimeFactory) {
-    return AutoAdjustingDateTimeTickProvider._internal([
-      createYearTickProvider(dateTimeFactory),
-      createMonthTickProvider(dateTimeFactory),
-      createDayTickProvider(dateTimeFactory)
-    ]);
-  }
+    DateTimeFactory dateTimeFactory,
+  ) =>
+      AutoAdjustingDateTimeTickProvider._internal([
+        createYearTickProvider(dateTimeFactory),
+        createMonthTickProvider(dateTimeFactory),
+        createDayTickProvider(dateTimeFactory),
+      ]);
 
   /// Creates [AutoAdjustingDateTimeTickProvider] with custom tick providers.
   ///
   /// [potentialTickProviders] must have at least one [TimeRangeTickProvider]
   /// and this list of tick providers are used in the order they are provided.
   factory AutoAdjustingDateTimeTickProvider.createWith(
-      List<TimeRangeTickProvider> potentialTickProviders) {
-    if (potentialTickProviders == null || potentialTickProviders.isEmpty) {
+    List<TimeRangeTickProvider> potentialTickProviders,
+  ) {
+    if (potentialTickProviders.isEmpty) {
       throw ArgumentError('At least one TimeRangeTickProvider is required');
     }
 
     return AutoAdjustingDateTimeTickProvider._internal(potentialTickProviders);
   }
+
+  /// List of tick providers to be selected from.
+  final List<TimeRangeTickProvider> _potentialTickProviders;
 
   /// Generates a list of ticks for the given data which should not collide
   /// unless the range is not large enough.
@@ -155,22 +171,27 @@ class AutoAdjustingDateTimeTickProvider implements TickProvider<DateTime> {
   }
 
   static TimeRangeTickProvider createYearTickProvider(
-          DateTimeFactory dateTimeFactory) =>
+    DateTimeFactory dateTimeFactory,
+  ) =>
       TimeRangeTickProviderImpl(YearTimeStepper(dateTimeFactory));
 
   static TimeRangeTickProvider createMonthTickProvider(
-          DateTimeFactory dateTimeFactory) =>
+    DateTimeFactory dateTimeFactory,
+  ) =>
       TimeRangeTickProviderImpl(MonthTimeStepper(dateTimeFactory));
 
   static TimeRangeTickProvider createDayTickProvider(
-          DateTimeFactory dateTimeFactory) =>
+    DateTimeFactory dateTimeFactory,
+  ) =>
       TimeRangeTickProviderImpl(DayTimeStepper(dateTimeFactory));
 
   static TimeRangeTickProvider createHourTickProvider(
-          DateTimeFactory dateTimeFactory) =>
+    DateTimeFactory dateTimeFactory,
+  ) =>
       TimeRangeTickProviderImpl(HourTimeStepper(dateTimeFactory));
 
   static TimeRangeTickProvider createMinuteTickProvider(
-          DateTimeFactory dateTimeFactory) =>
+    DateTimeFactory dateTimeFactory,
+  ) =>
       TimeRangeTickProviderImpl(MinuteTimeStepper(dateTimeFactory));
 }

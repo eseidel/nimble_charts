@@ -13,16 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import '../../../common/graphics_factory.dart' show GraphicsFactory;
-import '../../common/chart_context.dart' show ChartContext;
-import 'axis.dart' show AxisOrientation;
-import 'draw_strategy/tick_draw_strategy.dart' show TickDrawStrategy;
-import 'scale.dart' show MutableScale;
-import 'spec/tick_spec.dart' show TickSpec;
-import 'static_tick_provider.dart' show StaticTickProvider;
-import 'tick.dart' show Tick;
-import 'tick_formatter.dart' show TickFormatter;
-import 'tick_provider.dart' show TickProvider, TickHint;
+import 'package:charts_common/common.dart';
+import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+    show MutableScale;
+import 'package:charts_common/src/chart/cartesian/axis/static_tick_provider.dart'
+    show StaticTickProvider;
+import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show TickHint, TickProvider;
 
 /// A strategy that selects ticks without them colliding.
 ///
@@ -33,10 +30,9 @@ import 'tick_provider.dart' show TickProvider, TickHint;
 /// The [TextStyle] is not overridden during [TickDrawStrategy.decorateTicks].
 /// If the [TickSpec] style is null, then the default [TextStyle] is used.
 class AutoAdjustingStaticTickProvider<D> extends TickProvider<D> {
+  AutoAdjustingStaticTickProvider(this.tickSpec, this.allowedTickIncrements);
   final List<TickSpec<D>> tickSpec;
   final List<int> allowedTickIncrements;
-
-  AutoAdjustingStaticTickProvider(this.tickSpec, this.allowedTickIncrements);
 
   @override
   List<Tick<D>> getTicks({
@@ -55,15 +51,16 @@ class AutoAdjustingStaticTickProvider<D> extends TickProvider<D> {
       final staticTickProvider =
           StaticTickProvider(tickSpec, tickIncrement: tickIncrement);
       final ticks = staticTickProvider.getTicks(
-          context: context,
-          graphicsFactory: graphicsFactory,
-          scale: scale,
-          formatter: formatter,
-          formatterValueCache: formatterValueCache,
-          tickDrawStrategy: tickDrawStrategy,
-          orientation: orientation,
-          viewportExtensionEnabled: viewportExtensionEnabled,
-          tickHint: tickHint);
+        context: context,
+        graphicsFactory: graphicsFactory,
+        scale: scale,
+        formatter: formatter,
+        formatterValueCache: formatterValueCache,
+        tickDrawStrategy: tickDrawStrategy,
+        orientation: orientation,
+        viewportExtensionEnabled: viewportExtensionEnabled,
+        tickHint: tickHint,
+      );
       if (ticksForTheFirstIncrement.isEmpty) {
         ticksForTheFirstIncrement = ticks;
       }
