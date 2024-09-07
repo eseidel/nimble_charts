@@ -13,21 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart' show Axis;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
-    show TickDrawStrategy;
-import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
-    show MutableScale, Scale;
-import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
-    show TickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
-    show TickProvider;
-import 'package:charts_common/src/chart/common/chart_context.dart'
-    show ChartContext;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/graphics_factory.dart'
-    show GraphicsFactory;
 import 'package:meta/meta.dart' show immutable;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
+    show Axis;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    show TickDrawStrategy;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart'
+    show MutableScale, Scale;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show TickFormatter;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show TickProvider;
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
 
 @immutable
 class AxisSpec<D> {

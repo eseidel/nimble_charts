@@ -15,12 +15,12 @@
 
 import 'dart:math' show Point;
 
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
-    show getAnimatedColor;
-import 'package:charts_common/src/chart/common/processed_series.dart'
-    show ImmutableSeries;
-import 'package:charts_common/src/common/color.dart' show Color;
 import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
+    show getAnimatedColor;
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries;
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
 
 class ArcRendererElementList<D> {
   ArcRendererElementList({

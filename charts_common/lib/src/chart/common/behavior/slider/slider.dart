@@ -15,19 +15,20 @@
 
 import 'dart:math';
 
-import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+import 'package:meta/meta.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart'
     show CartesianChart;
-import 'package:charts_common/src/chart/common/base_chart.dart'
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
     show BaseChart, LifecycleListener;
-import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
+import 'package:nimble_charts_common/src/chart/common/behavior/chart_behavior.dart'
     show ChartBehavior;
-import 'package:charts_common/src/chart/common/behavior/selection/selection_trigger.dart'
+import 'package:nimble_charts_common/src/chart/common/behavior/selection/selection_trigger.dart'
     show SelectionTrigger;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas, getAnimatedColor;
-import 'package:charts_common/src/chart/common/processed_series.dart'
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show MutableSeries;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show
         LayoutPosition,
         LayoutView,
@@ -35,17 +36,16 @@ import 'package:charts_common/src/chart/layout/layout_view.dart'
         LayoutViewPaintOrder,
         LayoutViewPositionOrder,
         ViewMeasuredSizes;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/gesture_listener.dart'
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/gesture_listener.dart'
     show GestureListener;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
-import 'package:charts_common/src/common/math.dart' show clamp;
-import 'package:charts_common/src/common/style/style_factory.dart'
+import 'package:nimble_charts_common/src/common/math.dart' show clamp;
+import 'package:nimble_charts_common/src/common/style/style_factory.dart'
     show StyleFactory;
-import 'package:charts_common/src/common/symbol_renderer.dart'
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart'
     show RectSymbolRenderer, SymbolRenderer;
-import 'package:meta/meta.dart';
 
 /// Chart behavior that adds a slider widget to a chart. When the slider is
 /// dropped after drag, it will report its domain position and nearest datum

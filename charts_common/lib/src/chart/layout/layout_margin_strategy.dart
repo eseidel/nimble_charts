@@ -14,7 +14,7 @@
 // limitations under the License.
 
 import 'dart:math' show Rectangle;
-import 'package:charts_common/src/chart/layout/layout_view.dart';
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart';
 
 class SizeList {
   final _sizes = <int>[];

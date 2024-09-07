@@ -13,14 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     show TextStyleSpec;
-import 'package:charts_common/src/chart/common/processed_series.dart'
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show ImmutableSeries;
-import 'package:charts_common/src/chart/common/series_renderer.dart'
+import 'package:nimble_charts_common/src/chart/common/series_renderer.dart'
     show rendererKey;
-import 'package:charts_common/src/common/color.dart';
-import 'package:charts_common/src/common/symbol_renderer.dart';
+import 'package:nimble_charts_common/src/common/color.dart';
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart';
 
 /// The most basic possible legend entry - just a display name and positioning.
 class LegendEntryBase {

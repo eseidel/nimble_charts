@@ -15,16 +15,16 @@
 
 import 'dart:math';
 
-import 'package:charts_common/src/chart/bar/bar_renderer.dart'
+import 'package:nimble_charts_common/src/chart/bar/bar_renderer.dart'
     show ImmutableBarRendererElement;
-import 'package:charts_common/src/chart/bar/bar_renderer_decorator.dart'
+import 'package:nimble_charts_common/src/chart/bar/bar_renderer_decorator.dart'
     show BarRendererDecorator;
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show ImmutableAxis, measureAxisKey;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
 
 /// Decorates bars with error whiskers.

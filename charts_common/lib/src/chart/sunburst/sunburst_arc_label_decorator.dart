@@ -15,17 +15,18 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
-import 'package:charts_common/src/chart/pie/arc_label_decorator.dart';
-import 'package:charts_common/src/chart/pie/arc_renderer_element.dart'
+import 'package:nimble_charts_common/src/chart/pie/arc_label_decorator.dart';
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer_element.dart'
     show ArcRendererElement, ArcRendererElementList;
-import 'package:charts_common/src/chart/sunburst/sunburst_arc_renderer.dart'
+import 'package:nimble_charts_common/src/chart/sunburst/sunburst_arc_renderer.dart'
     show SunburstArcRendererElement;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
-import 'package:charts_common/src/common/text_element.dart' show TextElement;
-import 'package:charts_common/src/common/text_style.dart' show TextStyle;
+import 'package:nimble_charts_common/src/common/text_element.dart'
+    show TextElement;
+import 'package:nimble_charts_common/src/common/text_style.dart' show TextStyle;
 
 /// Renders labels for sunburst arc renderers. Configures label based on arc's
 /// position via innerRingArcLabelPosition, innerRingLeafArcLabelPosition, and

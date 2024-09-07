@@ -13,24 +13,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/common.dart';
-import 'package:charts_common/src/chart/cartesian/axis/auto_adjusting_static_tick_provider.dart'
-    show AutoAdjustingStaticTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/ordinal_scale.dart'
-    show OrdinalScale;
-import 'package:charts_common/src/chart/cartesian/axis/ordinal_tick_provider.dart'
-    show OrdinalTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/range_tick_provider.dart'
-    show RangeTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
-    show RangeBandConfig;
-import 'package:charts_common/src/chart/cartesian/axis/simple_ordinal_scale.dart'
-    show SimpleOrdinalScale;
-import 'package:charts_common/src/chart/cartesian/axis/static_tick_provider.dart'
-    show StaticTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
-    show OrdinalTickFormatter;
 import 'package:meta/meta.dart' show immutable;
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/auto_adjusting_static_tick_provider.dart'
+    show AutoAdjustingStaticTickProvider;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/ordinal_scale.dart'
+    show OrdinalScale;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/ordinal_tick_provider.dart'
+    show OrdinalTickProvider;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/range_tick_provider.dart'
+    show RangeTickProvider;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart'
+    show RangeBandConfig;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/simple_ordinal_scale.dart'
+    show SimpleOrdinalScale;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/static_tick_provider.dart'
+    show StaticTickProvider;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show OrdinalTickFormatter;
 
 /// [AxisSpec] specialized for ordinal/non-continuous axes typically for bars.
 @immutable

@@ -13,15 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
-    show FillPatternType;
-import 'package:charts_common/src/chart/common/series_renderer_config.dart'
-    show RendererAttributes, SeriesRendererConfig;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
-    show LayoutViewConfig;
-import 'package:charts_common/src/common/symbol_renderer.dart'
-    show RoundedRectSymbolRenderer, SymbolRenderer;
 import 'package:collection/collection.dart' show ListEquality;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
+    show FillPatternType;
+import 'package:nimble_charts_common/src/chart/common/series_renderer_config.dart'
+    show RendererAttributes, SeriesRendererConfig;
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
+    show LayoutViewConfig;
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart'
+    show RoundedRectSymbolRenderer, SymbolRenderer;
 
 /// Shared configuration for bar chart renderers.
 ///

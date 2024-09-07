@@ -13,15 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/scatter_plot/comparison_points_decorator.dart'
+import 'package:nimble_charts_common/src/chart/scatter_plot/comparison_points_decorator.dart'
     show ComparisonPointsDecorator;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer_config.dart'
     show PointRendererConfig;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer_decorator.dart'
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer_decorator.dart'
     show PointRendererDecorator;
-import 'package:charts_common/src/chart/scatter_plot/symbol_annotation_renderer.dart'
+import 'package:nimble_charts_common/src/chart/scatter_plot/symbol_annotation_renderer.dart'
     show SymbolAnnotationRenderer;
-import 'package:charts_common/src/common/symbol_renderer.dart';
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart';
 
 /// Configuration for [SymbolAnnotationRenderer].
 ///

@@ -15,9 +15,9 @@
 
 import 'dart:math' as math show max, min;
 
-import 'package:charts_common/src/common/math.dart';
+import 'package:nimble_charts_common/src/common/math.dart';
 
-import 'package:charts_common/src/common/style/style_factory.dart'
+import 'package:nimble_charts_common/src/common/style/style_factory.dart'
     show StyleFactory;
 
 /// Scale used to convert data input domain units to output range units.

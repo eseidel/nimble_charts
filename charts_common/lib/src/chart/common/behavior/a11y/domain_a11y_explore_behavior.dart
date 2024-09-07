@@ -15,21 +15,21 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show ImmutableAxis, domainAxisKey;
-import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart'
     show CartesianChart;
-import 'package:charts_common/src/chart/common/base_chart.dart'
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
     show BaseChart, LifecycleListener;
-import 'package:charts_common/src/chart/common/behavior/a11y/a11y_explore_behavior.dart'
+import 'package:nimble_charts_common/src/chart/common/behavior/a11y/a11y_explore_behavior.dart'
     show A11yExploreBehavior, ExploreModeTrigger;
-import 'package:charts_common/src/chart/common/behavior/a11y/a11y_node.dart'
+import 'package:nimble_charts_common/src/chart/common/behavior/a11y/a11y_node.dart'
     show A11yNode, OnFocus;
-import 'package:charts_common/src/chart/common/processed_series.dart'
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show MutableSeries;
-import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
+import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart'
     show SelectionModelType;
-import 'package:charts_common/src/chart/common/series_datum.dart'
+import 'package:nimble_charts_common/src/chart/common/series_datum.dart'
     show SeriesDatum;
 
 /// Returns a string for a11y vocalization from a list of series datum.

@@ -13,13 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/bar/bar_target_line_renderer.dart'
+import 'package:nimble_charts_common/src/chart/bar/bar_target_line_renderer.dart'
     show BarTargetLineRenderer;
-import 'package:charts_common/src/chart/bar/base_bar_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/bar/base_bar_renderer_config.dart'
     show BarGroupingType, BaseBarRendererConfig;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show LayoutViewPaintOrder;
-import 'package:charts_common/src/common/symbol_renderer.dart'
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart'
     show LineSymbolRenderer, SymbolRenderer;
 
 /// Configuration for a bar target line renderer.

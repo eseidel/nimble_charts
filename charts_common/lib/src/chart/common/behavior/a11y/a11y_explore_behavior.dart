@@ -15,12 +15,13 @@
 
 import 'dart:math' show Point;
 
-import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
-import 'package:charts_common/src/chart/common/behavior/a11y/a11y_node.dart'
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
+    show BaseChart;
+import 'package:nimble_charts_common/src/chart/common/behavior/a11y/a11y_node.dart'
     show A11yNode;
-import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
+import 'package:nimble_charts_common/src/chart/common/behavior/chart_behavior.dart'
     show ChartBehavior;
-import 'package:charts_common/src/common/gesture_listener.dart'
+import 'package:nimble_charts_common/src/common/gesture_listener.dart'
     show GestureListener;
 
 /// The gesture to use for triggering explore mode.

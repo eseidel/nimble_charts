@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export 'package:charts_common/common.dart'
+export 'package:nimble_charts_common/common.dart'
     show
         boundsLineRadiusPxFnKey,
         boundsLineRadiusPxKey,

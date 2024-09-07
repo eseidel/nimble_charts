@@ -13,12 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/bar/bar_renderer.dart' show BarRenderer;
-import 'package:charts_common/src/chart/bar/bar_renderer_decorator.dart'
+import 'package:nimble_charts_common/src/chart/bar/bar_renderer.dart'
+    show BarRenderer;
+import 'package:nimble_charts_common/src/chart/bar/bar_renderer_decorator.dart'
     show BarRendererDecorator;
-import 'package:charts_common/src/chart/bar/base_bar_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/bar/base_bar_renderer_config.dart'
     show BarGroupingType, BaseBarRendererConfig;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show LayoutViewPaintOrder;
 
 /// Configuration for a bar renderer.

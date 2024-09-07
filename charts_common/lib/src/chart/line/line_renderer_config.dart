@@ -13,13 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/common/series_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/common/series_renderer_config.dart'
     show RendererAttributes, SeriesRendererConfig;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show LayoutViewConfig, LayoutViewPaintOrder;
-import 'package:charts_common/src/chart/line/line_renderer.dart'
+import 'package:nimble_charts_common/src/chart/line/line_renderer.dart'
     show LineRenderer;
-import 'package:charts_common/src/common/symbol_renderer.dart';
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart';
 
 /// Configuration for a line renderer.
 class LineRendererConfig<D> extends LayoutViewConfig

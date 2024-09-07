@@ -16,10 +16,10 @@
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show Point, Rectangle, max, min;
 
-import 'package:charts_common/common.dart';
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
-    show ChartCanvas, getAnimatedColor;
 import 'package:meta/meta.dart';
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas, getAnimatedColor;
 
 /// Chart behavior that monitors the specified [SelectionModel] and renders a
 /// dot for selected data.

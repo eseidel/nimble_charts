@@ -15,16 +15,17 @@
 
 import 'dart:math' show Point;
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart' show Axis;
-import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
-    show CartesianChart;
-import 'package:charts_common/src/chart/common/base_chart.dart'
-    show BaseChart, LifecycleListener;
-import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
-    show ChartBehavior;
-import 'package:charts_common/src/common/gesture_listener.dart'
-    show GestureListener;
 import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
+    show Axis;
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart'
+    show CartesianChart;
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
+    show BaseChart, LifecycleListener;
+import 'package:nimble_charts_common/src/chart/common/behavior/chart_behavior.dart'
+    show ChartBehavior;
+import 'package:nimble_charts_common/src/common/gesture_listener.dart'
+    show GestureListener;
 
 /// Adds initial hint behavior for [CartesianChart].
 ///

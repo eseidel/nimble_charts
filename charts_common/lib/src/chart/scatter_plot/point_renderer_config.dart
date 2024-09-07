@@ -13,15 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/common/series_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/common/series_renderer_config.dart'
     show RendererAttributes, SeriesRendererConfig;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show LayoutViewConfig, LayoutViewPaintOrder;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer.dart'
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer.dart'
     show PointRenderer, pointSymbolRendererIdKey;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer_decorator.dart'
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer_decorator.dart'
     show PointRendererDecorator;
-import 'package:charts_common/src/common/symbol_renderer.dart';
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart';
 
 /// Configuration for a line renderer.
 class PointRendererConfig<D> extends LayoutViewConfig

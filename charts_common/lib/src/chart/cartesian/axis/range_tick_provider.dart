@@ -13,30 +13,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show AxisOrientation;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
     show TickDrawStrategy;
-import 'package:charts_common/src/chart/cartesian/axis/numeric_scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_scale.dart'
     show NumericScale;
-import 'package:charts_common/src/chart/cartesian/axis/range_tick.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/range_tick.dart'
     show RangeTick;
-import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart'
     show MutableScale;
-import 'package:charts_common/src/chart/cartesian/axis/spec/range_tick_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/range_tick_spec.dart'
     show RangeTickSpec;
-import 'package:charts_common/src/chart/cartesian/axis/spec/tick_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/tick_spec.dart'
     show TickSpec;
-import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
-import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart'
+    show Tick;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart'
     show TickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_provider.dart'
     show TickHint, TickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/time/date_time_scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_scale.dart'
     show DateTimeScale;
-import 'package:charts_common/src/chart/common/chart_context.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart'
     show ChartContext;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
 
 /// A strategy that provides normal ticks and range ticks.

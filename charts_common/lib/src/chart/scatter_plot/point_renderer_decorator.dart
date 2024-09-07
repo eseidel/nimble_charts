@@ -15,11 +15,11 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer.dart'
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer.dart'
     show PointRendererElement;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
 
 /// Decorates points after the points have already been painted.

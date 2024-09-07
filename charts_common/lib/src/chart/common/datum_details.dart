@@ -15,13 +15,13 @@
 
 import 'dart:math';
 
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show FillPatternType;
-import 'package:charts_common/src/chart/common/processed_series.dart'
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show ImmutableSeries;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/math.dart' show NullablePoint;
-import 'package:charts_common/src/common/symbol_renderer.dart'
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/math.dart' show NullablePoint;
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart'
     show SymbolRenderer;
 
 typedef DomainFormatter<D> = String Function(D domain);

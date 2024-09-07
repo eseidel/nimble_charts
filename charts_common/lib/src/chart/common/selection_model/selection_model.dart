@@ -13,11 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/common/processed_series.dart'
-    show ImmutableSeries;
-import 'package:charts_common/src/chart/common/series_datum.dart'
-    show SeriesDatum, SeriesDatumConfig;
 import 'package:collection/collection.dart' show ListEquality;
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries;
+import 'package:nimble_charts_common/src/chart/common/series_datum.dart'
+    show SeriesDatum, SeriesDatumConfig;
 
 /// Holds the state of interaction or selection for the chart to coordinate
 /// between various event sources and things that wish to act upon the selection

@@ -16,14 +16,14 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers,
 // ignore_for_file: avoid_types_on_closure_parameters
 
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     show TextStyleSpec;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show FillPatternType;
-import 'package:charts_common/src/chart/common/datum_details.dart'
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
     show DomainFormatter, MeasureFormatter;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/typed_registry.dart'
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/typed_registry.dart'
     show TypedKey, TypedRegistry;
 
 class Series<T, D> {

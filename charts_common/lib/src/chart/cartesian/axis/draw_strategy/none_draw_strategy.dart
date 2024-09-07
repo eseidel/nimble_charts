@@ -15,28 +15,29 @@
 
 import 'dart:math';
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
-    show AxisOrientation;
-import 'package:charts_common/src/chart/cartesian/axis/collision_report.dart'
-    show CollisionReport;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart';
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
-    show LineStyleSpec, RenderSpec;
-import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
-    show ChartCanvas;
-import 'package:charts_common/src/chart/common/chart_context.dart'
-    show ChartContext;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
-    show ViewMeasuredSizes;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/graphics_factory.dart'
-    show GraphicsFactory;
-import 'package:charts_common/src/common/line_style.dart' show LineStyle;
-import 'package:charts_common/src/common/style/style_factory.dart'
-    show StyleFactory;
-import 'package:charts_common/src/common/text_style.dart' show TextStyle;
 import 'package:meta/meta.dart' show immutable;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/collision_report.dart'
+    show CollisionReport;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show LineStyleSpec, RenderSpec;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart'
+    show Tick;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
+    show ViewMeasuredSizes;
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
+import 'package:nimble_charts_common/src/common/line_style.dart' show LineStyle;
+import 'package:nimble_charts_common/src/common/style/style_factory.dart'
+    show StyleFactory;
+import 'package:nimble_charts_common/src/common/text_style.dart' show TextStyle;
 
 /// Renders no ticks no labels, and claims no space in layout.
 /// However, it does render the axis line if asked to by the axis.

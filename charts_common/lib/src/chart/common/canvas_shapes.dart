@@ -15,7 +15,7 @@
 
 import 'dart:math' show Point, Rectangle, max, min;
 
-import 'package:charts_common/common.dart';
+import 'package:nimble_charts_common/common.dart';
 
 /// A rectangle to be painted by [ChartCanvas].
 class CanvasRect {

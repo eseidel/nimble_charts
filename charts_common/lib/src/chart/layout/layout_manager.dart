@@ -15,9 +15,9 @@
 
 import 'dart:math' show Point, Rectangle;
 
-import 'package:charts_common/src/chart/layout/layout_config.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_config.dart'
     show LayoutConfig;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show LayoutView;
 
 abstract class LayoutManager {

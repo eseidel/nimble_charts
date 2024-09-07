@@ -15,11 +15,11 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
-import 'package:charts_common/src/chart/pie/arc_renderer_element.dart'
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer_element.dart'
     show ArcRendererElementList;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
 
 /// Decorates arcs after the arcs have already been painted.

@@ -15,16 +15,16 @@
 
 import 'dart:math' show pi;
 
-import 'package:charts_common/src/chart/common/series_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/common/series_renderer_config.dart'
     show RendererAttributes, SeriesRendererConfig;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show LayoutViewConfig, LayoutViewPaintOrder;
-import 'package:charts_common/src/chart/pie/arc_renderer_decorator.dart'
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer_decorator.dart'
     show ArcRendererDecorator;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/style/style_factory.dart'
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/style/style_factory.dart'
     show StyleFactory;
-import 'package:charts_common/src/common/symbol_renderer.dart';
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart';
 
 /// The base renderer config for arc renderer and sunburst arc renderer.
 abstract class BaseArcRendererConfig<D> extends LayoutViewConfig

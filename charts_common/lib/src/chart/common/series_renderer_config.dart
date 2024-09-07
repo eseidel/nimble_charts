@@ -13,10 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/common/series_renderer.dart'
+import 'package:nimble_charts_common/src/chart/common/series_renderer.dart'
     show SeriesRenderer;
-import 'package:charts_common/src/common/symbol_renderer.dart';
-import 'package:charts_common/src/common/typed_registry.dart';
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart';
+import 'package:nimble_charts_common/src/common/typed_registry.dart';
 
 /// Interface for series renderer configuration.
 abstract class SeriesRendererConfig<D> {

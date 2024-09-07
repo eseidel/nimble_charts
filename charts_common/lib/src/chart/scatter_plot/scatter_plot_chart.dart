@@ -13,13 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/gridline_draw_strategy.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/gridline_draw_strategy.dart'
     show GridlineRendererSpec;
-import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart'
     show NumericCartesianChart;
-import 'package:charts_common/src/chart/common/series_renderer.dart'
+import 'package:nimble_charts_common/src/chart/common/series_renderer.dart'
     show SeriesRenderer;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer.dart'
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer.dart'
     show PointRenderer;
 
 /// A scatter plot draws series data as a collection of points in a two

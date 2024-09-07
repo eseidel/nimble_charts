@@ -15,21 +15,21 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:charts_common/src/chart/bar/bar_renderer.dart'
+import 'package:nimble_charts_common/src/chart/bar/bar_renderer.dart'
     show ImmutableBarRendererElement;
-import 'package:charts_common/src/chart/bar/bar_renderer_decorator.dart'
+import 'package:nimble_charts_common/src/chart/bar/bar_renderer_decorator.dart'
     show BarRendererDecorator;
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     show TextStyleSpec;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
-import 'package:charts_common/src/common/text_element.dart'
+import 'package:nimble_charts_common/src/common/text_element.dart'
     show TextDirection, TextElement;
-import 'package:charts_common/src/common/text_style.dart' show TextStyle;
-import 'package:charts_common/src/data/series.dart' show AccessorFn;
+import 'package:nimble_charts_common/src/common/text_style.dart' show TextStyle;
+import 'package:nimble_charts_common/src/data/series.dart' show AccessorFn;
 
 class BarLabelDecorator<D> extends BarRendererDecorator<D> {
   BarLabelDecorator({

@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/common.dart';
+import 'package:nimble_charts_common/common.dart';
 
 /// Chart behavior that monitors the specified [SelectionModel] and outlines the
 /// selected data.

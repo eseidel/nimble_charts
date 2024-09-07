@@ -15,27 +15,28 @@
 
 import 'dart:math';
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
-    show AxisOrientation;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart'
-    show BaseTickDrawStrategy;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/small_tick_draw_strategy.dart'
-    show SmallTickRendererSpec;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
-    show TickDrawStrategy;
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
-    show LineStyleSpec, TextStyleSpec, TickLabelAnchor, TickLabelJustification;
-import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
-    show ChartCanvas;
-import 'package:charts_common/src/chart/common/chart_context.dart'
-    show ChartContext;
-import 'package:charts_common/src/common/graphics_factory.dart'
-    show GraphicsFactory;
-import 'package:charts_common/src/common/line_style.dart' show LineStyle;
-import 'package:charts_common/src/common/style/style_factory.dart'
-    show StyleFactory;
 import 'package:meta/meta.dart' show immutable;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
+    show AxisOrientation;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart'
+    show BaseTickDrawStrategy;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/small_tick_draw_strategy.dart'
+    show SmallTickRendererSpec;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    show TickDrawStrategy;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+    show LineStyleSpec, TextStyleSpec, TickLabelAnchor, TickLabelJustification;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart'
+    show Tick;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart'
+    show ChartContext;
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
+import 'package:nimble_charts_common/src/common/line_style.dart' show LineStyle;
+import 'package:nimble_charts_common/src/common/style/style_factory.dart'
+    show StyleFactory;
 
 @immutable
 class GridlineRendererSpec<D> extends SmallTickRendererSpec<D> {

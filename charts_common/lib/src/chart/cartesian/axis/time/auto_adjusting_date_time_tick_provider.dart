@@ -13,36 +13,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show AxisOrientation;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
     show TickDrawStrategy;
-import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
-import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart'
+    show Tick;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart'
     show TickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_provider.dart'
     show TickHint, TickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/time/date_time_scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_scale.dart'
     show DateTimeScale;
-import 'package:charts_common/src/chart/cartesian/axis/time/day_time_stepper.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/day_time_stepper.dart'
     show DayTimeStepper;
-import 'package:charts_common/src/chart/cartesian/axis/time/hour_time_stepper.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/hour_time_stepper.dart'
     show HourTimeStepper;
-import 'package:charts_common/src/chart/cartesian/axis/time/minute_time_stepper.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/minute_time_stepper.dart'
     show MinuteTimeStepper;
-import 'package:charts_common/src/chart/cartesian/axis/time/month_time_stepper.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/month_time_stepper.dart'
     show MonthTimeStepper;
-import 'package:charts_common/src/chart/cartesian/axis/time/time_range_tick_provider.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/time_range_tick_provider.dart'
     show TimeRangeTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/time/time_range_tick_provider_impl.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/time_range_tick_provider_impl.dart'
     show TimeRangeTickProviderImpl;
-import 'package:charts_common/src/chart/cartesian/axis/time/year_time_stepper.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/year_time_stepper.dart'
     show YearTimeStepper;
-import 'package:charts_common/src/chart/common/chart_context.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart'
     show ChartContext;
-import 'package:charts_common/src/common/date_time_factory.dart'
+import 'package:nimble_charts_common/src/common/date_time_factory.dart'
     show DateTimeFactory;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
 
 /// Tick provider for date and time.

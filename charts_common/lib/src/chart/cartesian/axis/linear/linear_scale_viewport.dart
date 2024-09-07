@@ -15,11 +15,11 @@
 
 import 'dart:math' as math show max, min;
 
-import 'package:charts_common/src/chart/cartesian/axis/linear/linear_scale_domain_info.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/linear/linear_scale_domain_info.dart'
     show LinearScaleDomainInfo;
-import 'package:charts_common/src/chart/cartesian/axis/numeric_extents.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_extents.dart'
     show NumericExtents;
-import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart'
     show ScaleOutputExtent;
 
 /// Component of the LinearScale responsible for the configuration and

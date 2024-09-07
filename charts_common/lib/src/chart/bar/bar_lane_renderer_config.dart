@@ -13,16 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/bar/bar_label_decorator.dart'
+import 'package:nimble_charts_common/src/chart/bar/bar_label_decorator.dart'
     show BarLabelDecorator;
-import 'package:charts_common/src/chart/bar/bar_lane_renderer.dart'
+import 'package:nimble_charts_common/src/chart/bar/bar_lane_renderer.dart'
     show BarLaneRenderer;
-import 'package:charts_common/src/chart/bar/bar_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/bar/bar_renderer_config.dart'
     show BarRendererConfig, CornerStrategy;
-import 'package:charts_common/src/chart/bar/base_bar_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/bar/base_bar_renderer_config.dart'
     show BarGroupingType;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/style/style_factory.dart'
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/style/style_factory.dart'
     show StyleFactory;
 
 /// Configuration for a bar lane renderer.

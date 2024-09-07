@@ -16,16 +16,17 @@
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show Rectangle, max;
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show ImmutableAxis;
-import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart'
     show CartesianChart;
-import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
+    show BaseChart;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
-import 'package:charts_common/src/chart/common/processed_series.dart'
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show ImmutableSeries, MutableSeries;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show
         LayoutPosition,
         LayoutView,
@@ -33,11 +34,11 @@ import 'package:charts_common/src/chart/layout/layout_view.dart'
         LayoutViewPaintOrder,
         LayoutViewPositionOrder,
         ViewMeasuredSizes;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer.dart'
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer.dart'
     show AnimatedPoint, DatumPoint, PointRenderer;
-import 'package:charts_common/src/chart/scatter_plot/symbol_annotation_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/scatter_plot/symbol_annotation_renderer_config.dart'
     show SymbolAnnotationRendererConfig;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
 
 /// Series renderer which draws a row of symbols for each series below the

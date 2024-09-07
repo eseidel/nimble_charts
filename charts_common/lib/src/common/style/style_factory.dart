@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/common/style/material_style.dart'
+import 'package:nimble_charts_common/src/common/style/material_style.dart'
     show MaterialStyle;
-import 'package:charts_common/src/common/style/style.dart' show Style;
+import 'package:nimble_charts_common/src/common/style/style.dart' show Style;
 
 class StyleFactory {
   StyleFactory._internal();

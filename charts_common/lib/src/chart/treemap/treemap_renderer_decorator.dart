@@ -15,9 +15,9 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:charts_common/src/chart/common/chart_canvas.dart';
-import 'package:charts_common/src/chart/treemap/treemap_renderer_element.dart';
-import 'package:charts_common/src/common/graphics_factory.dart';
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart';
+import 'package:nimble_charts_common/src/chart/treemap/treemap_renderer_element.dart';
+import 'package:nimble_charts_common/src/common/graphics_factory.dart';
 
 /// Decorator that gets rendered after [TreeMapRendererElement]s are rendered.
 abstract class TreeMapRendererDecorator<D> {

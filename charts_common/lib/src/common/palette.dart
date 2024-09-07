@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
 
 /// A color palette.
 abstract class Palette {

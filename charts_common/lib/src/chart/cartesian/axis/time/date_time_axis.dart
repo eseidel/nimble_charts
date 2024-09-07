@@ -13,20 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart' show Axis;
-import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
+    show Axis;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart'
     show TickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_provider.dart'
     show TickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/time/auto_adjusting_date_time_tick_provider.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/auto_adjusting_date_time_tick_provider.dart'
     show AutoAdjustingDateTimeTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/time/date_time_extents.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_extents.dart'
     show DateTimeExtents;
-import 'package:charts_common/src/chart/cartesian/axis/time/date_time_scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_scale.dart'
     show DateTimeScale;
-import 'package:charts_common/src/chart/cartesian/axis/time/date_time_tick_formatter.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_tick_formatter.dart'
     show DateTimeTickFormatter;
-import 'package:charts_common/src/common/date_time_factory.dart'
+import 'package:nimble_charts_common/src/common/date_time_factory.dart'
     show DateTimeFactory;
 
 class DateTimeAxis extends Axis<DateTime> {

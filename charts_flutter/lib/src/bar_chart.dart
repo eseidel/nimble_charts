@@ -15,7 +15,7 @@
 
 import 'dart:collection' show LinkedHashMap;
 
-import 'package:charts_common/common.dart' as common
+import 'package:nimble_charts_common/common.dart' as common
     show
         AxisSpec,
         BarChart,

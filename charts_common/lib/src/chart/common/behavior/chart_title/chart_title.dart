@@ -15,8 +15,8 @@
 
 import 'dart:math';
 
-import 'package:charts_common/common.dart';
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show
         LayoutPosition,
         LayoutView,

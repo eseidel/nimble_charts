@@ -13,12 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/common.dart';
-import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart'
     show MutableScale;
-import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_provider.dart'
     show TickHint, TickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/time/date_time_scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_scale.dart'
     show DateTimeScale;
 
 /// A strategy that uses the ticks provided and only assigns positioning.

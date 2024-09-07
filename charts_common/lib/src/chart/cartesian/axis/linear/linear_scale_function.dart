@@ -13,11 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/linear/linear_scale_domain_info.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/linear/linear_scale_domain_info.dart'
     show LinearScaleDomainInfo;
-import 'package:charts_common/src/chart/cartesian/axis/linear/linear_scale_viewport.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/linear/linear_scale_viewport.dart'
     show LinearScaleViewportSettings;
-import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart'
     show RangeBandConfig, RangeBandType, StepSizeConfig, StepSizeType;
 
 /// Component of the LinearScale which actually handles the apply and reverse

@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/common/text_measurement.dart'
+import 'package:nimble_charts_common/src/common/text_measurement.dart'
     show TextMeasurement;
-import 'package:charts_common/src/common/text_style.dart' show TextStyle;
+import 'package:nimble_charts_common/src/common/text_style.dart' show TextStyle;
 
 /// Interface for accessing text measurement and painter.
 abstract class TextElement {

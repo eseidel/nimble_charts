@@ -1,3 +1,8 @@
+# 0.1.0-beta
+* Fork from flutter_charts
+* Rename packages and overhaul some code for Flutter 3+
+* Delete tests until they can be updated
+
 # 0.12.0
 * Add functions to draw horizontal or vertical links onto the dart charts web canvas.
 * Add "preserveSelection" functionality to InitialSelection chart Behavior.

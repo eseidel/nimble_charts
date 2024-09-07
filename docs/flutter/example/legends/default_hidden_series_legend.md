@@ -7,7 +7,7 @@ Example:
 ```
 /// Bar chart with default hidden series legend example
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:nimble_charts/flutter.dart' as charts;
 
 class DefaultHiddenSeriesLegend extends StatelessWidget {
   final List<charts.Series> seriesList;

@@ -15,9 +15,9 @@
 
 import 'dart:math' show Point;
 
-import 'package:charts_common/src/common/gesture_listener.dart'
-    show GestureListener;
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:nimble_charts_common/src/common/gesture_listener.dart'
+    show GestureListener;
 
 /// Listens to all gestures and proxies to child listeners.
 class ProxyGestureListener {

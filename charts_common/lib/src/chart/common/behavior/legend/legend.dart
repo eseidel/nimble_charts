@@ -15,27 +15,29 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+import 'package:intl/intl.dart';
+import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     show TextStyleSpec;
-import 'package:charts_common/src/chart/common/base_chart.dart'
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
     show BaseChart, LifecycleListener;
-import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
+import 'package:nimble_charts_common/src/chart/common/behavior/chart_behavior.dart'
     show
         BehaviorPosition,
         ChartBehavior,
         InsideJustification,
         OutsideJustification;
-import 'package:charts_common/src/chart/common/behavior/legend/legend_entry.dart';
-import 'package:charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/behavior/legend/legend_entry.dart';
+import 'package:nimble_charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
-import 'package:charts_common/src/chart/common/chart_context.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart'
     show ChartContext;
-import 'package:charts_common/src/chart/common/processed_series.dart'
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show MutableSeries;
-import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
+import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart'
     show SelectionModel, SelectionModelType;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show
         LayoutPosition,
         LayoutView,
@@ -44,10 +46,8 @@ import 'package:charts_common/src/chart/layout/layout_view.dart'
         LayoutViewPositionOrder,
         ViewMeasuredSizes,
         layoutPosition;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
-import 'package:intl/intl.dart';
-import 'package:meta/meta.dart' show protected;
 
 /// Legend behavior for charts.
 ///

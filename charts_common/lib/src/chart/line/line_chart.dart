@@ -13,11 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart'
     show NumericCartesianChart;
-import 'package:charts_common/src/chart/common/series_renderer.dart'
+import 'package:nimble_charts_common/src/chart/common/series_renderer.dart'
     show SeriesRenderer;
-import 'package:charts_common/src/chart/line/line_renderer.dart'
+import 'package:nimble_charts_common/src/chart/line/line_renderer.dart'
     show LineRenderer;
 
 class LineChart extends NumericCartesianChart {

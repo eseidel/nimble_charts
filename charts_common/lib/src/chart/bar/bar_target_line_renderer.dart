@@ -15,9 +15,9 @@
 
 import 'dart:math' show Point, Rectangle, max, min;
 
-import 'package:charts_common/src/chart/bar/bar_target_line_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/bar/bar_target_line_renderer_config.dart'
     show BarTargetLineRendererConfig;
-import 'package:charts_common/src/chart/bar/base_bar_renderer.dart'
+import 'package:nimble_charts_common/src/chart/bar/base_bar_renderer.dart'
     show
         BaseBarRenderer,
         allBarGroupWeightsKey,
@@ -25,22 +25,22 @@ import 'package:charts_common/src/chart/bar/base_bar_renderer.dart'
         barGroupIndexKey,
         barGroupWeightKey,
         previousBarGroupWeightKey;
-import 'package:charts_common/src/chart/bar/base_bar_renderer_element.dart'
+import 'package:nimble_charts_common/src/chart/bar/base_bar_renderer_element.dart'
     show BaseAnimatedBar, BaseBarRendererElement;
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show ImmutableAxis, domainAxisKey, measureAxisKey;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas, FillPatternType;
-import 'package:charts_common/src/chart/common/datum_details.dart'
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
     show DatumDetails;
-import 'package:charts_common/src/chart/common/processed_series.dart'
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show ImmutableSeries, MutableSeries;
-import 'package:charts_common/src/chart/common/series_datum.dart'
+import 'package:nimble_charts_common/src/chart/common/series_datum.dart'
     show SeriesDatum;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show LayoutViewPaintOrder;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/math.dart' show NullablePoint;
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/math.dart' show NullablePoint;
 
 /// Renders series data as a series of bar target lines.
 ///

@@ -15,14 +15,15 @@
 
 import 'dart:math';
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show AxisOrientation;
-import 'package:charts_common/src/chart/cartesian/axis/collision_report.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/collision_report.dart'
     show CollisionReport;
-import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart'
+    show Tick;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show ViewMeasuredSizes;
 
 /// Strategy for drawing ticks and checking for collisions.

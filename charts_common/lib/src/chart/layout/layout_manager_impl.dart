@@ -15,11 +15,11 @@
 
 import 'dart:math' show Point, Rectangle, max;
 
-import 'package:charts_common/src/chart/layout/layout_config.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_config.dart'
     show LayoutConfig;
-import 'package:charts_common/src/chart/layout/layout_manager.dart';
-import 'package:charts_common/src/chart/layout/layout_margin_strategy.dart';
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_manager.dart';
+import 'package:nimble_charts_common/src/chart/layout/layout_margin_strategy.dart';
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show LayoutPosition, LayoutView;
 
 /// Default Layout manager for [LayoutView]s.

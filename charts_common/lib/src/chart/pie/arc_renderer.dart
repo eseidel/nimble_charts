@@ -16,21 +16,21 @@
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show Point, max, pi;
 
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
-    show ChartCanvas;
-import 'package:charts_common/src/chart/common/processed_series.dart'
-    show ImmutableSeries, MutableSeries;
-import 'package:charts_common/src/chart/pie/arc_renderer_config.dart'
-    show ArcRendererConfig;
-import 'package:charts_common/src/chart/pie/arc_renderer_decorator.dart'
-    show ArcRendererDecorator;
-import 'package:charts_common/src/chart/pie/arc_renderer_element.dart'
-    show AnimatedArc, AnimatedArcList, ArcRendererElement;
-import 'package:charts_common/src/chart/pie/base_arc_renderer.dart';
-import 'package:charts_common/src/common/style/style_factory.dart'
-    show StyleFactory;
-import 'package:charts_common/src/data/series.dart' show AttributeKey;
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries, MutableSeries;
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer_config.dart'
+    show ArcRendererConfig;
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer_decorator.dart'
+    show ArcRendererDecorator;
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer_element.dart'
+    show AnimatedArc, AnimatedArcList, ArcRendererElement;
+import 'package:nimble_charts_common/src/chart/pie/base_arc_renderer.dart';
+import 'package:nimble_charts_common/src/common/style/style_factory.dart'
+    show StyleFactory;
+import 'package:nimble_charts_common/src/data/series.dart' show AttributeKey;
 
 const arcElementsKey =
     AttributeKey<List<ArcRendererElement<Object>>>('ArcRenderer.elements');
