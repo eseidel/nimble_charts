@@ -18,6 +18,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:charts_flutter/flutter.dart' as charts;
 
+import 'test_functions.dart';
+
 void main() {
   testWidgets('selection can be set programmatically',
       (WidgetTester tester) async {
@@ -43,6 +45,8 @@ void main() {
     );
 
     expect(currentSelectionModel, isNull);
+
+    await matchesGolden<TestChart>('BarChart-Blue');
 
     await tester.tap(find.byType(charts.BarChart));
 
