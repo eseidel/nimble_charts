@@ -1,16 +1,40 @@
-# example
+# nimble_charts Example
 
-A new Flutter project.
+This example demonstrates the usage of the nimble_charts package, a resurrection of the discontinued Google Charts Flutter library.
 
-## Getting Started
+## 🚀 Live Demo
 
-This project is a starting point for a Flutter application.
+Check out the [live WASM web app demo](https://melbournedeveloper.github.io/charts/) to see these examples in action!
 
-A few resources to get you started if this is your first Flutter project:
+## 📊 Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+This example app showcases various chart types and features, including:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Line charts
+- Bar charts
+- Pie charts
+- Scatter plots
+- Time series charts
+- And more!
+
+## 🛠️ Running the Example
+
+To run this example:
+
+1. Ensure you have Flutter installed and set up.
+2. Clone the nimble_charts repository.
+3. Navigate to the `charts_flutter/example` directory.
+4. Run `flutter pub get` to install dependencies.
+5. Use `flutter run` to launch the example app on your preferred device or simulator.
+
+## 📝 Usage
+
+Each chart in the example app demonstrates different features and customization options of the nimble_charts package. You can explore the source code in this directory to see how each chart is implemented.
+
+## 🤝 Contributing
+
+If you find any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request on the main nimble_charts repository.
+
+## 📣 Acknowledgements
+
+This example app is based on the original work done by the Google Charts team. We express our gratitude for their efforts in creating such a valuable library for the Flutter community.
