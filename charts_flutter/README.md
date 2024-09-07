@@ -4,11 +4,11 @@ This project is a resurrection of the discontinued [Google Charts Flutter librar
 
 nimble_charts is a fork of the original [charts_flutter](https://pub.dev/packages/charts_flutter) library. It has been renamed, and [Nimblesite](https://www.nimblesite.co/) now maintains it. While the package name has changed, we continue to honor the original Apache 2.0 license and attribute the original work to the original Google team.
 
-[![build_and_test](https://github.com/MelbourneDeveloper/charts/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/MelbourneDeveloper/charts/actions/workflows/build_and_test.yml)
+[![build_and_test](https://github.com/Nimblesite/nimble_charts/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/Nimblesite/nimble_charts/actions/workflows/build_and_test.yml)
 
 ## 🚀 Live Demo
 
-Check out the [live WASM web app demo](https://melbournedeveloper.github.io/charts/) to see the charts in action!
+Check out the [live WASM web app demo](https://nimblesite.github.io/nimble_charts/) to see the charts in action!
 
 This is the original example app, running in a browser with WASM.
 

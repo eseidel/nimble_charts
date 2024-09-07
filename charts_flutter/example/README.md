@@ -4,7 +4,7 @@ This example demonstrates the usage of the nimble_charts package, a resurrection
 
 ## 🚀 Live Demo
 
-Check out the [live WASM web app demo](https://melbournedeveloper.github.io/charts/) to see these examples in action!
+Check out the [live WASM web app demo](https://nimblesite.github.io/nimble_charts/) to see these examples in action!
 
 ## 📊 Features
 
