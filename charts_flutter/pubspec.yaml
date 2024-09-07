@@ -8,8 +8,7 @@ environment:
   flutter: '>=3.0.0 <4.0.0'
 
 dependencies:
-  nimble_charts_common:
-    path: ../charts_common/
+  nimble_charts_common: ^0.1.0-beta
   collection: ^1.14.5
   flutter:
     sdk: flutter
