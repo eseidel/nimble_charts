@@ -13,16 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/common/behavior/legend/legend.dart';
-import 'package:charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
-import 'package:charts_common/src/chart/common/behavior/legend/per_series_legend_entry_generator.dart';
-import 'package:charts_common/src/chart/common/datum_details.dart'
-    show MeasureFormatter;
-import 'package:charts_common/src/chart/common/processed_series.dart'
-    show MutableSeries;
-import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
-    show SelectionModelType;
 import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/chart/common/behavior/legend/legend.dart';
+import 'package:nimble_charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
+import 'package:nimble_charts_common/src/chart/common/behavior/legend/per_series_legend_entry_generator.dart';
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
+    show MeasureFormatter;
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
+    show MutableSeries;
+import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart'
+    show SelectionModelType;
 
 // TODO: Allows for hovering over a series in legend to highlight
 // corresponding series in draw area.

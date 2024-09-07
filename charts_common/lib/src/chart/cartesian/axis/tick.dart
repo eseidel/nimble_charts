@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/common/text_element.dart';
+import 'package:nimble_charts_common/src/common/text_element.dart';
 
 /// A labeled point on an axis.
 ///

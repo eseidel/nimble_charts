@@ -15,9 +15,9 @@
 
 import 'dart:collection' show HashMap;
 
-import 'package:charts_common/src/chart/cartesian/axis/ordinal_extents.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/ordinal_extents.dart'
     show OrdinalExtents;
-import 'package:charts_common/src/chart/cartesian/axis/ordinal_scale.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/ordinal_scale.dart';
 
 /// A domain processor for [OrdinalScale].
 ///

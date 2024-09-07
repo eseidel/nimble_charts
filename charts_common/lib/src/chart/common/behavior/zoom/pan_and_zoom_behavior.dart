@@ -15,10 +15,10 @@
 
 import 'dart:math' show Point, max, min;
 
-import 'package:charts_common/src/chart/common/behavior/zoom/pan_behavior.dart';
-import 'package:charts_common/src/chart/common/behavior/zoom/panning_tick_provider.dart'
-    show PanningTickProviderMode;
 import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/chart/common/behavior/zoom/pan_behavior.dart';
+import 'package:nimble_charts_common/src/chart/common/behavior/zoom/panning_tick_provider.dart'
+    show PanningTickProviderMode;
 
 /// Adds domain axis panning and zooming support to the chart.
 ///

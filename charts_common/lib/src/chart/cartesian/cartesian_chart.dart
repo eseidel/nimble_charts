@@ -15,8 +15,10 @@
 
 import 'dart:collection' show LinkedHashMap;
 
-import 'package:charts_common/src/chart/bar/bar_renderer.dart' show BarRenderer;
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/chart/bar/bar_renderer.dart'
+    show BarRenderer;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show
         Axis,
         AxisOrientation,
@@ -25,35 +27,35 @@ import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
         domainAxisKey,
         measureAxisIdKey,
         measureAxisKey;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/gridline_draw_strategy.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/gridline_draw_strategy.dart'
     show GridlineRendererSpec;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/none_draw_strategy.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/none_draw_strategy.dart'
     show NoneDrawStrategy;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/small_tick_draw_strategy.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/small_tick_draw_strategy.dart'
     show SmallTickRendererSpec;
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     show AxisSpec;
-import 'package:charts_common/src/chart/cartesian/axis/spec/numeric_axis_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/numeric_axis_spec.dart'
     show NumericAxisSpec;
-import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
-import 'package:charts_common/src/chart/common/chart_context.dart'
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
+    show BaseChart;
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart'
     show ChartContext;
-import 'package:charts_common/src/chart/common/datum_details.dart'
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
     show DatumDetails;
-import 'package:charts_common/src/chart/common/processed_series.dart'
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show MutableSeries;
-import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
+import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart'
     show SelectionModelType;
-import 'package:charts_common/src/chart/common/series_renderer.dart'
+import 'package:nimble_charts_common/src/chart/common/series_renderer.dart'
     show SeriesRenderer, rendererIdKey;
-import 'package:charts_common/src/chart/layout/layout_config.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_config.dart'
     show LayoutConfig, MarginSpec;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show LayoutViewPaintOrder;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
-import 'package:charts_common/src/data/series.dart' show Series;
-import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/data/series.dart' show Series;
 
 class NumericCartesianChart extends CartesianChart<num> {
   NumericCartesianChart({

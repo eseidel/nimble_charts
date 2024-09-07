@@ -15,35 +15,36 @@
 
 import 'dart:math';
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:meta/meta.dart' show immutable, protected;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show AxisOrientation;
-import 'package:charts_common/src/chart/cartesian/axis/collision_report.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/collision_report.dart'
     show CollisionReport;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
     show TickDrawStrategy;
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     show
         LineStyleSpec,
         RenderSpec,
         TextStyleSpec,
         TickLabelAnchor,
         TickLabelJustification;
-import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart'
+    show Tick;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
-import 'package:charts_common/src/chart/common/chart_context.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart'
     show ChartContext;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
     show ViewMeasuredSizes;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
-import 'package:charts_common/src/common/line_style.dart' show LineStyle;
-import 'package:charts_common/src/common/style/style_factory.dart'
+import 'package:nimble_charts_common/src/common/line_style.dart' show LineStyle;
+import 'package:nimble_charts_common/src/common/style/style_factory.dart'
     show StyleFactory;
-import 'package:charts_common/src/common/text_element.dart'
+import 'package:nimble_charts_common/src/common/text_element.dart'
     show MaxWidthStrategy, TextDirection, TextElement;
-import 'package:charts_common/src/common/text_style.dart' show TextStyle;
-import 'package:meta/meta.dart' show immutable, protected;
+import 'package:nimble_charts_common/src/common/text_style.dart' show TextStyle;
 
 @immutable
 abstract class BaseRenderSpec<D> implements RenderSpec<D> {

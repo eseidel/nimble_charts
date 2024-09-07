@@ -13,12 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/common/behavior/legend/legend.dart';
-import 'package:charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
-import 'package:charts_common/src/chart/common/behavior/legend/per_datum_legend_entry_generator.dart';
-import 'package:charts_common/src/chart/common/datum_details.dart'
+import 'package:nimble_charts_common/src/chart/common/behavior/legend/legend.dart';
+import 'package:nimble_charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
+import 'package:nimble_charts_common/src/chart/common/behavior/legend/per_datum_legend_entry_generator.dart';
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
     show MeasureFormatter;
-import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
+import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart'
     show SelectionModelType;
 
 /// Datum legend behavior for charts.

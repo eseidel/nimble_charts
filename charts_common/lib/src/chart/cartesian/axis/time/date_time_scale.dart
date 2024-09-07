@@ -13,15 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/linear/linear_scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/linear/linear_scale.dart'
     show LinearScale;
-import 'package:charts_common/src/chart/cartesian/axis/numeric_extents.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_extents.dart'
     show NumericExtents;
-import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart'
     show MutableScale, RangeBandConfig, ScaleOutputExtent, StepSizeConfig;
-import 'package:charts_common/src/chart/cartesian/axis/time/date_time_extents.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_extents.dart'
     show DateTimeExtents;
-import 'package:charts_common/src/common/date_time_factory.dart'
+import 'package:nimble_charts_common/src/common/date_time_factory.dart'
     show DateTimeFactory;
 
 /// [DateTimeScale] is a wrapper for [LinearScale].

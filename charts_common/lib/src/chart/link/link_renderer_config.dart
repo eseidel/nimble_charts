@@ -13,11 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/common/series_renderer_config.dart';
-import 'package:charts_common/src/chart/layout/layout_view.dart';
-import 'package:charts_common/src/chart/link/link_renderer.dart';
-import 'package:charts_common/src/chart/sankey/sankey_renderer.dart';
-import 'package:charts_common/src/common/symbol_renderer.dart';
+import 'package:nimble_charts_common/src/chart/common/series_renderer_config.dart';
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart';
+import 'package:nimble_charts_common/src/chart/link/link_renderer.dart';
+import 'package:nimble_charts_common/src/chart/sankey/sankey_renderer.dart';
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart';
 
 /// Configuration for a [SankeyRenderer].
 class LinkRendererConfig<D> extends LayoutViewConfig

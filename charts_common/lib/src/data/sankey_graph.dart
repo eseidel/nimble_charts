@@ -13,11 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/common.dart';
-import 'package:charts_common/src/data/graph.dart' as graph;
-import 'package:charts_common/src/data/graph.dart';
-import 'package:charts_common/src/data/graph_utils.dart';
 import 'package:meta/meta.dart';
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/data/graph.dart' as graph;
+import 'package:nimble_charts_common/src/data/graph.dart';
+import 'package:nimble_charts_common/src/data/graph_utils.dart';
 
 /// Directed acyclic graph with Sankey diagram related data.
 class SankeyGraph<N, L, D> extends Graph<N, L, D> {

@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/palette.dart' show Palette;
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/palette.dart' show Palette;
 
 /// A canonical palette of colors from material.io.
 ///

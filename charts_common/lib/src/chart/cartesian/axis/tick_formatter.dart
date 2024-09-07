@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/common/datum_details.dart'
-    show MeasureFormatter;
 import 'package:intl/intl.dart';
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
+    show MeasureFormatter;
 
 // TODO: Break out into separate files.
 

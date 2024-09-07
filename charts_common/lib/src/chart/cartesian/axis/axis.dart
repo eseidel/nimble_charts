@@ -15,31 +15,31 @@
 
 import 'dart:math' show Rectangle, max, min;
 
-import 'package:charts_common/common.dart';
-import 'package:charts_common/src/chart/cartesian/axis/axis_tick.dart'
-    show AxisTicks;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/small_tick_draw_strategy.dart'
-    show SmallTickDrawStrategy;
-import 'package:charts_common/src/chart/cartesian/axis/numeric_tick_provider.dart'
-    show NumericTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/ordinal_scale.dart'
-    show OrdinalScale;
-import 'package:charts_common/src/chart/cartesian/axis/ordinal_tick_provider.dart'
-    show OrdinalTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/range_axis_tick.dart'
-    show RangeAxisTicks;
-import 'package:charts_common/src/chart/cartesian/axis/range_tick.dart'
-    show RangeTick;
-import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
-    show MutableScale, RangeBandConfig, RangeBandType, Scale, ScaleOutputExtent;
-import 'package:charts_common/src/chart/cartesian/axis/simple_ordinal_scale.dart'
-    show SimpleOrdinalScale;
-import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
-    show NumericTickFormatter, OrdinalTickFormatter, TickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
-    show TickProvider;
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:meta/meta.dart' show protected, visibleForTesting;
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis_tick.dart'
+    show AxisTicks;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/small_tick_draw_strategy.dart'
+    show SmallTickDrawStrategy;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_tick_provider.dart'
+    show NumericTickProvider;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/ordinal_scale.dart'
+    show OrdinalScale;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/ordinal_tick_provider.dart'
+    show OrdinalTickProvider;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/range_axis_tick.dart'
+    show RangeAxisTicks;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/range_tick.dart'
+    show RangeTick;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart'
+    show MutableScale, RangeBandConfig, RangeBandType, Scale, ScaleOutputExtent;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/simple_ordinal_scale.dart'
+    show SimpleOrdinalScale;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show NumericTickFormatter, OrdinalTickFormatter, TickFormatter;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    show TickProvider;
 
 const measureAxisIdKey = AttributeKey<String>('Axis.measureAxisId');
 const measureAxisKey = AttributeKey<Axis<Object>>('Axis.measureAxis');

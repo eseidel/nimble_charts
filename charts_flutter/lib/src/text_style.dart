@@ -14,7 +14,8 @@
 // limitations under the License.
 
 import 'dart:ui' show hashValues;
-import 'package:charts_common/common.dart' as common show Color, TextStyle;
+import 'package:nimble_charts_common/common.dart' as common
+    show Color, TextStyle;
 
 class TextStyle implements common.TextStyle {
   int? fontSize;

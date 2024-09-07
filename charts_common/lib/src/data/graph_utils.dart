@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/data/graph.dart';
-import 'package:charts_common/src/data/series.dart' show TypedAccessorFn;
+import 'package:nimble_charts_common/src/data/graph.dart';
+import 'package:nimble_charts_common/src/data/series.dart' show TypedAccessorFn;
 
 const graphCycleErrorMsg = 'The given graph contains a cycle.';
 

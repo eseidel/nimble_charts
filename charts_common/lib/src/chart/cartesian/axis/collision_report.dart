@@ -13,7 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart'
+    show Tick;
 
 /// A report that contains a list of ticks and if they collide.
 class CollisionReport<D> {

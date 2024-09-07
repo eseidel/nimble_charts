@@ -13,25 +13,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/common.dart';
-import 'package:charts_common/src/chart/cartesian/axis/end_points_tick_provider.dart'
-    show EndPointsTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/static_tick_provider.dart'
-    show StaticTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/time/date_time_axis.dart'
-    show DateTimeAxis;
-import 'package:charts_common/src/chart/cartesian/axis/time/day_time_stepper.dart'
-    show DayTimeStepper;
-import 'package:charts_common/src/chart/cartesian/axis/time/hour_tick_formatter.dart'
-    show HourTickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/time/simple_time_tick_formatter.dart'
-    show DateTimeFormatterFunction, SimpleTimeTickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/time/time_tick_formatter.dart'
-    show TimeTickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/time/time_tick_formatter_impl.dart'
-    show CalendarField, TimeTickFormatterImpl;
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:meta/meta.dart' show immutable;
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/end_points_tick_provider.dart'
+    show EndPointsTickProvider;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/static_tick_provider.dart'
+    show StaticTickProvider;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_axis.dart'
+    show DateTimeAxis;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/day_time_stepper.dart'
+    show DayTimeStepper;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/hour_tick_formatter.dart'
+    show HourTickFormatter;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/simple_time_tick_formatter.dart'
+    show DateTimeFormatterFunction, SimpleTimeTickFormatter;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/time_tick_formatter.dart'
+    show TimeTickFormatter;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/time_tick_formatter_impl.dart'
+    show CalendarField, TimeTickFormatterImpl;
 
 /// Generic [AxisSpec] specialized for Timeseries charts.
 @immutable

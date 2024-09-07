@@ -15,18 +15,20 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
-import 'package:charts_common/src/chart/common/datum_details.dart'
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
+    show BaseChart;
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
     show DatumDetails;
-import 'package:charts_common/src/chart/common/processed_series.dart'
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show MutableSeries;
-import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
+import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart'
     show SelectionModelType;
-import 'package:charts_common/src/chart/common/series_renderer.dart'
+import 'package:nimble_charts_common/src/chart/common/series_renderer.dart'
     show SeriesRenderer, rendererIdKey;
-import 'package:charts_common/src/chart/layout/layout_config.dart'
+import 'package:nimble_charts_common/src/chart/layout/layout_config.dart'
     show LayoutConfig, MarginSpec;
-import 'package:charts_common/src/chart/pie/arc_renderer.dart' show ArcRenderer;
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer.dart'
+    show ArcRenderer;
 
 class PieChart<D> extends BaseChart<D> {
   PieChart({LayoutConfig? layoutConfig})

@@ -13,11 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/common.dart';
+import 'package:nimble_charts_common/common.dart';
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show Axis, NumericAxis;
-import 'package:charts_common/src/chart/cartesian/axis/linear/bucketing_numeric_tick_provider.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/linear/bucketing_numeric_tick_provider.dart'
     show BucketingNumericTickProvider;
 
 /// A numeric [Axis] that positions all values beneath a certain [threshold]

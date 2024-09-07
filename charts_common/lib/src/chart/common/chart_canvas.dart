@@ -15,12 +15,13 @@
 
 import 'dart:math' show Point, Rectangle;
 
-import 'package:charts_common/src/chart/common/canvas_shapes.dart'
+import 'package:nimble_charts_common/src/chart/common/canvas_shapes.dart'
     show CanvasBarStack, CanvasPie;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
-import 'package:charts_common/src/common/text_element.dart' show TextElement;
+import 'package:nimble_charts_common/src/common/text_element.dart'
+    show TextElement;
 
 abstract class ChartCanvas {
   /// Get [GraphicsFactory] for creating native graphics elements.

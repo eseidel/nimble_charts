@@ -13,23 +13,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show Axis, NumericAxis;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/small_tick_draw_strategy.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/small_tick_draw_strategy.dart'
     show SmallTickRendererSpec;
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     show AxisSpec;
-import 'package:charts_common/src/chart/cartesian/axis/spec/date_time_axis_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/date_time_axis_spec.dart'
     show DateTimeAxisSpec;
-import 'package:charts_common/src/chart/cartesian/axis/time/date_time_axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_axis.dart'
     show DateTimeAxis;
-import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart'
     show CartesianChart;
-import 'package:charts_common/src/chart/common/series_renderer.dart'
+import 'package:nimble_charts_common/src/chart/common/series_renderer.dart'
     show SeriesRenderer;
-import 'package:charts_common/src/chart/line/line_renderer.dart'
+import 'package:nimble_charts_common/src/chart/line/line_renderer.dart'
     show LineRenderer;
-import 'package:charts_common/src/common/date_time_factory.dart'
+import 'package:nimble_charts_common/src/common/date_time_factory.dart'
     show DateTimeFactory, LocalDateTimeFactory;
 
 class TimeSeriesChart extends CartesianChart<DateTime> {

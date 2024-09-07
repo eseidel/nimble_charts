@@ -13,11 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/common/chart_canvas.dart';
-import 'package:charts_common/src/common/color.dart';
-import 'package:charts_common/src/common/typed_registry.dart';
-import 'package:charts_common/src/data/graph_utils.dart';
-import 'package:charts_common/src/data/series.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart';
+import 'package:nimble_charts_common/src/common/color.dart';
+import 'package:nimble_charts_common/src/common/typed_registry.dart';
+import 'package:nimble_charts_common/src/data/graph_utils.dart';
+import 'package:nimble_charts_common/src/data/series.dart'
     show AttributeKey, Series, TypedAccessorFn;
 
 // Used for readability to indicate where any indexed value can be returned

@@ -15,16 +15,17 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
-import 'package:charts_common/src/chart/common/datum_details.dart'
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
+    show BaseChart;
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
     show DatumDetails;
-import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
+import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart'
     show SelectionModelType;
-import 'package:charts_common/src/chart/common/series_renderer.dart'
+import 'package:nimble_charts_common/src/chart/common/series_renderer.dart'
     show SeriesRenderer, rendererIdKey;
-import 'package:charts_common/src/chart/sunburst/sunburst_arc_renderer.dart'
+import 'package:nimble_charts_common/src/chart/sunburst/sunburst_arc_renderer.dart'
     show SunburstArcRenderer;
-import 'package:charts_common/src/data/tree.dart' show TreeNode;
+import 'package:nimble_charts_common/src/data/tree.dart' show TreeNode;
 
 class SunburstChart<D> extends BaseChart<D> {
   SunburstChart({super.layoutConfig});

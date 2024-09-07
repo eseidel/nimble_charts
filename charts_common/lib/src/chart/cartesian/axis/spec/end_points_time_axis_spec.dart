@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/common.dart';
 import 'package:meta/meta.dart' show immutable;
+import 'package:nimble_charts_common/common.dart';
 
 /// Default [AxisSpec] used for Timeseries charts.
 @immutable

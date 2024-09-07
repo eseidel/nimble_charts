@@ -16,36 +16,37 @@
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show Point, Rectangle, min;
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
-    show ImmutableAxis, domainAxisKey, measureAxisKey;
-import 'package:charts_common/src/chart/cartesian/cartesian_renderer.dart'
-    show BaseCartesianRenderer;
-import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
-    show ChartCanvas, getAnimatedColor;
-import 'package:charts_common/src/chart/common/datum_details.dart'
-    show DatumDetails;
-import 'package:charts_common/src/chart/common/processed_series.dart'
-    show ImmutableSeries, MutableSeries;
-import 'package:charts_common/src/chart/common/series_datum.dart'
-    show SeriesDatum;
-import 'package:charts_common/src/chart/layout/layout_view.dart'
-    show LayoutViewPaintOrder;
-import 'package:charts_common/src/chart/scatter_plot/comparison_points_decorator.dart'
-    show ComparisonPointsDecorator;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer_config.dart'
-    show PointRendererConfig;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer_decorator.dart'
-    show PointRendererDecorator;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/math.dart'
-    show NullablePoint, distanceBetweenPointAndLineSegment;
-import 'package:charts_common/src/common/symbol_renderer.dart'
-    show CircleSymbolRenderer, SymbolRenderer;
-import 'package:charts_common/src/data/series.dart'
-    show AccessorFn, AttributeKey, TypedAccessorFn;
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
+    show ImmutableAxis, domainAxisKey, measureAxisKey;
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_renderer.dart'
+    show BaseCartesianRenderer;
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
+    show BaseChart;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas, getAnimatedColor;
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
+    show DatumDetails;
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries, MutableSeries;
+import 'package:nimble_charts_common/src/chart/common/series_datum.dart'
+    show SeriesDatum;
+import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
+    show LayoutViewPaintOrder;
+import 'package:nimble_charts_common/src/chart/scatter_plot/comparison_points_decorator.dart'
+    show ComparisonPointsDecorator;
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer_config.dart'
+    show PointRendererConfig;
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer_decorator.dart'
+    show PointRendererDecorator;
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/math.dart'
+    show NullablePoint, distanceBetweenPointAndLineSegment;
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart'
+    show CircleSymbolRenderer, SymbolRenderer;
+import 'package:nimble_charts_common/src/data/series.dart'
+    show AccessorFn, AttributeKey, TypedAccessorFn;
 import 'package:vector_math/vector_math.dart' show Vector2;
 
 const pointElementsKey =

@@ -14,7 +14,8 @@
 // limitations under the License.
 
 import 'dart:collection' show HashSet;
-import 'package:charts_common/src/chart/cartesian/axis/scale.dart' show Extents;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart'
+    show Extents;
 
 /// A range of ordinals.
 class OrdinalExtents extends Extents<String> {

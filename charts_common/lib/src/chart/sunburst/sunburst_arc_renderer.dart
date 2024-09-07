@@ -16,23 +16,23 @@
 import 'dart:collection' show HashSet, LinkedHashMap;
 import 'dart:math' show Point, max, min, pi;
 
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
-    show ChartCanvas;
-import 'package:charts_common/src/chart/common/processed_series.dart'
-    show ImmutableSeries, MutableSeries;
-import 'package:charts_common/src/chart/pie/arc_renderer_decorator.dart'
-    show ArcRendererDecorator;
-import 'package:charts_common/src/chart/pie/arc_renderer_element.dart'
-    show AnimatedArc, AnimatedArcList, ArcRendererElement;
-import 'package:charts_common/src/chart/pie/base_arc_renderer.dart';
-import 'package:charts_common/src/chart/sunburst/sunburst_arc_renderer_config.dart'
-    show SunburstArcRendererConfig, SunburstColorStrategy;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/style/style_factory.dart'
-    show StyleFactory;
-import 'package:charts_common/src/data/series.dart' show AttributeKey;
-import 'package:charts_common/src/data/tree.dart' show TreeNode;
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries, MutableSeries;
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer_decorator.dart'
+    show ArcRendererDecorator;
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer_element.dart'
+    show AnimatedArc, AnimatedArcList, ArcRendererElement;
+import 'package:nimble_charts_common/src/chart/pie/base_arc_renderer.dart';
+import 'package:nimble_charts_common/src/chart/sunburst/sunburst_arc_renderer_config.dart'
+    show SunburstArcRendererConfig, SunburstColorStrategy;
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/style/style_factory.dart'
+    show StyleFactory;
+import 'package:nimble_charts_common/src/data/series.dart' show AttributeKey;
+import 'package:nimble_charts_common/src/data/tree.dart' show TreeNode;
 
 const arcElementsKey = AttributeKey<List<SunburstArcRendererElement<Object>>>(
   'SunburstArcRenderer.elements',

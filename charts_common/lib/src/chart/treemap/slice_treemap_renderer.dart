@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/treemap/base_treemap_renderer.dart';
-import 'package:charts_common/src/chart/treemap/treemap_renderer_config.dart';
-import 'package:charts_common/src/data/tree.dart';
+import 'package:nimble_charts_common/src/chart/treemap/base_treemap_renderer.dart';
+import 'package:nimble_charts_common/src/chart/treemap/treemap_renderer_config.dart';
+import 'package:nimble_charts_common/src/data/tree.dart';
 
 /// A treemap renderer that renders a treemap with slice layout.
 class SliceTreeMapRenderer<D> extends BaseTreeMapRenderer<D> {

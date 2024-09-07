@@ -13,16 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     show LineStyleSpec;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
-import 'package:charts_common/src/common/line_style.dart' show LineStyle;
-import 'package:charts_common/src/common/material_palette.dart'
+import 'package:nimble_charts_common/src/common/line_style.dart' show LineStyle;
+import 'package:nimble_charts_common/src/common/material_palette.dart'
     show MaterialPalette;
-import 'package:charts_common/src/common/palette.dart' show Palette;
-import 'package:charts_common/src/common/style/style.dart' show Style;
+import 'package:nimble_charts_common/src/common/palette.dart' show Palette;
+import 'package:nimble_charts_common/src/common/style/style.dart' show Style;
 
 class MaterialStyle implements Style {
   const MaterialStyle();

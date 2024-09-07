@@ -15,34 +15,35 @@
 
 import 'dart:math' show Point, Rectangle, atan2, cos, pi, sin;
 
-import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
-import 'package:charts_common/src/chart/common/canvas_shapes.dart'
+import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
+    show BaseChart;
+import 'package:nimble_charts_common/src/chart/common/canvas_shapes.dart'
     show CanvasPie, CanvasPieSlice;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
-import 'package:charts_common/src/chart/common/datum_details.dart'
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
     show DatumDetails;
-import 'package:charts_common/src/chart/common/processed_series.dart'
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show MutableSeries;
-import 'package:charts_common/src/chart/common/series_datum.dart'
+import 'package:nimble_charts_common/src/chart/common/series_datum.dart'
     show SeriesDatum;
-import 'package:charts_common/src/chart/common/series_renderer.dart'
+import 'package:nimble_charts_common/src/chart/common/series_renderer.dart'
     show BaseSeriesRenderer;
-import 'package:charts_common/src/chart/pie/arc_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer_config.dart'
     show ArcRendererConfig;
-import 'package:charts_common/src/chart/pie/arc_renderer_decorator.dart'
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer_decorator.dart'
     show ArcRendererDecorator;
-import 'package:charts_common/src/chart/pie/arc_renderer_element.dart'
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer_element.dart'
     show
         AnimatedArc,
         AnimatedArcList,
         ArcRendererElement,
         ArcRendererElementList;
-import 'package:charts_common/src/chart/pie/base_arc_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/pie/base_arc_renderer_config.dart'
     show BaseArcRendererConfig;
-import 'package:charts_common/src/common/math.dart' show NullablePoint;
-import 'package:charts_common/src/data/series.dart' show AttributeKey;
-import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/common/math.dart' show NullablePoint;
+import 'package:nimble_charts_common/src/data/series.dart' show AttributeKey;
 
 const arcElementsKey =
     AttributeKey<List<ArcRendererElement<Object>>>('ArcRenderer.elements');

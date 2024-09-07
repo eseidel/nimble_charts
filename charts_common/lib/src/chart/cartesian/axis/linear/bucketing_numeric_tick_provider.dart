@@ -13,23 +13,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show AxisOrientation;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
     show TickDrawStrategy;
-import 'package:charts_common/src/chart/cartesian/axis/linear/bucketing_numeric_axis.dart';
-import 'package:charts_common/src/chart/cartesian/axis/numeric_scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/linear/bucketing_numeric_axis.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_scale.dart'
     show NumericScale;
-import 'package:charts_common/src/chart/cartesian/axis/numeric_tick_provider.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_tick_provider.dart'
     show NumericTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
-import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart'
+    show Tick;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart'
     show SimpleTickFormatterBase, TickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_provider.dart'
     show TickHint;
-import 'package:charts_common/src/chart/common/chart_context.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart'
     show ChartContext;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
 
 /// Tick provider that generates ticks for a [BucketingNumericAxis].

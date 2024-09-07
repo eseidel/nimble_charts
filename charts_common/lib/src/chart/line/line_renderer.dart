@@ -16,31 +16,32 @@
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math' show Point, Rectangle;
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
-    show ImmutableAxis, OrdinalAxis, domainAxisKey, measureAxisKey;
-import 'package:charts_common/src/chart/cartesian/cartesian_renderer.dart'
-    show BaseCartesianRenderer;
-import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
-    show ChartCanvas, getAnimatedColor;
-import 'package:charts_common/src/chart/common/datum_details.dart'
-    show DatumDetails;
-import 'package:charts_common/src/chart/common/processed_series.dart'
-    show ImmutableSeries, MutableSeries;
-import 'package:charts_common/src/chart/common/series_datum.dart'
-    show SeriesDatum;
-import 'package:charts_common/src/chart/line/line_renderer_config.dart'
-    show LineRendererConfig;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer.dart'
-    show PointRenderer;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer_config.dart'
-    show PointRendererConfig;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/math.dart';
-import 'package:charts_common/src/data/series.dart'
-    show AccessorFn, AttributeKey;
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:meta/meta.dart' show visibleForTesting;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
+    show ImmutableAxis, OrdinalAxis, domainAxisKey, measureAxisKey;
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_renderer.dart'
+    show BaseCartesianRenderer;
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
+    show BaseChart;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas, getAnimatedColor;
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
+    show DatumDetails;
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries, MutableSeries;
+import 'package:nimble_charts_common/src/chart/common/series_datum.dart'
+    show SeriesDatum;
+import 'package:nimble_charts_common/src/chart/line/line_renderer_config.dart'
+    show LineRendererConfig;
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer.dart'
+    show PointRenderer;
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer_config.dart'
+    show PointRendererConfig;
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/math.dart';
+import 'package:nimble_charts_common/src/data/series.dart'
+    show AccessorFn, AttributeKey;
 
 const styleSegmentsKey = AttributeKey<List<_LineRendererElement<Object>>>(
   'LineRenderer.styleSegments',

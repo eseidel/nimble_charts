@@ -15,13 +15,13 @@
 
 import 'dart:collection';
 
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart';
-import 'package:charts_common/src/chart/common/chart_canvas.dart';
-import 'package:charts_common/src/common/color.dart';
-import 'package:charts_common/src/common/typed_registry.dart';
-import 'package:charts_common/src/data/series.dart'
-    show AttributeKey, Series, TypedAccessorFn;
 import 'package:meta/meta.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart';
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart';
+import 'package:nimble_charts_common/src/common/color.dart';
+import 'package:nimble_charts_common/src/common/typed_registry.dart';
+import 'package:nimble_charts_common/src/data/series.dart'
+    show AttributeKey, Series, TypedAccessorFn;
 
 /// A tree structure that contains metadata of a rendering tree.
 class Tree<T, D> {

@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/common.dart';
-import 'package:charts_common/src/common/palette.dart';
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/common/palette.dart';
 
 // TODO: Implementation of style will change drastically, see bug
 // for more details. This is an intermediate step in order to allow overriding

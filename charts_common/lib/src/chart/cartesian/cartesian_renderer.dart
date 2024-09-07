@@ -13,17 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
-    show Axis, domainAxisKey, measureAxisKey;
-import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
-    show CartesianChart;
-import 'package:charts_common/src/chart/common/base_chart.dart' show BaseChart;
-import 'package:charts_common/src/chart/common/processed_series.dart'
-    show MutableSeries;
-import 'package:charts_common/src/chart/common/series_renderer.dart'
-    show BaseSeriesRenderer, SeriesRenderer;
-import 'package:charts_common/src/data/series.dart' show AccessorFn;
 import 'package:meta/meta.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
+    show Axis, domainAxisKey, measureAxisKey;
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart'
+    show CartesianChart;
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
+    show BaseChart;
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
+    show MutableSeries;
+import 'package:nimble_charts_common/src/chart/common/series_renderer.dart'
+    show BaseSeriesRenderer, SeriesRenderer;
+import 'package:nimble_charts_common/src/data/series.dart' show AccessorFn;
 
 abstract class CartesianRenderer<D> extends SeriesRenderer<D> {
   @override

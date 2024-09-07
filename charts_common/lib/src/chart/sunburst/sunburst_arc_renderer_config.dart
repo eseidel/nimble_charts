@@ -13,12 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/pie/arc_renderer.dart' show ArcRenderer;
-import 'package:charts_common/src/chart/pie/base_arc_renderer_config.dart'
+import 'package:nimble_charts_common/src/chart/pie/arc_renderer.dart'
+    show ArcRenderer;
+import 'package:nimble_charts_common/src/chart/pie/base_arc_renderer_config.dart'
     show BaseArcRendererConfig;
-import 'package:charts_common/src/chart/sunburst/sunburst_arc_renderer.dart'
+import 'package:nimble_charts_common/src/chart/sunburst/sunburst_arc_renderer.dart'
     show SunburstArcRenderer;
-import 'package:charts_common/src/data/tree.dart' show TreeNode;
+import 'package:nimble_charts_common/src/data/tree.dart' show TreeNode;
 
 /// Given the selected node and a list of currently expanded node, returns the
 /// new set of node to be expanded (shown beyond the initialDisplayLevel).

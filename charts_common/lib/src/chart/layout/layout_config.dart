@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/layout/layout_manager.dart';
+import 'package:nimble_charts_common/src/chart/layout/layout_manager.dart';
 
 /// Collection of configurations that apply to the [LayoutManager].
 class LayoutConfig {

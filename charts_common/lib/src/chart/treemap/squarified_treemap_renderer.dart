@@ -16,9 +16,9 @@
 import 'dart:collection' show Queue;
 import 'dart:math' as math;
 
-import 'package:charts_common/src/chart/treemap/base_treemap_renderer.dart';
-import 'package:charts_common/src/chart/treemap/treemap_renderer_config.dart';
-import 'package:charts_common/src/data/tree.dart';
+import 'package:nimble_charts_common/src/chart/treemap/base_treemap_renderer.dart';
+import 'package:nimble_charts_common/src/chart/treemap/treemap_renderer_config.dart';
+import 'package:nimble_charts_common/src/data/tree.dart';
 
 /// A treemap renderer that renders a squarified treemap.
 class SquarifiedTreeMapRenderer<D> extends BaseTreeMapRenderer<D> {

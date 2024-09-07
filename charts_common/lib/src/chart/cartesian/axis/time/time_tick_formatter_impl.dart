@@ -13,11 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/time/time_tick_formatter.dart'
-    show TimeTickFormatter;
-import 'package:charts_common/src/common/date_time_factory.dart'
-    show DateTimeFactory;
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/time_tick_formatter.dart'
+    show TimeTickFormatter;
+import 'package:nimble_charts_common/src/common/date_time_factory.dart'
+    show DateTimeFactory;
 
 /// Formatter that can format simple and transition time ticks differently.
 class TimeTickFormatterImpl implements TimeTickFormatter {

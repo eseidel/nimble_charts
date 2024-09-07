@@ -15,17 +15,17 @@
 
 import 'dart:collection' show HashSet;
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show Axis, measureAxisIdKey;
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     show TextStyleSpec;
-import 'package:charts_common/src/chart/common/behavior/legend/legend_entry.dart';
-import 'package:charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
-import 'package:charts_common/src/chart/common/datum_details.dart'
+import 'package:nimble_charts_common/src/chart/common/behavior/legend/legend_entry.dart';
+import 'package:nimble_charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
     show MeasureFormatter;
-import 'package:charts_common/src/chart/common/processed_series.dart'
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show MutableSeries;
-import 'package:charts_common/src/chart/common/selection_model/selection_model.dart';
+import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart';
 
 /// A strategy for generating a list of [LegendEntry] per series drawn.
 ///

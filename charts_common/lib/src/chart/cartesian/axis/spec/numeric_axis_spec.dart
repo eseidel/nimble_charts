@@ -13,18 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/common.dart';
-import 'package:charts_common/src/chart/cartesian/axis/end_points_tick_provider.dart'
-    show EndPointsTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/numeric_tick_provider.dart'
-    show NumericTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/static_tick_provider.dart'
-    show StaticTickProvider;
-import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
-    show NumericTickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart' show immutable;
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/end_points_tick_provider.dart'
+    show EndPointsTickProvider;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_tick_provider.dart'
+    show NumericTickProvider;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/static_tick_provider.dart'
+    show StaticTickProvider;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+    show NumericTickFormatter;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart';
 
 /// [AxisSpec] specialized for numeric/continuous axes like the measure axis.
 @immutable

@@ -13,15 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart'
     show TickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/time/hour_tick_formatter.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/hour_tick_formatter.dart'
     show HourTickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/time/time_tick_formatter.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/time_tick_formatter.dart'
     show TimeTickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/time/time_tick_formatter_impl.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/time_tick_formatter_impl.dart'
     show CalendarField, TimeTickFormatterImpl;
-import 'package:charts_common/src/common/date_time_factory.dart'
+import 'package:nimble_charts_common/src/common/date_time_factory.dart'
     show DateTimeFactory;
 
 /// A [TickFormatter] that formats date/time values based on minimum difference

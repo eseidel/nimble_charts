@@ -15,16 +15,16 @@
 
 import 'dart:math' show Point, Rectangle;
 
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
-    show ChartCanvas;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer.dart'
-    show PointRendererElement;
-import 'package:charts_common/src/chart/scatter_plot/point_renderer_decorator.dart'
-    show PointRendererDecorator;
-import 'package:charts_common/src/common/graphics_factory.dart'
-    show GraphicsFactory;
-import 'package:charts_common/src/common/symbol_renderer.dart';
 import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas;
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer.dart'
+    show PointRendererElement;
+import 'package:nimble_charts_common/src/chart/scatter_plot/point_renderer_decorator.dart'
+    show PointRendererDecorator;
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
+    show GraphicsFactory;
+import 'package:nimble_charts_common/src/common/symbol_renderer.dart';
 
 /// Decorates a point chart by drawing a shape connecting the domain and measure
 /// data bounds.

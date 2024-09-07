@@ -15,11 +15,11 @@
 
 import 'dart:math' show Rectangle;
 
-import 'package:charts_common/src/chart/bar/bar_renderer.dart'
+import 'package:nimble_charts_common/src/chart/bar/bar_renderer.dart'
     show ImmutableBarRendererElement;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
 
 /// Decorates bars after the bars have already been painted.

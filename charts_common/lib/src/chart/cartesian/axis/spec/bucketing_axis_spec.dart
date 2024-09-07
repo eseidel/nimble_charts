@@ -13,13 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/common.dart';
-import 'package:charts_common/src/chart/cartesian/axis/linear/bucketing_numeric_axis.dart'
-    show BucketingNumericAxis;
-import 'package:charts_common/src/chart/cartesian/axis/linear/bucketing_numeric_tick_provider.dart'
-    show BucketingNumericTickProvider;
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart' show immutable;
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/linear/bucketing_numeric_axis.dart'
+    show BucketingNumericAxis;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/linear/bucketing_numeric_tick_provider.dart'
+    show BucketingNumericTickProvider;
 
 /// A numeric [AxisSpec] that positions all values beneath a certain [threshold]
 /// into a reserved space on the axis range. The label for the bucket line will

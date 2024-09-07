@@ -15,8 +15,9 @@
 
 import 'dart:math';
 
-import 'package:charts_common/common.dart';
-import 'package:charts_common/src/common/rate_limit_utils.dart' show throttle;
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/common/rate_limit_utils.dart'
+    show throttle;
 
 /// Chart behavior that listens to the given eventTrigger and updates the
 /// specified [SelectionModel]. This is used to pair input events to behaviors

@@ -1,23 +1,15 @@
-name: charts_flutter
+name: nimble_charts
 version: 0.12.0
-description: Material Design charting library for flutter.
-homepage: https://github.com/google/charts
-publish_to: 'none' 
+description: Charts for Flutter. A fork of charts_flutter
+homepage: https://github.com/MelbourneDeveloper/charts
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
   flutter: '>=3.0.0 <4.0.0'
 
 dependencies:
-  # Pointing this to a local path allows for pointing to the latest code
-  # in Github for open source development.
-  #
-  # The pub version of charts_flutter will point to the pub version of charts_common.
-  # The latest pub version is commented out and shown below as an example.
   charts_common:
     path: ../charts_common/
-  # charts_common:
-  #   path: ../charts_common/
   collection: ^1.14.5
   flutter:
     sdk: flutter

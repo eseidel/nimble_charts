@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/time/base_time_stepper.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/base_time_stepper.dart'
     show BaseTimeStepper;
-import 'package:charts_common/src/common/date_time_factory.dart'
+import 'package:nimble_charts_common/src/common/date_time_factory.dart'
     show DateTimeFactory;
 
 /// Month stepper.

@@ -15,11 +15,12 @@
 
 import 'dart:collection' show LinkedHashMap;
 
-import 'package:charts_common/src/chart/bar/bar_lane_renderer_config.dart'
+import 'package:collection/collection.dart' show IterableExtension;
+import 'package:nimble_charts_common/src/chart/bar/bar_lane_renderer_config.dart'
     show BarLaneRendererConfig;
-import 'package:charts_common/src/chart/bar/bar_renderer.dart'
+import 'package:nimble_charts_common/src/chart/bar/bar_renderer.dart'
     show AnimatedBar, BarRenderer, BarRendererElement;
-import 'package:charts_common/src/chart/bar/base_bar_renderer.dart'
+import 'package:nimble_charts_common/src/chart/bar/base_bar_renderer.dart'
     show
         allBarGroupWeightsKey,
         barGroupCountKey,
@@ -27,14 +28,13 @@ import 'package:charts_common/src/chart/bar/base_bar_renderer.dart'
         barGroupWeightKey,
         previousBarGroupWeightKey,
         stackKeyKey;
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show ImmutableAxis, domainAxisKey, measureAxisKey;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
-import 'package:charts_common/src/chart/common/processed_series.dart'
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show ImmutableSeries, MutableSeries;
-import 'package:charts_common/src/data/series.dart' show AttributeKey;
-import 'package:collection/collection.dart' show IterableExtension;
+import 'package:nimble_charts_common/src/data/series.dart' show AttributeKey;
 
 /// Key for storing a list of all domain values that exist in the series data.
 ///

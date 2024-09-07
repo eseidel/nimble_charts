@@ -15,8 +15,8 @@
 
 import 'dart:math' show Point, Rectangle, max;
 
-import 'package:charts_common/common.dart';
 import 'package:meta/meta.dart';
+import 'package:nimble_charts_common/common.dart';
 
 /// Unique identifier used to associate custom series renderers on a chart with
 /// one or more series of data.

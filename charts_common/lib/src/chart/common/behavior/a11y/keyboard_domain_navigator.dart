@@ -13,19 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/cartesian_chart.dart'
-    show CartesianChart;
-import 'package:charts_common/src/chart/common/base_chart.dart'
-    show BaseChart, LifecycleListener;
-import 'package:charts_common/src/chart/common/behavior/chart_behavior.dart'
-    show ChartBehavior;
-import 'package:charts_common/src/chart/common/processed_series.dart'
-    show MutableSeries;
-import 'package:charts_common/src/chart/common/selection_model/selection_model.dart'
-    show SelectionModelType;
-import 'package:charts_common/src/chart/common/series_datum.dart'
-    show SeriesDatum;
 import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart'
+    show CartesianChart;
+import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
+    show BaseChart, LifecycleListener;
+import 'package:nimble_charts_common/src/chart/common/behavior/chart_behavior.dart'
+    show ChartBehavior;
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
+    show MutableSeries;
+import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart'
+    show SelectionModelType;
+import 'package:nimble_charts_common/src/chart/common/series_datum.dart'
+    show SeriesDatum;
 
 /// Enable keyboard navigation of the chart when focused using the directional
 /// keys.

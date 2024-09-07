@@ -15,18 +15,18 @@
 
 import 'dart:math' show max, min;
 
-import 'package:charts_common/src/chart/cartesian/axis/ordinal_scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/ordinal_scale.dart'
     show OrdinalScale;
-import 'package:charts_common/src/chart/cartesian/axis/ordinal_scale_domain_info.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/ordinal_scale_domain_info.dart'
     show OrdinalScaleDomainInfo;
-import 'package:charts_common/src/chart/cartesian/axis/scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart'
     show
         RangeBandConfig,
         RangeBandType,
         ScaleOutputExtent,
         StepSizeConfig,
         StepSizeType;
-import 'package:charts_common/src/common/math.dart';
+import 'package:nimble_charts_common/src/common/math.dart';
 
 /// Scale that converts ordinal values of type [D] to a given range output.
 ///

@@ -13,15 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart' show Axis;
-import 'package:charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
+    show Axis;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     show TextStyleSpec;
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show FillPatternType;
-import 'package:charts_common/src/chart/common/datum_details.dart'
+import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
     show DomainFormatter, MeasureFormatter;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/data/series.dart'
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/data/series.dart'
     show AccessorFn, AttributeKey, Series, SeriesAttributes;
 
 class MutableSeries<D> extends ImmutableSeries<D> {

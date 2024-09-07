@@ -15,12 +15,12 @@
 
 import 'dart:math' show Point, Rectangle, min, sqrt;
 
-import 'package:charts_common/src/chart/common/chart_canvas.dart'
-    show ChartCanvas, FillPatternType;
-import 'package:charts_common/src/common/color.dart' show Color;
-import 'package:charts_common/src/common/style/style_factory.dart'
-    show StyleFactory;
 import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
+    show ChartCanvas, FillPatternType;
+import 'package:nimble_charts_common/src/common/color.dart' show Color;
+import 'package:nimble_charts_common/src/common/style/style_factory.dart'
+    show StyleFactory;
 
 /// Strategy for rendering a symbol.
 abstract class BaseSymbolRenderer {

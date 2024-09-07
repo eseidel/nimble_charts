@@ -14,7 +14,7 @@
 // limitations under the License.
 
 import 'dart:ui' show TextAlign, TextDirection;
-import 'package:charts_common/common.dart' as common
+import 'package:nimble_charts_common/common.dart' as common
     show
         MaxWidthStrategy,
         TextElement,

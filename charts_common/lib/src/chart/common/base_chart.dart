@@ -15,12 +15,12 @@
 
 import 'dart:math' show Point, Rectangle;
 
-import 'package:charts_common/common.dart';
-import 'package:charts_common/src/chart/layout/layout_manager.dart'
-    show LayoutManager;
-import 'package:charts_common/src/chart/layout/layout_manager_impl.dart'
-    show LayoutManagerImpl;
 import 'package:meta/meta.dart' show protected;
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/chart/layout/layout_manager.dart'
+    show LayoutManager;
+import 'package:nimble_charts_common/src/chart/layout/layout_manager_impl.dart'
+    show LayoutManagerImpl;
 
 typedef BehaviorCreator = ChartBehavior<D> Function<D>();
 

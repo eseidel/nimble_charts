@@ -15,26 +15,27 @@
 
 import 'dart:math' show log, log10e, max, min, pow;
 
-import 'package:charts_common/src/chart/cartesian/axis/axis.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
     show AxisOrientation;
-import 'package:charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
     show TickDrawStrategy;
-import 'package:charts_common/src/chart/cartesian/axis/numeric_extents.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_extents.dart'
     show NumericExtents;
-import 'package:charts_common/src/chart/cartesian/axis/numeric_scale.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_scale.dart'
     show NumericScale;
-import 'package:charts_common/src/chart/cartesian/axis/tick.dart' show Tick;
-import 'package:charts_common/src/chart/cartesian/axis/tick_formatter.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart'
+    show Tick;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart'
     show TickFormatter;
-import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart'
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_provider.dart'
     show BaseTickProvider, TickHint;
-import 'package:charts_common/src/chart/common/chart_context.dart'
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart'
     show ChartContext;
-import 'package:charts_common/src/chart/common/unitconverter/identity_converter.dart'
+import 'package:nimble_charts_common/src/chart/common/unitconverter/identity_converter.dart'
     show IdentityConverter;
-import 'package:charts_common/src/chart/common/unitconverter/unit_converter.dart'
+import 'package:nimble_charts_common/src/chart/common/unitconverter/unit_converter.dart'
     show UnitConverter;
-import 'package:charts_common/src/common/graphics_factory.dart'
+import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
 
 /// Tick provider that allows you to specify how many ticks to present while
