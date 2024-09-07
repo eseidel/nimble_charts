@@ -46,7 +46,8 @@ void main() {
       );
     });
 
-    testWidgets('TimeSeriesChart renders correctly', (WidgetTester tester) async {
+    testWidgets('TimeSeriesChart renders correctly',
+        (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -67,7 +68,8 @@ void main() {
       );
     });
 
-    testWidgets('BarChart with custom colors renders correctly', (WidgetTester tester) async {
+    testWidgets('BarChart with custom colors renders correctly',
+        (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -88,7 +90,8 @@ void main() {
       );
     });
 
-    testWidgets('LineChart with points renders correctly', (WidgetTester tester) async {
+    testWidgets('LineChart with points renders correctly',
+        (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -110,7 +113,8 @@ void main() {
       );
     });
 
-    testWidgets('TimeSeriesChart with multiple series renders correctly', (WidgetTester tester) async {
+    testWidgets('TimeSeriesChart with multiple series renders correctly',
+        (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -134,120 +138,121 @@ void main() {
 }
 
 /// Creates sample data for a bar chart.
-List<charts.Series<OrdinalSales, String>> createSampleBarData() =>
-  [
-    charts.Series<OrdinalSales, String>(
-      id: 'Sales',
-      data: [
-        OrdinalSales('2014', 5),
-        OrdinalSales('2015', 25),
-        OrdinalSales('2016', 100),
-        OrdinalSales('2017', 75),
-      ],
-      domainFn: (OrdinalSales sales, _) => sales.year,
-      measureFn: (OrdinalSales sales, _) => sales.sales,
-    )
-  ];
+List<charts.Series<OrdinalSales, String>> createSampleBarData() => [
+      charts.Series<OrdinalSales, String>(
+        id: 'Sales',
+        data: [
+          OrdinalSales('2014', 5),
+          OrdinalSales('2015', 25),
+          OrdinalSales('2016', 100),
+          OrdinalSales('2017', 75),
+        ],
+        domainFn: (OrdinalSales sales, _) => sales.year,
+        measureFn: (OrdinalSales sales, _) => sales.sales,
+      )
+    ];
 
 /// Creates sample data for a line chart.
-List<charts.Series<LinearSales, int>> createSampleLineData() =>
-  [
-    charts.Series<LinearSales, int>(
-      id: 'Sales',
-      data: [
-        LinearSales(0, 5),
-        LinearSales(1, 25),
-        LinearSales(2, 100),
-        LinearSales(3, 75),
-      ],
-      domainFn: (LinearSales sales, _) => sales.year,
-      measureFn: (LinearSales sales, _) => sales.sales,
-    )
-  ];
+List<charts.Series<LinearSales, int>> createSampleLineData() => [
+      charts.Series<LinearSales, int>(
+        id: 'Sales',
+        data: [
+          LinearSales(0, 5),
+          LinearSales(1, 25),
+          LinearSales(2, 100),
+          LinearSales(3, 75),
+        ],
+        domainFn: (LinearSales sales, _) => sales.year,
+        measureFn: (LinearSales sales, _) => sales.sales,
+      )
+    ];
 
 /// Creates sample data for a time series chart.
-List<charts.Series<TimeSeriesSales, DateTime>> createSampleTimeSeriesData() =>
-  [
-    charts.Series<TimeSeriesSales, DateTime>(
-      id: 'Sales',
-      data: [
-        TimeSeriesSales(DateTime(2017, 9, 19), 5),
-        TimeSeriesSales(DateTime(2017, 9, 26), 25),
-        TimeSeriesSales(DateTime(2017, 10, 3), 100),
-        TimeSeriesSales(DateTime(2017, 10, 10), 75),
-      ],
-      domainFn: (TimeSeriesSales sales, _) => sales.time,
-      measureFn: (TimeSeriesSales sales, _) => sales.sales,
-    )
-  ];
+List<charts.Series<TimeSeriesSales, DateTime>> createSampleTimeSeriesData() => [
+      charts.Series<TimeSeriesSales, DateTime>(
+        id: 'Sales',
+        data: [
+          TimeSeriesSales(DateTime(2017, 9, 19), 5),
+          TimeSeriesSales(DateTime(2017, 9, 26), 25),
+          TimeSeriesSales(DateTime(2017, 10, 3), 100),
+          TimeSeriesSales(DateTime(2017, 10, 10), 75),
+        ],
+        domainFn: (TimeSeriesSales sales, _) => sales.time,
+        measureFn: (TimeSeriesSales sales, _) => sales.sales,
+      )
+    ];
 
 /// Creates sample data for a bar chart with custom colors.
-List<charts.Series<OrdinalSales, String>> createSampleBarDataWithCustomColors() =>
-  [
-    charts.Series<OrdinalSales, String>(
-      id: 'Sales',
-      data: [
-        OrdinalSales('2014', 5),
-        OrdinalSales('2015', 25),
-        OrdinalSales('2016', 100),
-        OrdinalSales('2017', 75),
-      ],
-      domainFn: (OrdinalSales sales, _) => sales.year,
-      measureFn: (OrdinalSales sales, _) => sales.sales,
-      colorFn: (OrdinalSales sales, _) {
-        switch (sales.year) {
-          case '2014': return charts.MaterialPalette.blue.shadeDefault;
-          case '2015': return charts.MaterialPalette.red.shadeDefault;
-          case '2016': return charts.MaterialPalette.green.shadeDefault;
-          case '2017': return charts.MaterialPalette.yellow.shadeDefault;
-          default: return charts.MaterialPalette.gray.shadeDefault;
-        }
-      },
-    )
-  ];
+List<charts.Series<OrdinalSales, String>>
+    createSampleBarDataWithCustomColors() => [
+          charts.Series<OrdinalSales, String>(
+            id: 'Sales',
+            data: [
+              OrdinalSales('2014', 5),
+              OrdinalSales('2015', 25),
+              OrdinalSales('2016', 100),
+              OrdinalSales('2017', 75),
+            ],
+            domainFn: (OrdinalSales sales, _) => sales.year,
+            measureFn: (OrdinalSales sales, _) => sales.sales,
+            colorFn: (OrdinalSales sales, _) {
+              switch (sales.year) {
+                case '2014':
+                  return charts.MaterialPalette.blue.shadeDefault;
+                case '2015':
+                  return charts.MaterialPalette.red.shadeDefault;
+                case '2016':
+                  return charts.MaterialPalette.green.shadeDefault;
+                case '2017':
+                  return charts.MaterialPalette.yellow.shadeDefault;
+                default:
+                  return charts.MaterialPalette.gray.shadeDefault;
+              }
+            },
+          )
+        ];
 
 /// Creates sample data for a line chart with points.
-List<charts.Series<LinearSales, int>> createSampleLineDataWithPoints() =>
-  [
-    charts.Series<LinearSales, int>(
-      id: 'Sales',
-      data: [
-        LinearSales(0, 5),
-        LinearSales(1, 25),
-        LinearSales(2, 100),
-        LinearSales(3, 75),
-      ],
-      domainFn: (LinearSales sales, _) => sales.year,
-      measureFn: (LinearSales sales, _) => sales.sales,
-    )
-  ];
+List<charts.Series<LinearSales, int>> createSampleLineDataWithPoints() => [
+      charts.Series<LinearSales, int>(
+        id: 'Sales',
+        data: [
+          LinearSales(0, 5),
+          LinearSales(1, 25),
+          LinearSales(2, 100),
+          LinearSales(3, 75),
+        ],
+        domainFn: (LinearSales sales, _) => sales.year,
+        measureFn: (LinearSales sales, _) => sales.sales,
+      )
+    ];
 
 /// Creates sample data for a time series chart with multiple series.
-List<charts.Series<TimeSeriesSales, DateTime>> createSampleMultipleTimeSeriesData() =>
-  [
-    charts.Series<TimeSeriesSales, DateTime>(
-      id: 'Desktop',
-      data: [
-        TimeSeriesSales(DateTime(2017, 9, 19), 5),
-        TimeSeriesSales(DateTime(2017, 9, 26), 25),
-        TimeSeriesSales(DateTime(2017, 10, 3), 100),
-        TimeSeriesSales(DateTime(2017, 10, 10), 75),
-      ],
-      domainFn: (TimeSeriesSales sales, _) => sales.time,
-      measureFn: (TimeSeriesSales sales, _) => sales.sales,
-    ),
-    charts.Series<TimeSeriesSales, DateTime>(
-      id: 'Mobile',
-      data: [
-        TimeSeriesSales(DateTime(2017, 9, 19), 10),
-        TimeSeriesSales(DateTime(2017, 9, 26), 50),
-        TimeSeriesSales(DateTime(2017, 10, 3), 200),
-        TimeSeriesSales(DateTime(2017, 10, 10), 150),
-      ],
-      domainFn: (TimeSeriesSales sales, _) => sales.time,
-      measureFn: (TimeSeriesSales sales, _) => sales.sales,
-    ),
-  ];
+List<charts.Series<TimeSeriesSales, DateTime>>
+    createSampleMultipleTimeSeriesData() => [
+          charts.Series<TimeSeriesSales, DateTime>(
+            id: 'Desktop',
+            data: [
+              TimeSeriesSales(DateTime(2017, 9, 19), 5),
+              TimeSeriesSales(DateTime(2017, 9, 26), 25),
+              TimeSeriesSales(DateTime(2017, 10, 3), 100),
+              TimeSeriesSales(DateTime(2017, 10, 10), 75),
+            ],
+            domainFn: (TimeSeriesSales sales, _) => sales.time,
+            measureFn: (TimeSeriesSales sales, _) => sales.sales,
+          ),
+          charts.Series<TimeSeriesSales, DateTime>(
+            id: 'Mobile',
+            data: [
+              TimeSeriesSales(DateTime(2017, 9, 19), 10),
+              TimeSeriesSales(DateTime(2017, 9, 26), 50),
+              TimeSeriesSales(DateTime(2017, 10, 3), 200),
+              TimeSeriesSales(DateTime(2017, 10, 10), 150),
+            ],
+            domainFn: (TimeSeriesSales sales, _) => sales.time,
+            measureFn: (TimeSeriesSales sales, _) => sales.sales,
+          ),
+        ];
 
 /// Sample ordinal data type.
 class OrdinalSales {

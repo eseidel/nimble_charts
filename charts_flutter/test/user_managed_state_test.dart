@@ -13,53 +13,56 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:nimble_charts/flutter.dart' as charts;
 
+import 'chart_widget_test.dart';
 import 'test_functions.dart';
 
 void main() {
-  testWidgets('selection can be set programmatically',
-      (WidgetTester tester) async {
-    final onTapSelection =
-        new charts.UserManagedSelectionModel<String>.fromConfig(
-            selectedDataConfig: [
-          new charts.SeriesDatumConfig<String>('Sales', '2016')
-        ]);
+  group('User Managed State Tests', () {
+    testWidgets('selection can be set programmatically',
+        (WidgetTester tester) async {
+      final onTapSelection =
+          charts.UserManagedSelectionModel<String>.fromConfig(
+              selectedDataConfig: [
+            charts.SeriesDatumConfig<String>('Sales', '2016')
+          ]);
 
-    charts.SelectionModel<String>? currentSelectionModel;
+      charts.SelectionModel<String>? currentSelectionModel;
 
-    void selectionChangedListener(charts.SelectionModel<String> model) {
-      currentSelectionModel = model;
-    }
+      void selectionChangedListener(charts.SelectionModel<String> model) {
+        currentSelectionModel = model;
+      }
 
-    final testChart = new TestChart(selectionChangedListener, onTapSelection);
+      final testChart = TestChart(selectionChangedListener, onTapSelection);
 
-    await tester.pumpWidget(
-      new Directionality(
-        textDirection: TextDirection.ltr,
-        child: testChart,
-      ),
-    );
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: testChart,
+        ),
+      );
 
-    expect(currentSelectionModel, isNull);
+      expect(currentSelectionModel, isNull);
 
-    await matchesGolden<TestChart>('BarChart-Blue');
+      await matchesGolden<TestChart>('BarChart-Blue');
 
-    await tester.tap(find.byType(charts.BarChart));
+      await tester.tap(find.byType(charts.BarChart));
 
-    await tester.pump();
+      await tester.pump();
 
-    expect(currentSelectionModel, isNotNull);
-    expect(currentSelectionModel!.selectedDatum, hasLength(1));
-    final selectedDatum =
-        currentSelectionModel!.selectedDatum.first.datum as OrdinalSales;
-    expect(selectedDatum.year, equals('2016'));
-    expect(selectedDatum.sales, equals(100));
-    expect(currentSelectionModel!.selectedSeries, hasLength(1));
-    expect(currentSelectionModel!.selectedSeries.first.id, equals('Sales'));
+      expect(currentSelectionModel, isNotNull);
+      expect(currentSelectionModel!.selectedDatum, hasLength(1));
+      final selectedDatum =
+          currentSelectionModel!.selectedDatum.first.datum as OrdinalSales;
+      expect(selectedDatum.year, equals('2016'));
+      expect(selectedDatum.sales, equals(100));
+      expect(currentSelectionModel!.selectedSeries, hasLength(1));
+      expect(currentSelectionModel!.selectedSeries.first.id, equals('Sales'));
+    });
   });
 }
 
