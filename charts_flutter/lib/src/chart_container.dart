@@ -13,8 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:nimble_charts/flutter.dart';
 import 'package:nimble_charts/src/base_chart_state.dart';
 import 'package:nimble_charts_common/common.dart' as common;
@@ -266,7 +269,7 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
     _setNewPainter();
     requestRebuild();
     if (announcement != null) {
-      SemanticsService.announce(announcement, textDirection);
+      unawaited(SemanticsService.announce(announcement, textDirection));
     }
   }
 

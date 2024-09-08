@@ -122,7 +122,7 @@ class LinePainter {
     List<Point> points,
     List<int> dashPattern,
   ) {
-    final localDashPattern = List.from(dashPattern);
+    final localDashPattern = List<int>.from(dashPattern);
 
     // If an odd number of parts are defined, repeat the pattern to get an even
     // number.
@@ -139,7 +139,7 @@ class LinePainter {
 
     // Gets the next segment in the dash pattern, looping back to the
     // beginning once the end has been reached.
-    dynamic getNextDashPatternSegment() {
+    int getNextDashPatternSegment() {
       final dashSegment = localDashPattern[dashPatternIndex];
       dashPatternIndex = (dashPatternIndex + 1) % localDashPattern.length;
       return dashSegment;
@@ -249,7 +249,7 @@ class LinePainter {
       Offset(point.x.toDouble(), point.y.toDouble());
 
   /// Computes the distance between two [Offset]s, as if they were [Point]s.
-  static num _getOffsetDistance(Offset o1, Offset o2) {
+  static double _getOffsetDistance(Offset o1, Offset o2) {
     final p1 = Point(o1.dx, o1.dy);
     final p2 = Point(o2.dx, o2.dy);
     return p1.distanceTo(p2);
