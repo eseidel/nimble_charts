@@ -38,7 +38,12 @@ class SymbolRendererCanvas implements SymbolRendererBuilder {
     bool enabled = true,
   }) {
     if (color != null && !enabled) {
-      color = color.withOpacity(0.26);
+      color = common.Color(
+        r: color.r,
+        g: color.g,
+        b: color.b,
+        a: (color.a * 0.26).round(),
+      );
     }
 
     return SizedBox.fromSize(
@@ -47,7 +52,12 @@ class SymbolRendererCanvas implements SymbolRendererBuilder {
         painter: _SymbolCustomPaint(
           context,
           commonSymbolRenderer,
-          color,
+          ui.Color.fromARGB(
+            color?.a ?? 255,
+            color?.r ?? 0,
+            color?.g ?? 0,
+            color?.b ?? 0,
+          ),
           dashPattern,
         ),
       ),

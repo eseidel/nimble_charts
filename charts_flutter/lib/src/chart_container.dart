@@ -15,6 +15,8 @@
 
 import 'dart:async';
 
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
@@ -23,7 +25,7 @@ import 'package:nimble_charts/src/base_chart_state.dart';
 import 'package:nimble_charts/src/chart_canvas.dart' as cc;
 import 'package:nimble_charts/src/graphics_factory.dart' as gf;
 import 'package:nimble_charts_common/common.dart' as common;
-import 'package:sky_engine/ui/text.dart' as sky;
+//import 'package:sky_engine/ui/text.dart' as sky;
 
 /// Widget that inflates to a [CustomPaint] that implements common
 /// [common.ChartContext].
@@ -259,8 +261,8 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
   /// Gets the chart's gesture listener.
   common.ProxyGestureListener get gestureProxy => _chart!.gestureProxy;
 
-  sky.TextDirection get textDirection =>
-      _chartContainerIsRtl ? sky.TextDirection.rtl : sky.TextDirection.ltr;
+  TextDirection get textDirection =>
+      _chartContainerIsRtl ? TextDirection.rtl : TextDirection.ltr;
 
   @override
   void enableA11yExploreMode(
@@ -272,7 +274,12 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
     _setNewPainter();
     requestRebuild();
     if (announcement != null) {
-      unawaited(SemanticsService.announce(announcement, textDirection));
+      unawaited(
+        SemanticsService.announce(
+          announcement,
+          toDartTextDirection(textDirection),
+        ),
+      );
     }
   }
 
@@ -283,7 +290,12 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
     _setNewPainter();
     requestRebuild();
     if (announcement != null) {
-      unawaited(SemanticsService.announce(announcement, textDirection));
+      unawaited(
+        SemanticsService.announce(
+          announcement,
+          toDartTextDirection(textDirection),
+        ),
+      );
     }
   }
 
@@ -330,7 +342,7 @@ class ChartContainerCustomPaint extends CustomPainter {
   final common.BaseChart chart;
   final bool exploreMode;
   final List<common.A11yNode> a11yNodes;
-  final sky.TextDirection textDirection;
+  final TextDirection textDirection;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -369,7 +381,7 @@ class ChartContainerCustomPaint extends CustomPainter {
           rect: rect,
           properties: SemanticsProperties(
             value: node.label,
-            textDirection: textDirection,
+            textDirection: toDartTextDirection(textDirection) ,
             onDidGainAccessibilityFocus: node.onFocus,
           ),
         ),
@@ -379,3 +391,11 @@ class ChartContainerCustomPaint extends CustomPainter {
     return nodes;
   }
 }
+
+ui.TextDirection toDartTextDirection(TextDirection textDirection) =>
+    switch (textDirection) {
+      TextDirection.ltr => ui.TextDirection.ltr,
+      TextDirection.rtl => ui.TextDirection.rtl,
+      //TODO: is this mapping correct?
+      TextDirection.center => ui.TextDirection.ltr,
+    };
