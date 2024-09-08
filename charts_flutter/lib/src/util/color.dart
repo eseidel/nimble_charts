@@ -13,16 +13,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/common.dart' as common show Color;
 import 'dart:ui' as ui;
 
-class ColorUtil {
-  static ui.Color toDartColor(common.Color color) {
-    return ui.Color.fromARGB(color.a, color.r, color.g, color.b);
-  }
+import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts_common/common.dart' as common show Color;
 
-  static common.Color fromDartColor(ui.Color color) {
-    return common.Color(
-        r: color.red, g: color.green, b: color.blue, a: color.alpha);
-  }
+class ColorUtil {
+  static ui.Color toDartColor(common.Color color) => color.toDartColor();
+
+  static common.Color fromDartColor(ui.Color color) => color.fromDartColor();
+}
+
+extension ColorExtensions on Color {
+  ui.Color toDartColor() => ui.Color.fromARGB(a, r, g, b);
+
+  Color withAlpha(double alpha) => Color(
+        r: r,
+        g: g,
+        b: b,
+        a: (a * alpha).round(),
+      );
+}
+
+extension UIColorExtensions on ui.Color {
+  common.Color fromDartColor() => common.Color(
+        r: red,
+        g: green,
+        b: blue,
+        a: alpha,
+      );
 }

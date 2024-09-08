@@ -15,12 +15,6 @@
 
 export 'package:nimble_charts_common/common.dart'
     show
-        boundsLineRadiusPxFnKey,
-        boundsLineRadiusPxKey,
-        measureAxisIdKey,
-        pointSymbolRendererFnKey,
-        pointSymbolRendererIdKey,
-        rendererIdKey,
         AnnotationLabelAnchor,
         AnnotationLabelDirection,
         AnnotationLabelPosition,
@@ -47,8 +41,8 @@ export 'package:nimble_charts_common/common.dart'
         BasicDateTimeTickFormatterSpec,
         BasicNumericTickFormatterSpec,
         BasicNumericTickProviderSpec,
-        BasicOrdinalTickProviderSpec,
         BasicOrdinalTickFormatterSpec,
+        BasicOrdinalTickProviderSpec,
         BehaviorPosition,
         BucketingAxisSpec,
         BucketingNumericTickProviderSpec,
@@ -122,11 +116,11 @@ export 'package:nimble_charts_common/common.dart'
         PointRendererElement,
         PointSymbolRenderer,
         QuantumPalette,
+        RTLSpec,
         RangeAnnotationAxisType,
         RangeAnnotationSegment,
         RectSymbolRenderer,
         RenderSpec,
-        RTLSpec,
         SelectionModel,
         SelectionModelListener,
         SelectionModelType,
@@ -160,17 +154,23 @@ export 'package:nimble_charts_common/common.dart'
         TypedAccessorFn,
         UTCDateTimeFactory,
         ViewMargin,
-        VocalizationCallback;
+        VocalizationCallback,
+        boundsLineRadiusPxFnKey,
+        boundsLineRadiusPxKey,
+        measureAxisIdKey,
+        pointSymbolRendererFnKey,
+        pointSymbolRendererIdKey,
+        rendererIdKey;
 
 export 'src/bar_chart.dart';
 export 'src/base_chart.dart' show BaseChart, LayoutConfig;
 export 'src/behaviors/a11y/domain_a11y_explore_behavior.dart'
     show DomainA11yExploreBehavior;
+export 'src/behaviors/calculation/percent_injector.dart' show PercentInjector;
 export 'src/behaviors/chart_behavior.dart' show ChartBehavior;
+export 'src/behaviors/chart_title/chart_title.dart' show ChartTitle;
 export 'src/behaviors/domain_highlighter.dart' show DomainHighlighter;
 export 'src/behaviors/initial_selection.dart' show InitialSelection;
-export 'src/behaviors/calculation/percent_injector.dart' show PercentInjector;
-export 'src/behaviors/chart_title/chart_title.dart' show ChartTitle;
 export 'src/behaviors/legend/datum_legend.dart' show DatumLegend;
 export 'src/behaviors/legend/legend_content_builder.dart'
     show LegendContentBuilder, TabularLegendContentBuilder;
@@ -182,8 +182,8 @@ export 'src/behaviors/legend/series_legend.dart' show SeriesLegend;
 export 'src/behaviors/line_point_highlighter.dart' show LinePointHighlighter;
 export 'src/behaviors/range_annotation.dart' show RangeAnnotation;
 export 'src/behaviors/select_nearest.dart' show SelectNearest;
-export 'src/behaviors/sliding_viewport.dart' show SlidingViewport;
 export 'src/behaviors/slider/slider.dart' show Slider;
+export 'src/behaviors/sliding_viewport.dart' show SlidingViewport;
 export 'src/behaviors/zoom/initial_hint_behavior.dart' show InitialHintBehavior;
 export 'src/behaviors/zoom/pan_and_zoom_behavior.dart' show PanAndZoomBehavior;
 export 'src/behaviors/zoom/pan_behavior.dart' show PanBehavior;
@@ -195,5 +195,5 @@ export 'src/selection_model_config.dart' show SelectionModelConfig;
 export 'src/symbol_renderer.dart' show CustomSymbolRenderer;
 export 'src/time_series_chart.dart';
 export 'src/user_managed_state.dart'
-    show UserManagedState, UserManagedSelectionModel;
+    show UserManagedSelectionModel, UserManagedState;
 export 'src/util/color.dart' show ColorUtil;

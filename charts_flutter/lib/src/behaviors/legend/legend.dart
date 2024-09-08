@@ -19,5 +19,5 @@ import 'package:nimble_charts_common/common.dart'
 abstract class TappableLegend<T, D> {
   /// Delegates handling of legend entry clicks according to the configured
   /// [LegendTapHandling] strategy.
-  onLegendEntryTapUp(LegendEntry detail);
+  void onLegendEntryTapUp(LegendEntry detail);
 }

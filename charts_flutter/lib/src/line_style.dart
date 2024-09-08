@@ -17,6 +17,7 @@ import 'package:nimble_charts_common/common.dart' as common
     show Color, LineStyle;
 
 class LineStyle implements common.LineStyle {
+  LineStyle({this.strokeWidth = 0});
   @override
   common.Color? color;
 
@@ -25,6 +26,4 @@ class LineStyle implements common.LineStyle {
 
   @override
   int strokeWidth;
-
-  LineStyle({this.strokeWidth = 0});
 }

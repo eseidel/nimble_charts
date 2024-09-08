@@ -14,18 +14,21 @@
 // limitations under the License.
 
 import 'dart:ui' show TextAlign, TextDirection;
+
+import 'package:flutter/rendering.dart'
+    show Color, TextBaseline, TextPainter, TextSpan, TextStyle;
 import 'package:nimble_charts_common/common.dart' as common
     show
         MaxWidthStrategy,
-        TextElement,
         TextDirection,
+        TextElement,
         TextMeasurement,
         TextStyle;
-import 'package:flutter/rendering.dart'
-    show Color, TextBaseline, TextPainter, TextSpan, TextStyle;
 
 /// Flutter implementation for text measurement and painter.
 class TextElement implements common.TextElement {
+  TextElement(this.text, {common.TextStyle? style, this.textScaleFactor})
+      : _textStyle = style;
   static const ellipsis = '\u{2026}';
 
   @override
@@ -45,9 +48,6 @@ class TextElement implements common.TextElement {
   late common.TextMeasurement _measurement;
 
   double? _opacity;
-
-  TextElement(this.text, {common.TextStyle? style, this.textScaleFactor})
-      : _textStyle = style;
 
   @override
   common.TextStyle? get textStyle => _textStyle;
@@ -136,23 +136,26 @@ class TextElement implements common.TextElement {
   /// Create text painter and measure based on current settings
   void _refreshPainter() {
     _opacity ??= 1.0;
-    var color = (textStyle == null || textStyle!.color == null)
+    final color = (textStyle == null || textStyle!.color == null)
         ? null
-        : new Color.fromARGB(
+        : Color.fromARGB(
             (textStyle!.color!.a * _opacity!).round(),
             textStyle!.color!.r,
             textStyle!.color!.g,
             textStyle!.color!.b,
           );
 
-    _textPainter = new TextPainter(
-        text: new TextSpan(
-            text: text,
-            style: new TextStyle(
-                color: color,
-                fontSize: textStyle?.fontSize?.toDouble(),
-                fontFamily: textStyle?.fontFamily,
-                height: textStyle?.lineHeight)))
+    _textPainter = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: TextStyle(
+          color: color,
+          fontSize: textStyle?.fontSize?.toDouble(),
+          fontFamily: textStyle?.fontFamily,
+          height: textStyle?.lineHeight,
+        ),
+      ),
+    )
       ..textDirection = TextDirection.ltr
       // TODO Flip once textAlign works
       ..textAlign = TextAlign.left
@@ -176,10 +179,11 @@ class TextElement implements common.TextElement {
     // The font reports a size larger than the drawn size, which makes it
     // difficult to shift the text around to get it to visually line up
     // vertically with other components.
-    _measurement = new common.TextMeasurement(
-        horizontalSliceWidth: _textPainter.width,
-        verticalSliceWidth: _textPainter.height * 0.70,
-        baseline: baseline);
+    _measurement = common.TextMeasurement(
+      horizontalSliceWidth: _textPainter.width,
+      verticalSliceWidth: _textPainter.height * 0.70,
+      baseline: baseline,
+    );
 
     _painterReady = true;
   }

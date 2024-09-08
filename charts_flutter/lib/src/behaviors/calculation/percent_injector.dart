@@ -13,11 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/common.dart' as common
-    show ChartBehavior, PercentInjector, PercentInjectorTotalType;
-import 'package:meta/meta.dart' show immutable;
-
-import '../chart_behavior.dart' show ChartBehavior, GestureType;
+import 'package:flutter/material.dart';
+import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart';
+import 'package:nimble_charts_common/common.dart' as common;
 
 /// Chart behavior that can inject series or domain percentages into each datum.
 ///
@@ -25,31 +24,33 @@ import '../chart_behavior.dart' show ChartBehavior, GestureType;
 ///
 /// The measure values of each datum will be replaced by the percent of the
 /// total measure value that each represents. The "raw" measure accessor
-/// function on [MutableSeries] can still be used to get the original values.
+/// function on [common.MutableSeries] can still be used to get the original
+/// values.
 ///
 /// Note that the results for measureLowerBound and measureUpperBound are not
 /// currently well defined when converted into percentage values. This behavior
 /// will replace them as percents to prevent bad axis results, but no effort is
 /// made to bound them to within a "0 to 100%" data range.
 ///
-/// Note that if the chart has a [Legend] that is capable of hiding series data,
-/// then this behavior must be added after the [Legend] to ensure that it
-/// calculates values after series have been potentially removed from the list.
+/// Note that if the chart has a [common.Legend] that is capable of hiding
+/// series data,then this behavior must be added after the [common.Legend] to
+/// ensure that it calculates values after series have been potentially removed
+/// from the list.
 @immutable
 class PercentInjector<D> extends ChartBehavior<D> {
-  final desiredGestures = new Set<GestureType>();
-
-  /// The type of data total to be calculated.
-  final common.PercentInjectorTotalType totalType;
-
   /// Constructs a [PercentInjector].
   ///
   /// [totalType] configures the type of data total to be calculated.
   PercentInjector({this.totalType = common.PercentInjectorTotalType.domain});
+  @override
+  final desiredGestures = <GestureType>{};
+
+  /// The type of data total to be calculated.
+  final common.PercentInjectorTotalType totalType;
 
   @override
   common.PercentInjector<D> createCommonBehavior() =>
-      new common.PercentInjector<D>(totalType: totalType);
+      common.PercentInjector<D>(totalType: totalType);
 
   @override
   void updateCommonBehavior(common.ChartBehavior commonBehavior) {}
@@ -58,9 +59,8 @@ class PercentInjector<D> extends ChartBehavior<D> {
   String get role => 'PercentInjector';
 
   @override
-  bool operator ==(Object o) {
-    return o is PercentInjector && totalType == o.totalType;
-  }
+  bool operator ==(Object other) =>
+      other is PercentInjector && totalType == other.totalType;
 
   @override
   int get hashCode => totalType.hashCode;

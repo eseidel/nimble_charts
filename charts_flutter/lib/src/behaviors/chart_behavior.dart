@@ -14,16 +14,16 @@
 // limitations under the License.
 
 import 'dart:math' show Rectangle;
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:nimble_charts/src/base_chart_state.dart' show BaseChartState;
 import 'package:nimble_charts_common/common.dart' as common
     show
         BehaviorPosition,
+        ChartBehavior,
         InsideJustification,
-        OutsideJustification,
-        ChartBehavior;
-import 'package:meta/meta.dart' show immutable;
-import 'package:flutter/widgets.dart' show BuildContext, Widget;
-
-import '../base_chart_state.dart' show BaseChartState;
+        OutsideJustification;
 
 /// Flutter wrapper for chart behaviors.
 @immutable
@@ -56,7 +56,8 @@ abstract class BuildableBehavior<B extends common.ChartBehavior> {
   /// Justification of the widget, if [position] is top, bottom, start, or end.
   common.OutsideJustification get outsideJustification;
 
-  /// Justification of the widget if [position] is [common.BehaviorPosition.inside].
+  /// Justification of the widget if [position] is
+  /// [common.BehaviorPosition.inside].
   common.InsideJustification get insideJustification;
 
   /// Chart's draw area bounds are used for positioning.

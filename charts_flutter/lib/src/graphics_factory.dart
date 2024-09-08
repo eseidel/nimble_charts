@@ -13,22 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/common.dart' as common
-    show GraphicsFactory, LineStyle, TextElement, TextStyle;
 import 'package:flutter/widgets.dart'
     show BuildContext, DefaultTextStyle, MediaQuery;
-import 'line_style.dart' show LineStyle;
-import 'text_element.dart' show TextElement;
-import 'text_style.dart' show TextStyle;
+import 'package:nimble_charts/src/line_style.dart' show LineStyle;
+import 'package:nimble_charts/src/text_element.dart' show TextElement;
+import 'package:nimble_charts/src/text_style.dart' show TextStyle;
+import 'package:nimble_charts_common/common.dart' as common
+    show GraphicsFactory, LineStyle, TextElement, TextStyle;
 
 class GraphicsFactory implements common.GraphicsFactory {
+  GraphicsFactory(
+    BuildContext context, {
+    GraphicsFactoryHelper helper = const GraphicsFactoryHelper(),
+  })  : textScaleFactor = helper.getTextScaleFactorOf(context),
+        defaultTextStyle = DefaultTextStyle.of(context);
   final double textScaleFactor;
   final DefaultTextStyle defaultTextStyle;
-
-  GraphicsFactory(BuildContext context,
-      {GraphicsFactoryHelper helper = const GraphicsFactoryHelper()})
-      : textScaleFactor = helper.getTextScaleFactorOf(context),
-        defaultTextStyle = DefaultTextStyle.of(context);
 
   /// Returns a [TextStyle] object.
   @override
@@ -37,10 +37,9 @@ class GraphicsFactory implements common.GraphicsFactory {
 
   /// Returns a text element from [text].
   @override
-  common.TextElement createTextElement(String text) {
-    return TextElement(text, textScaleFactor: textScaleFactor)
-      ..textStyle = createTextPaint();
-  }
+  common.TextElement createTextElement(String text) =>
+      TextElement(text, textScaleFactor: textScaleFactor)
+        ..textStyle = createTextPaint();
 
   @override
   common.LineStyle createLinePaint() => LineStyle();

@@ -51,12 +51,13 @@ List<GalleryScaffold> buildGallery() {
       childBuilder: () =>
           new SelectionLineHighlightCustomShape.withRandomData(),
     ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.flag),
-      title: 'Selection Scatter Plot Highlight',
-      subtitle: 'Scatter plot chart with tap and drag activation',
-      childBuilder: () => new SelectionScatterPlotHighlight.withRandomData(),
-    ),
+    //TODO
+    // new GalleryScaffold(
+    //   listTileIcon: new Icon(Icons.flag),
+    //   title: 'Selection Scatter Plot Highlight',
+    //   subtitle: 'Scatter plot chart with tap and drag activation',
+    //   childBuilder: () => new SelectionScatterPlotHighlight.withRandomData(),
+    // ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.flag),
       title: 'Selection Callback Example',

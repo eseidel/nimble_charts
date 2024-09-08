@@ -13,21 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:collection/collection.dart' show ListEquality;
-import 'package:nimble_charts_common/common.dart' as common
-    show
-        ChartBehavior,
-        LinePointHighlighter,
-        LinePointHighlighterFollowLineType,
-        SelectionModelType,
-        SymbolRenderer;
-import 'package:flutter/widgets.dart' show hashValues;
-import 'package:meta/meta.dart' show immutable;
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
+import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart';
+import 'package:nimble_charts_common/common.dart' as common;
 
-import 'chart_behavior.dart' show ChartBehavior, GestureType;
-
-/// Chart behavior that monitors the specified [SelectionModel] and darkens the
-/// color for selected data.
+/// Chart behavior that monitors the specified [common.SelectionModel] and
+/// darkens the color for selected data.
 ///
 /// This is typically used for bars and pies to highlight segments.
 ///
@@ -35,7 +28,18 @@ import 'chart_behavior.dart' show ChartBehavior, GestureType;
 /// and expand selection out to the domain value.
 @immutable
 class LinePointHighlighter<D> extends ChartBehavior<D> {
-  final desiredGestures = new Set<GestureType>();
+  LinePointHighlighter({
+    this.selectionModelType,
+    this.defaultRadiusPx,
+    this.radiusPaddingPx,
+    this.showHorizontalFollowLine,
+    this.showVerticalFollowLine,
+    this.dashPattern,
+    this.drawFollowLinesAcrossChart,
+    this.symbolRenderer,
+  });
+  @override
+  final desiredGestures = <GestureType>{};
 
   final common.SelectionModelType? selectionModelType;
 
@@ -72,19 +76,9 @@ class LinePointHighlighter<D> extends ChartBehavior<D> {
   /// Renderer used to draw the highlighted points.
   final common.SymbolRenderer? symbolRenderer;
 
-  LinePointHighlighter(
-      {this.selectionModelType,
-      this.defaultRadiusPx,
-      this.radiusPaddingPx,
-      this.showHorizontalFollowLine,
-      this.showVerticalFollowLine,
-      this.dashPattern,
-      this.drawFollowLinesAcrossChart,
-      this.symbolRenderer});
-
   @override
   common.LinePointHighlighter<D> createCommonBehavior() =>
-      new common.LinePointHighlighter<D>(
+      common.LinePointHighlighter<D>(
         selectionModelType: selectionModelType,
         defaultRadiusPx: defaultRadiusPx,
         radiusPaddingPx: radiusPaddingPx,
@@ -99,30 +93,27 @@ class LinePointHighlighter<D> extends ChartBehavior<D> {
   void updateCommonBehavior(common.ChartBehavior<D> commonBehavior) {}
 
   @override
-  String get role => 'LinePointHighlighter-${selectionModelType.toString()}';
+  String get role => 'LinePointHighlighter-$selectionModelType';
 
   @override
-  bool operator ==(Object o) {
-    return o is LinePointHighlighter &&
-        defaultRadiusPx == o.defaultRadiusPx &&
-        radiusPaddingPx == o.radiusPaddingPx &&
-        showHorizontalFollowLine == o.showHorizontalFollowLine &&
-        showVerticalFollowLine == o.showVerticalFollowLine &&
-        selectionModelType == o.selectionModelType &&
-        new ListEquality().equals(dashPattern, o.dashPattern) &&
-        drawFollowLinesAcrossChart == o.drawFollowLinesAcrossChart;
-  }
+  bool operator ==(Object other) =>
+      other is LinePointHighlighter &&
+      defaultRadiusPx == other.defaultRadiusPx &&
+      radiusPaddingPx == other.radiusPaddingPx &&
+      showHorizontalFollowLine == other.showHorizontalFollowLine &&
+      showVerticalFollowLine == other.showVerticalFollowLine &&
+      selectionModelType == other.selectionModelType &&
+      const ListEquality().equals(dashPattern, other.dashPattern) &&
+      drawFollowLinesAcrossChart == other.drawFollowLinesAcrossChart;
 
   @override
-  int get hashCode {
-    return hashValues(
-      selectionModelType,
-      defaultRadiusPx,
-      radiusPaddingPx,
-      showHorizontalFollowLine,
-      showVerticalFollowLine,
-      dashPattern,
-      drawFollowLinesAcrossChart,
-    );
-  }
+  int get hashCode => hashValues(
+        selectionModelType,
+        defaultRadiusPx,
+        radiusPaddingPx,
+        showHorizontalFollowLine,
+        showVerticalFollowLine,
+        dashPattern,
+        drawFollowLinesAcrossChart,
+      );
 }

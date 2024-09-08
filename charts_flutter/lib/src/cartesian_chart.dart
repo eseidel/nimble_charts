@@ -14,92 +14,72 @@
 // limitations under the License.
 
 import 'dart:collection' show LinkedHashMap;
-import 'package:meta/meta.dart' show immutable, protected;
 
+import 'package:meta/meta.dart' show immutable, protected;
+import 'package:nimble_charts/src/base_chart.dart' show BaseChart;
+import 'package:nimble_charts/src/base_chart_state.dart' show BaseChartState;
 import 'package:nimble_charts_common/common.dart' as common
-    show
-        AxisSpec,
-        BaseChart,
-        CartesianChart,
-        NumericAxis,
-        NumericAxisSpec,
-        RTLSpec,
-        Series,
-        SeriesRendererConfig;
-import 'base_chart_state.dart' show BaseChartState;
-import 'behaviors/chart_behavior.dart' show ChartBehavior;
-import 'base_chart.dart' show BaseChart, LayoutConfig;
-import 'selection_model_config.dart' show SelectionModelConfig;
-import 'user_managed_state.dart' show UserManagedState;
+    show AxisSpec, BaseChart, CartesianChart, NumericAxis, NumericAxisSpec;
 
 @immutable
 abstract class CartesianChart<D> extends BaseChart<D> {
+  const CartesianChart(
+    super.seriesList, {
+    super.key,
+    super.animate,
+    super.animationDuration,
+    this.domainAxis,
+    this.primaryMeasureAxis,
+    this.secondaryMeasureAxis,
+    this.disjointMeasureAxes,
+    super.defaultRenderer,
+    super.customSeriesRenderers,
+    super.behaviors,
+    super.selectionModels,
+    super.rtlSpec,
+    super.defaultInteractions,
+    super.layoutConfig,
+    super.userManagedState,
+    this.flipVerticalAxis,
+  });
   final common.AxisSpec? domainAxis;
   final common.NumericAxisSpec? primaryMeasureAxis;
   final common.NumericAxisSpec? secondaryMeasureAxis;
   final LinkedHashMap<String, common.NumericAxisSpec>? disjointMeasureAxes;
   final bool? flipVerticalAxis;
 
-  CartesianChart(
-    List<common.Series<dynamic, D>> seriesList, {
-    bool? animate,
-    Duration? animationDuration,
-    this.domainAxis,
-    this.primaryMeasureAxis,
-    this.secondaryMeasureAxis,
-    this.disjointMeasureAxes,
-    common.SeriesRendererConfig<D>? defaultRenderer,
-    List<common.SeriesRendererConfig<D>>? customSeriesRenderers,
-    List<ChartBehavior<D>>? behaviors,
-    List<SelectionModelConfig<D>>? selectionModels,
-    common.RTLSpec? rtlSpec,
-    bool defaultInteractions = true,
-    LayoutConfig? layoutConfig,
-    UserManagedState<D>? userManagedState,
-    this.flipVerticalAxis,
-  }) : super(
-          seriesList,
-          animate: animate,
-          animationDuration: animationDuration,
-          defaultRenderer: defaultRenderer,
-          customSeriesRenderers: customSeriesRenderers,
-          behaviors: behaviors,
-          selectionModels: selectionModels,
-          rtlSpec: rtlSpec,
-          defaultInteractions: defaultInteractions,
-          layoutConfig: layoutConfig,
-          userManagedState: userManagedState,
-        );
-
   @override
-  void updateCommonChart(common.BaseChart<D> baseChart, BaseChart<D>? oldWidget,
-      BaseChartState<D> chartState) {
-    super.updateCommonChart(baseChart, oldWidget, chartState);
+  void updateCommonChart(
+    common.BaseChart<D> chart,
+    BaseChart<D>? oldWidget,
+    BaseChartState<D> chartState,
+  ) {
+    super.updateCommonChart(chart, oldWidget, chartState);
 
     final prev = oldWidget as CartesianChart?;
-    final chart = baseChart as common.CartesianChart;
+    final cartesianChart = chart as common.CartesianChart;
 
     if (flipVerticalAxis != null) {
-      chart.flipVerticalAxisOutput = flipVerticalAxis!;
+      cartesianChart.flipVerticalAxisOutput = flipVerticalAxis!;
     }
 
     if (domainAxis != null && domainAxis != prev?.domainAxis) {
-      chart.domainAxisSpec = domainAxis!;
+      cartesianChart.domainAxisSpec = domainAxis!;
       chartState.markChartDirty();
     }
 
     if (primaryMeasureAxis != prev?.primaryMeasureAxis) {
-      chart.primaryMeasureAxisSpec = primaryMeasureAxis;
+      cartesianChart.primaryMeasureAxisSpec = primaryMeasureAxis;
       chartState.markChartDirty();
     }
 
     if (secondaryMeasureAxis != prev?.secondaryMeasureAxis) {
-      chart.secondaryMeasureAxisSpec = secondaryMeasureAxis;
+      cartesianChart.secondaryMeasureAxisSpec = secondaryMeasureAxis;
       chartState.markChartDirty();
     }
 
     if (disjointMeasureAxes != prev?.disjointMeasureAxes) {
-      chart.disjointMeasureAxisSpecs = disjointMeasureAxes;
+      cartesianChart.disjointMeasureAxisSpecs = disjointMeasureAxes;
       chartState.markChartDirty();
     }
   }
@@ -107,10 +87,10 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   @protected
   LinkedHashMap<String, common.NumericAxis>? createDisjointMeasureAxes() {
     if (disjointMeasureAxes != null) {
-      final disjointAxes = new LinkedHashMap<String, common.NumericAxis>();
+      // ignore: prefer_collection_literals
+      final disjointAxes = LinkedHashMap<String, common.NumericAxis>();
 
-      disjointMeasureAxes!
-          .forEach((String axisId, common.NumericAxisSpec axisSpec) {
+      disjointMeasureAxes!.forEach((axisId, axisSpec) {
         disjointAxes[axisId] = axisSpec.createAxis();
       });
 

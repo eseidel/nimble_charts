@@ -13,55 +13,56 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/common.dart' as common
-    show ChartBehavior, InitialSelection, SeriesDatumConfig, SelectionModelType;
 import 'package:collection/collection.dart' show ListEquality;
 import 'package:meta/meta.dart' show immutable;
-
-import 'chart_behavior.dart' show ChartBehavior, GestureType;
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart'
+    show ChartBehavior, GestureType;
+import 'package:nimble_charts_common/common.dart' as common
+    show ChartBehavior, InitialSelection, SelectionModelType, SeriesDatumConfig;
 
 /// Chart behavior that sets the initial selection for a [selectionModelType].
 @immutable
 class InitialSelection<D> extends ChartBehavior<D> {
-  final desiredGestures = new Set<GestureType>();
+  InitialSelection({
+    this.selectionModelType = common.SelectionModelType.info,
+    this.selectedSeriesConfig,
+    this.selectedDataConfig,
+    this.shouldPreserveSelectionOnDraw = false,
+  });
+  @override
+  final desiredGestures = <GestureType>{};
 
   final common.SelectionModelType selectionModelType;
   final List<String>? selectedSeriesConfig;
   final List<common.SeriesDatumConfig<D>>? selectedDataConfig;
   final bool shouldPreserveSelectionOnDraw;
 
-  InitialSelection(
-      {this.selectionModelType = common.SelectionModelType.info,
-      this.selectedSeriesConfig,
-      this.selectedDataConfig,
-      this.shouldPreserveSelectionOnDraw = false});
-
   @override
   common.InitialSelection<D> createCommonBehavior() =>
-      new common.InitialSelection<D>(
-          selectionModelType: selectionModelType,
-          selectedDataConfig: selectedDataConfig,
-          selectedSeriesConfig: selectedSeriesConfig,
-          shouldPreserveSelectionOnDraw: shouldPreserveSelectionOnDraw);
+      common.InitialSelection<D>(
+        selectionModelType: selectionModelType,
+        selectedDataConfig: selectedDataConfig,
+        selectedSeriesConfig: selectedSeriesConfig,
+        shouldPreserveSelectionOnDraw: shouldPreserveSelectionOnDraw,
+      );
 
   @override
   void updateCommonBehavior(common.ChartBehavior commonBehavior) {}
 
   @override
-  String get role => 'InitialSelection-${selectionModelType.toString()}';
+  String get role => 'InitialSelection-$selectionModelType';
 
   @override
-  bool operator ==(Object o) {
-    return o is InitialSelection &&
-        selectionModelType == o.selectionModelType &&
-        new ListEquality()
-            .equals(selectedSeriesConfig, o.selectedSeriesConfig) &&
-        new ListEquality().equals(selectedDataConfig, o.selectedDataConfig);
-  }
+  bool operator ==(Object other) =>
+      other is InitialSelection &&
+      selectionModelType == other.selectionModelType &&
+      const ListEquality()
+          .equals(selectedSeriesConfig, other.selectedSeriesConfig) &&
+      const ListEquality().equals(selectedDataConfig, other.selectedDataConfig);
 
   @override
   int get hashCode {
-    int hashcode = selectionModelType.hashCode;
+    var hashcode = selectionModelType.hashCode;
     hashcode = hashcode * 37 + (selectedSeriesConfig?.hashCode ?? 0);
     hashcode = hashcode * 37 + (selectedDataConfig?.hashCode ?? 0);
     return hashcode;

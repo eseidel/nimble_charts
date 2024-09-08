@@ -13,40 +13,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/common.dart' as common
-    show ChartBehavior, SelectionModelType, SlidingViewport;
-
-import 'package:meta/meta.dart' show immutable;
-
-import 'chart_behavior.dart' show ChartBehavior, GestureType;
+import 'package:flutter/material.dart';
+import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart';
+import 'package:nimble_charts_common/common.dart' as common;
 
 /// Chart behavior that centers the viewport on the selected domain.
 ///
 /// It is used in combination with SelectNearest to update the selection model
 /// and notify this behavior to update the viewport on selection change.
 ///
-/// This behavior can only be used on [CartesianChart].
+/// This behavior can only be used on [common.CartesianChart].
 @immutable
 class SlidingViewport<D> extends ChartBehavior<D> {
-  final desiredGestures = new Set<GestureType>();
+  SlidingViewport([this.selectionModelType = common.SelectionModelType.info]);
+  @override
+  final desiredGestures = <GestureType>{};
 
   final common.SelectionModelType selectionModelType;
 
-  SlidingViewport([this.selectionModelType = common.SelectionModelType.info]);
-
   @override
   common.SlidingViewport<D> createCommonBehavior() =>
-      new common.SlidingViewport<D>(selectionModelType);
+      common.SlidingViewport<D>(selectionModelType);
 
   @override
   void updateCommonBehavior(common.ChartBehavior<D> commonBehavior) {}
 
   @override
-  String get role => 'slidingViewport-${selectionModelType.toString()}';
+  String get role => 'slidingViewport-$selectionModelType';
 
   @override
-  bool operator ==(Object o) =>
-      o is SlidingViewport && selectionModelType == o.selectionModelType;
+  bool operator ==(Object other) =>
+      other is SlidingViewport &&
+      selectionModelType == other.selectionModelType;
 
   @override
   int get hashCode => selectionModelType.hashCode;

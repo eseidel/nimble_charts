@@ -16,10 +16,11 @@
 import 'package:flutter/rendering.dart'
     show
         RenderBox,
-        RenderSemanticsGestureHandler,
+        RenderCustomMultiChildLayoutBox,
         RenderPointerListener,
-        RenderCustomMultiChildLayoutBox;
-import 'chart_container.dart' show ChartContainerRenderObject;
+        RenderSemanticsGestureHandler;
+import 'package:nimble_charts/src/chart_container.dart'
+    show ChartContainerRenderObject;
 
 /// Get the [ChartContainerRenderObject] from a [RenderBox].
 ///
@@ -37,9 +38,9 @@ ChartContainerRenderObject getChartContainerRenderObject(RenderBox box) {
 
   assert(renderPointerListener is RenderPointerListener);
   final chartContainerRenderObject =
-      (renderPointerListener as RenderPointerListener).child;
+      (renderPointerListener! as RenderPointerListener).child;
 
   assert(chartContainerRenderObject is ChartContainerRenderObject);
 
-  return chartContainerRenderObject as ChartContainerRenderObject;
+  return chartContainerRenderObject! as ChartContainerRenderObject;
 }

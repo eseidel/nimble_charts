@@ -29,12 +29,13 @@ List<GalleryScaffold> buildGallery() {
       subtitle: 'With a single series',
       childBuilder: () => new SimpleScatterPlotChart.withRandomData(),
     ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.scatter_plot),
-      title: 'Shapes Scatter Plot Chart',
-      subtitle: 'With custom shapes',
-      childBuilder: () => new ShapesScatterPlotChart.withRandomData(),
-    ),
+    //TODO:
+    // new GalleryScaffold(
+    //   listTileIcon: new Icon(Icons.scatter_plot),
+    //   title: 'Shapes Scatter Plot Chart',
+    //   subtitle: 'With custom shapes',
+    //   childBuilder: () => new ShapesScatterPlotChart.withRandomData(),
+    // ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.scatter_plot),
       title: 'Comparison Points Scatter Plot Chart',

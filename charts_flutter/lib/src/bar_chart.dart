@@ -15,33 +15,19 @@
 
 import 'dart:collection' show LinkedHashMap;
 
-import 'package:nimble_charts_common/common.dart' as common
-    show
-        AxisSpec,
-        BarChart,
-        BarGroupingType,
-        BarRendererConfig,
-        BarRendererDecorator,
-        NumericAxisSpec,
-        RTLSpec,
-        Series,
-        SeriesRendererConfig;
-import 'behaviors/domain_highlighter.dart' show DomainHighlighter;
-import 'behaviors/chart_behavior.dart' show ChartBehavior;
-import 'package:meta/meta.dart' show immutable;
-import 'base_chart.dart' show LayoutConfig;
-import 'base_chart_state.dart' show BaseChartState;
-import 'cartesian_chart.dart' show CartesianChart;
-import 'selection_model_config.dart' show SelectionModelConfig;
-import 'user_managed_state.dart' show UserManagedState;
+import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts/src/base_chart_state.dart';
+import 'package:nimble_charts/src/cartesian_chart.dart' as cart;
+import 'package:nimble_charts_common/common.dart' as common;
 
-@immutable
-class BarChart extends CartesianChart<String> {
+class BarChart extends cart.CartesianChart<String> {
   final bool vertical;
   final common.BarRendererDecorator<String>? barRendererDecorator;
 
+  // ignore: sort_constructors_first, use_super_parameters
   BarChart(
     List<common.Series<dynamic, String>> seriesList, {
+    super.key,
     bool? animate,
     Duration? animationDuration,
     common.AxisSpec? domainAxis,
@@ -69,9 +55,10 @@ class BarChart extends CartesianChart<String> {
           secondaryMeasureAxis: secondaryMeasureAxis,
           disjointMeasureAxes: disjointMeasureAxes,
           defaultRenderer: defaultRenderer ??
-              new common.BarRendererConfig<String>(
-                  groupingType: barGroupingType,
-                  barRendererDecorator: barRendererDecorator),
+              common.BarRendererConfig<String>(
+                groupingType: barGroupingType,
+                barRendererDecorator: barRendererDecorator,
+              ),
           customSeriesRenderers: customSeriesRenderers,
           behaviors: behaviors,
           selectionModels: selectionModels,
@@ -83,22 +70,24 @@ class BarChart extends CartesianChart<String> {
         );
 
   @override
-  common.BarChart createCommonChart(BaseChartState chartState) {
-    // Optionally create primary and secondary measure axes if the chart was
-    // configured with them. If no axes were configured, then the chart will
-    // use its default types (usually a numeric axis).
-    return new common.BarChart(
+  common.BaseChart<String> createCommonChart(
+    BaseChartState<String> chartState,
+  ) =>
+      // Optionally create primary and secondary measure axes if the chart was
+      // configured with them. If no axes were configured, then the chart will
+      // use its default types (usually a numeric axis).
+      common.BarChart(
         vertical: vertical,
         layoutConfig: layoutConfig?.commonLayoutConfig,
         primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
         secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
-        disjointMeasureAxes: createDisjointMeasureAxes());
-  }
+        disjointMeasureAxes: createDisjointMeasureAxes(),
+      );
 
   @override
   void addDefaultInteractions(List<ChartBehavior> behaviors) {
     super.addDefaultInteractions(behaviors);
 
-    behaviors.add(new DomainHighlighter<String>());
+    behaviors.add(DomainHighlighter<String>());
   }
 }

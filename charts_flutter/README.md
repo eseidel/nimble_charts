@@ -23,7 +23,7 @@ This is the original example app, running in a browser with WASM.
 
 Add the following to your `pubspec.yaml`:
 
-nimble_charts: ^1.0.0-beta
+nimble_charts: ^0.1.0-beta
 
 ## 📝 Usage
 

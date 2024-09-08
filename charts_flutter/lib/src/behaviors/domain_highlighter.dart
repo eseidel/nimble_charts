@@ -13,15 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/common.dart' as common
-    show ChartBehavior, DomainHighlighter, SelectionModelType;
+import 'package:flutter/material.dart';
+import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart';
+import 'package:nimble_charts_common/common.dart' as common;
 
-import 'package:meta/meta.dart' show immutable;
-
-import 'chart_behavior.dart' show ChartBehavior, GestureType;
-
-/// Chart behavior that monitors the specified [SelectionModel] and darkens the
-/// color for selected data.
+/// Chart behavior that monitors the specified [common.SelectionModel] and
+/// darkens the color for selected data.
 ///
 /// This is typically used for bars and pies to highlight segments.
 ///
@@ -29,25 +27,26 @@ import 'chart_behavior.dart' show ChartBehavior, GestureType;
 /// and expand selection out to the domain value.
 @immutable
 class DomainHighlighter<D> extends ChartBehavior<D> {
-  final desiredGestures = new Set<GestureType>();
+  DomainHighlighter([this.selectionModelType = common.SelectionModelType.info]);
+  @override
+  final desiredGestures = <GestureType>{};
 
   final common.SelectionModelType selectionModelType;
 
-  DomainHighlighter([this.selectionModelType = common.SelectionModelType.info]);
-
   @override
   common.DomainHighlighter<D> createCommonBehavior() =>
-      new common.DomainHighlighter<D>(selectionModelType);
+      common.DomainHighlighter<D>(selectionModelType);
 
   @override
   void updateCommonBehavior(common.ChartBehavior commonBehavior) {}
 
   @override
-  String get role => 'domainHighlight-${selectionModelType.toString()}';
+  String get role => 'domainHighlight-$selectionModelType';
 
   @override
-  bool operator ==(Object o) =>
-      o is DomainHighlighter && selectionModelType == o.selectionModelType;
+  bool operator ==(Object other) =>
+      other is DomainHighlighter &&
+      selectionModelType == other.selectionModelType;
 
   @override
   int get hashCode => selectionModelType.hashCode;

@@ -17,7 +17,6 @@ import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 
 /// This is just a simple line chart with a behavior that adds slider controls.
@@ -119,7 +118,7 @@ class _SliderCallbackState extends State<SliderLine> {
       });
     }
 
-    SchedulerBinding.instance!.addPostFrameCallback(rebuild);
+    SchedulerBinding.instance.addPostFrameCallback(rebuild);
   }
 
   @override

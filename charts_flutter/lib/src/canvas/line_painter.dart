@@ -13,8 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:ui' as ui show Shader;
 import 'dart:math' show Point, Rectangle;
+import 'dart:ui' as ui show Shader;
+
 import 'package:flutter/material.dart';
 import 'package:nimble_charts_common/common.dart' as common show Color;
 
@@ -31,17 +32,18 @@ class LinePainter {
   /// to stroke-dasharray in SVG path elements. An odd number of values in the
   /// pattern will be repeated to derive an even number of values. "1,2,3" is
   /// equivalent to "1,2,3,1,2,3."
-  static void draw(
-      {required Canvas canvas,
-      required Paint paint,
-      required List<Point> points,
-      Rectangle<num>? clipBounds,
-      common.Color? fill,
-      common.Color? stroke,
-      bool? roundEndCaps,
-      double? strokeWidthPx,
-      List<int>? dashPattern,
-      ui.Shader? shader}) {
+  static void draw({
+    required Canvas canvas,
+    required Paint paint,
+    required List<Point> points,
+    Rectangle<num>? clipBounds,
+    common.Color? fill,
+    common.Color? stroke,
+    bool? roundEndCaps,
+    double? strokeWidthPx,
+    List<int>? dashPattern,
+    ui.Shader? shader,
+  }) {
     if (points.isEmpty) {
       return;
     }
@@ -50,14 +52,17 @@ class LinePainter {
     if (clipBounds != null) {
       canvas
         ..save()
-        ..clipRect(new Rect.fromLTWH(
+        ..clipRect(
+          Rect.fromLTWH(
             clipBounds.left.toDouble(),
             clipBounds.top.toDouble(),
             clipBounds.width.toDouble(),
-            clipBounds.height.toDouble()));
+            clipBounds.height.toDouble(),
+          ),
+        );
     }
 
-    paint.color = new Color.fromARGB(stroke!.a, stroke.r, stroke.g, stroke.b);
+    paint.color = Color.fromARGB(stroke!.a, stroke.r, stroke.g, stroke.b);
 
     if (shader != null) {
       paint.shader = shader;
@@ -67,14 +72,18 @@ class LinePainter {
     if (points.length == 1) {
       final point = points.first;
       paint.style = PaintingStyle.fill;
-      canvas.drawCircle(new Offset(point.x.toDouble(), point.y.toDouble()),
-          strokeWidthPx ?? 0, paint);
+      canvas.drawCircle(
+        Offset(point.x.toDouble(), point.y.toDouble()),
+        strokeWidthPx ?? 0,
+        paint,
+      );
     } else {
       if (strokeWidthPx != null) {
         paint.strokeWidth = strokeWidthPx;
       }
-      paint.strokeJoin = StrokeJoin.round;
-      paint.style = PaintingStyle.stroke;
+      paint
+        ..strokeJoin = StrokeJoin.round
+        ..style = PaintingStyle.stroke;
 
       if (dashPattern == null || dashPattern.isEmpty) {
         if (roundEndCaps == true) {
@@ -96,10 +105,10 @@ class LinePainter {
   static void _drawSolidLine(Canvas canvas, Paint paint, List<Point> points) {
     // TODO: Extract a native line component which constructs the
     // appropriate underlying data structures to avoid conversion.
-    final path = new Path()
+    final path = Path()
       ..moveTo(points.first.x.toDouble(), points.first.y.toDouble());
 
-    for (var point in points) {
+    for (final point in points) {
       path.lineTo(point.x.toDouble(), point.y.toDouble());
     }
 
@@ -108,12 +117,16 @@ class LinePainter {
 
   /// Draws dashed lines lines between each point.
   static void _drawDashedLine(
-      Canvas canvas, Paint paint, List<Point> points, List<int> dashPattern) {
-    final localDashPattern = new List.from(dashPattern);
+    Canvas canvas,
+    Paint paint,
+    List<Point> points,
+    List<int> dashPattern,
+  ) {
+    final localDashPattern = List<int>.from(dashPattern);
 
     // If an odd number of parts are defined, repeat the pattern to get an even
     // number.
-    if (dashPattern.length % 2 == 1) {
+    if (dashPattern.length.isOdd) {
       localDashPattern.addAll(dashPattern);
     }
 
@@ -126,16 +139,16 @@ class LinePainter {
 
     // Gets the next segment in the dash pattern, looping back to the
     // beginning once the end has been reached.
-    var getNextDashPatternSegment = () {
+    int getNextDashPatternSegment() {
       final dashSegment = localDashPattern[dashPatternIndex];
       dashPatternIndex = (dashPatternIndex + 1) % localDashPattern.length;
       return dashSegment;
-    };
+    }
 
     // Array of points that is used to draw a connecting path when only a
     // partial dash pattern segment can be drawn in the remaining length of a
     // line segment (between two defined points in the shape).
-    var remainderPoints;
+    List<Offset>? remainderPoints;
 
     // Draw the path through all the rest of the points in the series.
     for (var pointIndex = 1; pointIndex < points.length; pointIndex++) {
@@ -152,13 +165,13 @@ class LinePainter {
         var d = _getOffsetDistance(previousSeriesPoint, seriesPoint);
 
         while (d > 0) {
-          var dashSegment =
+          final dashSegment =
               remainder > 0 ? remainder : getNextDashPatternSegment();
           remainder = 0;
 
           // Create a unit vector in the direction from previous to next point.
           final v = seriesPoint - previousPoint;
-          final u = new Offset(v.dx / v.distance, v.dy / v.distance);
+          final u = Offset(v.dx / v.distance, v.dy / v.distance);
 
           // If the remaining distance is less than the length of the dash
           // pattern segment, then cut off the pattern segment for this portion
@@ -176,12 +189,12 @@ class LinePainter {
               // If we had a partial un-drawn dash from the previous point along
               // the line, draw a path that includes it and the end of the dash
               // pattern segment in the current line segment.
-              remainderPoints.add(new Offset(nextPoint.dx, nextPoint.dy));
+              remainderPoints.add(Offset(nextPoint.dx, nextPoint.dy));
 
-              final path = new Path()
+              final path = Path()
                 ..moveTo(remainderPoints.first.dx, remainderPoints.first.dy);
 
-              for (var p in remainderPoints) {
+              for (final p in remainderPoints) {
                 path.lineTo(p.dx, p.dy);
               }
 
@@ -200,8 +213,8 @@ class LinePainter {
                 // distance into account before starting the next dash in the
                 // next line segment.
                 remainderPoints = [
-                  new Offset(previousPoint.dx, previousPoint.dy),
-                  new Offset(nextPoint.dx, nextPoint.dy)
+                  Offset(previousPoint.dx, previousPoint.dy),
+                  Offset(nextPoint.dx, nextPoint.dy),
                 ];
               } else {
                 // Otherwise, draw a simple line segment for this dash.
@@ -233,12 +246,12 @@ class LinePainter {
 
   /// Converts a [Point] into an [Offset].
   static Offset _getOffset(Point point) =>
-      new Offset(point.x.toDouble(), point.y.toDouble());
+      Offset(point.x.toDouble(), point.y.toDouble());
 
   /// Computes the distance between two [Offset]s, as if they were [Point]s.
-  static num _getOffsetDistance(Offset o1, Offset o2) {
-    final p1 = new Point(o1.dx, o1.dy);
-    final p2 = new Point(o2.dx, o2.dy);
+  static double _getOffsetDistance(Offset o1, Offset o2) {
+    final p1 = Point(o1.dx, o1.dy);
+    final p2 = Point(o2.dx, o2.dy);
     return p1.distanceTo(p2);
   }
 }

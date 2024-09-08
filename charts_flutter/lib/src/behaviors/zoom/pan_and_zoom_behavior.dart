@@ -13,19 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:meta/meta.dart' show immutable;
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart'
+    show ChartBehavior, GestureType;
+import 'package:nimble_charts/src/behaviors/zoom/pan_behavior.dart'
+    show FlutterPanBehaviorMixin;
 import 'package:nimble_charts_common/common.dart' as common
     show ChartBehavior, PanAndZoomBehavior, PanningCompletedCallback;
-import 'package:meta/meta.dart' show immutable;
-
-import '../chart_behavior.dart' show ChartBehavior, GestureType;
-import 'pan_behavior.dart' show FlutterPanBehaviorMixin;
 
 @immutable
 class PanAndZoomBehavior<D> extends ChartBehavior<D> {
-  final _desiredGestures = new Set<GestureType>.from([
+  PanAndZoomBehavior({this.panningCompletedCallback});
+  final _desiredGestures = <GestureType>{
     GestureType.onDrag,
-  ]);
+  };
 
+  @override
   Set<GestureType> get desiredGestures => _desiredGestures;
 
   /// Optional callback that is called when pan / zoom is completed.
@@ -34,13 +37,10 @@ class PanAndZoomBehavior<D> extends ChartBehavior<D> {
   /// This is because panning is only completed when the flinging stops.
   final common.PanningCompletedCallback? panningCompletedCallback;
 
-  PanAndZoomBehavior({this.panningCompletedCallback});
-
   @override
-  common.PanAndZoomBehavior<D> createCommonBehavior() {
-    return new FlutterPanAndZoomBehavior<D>()
-      ..panningCompletedCallback = panningCompletedCallback;
-  }
+  common.PanAndZoomBehavior<D> createCommonBehavior() =>
+      FlutterPanAndZoomBehavior<D>()
+        ..panningCompletedCallback = panningCompletedCallback;
 
   @override
   void updateCommonBehavior(common.ChartBehavior commonBehavior) {}
@@ -48,14 +48,13 @@ class PanAndZoomBehavior<D> extends ChartBehavior<D> {
   @override
   String get role => 'PanAndZoom';
 
-  bool operator ==(Object other) {
-    return other is PanAndZoomBehavior &&
-        other.panningCompletedCallback == panningCompletedCallback;
-  }
+  @override
+  bool operator ==(Object other) =>
+      other is PanAndZoomBehavior &&
+      other.panningCompletedCallback == panningCompletedCallback;
 
-  int get hashCode {
-    return panningCompletedCallback.hashCode;
-  }
+  @override
+  int get hashCode => panningCompletedCallback.hashCode;
 }
 
 /// Adds fling gesture support to [common.PanAndZoomBehavior], by way of

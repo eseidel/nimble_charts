@@ -14,29 +14,30 @@
 // limitations under the License.
 
 import 'package:flutter/widgets.dart' show AnimationController;
-
+import 'package:meta/meta.dart' show immutable;
+import 'package:nimble_charts/src/base_chart_state.dart' show BaseChartState;
+import 'package:nimble_charts/src/behaviors/chart_behavior.dart'
+    show ChartBehavior, ChartStateBehavior, GestureType;
 import 'package:nimble_charts_common/common.dart' as common
     show BaseChart, ChartBehavior, InitialHintBehavior;
-import 'package:meta/meta.dart' show immutable;
-
-import '../../base_chart_state.dart' show BaseChartState;
-import '../chart_behavior.dart'
-    show ChartBehavior, ChartStateBehavior, GestureType;
 
 @immutable
 class InitialHintBehavior<D> extends ChartBehavior<D> {
-  final desiredGestures = new Set<GestureType>();
+  InitialHintBehavior({
+    this.hintDuration,
+    this.maxHintTranslate,
+    this.maxHintScaleFactor,
+  });
+  @override
+  final desiredGestures = <GestureType>{};
 
   final Duration? hintDuration;
   final double? maxHintTranslate;
   final double? maxHintScaleFactor;
 
-  InitialHintBehavior(
-      {this.hintDuration, this.maxHintTranslate, this.maxHintScaleFactor});
-
   @override
   common.InitialHintBehavior<D> createCommonBehavior() {
-    final behavior = new FlutterInitialHintBehavior<D>();
+    final behavior = FlutterInitialHintBehavior<D>();
 
     if (hintDuration != null) {
       behavior.hintDuration = hintDuration!;
@@ -47,7 +48,7 @@ class InitialHintBehavior<D> extends ChartBehavior<D> {
     }
 
     if (maxHintScaleFactor != null) {
-      behavior.maxHintScaleFactor = maxHintScaleFactor!;
+      behavior.maxHintScaleFactor = maxHintScaleFactor;
     }
 
     return behavior;
@@ -59,13 +60,12 @@ class InitialHintBehavior<D> extends ChartBehavior<D> {
   @override
   String get role => 'InitialHint';
 
-  bool operator ==(Object other) {
-    return other is InitialHintBehavior && other.hintDuration == hintDuration;
-  }
+  @override
+  bool operator ==(Object other) =>
+      other is InitialHintBehavior && other.hintDuration == hintDuration;
 
-  int get hashCode {
-    return hintDuration.hashCode;
-  }
+  @override
+  int get hashCode => hintDuration.hashCode;
 }
 
 /// Adds a native animation controller required for [common.InitialHintBehavior]
@@ -76,9 +76,8 @@ class FlutterInitialHintBehavior<D> extends common.InitialHintBehavior<D>
 
   BaseChartState? _chartState;
 
+  @override
   set chartState(BaseChartState chartState) {
-    assert(chartState != null);
-
     _chartState = chartState;
 
     _hintAnimator = chartState.getAnimationController(this);
@@ -91,7 +90,7 @@ class FlutterInitialHintBehavior<D> extends common.InitialHintBehavior<D>
 
     _hintAnimator!
       ..duration = hintDuration
-      ..forward(from: 0.0);
+      ..forward(from: 0);
   }
 
   @override
@@ -123,7 +122,7 @@ class FlutterInitialHintBehavior<D> extends common.InitialHintBehavior<D>
   }
 
   @override
-  removeFrom(common.BaseChart<D> chart) {
+  void removeFrom(common.BaseChart<D> chart) {
     _chartState!.disposeAnimationController(this);
     _hintAnimator = null;
     super.removeFrom(chart);

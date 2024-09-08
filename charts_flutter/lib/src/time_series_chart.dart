@@ -13,85 +13,54 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:collection' show LinkedHashMap;
+import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts/src/base_chart_state.dart';
+import 'package:nimble_charts/src/cartesian_chart.dart' as cart;
+import 'package:nimble_charts_common/common.dart' as common;
 
-import 'package:nimble_charts_common/common.dart' as common
-    show
-        AxisSpec,
-        DateTimeFactory,
-        LocalDateTimeFactory,
-        NumericAxisSpec,
-        Series,
-        SeriesRendererConfig,
-        TimeSeriesChart;
-import 'behaviors/chart_behavior.dart' show ChartBehavior;
-import 'behaviors/line_point_highlighter.dart' show LinePointHighlighter;
-import 'cartesian_chart.dart' show CartesianChart;
-import 'base_chart.dart' show LayoutConfig;
-import 'base_chart_state.dart' show BaseChartState;
-import 'selection_model_config.dart' show SelectionModelConfig;
-import 'user_managed_state.dart' show UserManagedState;
-
-class TimeSeriesChart extends CartesianChart<DateTime> {
-  final common.DateTimeFactory? dateTimeFactory;
-
+class TimeSeriesChart extends cart.CartesianChart<DateTime> {
   /// Create a [TimeSeriesChart].
   ///
   /// [dateTimeFactory] allows specifying a factory that creates [DateTime] to
   /// be used for the time axis. If none specified, local date time is used.
-  TimeSeriesChart(
-    List<common.Series<dynamic, DateTime>> seriesList, {
-    bool? animate,
-    Duration? animationDuration,
-    common.AxisSpec? domainAxis,
-    common.NumericAxisSpec? primaryMeasureAxis,
-    common.NumericAxisSpec? secondaryMeasureAxis,
-    LinkedHashMap<String, common.NumericAxisSpec>? disjointMeasureAxes,
-    common.SeriesRendererConfig<DateTime>? defaultRenderer,
-    List<common.SeriesRendererConfig<DateTime>>? customSeriesRenderers,
-    List<ChartBehavior<DateTime>>? behaviors,
-    List<SelectionModelConfig<DateTime>>? selectionModels,
-    LayoutConfig? layoutConfig,
+  const TimeSeriesChart(
+    super.seriesList, {
+    super.key,
+    super.animate,
+    super.animationDuration,
+    super.domainAxis,
+    super.primaryMeasureAxis,
+    super.secondaryMeasureAxis,
+    super.disjointMeasureAxes,
+    super.defaultRenderer,
+    super.customSeriesRenderers,
+    super.behaviors,
+    super.selectionModels,
+    super.layoutConfig,
     this.dateTimeFactory,
-    bool defaultInteractions = true,
-    bool? flipVerticalAxis,
-    UserManagedState<DateTime>? userManagedState,
-  }) : super(
-          seriesList,
-          animate: animate,
-          animationDuration: animationDuration,
-          domainAxis: domainAxis,
-          primaryMeasureAxis: primaryMeasureAxis,
-          secondaryMeasureAxis: secondaryMeasureAxis,
-          disjointMeasureAxes: disjointMeasureAxes,
-          defaultRenderer: defaultRenderer,
-          customSeriesRenderers: customSeriesRenderers,
-          behaviors: behaviors,
-          selectionModels: selectionModels,
-          layoutConfig: layoutConfig,
-          defaultInteractions: defaultInteractions,
-          flipVerticalAxis: flipVerticalAxis,
-          userManagedState: userManagedState,
-        );
+    super.defaultInteractions,
+    super.flipVerticalAxis,
+    super.userManagedState,
+  });
+  final common.DateTimeFactory? dateTimeFactory;
 
   @override
-  common.TimeSeriesChart createCommonChart(BaseChartState chartState) {
-    // Optionally create primary and secondary measure axes if the chart was
-    // configured with them. If no axes were configured, then the chart will
-    // use its default types (usually a numeric axis).
-    return new common.TimeSeriesChart(
+  common.TimeSeriesChart createCommonChart(BaseChartState chartState) =>
+      // Optionally create primary and secondary measure axes if the chart was
+      // configured with them. If no axes were configured, then the chart will
+      // use its default types (usually a numeric axis).
+      common.TimeSeriesChart(
         layoutConfig: layoutConfig?.commonLayoutConfig,
         primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
         secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
         disjointMeasureAxes: createDisjointMeasureAxes(),
-        dateTimeFactory:
-            dateTimeFactory ?? const common.LocalDateTimeFactory());
-  }
+        dateTimeFactory: dateTimeFactory ?? const common.LocalDateTimeFactory(),
+      );
 
   @override
   void addDefaultInteractions(List<ChartBehavior> behaviors) {
     super.addDefaultInteractions(behaviors);
 
-    behaviors.add(new LinePointHighlighter<DateTime>());
+    behaviors.add(LinePointHighlighter<DateTime>());
   }
 }

@@ -30,14 +30,15 @@ class PolygonPainter {
   /// to stroke-dasharray in SVG path elements. An odd number of values in the
   /// pattern will be repeated to derive an even number of values. "1,2,3" is
   /// equivalent to "1,2,3,1,2,3."
-  static void draw(
-      {required Canvas canvas,
-      required Paint paint,
-      required List<Point> points,
-      Rectangle<num>? clipBounds,
-      common.Color? fill,
-      common.Color? stroke,
-      double? strokeWidthPx}) {
+  static void draw({
+    required Canvas canvas,
+    required Paint paint,
+    required List<Point> points,
+    Rectangle<num>? clipBounds,
+    common.Color? fill,
+    common.Color? stroke,
+    double? strokeWidthPx,
+  }) {
     if (points.isEmpty) {
       return;
     }
@@ -46,20 +47,22 @@ class PolygonPainter {
     if (clipBounds != null) {
       canvas
         ..save()
-        ..clipRect(new Rect.fromLTWH(
+        ..clipRect(
+          Rect.fromLTWH(
             clipBounds.left.toDouble(),
             clipBounds.top.toDouble(),
             clipBounds.width.toDouble(),
-            clipBounds.height.toDouble()));
+            clipBounds.height.toDouble(),
+          ),
+        );
     }
 
     final strokeColor = stroke != null
-        ? new Color.fromARGB(stroke.a, stroke.r, stroke.g, stroke.b)
+        ? Color.fromARGB(stroke.a, stroke.r, stroke.g, stroke.b)
         : null;
 
-    final fillColor = fill != null
-        ? new Color.fromARGB(fill.a, fill.r, fill.g, fill.b)
-        : null;
+    final fillColor =
+        fill != null ? Color.fromARGB(fill.a, fill.r, fill.g, fill.b) : null;
 
     // If the line has a single point, draw a circle.
     if (points.length == 1) {
@@ -68,24 +71,29 @@ class PolygonPainter {
         paint.color = fillColor;
       }
       paint.style = PaintingStyle.fill;
-      canvas.drawCircle(new Offset(point.x.toDouble(), point.y.toDouble()),
-          strokeWidthPx!, paint);
+      canvas.drawCircle(
+        Offset(point.x.toDouble(), point.y.toDouble()),
+        strokeWidthPx!,
+        paint,
+      );
     } else {
       if (strokeColor != null && strokeWidthPx != null) {
-        paint.strokeWidth = strokeWidthPx;
-        paint.strokeJoin = StrokeJoin.bevel;
-        paint.style = PaintingStyle.stroke;
+        paint
+          ..strokeWidth = strokeWidthPx
+          ..strokeJoin = StrokeJoin.bevel
+          ..style = PaintingStyle.stroke;
       }
 
       if (fillColor != null) {
-        paint.color = fillColor;
-        paint.style = PaintingStyle.fill;
+        paint
+          ..color = fillColor
+          ..style = PaintingStyle.fill;
       }
 
-      final path = new Path()
+      final path = Path()
         ..moveTo(points.first.x.toDouble(), points.first.y.toDouble());
 
-      for (var point in points) {
+      for (final point in points) {
         path.lineTo(point.x.toDouble(), point.y.toDouble());
       }
 
