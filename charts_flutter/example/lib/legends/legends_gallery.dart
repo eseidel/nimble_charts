@@ -57,19 +57,20 @@ List<GalleryScaffold> buildGallery() {
       subtitle: 'Series legend with measures and measure formatting',
       childBuilder: () => new LegendWithMeasures.withRandomData(),
     ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.pie_chart),
-      title: 'Datum Legend',
-      subtitle: 'A datum legend for a pie chart with default settings',
-      childBuilder: () => new SimpleDatumLegend.withRandomData(),
-    ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.pie_chart),
-      title: 'Datum Legend Options',
-      subtitle:
-          'A datum legend with custom positioning and spacing for a pie chart',
-      childBuilder: () => new DatumLegendOptions.withRandomData(),
-    ),
+    //TODO:
+    // new GalleryScaffold(
+    //   listTileIcon: new Icon(Icons.pie_chart),
+    //   title: 'Datum Legend',
+    //   subtitle: 'A datum legend for a pie chart with default settings',
+    //   childBuilder: () => new SimpleDatumLegend.withRandomData(),
+    // ),
+    // new GalleryScaffold(
+    //   listTileIcon: new Icon(Icons.pie_chart),
+    //   title: 'Datum Legend Options',
+    //   subtitle:
+    //       'A datum legend with custom positioning and spacing for a pie chart',
+    //   childBuilder: () => new DatumLegendOptions.withRandomData(),
+    // ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.pie_chart),
       title: 'Datum legend with measures',
