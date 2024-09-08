@@ -54,7 +54,7 @@ class UserManagedSelectionModel<D> {
         selectedDataConfig = null;
 
   /// Creates a [UserManagedSelectionModel] with configuration that is converted
-  /// to a [common.SelectionModel] when [getModel] provides a processed series 
+  /// to a [common.SelectionModel] when [getModel] provides a processed series
   /// list.
   UserManagedSelectionModel.fromConfig({
     this.selectedSeriesConfig,

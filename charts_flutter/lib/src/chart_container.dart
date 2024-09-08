@@ -381,7 +381,7 @@ class ChartContainerCustomPaint extends CustomPainter {
           rect: rect,
           properties: SemanticsProperties(
             value: node.label,
-            textDirection: toDartTextDirection(textDirection) ,
+            textDirection: toDartTextDirection(textDirection),
             onDidGainAccessibilityFocus: node.onFocus,
           ),
         ),

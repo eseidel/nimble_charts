@@ -24,7 +24,7 @@ import 'package:nimble_charts_common/common.dart' as common;
 ///
 /// The measure values of each datum will be replaced by the percent of the
 /// total measure value that each represents. The "raw" measure accessor
-/// function on [common.MutableSeries] can still be used to get the original 
+/// function on [common.MutableSeries] can still be used to get the original
 /// values.
 ///
 /// Note that the results for measureLowerBound and measureUpperBound are not
@@ -32,9 +32,9 @@ import 'package:nimble_charts_common/common.dart' as common;
 /// will replace them as percents to prevent bad axis results, but no effort is
 /// made to bound them to within a "0 to 100%" data range.
 ///
-/// Note that if the chart has a [common.Legend] that is capable of hiding 
-/// series data,then this behavior must be added after the [common.Legend] to 
-/// ensure that it calculates values after series have been potentially removed 
+/// Note that if the chart has a [common.Legend] that is capable of hiding
+/// series data,then this behavior must be added after the [common.Legend] to
+/// ensure that it calculates values after series have been potentially removed
 /// from the list.
 @immutable
 class PercentInjector<D> extends ChartBehavior<D> {

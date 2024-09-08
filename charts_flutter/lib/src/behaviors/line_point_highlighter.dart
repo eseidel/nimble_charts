@@ -19,7 +19,7 @@ import 'package:nimble_charts/flutter.dart';
 import 'package:nimble_charts/src/behaviors/chart_behavior.dart';
 import 'package:nimble_charts_common/common.dart' as common;
 
-/// Chart behavior that monitors the specified [common.SelectionModel] and 
+/// Chart behavior that monitors the specified [common.SelectionModel] and
 /// darkens the color for selected data.
 ///
 /// This is typically used for bars and pies to highlight segments.
