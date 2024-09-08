@@ -126,16 +126,23 @@ class TabularLegendLayout implements LegendLayout {
   }
 
   Widget _buildVerticalFirst(List<Widget> legendEntries) {
-    final maxRows = (desiredMaxRows == _noLimit)
-        ? legendEntries.length
-        : min(legendEntries.length, desiredMaxRows);
+    //TODO: Fix
+    throw UnimplementedError(
+      'This code is trying to append an unmodifiable list in TableRow',
+    );
 
-    final rows = List.generate(maxRows, (_) => const TableRow());
-    for (var i = 0; i < legendEntries.length; i++) {
-      rows[i % maxRows].children.add(legendEntries[i]);
-    }
+    // final maxRows = (desiredMaxRows == _noLimit)
+    //     ? legendEntries.length
+    //     : min(legendEntries.length, desiredMaxRows);
 
-    return _buildTableFromRows(rows);
+    // final rows = List.generate(maxRows, (_) => const TableRow());
+
+    // for (var i = 0; i < legendEntries.length; i++) {
+    //   children here is unmodifiable. How did this work in the first place?
+    //   rows[i % maxRows].children.add(legendEntries[i]);
+    // }
+
+    // return _buildTableFromRows(rows);
   }
 
   Table _buildTableFromRows(List<TableRow> rows) {
