@@ -19,6 +19,7 @@ import 'package:flutter/widgets.dart';
 import 'package:nimble_charts/flutter.dart';
 import 'package:nimble_charts/src/chart_canvas.dart' as cc;
 import 'package:nimble_charts/src/graphics_factory.dart' as gf;
+import 'package:nimble_charts/src/util/color.dart';
 import 'package:nimble_charts_common/common.dart' as common;
 
 /// Flutter widget responsible for painting a common SymbolRenderer from the
@@ -38,12 +39,7 @@ class SymbolRendererCanvas implements SymbolRendererBuilder {
     bool enabled = true,
   }) {
     if (color != null && !enabled) {
-      color = common.Color(
-        r: color.r,
-        g: color.g,
-        b: color.b,
-        a: (color.a * 0.26).round(),
-      );
+      color = color.withAlpha(.26);
     }
 
     return SizedBox.fromSize(

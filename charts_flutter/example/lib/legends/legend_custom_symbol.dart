@@ -19,6 +19,8 @@ import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
+import 'package:nimble_charts_common/common.dart' as common;
+import 'package:nimble_charts/src/util/color.dart';
 
 /// Example custom renderer that renders [IconData].
 ///
@@ -29,16 +31,21 @@ class IconRenderer extends charts.CustomSymbolRenderer {
   IconRenderer(this.iconData);
 
   @override
-  Widget build(BuildContext context,
-      {Size? size, Color? color, bool enabled = true}) {
+  Widget build(
+    BuildContext context, {
+    required Size size,
+    common.Color? color,
+    bool enabled = true,
+  }) {
     // Lighten the color if the symbol is not enabled
     // Example: If user has tapped on a Series deselecting it.
     if (color != null && !enabled) {
-      color = color.withOpacity(0.26);
+      color = color.withAlpha(.26);
     }
 
     return new SizedBox.fromSize(
-        size: size, child: new Icon(iconData, color: color, size: 12.0));
+        size: size,
+        child: new Icon(iconData, color: color?.toDartColor(), size: 12.0));
   }
 }
 

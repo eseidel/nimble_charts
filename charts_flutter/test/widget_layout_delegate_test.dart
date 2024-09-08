@@ -122,13 +122,15 @@ void main() {
       Offset expectedChartOffset,
       Offset expectedBehaviorOffset,
     ) {
-      final chartBox = tester.firstRenderObject(find.byKey(chartKey));
+      final chartBox =
+          tester.firstRenderObject(find.byKey(chartKey)) as dynamic;
       expect(chartBox.size, equals(expectedChartSize));
 
       final chartOffset = chartBox.localToGlobal(Offset.zero);
       expect(chartOffset, equals(expectedChartOffset));
 
-      final behaviorBox = tester.firstRenderObject(find.byKey(behaviorKey));
+      final behaviorBox =
+          tester.firstRenderObject(find.byKey(behaviorKey)) as dynamic;
       final behaviorOffset = behaviorBox.localToGlobal(Offset.zero);
       expect(behaviorOffset, equals(expectedBehaviorOffset));
     }
