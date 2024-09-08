@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
-import 'test_functions.dart';
+import '../test_functions.dart';
 
 void main() {
-  group('Chart Interactions', () {
-    testWidgets('Supports tap selection', (tester) async {
+  group('BarChart Widget Tests', () {
+    testWidgets('Renders basic bar chart', (tester) async {
       final seriesList = [
         charts.Series<OrdinalSales, String>(
           id: 'Sales',
@@ -22,8 +22,6 @@ void main() {
         ),
       ];
 
-      charts.SelectionModel<String>? selectionModel;
-
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -32,31 +30,24 @@ void main() {
               child: charts.BarChart(
                 seriesList,
                 animate: false,
-                selectionModels: [
-                  charts.SelectionModelConfig(
-                    changedListener: (model) {
-                      selectionModel = model;
-                    },
-                  ),
-                ],
               ),
             ),
           ),
         ),
       );
 
-      await matchesGolden<charts.BarChart>('golden_bar_chart_before_selection');
+      expect(find.byType(charts.BarChart), findsOneWidget);
 
-      await tester.tap(find.byType(charts.BarChart));
-      await tester.pump();
-
-      expect(selectionModel, isNotNull);
-      expect(selectionModel!.selectedDatum, isNotEmpty);
-
-      await matchesGolden<charts.BarChart>('golden_bar_chart_after_selection');
+      await matchesGolden<charts.BarChart>(
+        'golden_bar_chart',
+      );
     });
 
-    // Add more interaction tests here
+    // Add more test cases here, e.g.:
+    // - Test with multiple series
+    // - Test with different color schemes
+    // - Test with custom axis specifications
+    // - Test with behaviors like legends or tooltips
   });
 }
 

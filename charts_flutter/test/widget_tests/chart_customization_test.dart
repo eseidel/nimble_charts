@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
-import 'test_functions.dart';
+import '../test_functions.dart';
 
 void main() {
-  group('BarChart Widget Tests', () {
-    testWidgets('Renders basic bar chart', (tester) async {
+  group('Chart Customization', () {
+    testWidgets('Applies custom axis specifications', (tester) async {
       final seriesList = [
         charts.Series<OrdinalSales, String>(
           id: 'Sales',
@@ -30,6 +30,19 @@ void main() {
               child: charts.BarChart(
                 seriesList,
                 animate: false,
+                domainAxis: charts.OrdinalAxisSpec(
+                  renderSpec: charts.SmallTickRendererSpec(
+                    labelStyle: charts.TextStyleSpec(
+                      fontSize: 18,
+                      color: charts.MaterialPalette.red.shadeDefault,
+                    ),
+                  ),
+                ),
+                primaryMeasureAxis: const charts.NumericAxisSpec(
+                  tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                    desiredTickCount: 5,
+                  ),
+                ),
               ),
             ),
           ),
@@ -38,16 +51,10 @@ void main() {
 
       expect(find.byType(charts.BarChart), findsOneWidget);
 
-      await matchesGolden<charts.BarChart>(
-        'golden_bar_chart',
-      );
+      await matchesGolden<charts.BarChart>('golden_customized_bar_chart.png');
     });
 
-    // Add more test cases here, e.g.:
-    // - Test with multiple series
-    // - Test with different color schemes
-    // - Test with custom axis specifications
-    // - Test with behaviors like legends or tooltips
+    // Add more customization tests here
   });
 }
 

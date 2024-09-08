@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
-import 'test_functions.dart';
+import '../test_functions.dart';
 
 void main() {
-  group('Chart Customization', () {
-    testWidgets('Applies custom axis specifications', (tester) async {
+  group('Chart Interactions', () {
+    testWidgets('Supports tap selection', (tester) async {
       final seriesList = [
         charts.Series<OrdinalSales, String>(
           id: 'Sales',
@@ -22,6 +22,8 @@ void main() {
         ),
       ];
 
+      charts.SelectionModel<String>? selectionModel;
+
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -30,31 +32,31 @@ void main() {
               child: charts.BarChart(
                 seriesList,
                 animate: false,
-                domainAxis: charts.OrdinalAxisSpec(
-                  renderSpec: charts.SmallTickRendererSpec(
-                    labelStyle: charts.TextStyleSpec(
-                      fontSize: 18,
-                      color: charts.MaterialPalette.red.shadeDefault,
-                    ),
+                selectionModels: [
+                  charts.SelectionModelConfig(
+                    changedListener: (model) {
+                      selectionModel = model;
+                    },
                   ),
-                ),
-                primaryMeasureAxis: const charts.NumericAxisSpec(
-                  tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                    desiredTickCount: 5,
-                  ),
-                ),
+                ],
               ),
             ),
           ),
         ),
       );
 
-      expect(find.byType(charts.BarChart), findsOneWidget);
+      await matchesGolden<charts.BarChart>('golden_bar_chart_before_selection');
 
-      await matchesGolden<charts.BarChart>('golden_customized_bar_chart.png');
+      await tester.tap(find.byType(charts.BarChart));
+      await tester.pump();
+
+      expect(selectionModel, isNotNull);
+      expect(selectionModel!.selectedDatum, isNotEmpty);
+
+      await matchesGolden<charts.BarChart>('golden_bar_chart_after_selection');
     });
 
-    // Add more customization tests here
+    // Add more interaction tests here
   });
 }
 
