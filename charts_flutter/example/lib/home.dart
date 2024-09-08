@@ -54,8 +54,7 @@ class Home extends StatelessWidget {
       {Key? key,
       this.showPerformanceOverlay = false,
       required this.onShowPerformanceOverlayChanged})
-      : super(key: key) {
-  }
+      : super(key: key) {}
 
   @override
   Widget build(BuildContext context) {
