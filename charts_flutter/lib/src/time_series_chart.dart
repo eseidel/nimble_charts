@@ -13,28 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:collection' show LinkedHashMap;
-
-import 'package:nimble_charts_common/common.dart' as common
-    show
-        AxisSpec,
-        DateTimeFactory,
-        LocalDateTimeFactory,
-        NumericAxisSpec,
-        Series,
-        SeriesRendererConfig,
-        TimeSeriesChart;
-import 'package:nimble_charts/src/behaviors/chart_behavior.dart'
-    show ChartBehavior;
-import 'package:nimble_charts/src/behaviors/line_point_highlighter.dart'
-    show LinePointHighlighter;
-import 'package:nimble_charts/src/cartesian_chart.dart' show CartesianChart;
-import 'package:nimble_charts/src/base_chart.dart' show LayoutConfig;
-import 'package:nimble_charts/src/base_chart_state.dart' show BaseChartState;
-import 'package:nimble_charts/src/selection_model_config.dart'
-    show SelectionModelConfig;
-import 'package:nimble_charts/src/user_managed_state.dart'
-    show UserManagedState;
+import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts_common/common.dart' as common;
 
 class TimeSeriesChart extends CartesianChart<DateTime> {
   /// Create a [TimeSeriesChart].
@@ -63,18 +43,17 @@ class TimeSeriesChart extends CartesianChart<DateTime> {
   final common.DateTimeFactory? dateTimeFactory;
 
   @override
-  common.TimeSeriesChart createCommonChart(BaseChartState chartState) {
-    // Optionally create primary and secondary measure axes if the chart was
-    // configured with them. If no axes were configured, then the chart will
-    // use its default types (usually a numeric axis).
-    return common.TimeSeriesChart(
-      layoutConfig: layoutConfig?.commonLayoutConfig,
-      primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-      secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
-      disjointMeasureAxes: createDisjointMeasureAxes(),
-      dateTimeFactory: dateTimeFactory ?? const common.LocalDateTimeFactory(),
-    );
-  }
+  common.TimeSeriesChart createCommonChart(BaseChartState chartState) =>
+      // Optionally create primary and secondary measure axes if the chart was
+      // configured with them. If no axes were configured, then the chart will
+      // use its default types (usually a numeric axis).
+      common.TimeSeriesChart(
+        layoutConfig: layoutConfig?.commonLayoutConfig,
+        primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
+        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
+        disjointMeasureAxes: createDisjointMeasureAxes(),
+        dateTimeFactory: dateTimeFactory ?? const common.LocalDateTimeFactory(),
+      );
 
   @override
   void addDefaultInteractions(List<ChartBehavior> behaviors) {

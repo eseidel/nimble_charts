@@ -126,7 +126,7 @@ class LinePainter {
 
     // If an odd number of parts are defined, repeat the pattern to get an even
     // number.
-    if (dashPattern.length % 2 == 1) {
+    if (dashPattern.length.isOdd) {
       localDashPattern.addAll(dashPattern);
     }
 

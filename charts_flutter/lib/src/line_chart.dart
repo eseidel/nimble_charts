@@ -13,21 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts/src/base_chart_state.dart' show BaseChartState;
-import 'package:nimble_charts/src/behaviors/chart_behavior.dart'
-    show ChartBehavior;
-import 'package:nimble_charts/src/behaviors/line_point_highlighter.dart'
-    show LinePointHighlighter;
-import 'package:nimble_charts/src/cartesian_chart.dart' show CartesianChart;
-import 'package:nimble_charts_common/common.dart' as common
-    show
-        AxisSpec,
-        LineChart,
-        LineRendererConfig,
-        NumericAxisSpec,
-        RTLSpec,
-        Series,
-        SeriesRendererConfig;
+import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts/src/base_chart_state.dart';
+import 'package:nimble_charts_common/common.dart' as common;
 
 class LineChart extends CartesianChart<num> {
   const LineChart(

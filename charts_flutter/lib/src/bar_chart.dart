@@ -13,12 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart';
 import 'package:nimble_charts/src/base_chart_state.dart';
-import 'package:nimble_charts_common/common.dart' as common
-   
+import 'package:nimble_charts_common/common.dart' as common;
 
 @immutable
 class BarChart extends CartesianChart<String> {
@@ -56,18 +54,16 @@ class BarChart extends CartesianChart<String> {
   final common.BarRendererDecorator<String>? barRendererDecorator;
 
   common.BarChart createCommonChart(BaseChartState chartState) =>
-    // Optionally create primary and secondary measure axes if the chart was
-    // configured with them. If no axes were configured, then the chart will
-    // use its default types (usually a numeric axis).
-     common.BarChart(
-      vertical: vertical,
-      layoutConfig: layoutConfig?.commonLayoutConfig,
-      primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
-      secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
-      disjointMeasureAxes: createDisjointMeasureAxes(),
-    );
-  
-
+      // Optionally create primary and secondary measure axes if the chart was
+      // configured with them. If no axes were configured, then the chart will
+      // use its default types (usually a numeric axis).
+      common.BarChart(
+        vertical: vertical,
+        layoutConfig: layoutConfig?.commonLayoutConfig,
+        primaryMeasureAxis: primaryMeasureAxis?.createAxis(),
+        secondaryMeasureAxis: secondaryMeasureAxis?.createAxis(),
+        disjointMeasureAxes: createDisjointMeasureAxes(),
+      );
 
   void addDefaultInteractions(List<ChartBehavior> behaviors) {
     behaviors.add(DomainHighlighter<String>());

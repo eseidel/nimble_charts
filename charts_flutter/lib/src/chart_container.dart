@@ -15,27 +15,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:nimble_charts/flutter.dart';
-import 'package:nimble_charts/src/base_chart_state.dart' show BaseChartState;
-import 'package:nimble_charts/src/chart_canvas.dart' show ChartCanvas;
-import 'package:nimble_charts/src/graphics_factory.dart' show GraphicsFactory;
-import 'package:nimble_charts_common/common.dart' as common
-    show
-        A11yNode,
-        AxisDirection,
-        BaseChart,
-        ChartContext,
-        DateTimeFactory,
-        LocalDateTimeFactory,
-        Performance,
-        ProxyGestureListener,
-        RTLSpec,
-        SelectionModelType,
-        Series;
-import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts/src/base_chart_state.dart';
+import 'package:nimble_charts_common/common.dart' as common;
 
-/// Widget that inflates to a [CustomPaint] that implements common [common.ChartContext].
+/// Widget that inflates to a [CustomPaint] that implements common 
+/// [common.ChartContext].
 class ChartContainer<D> extends CustomPaint {
   const ChartContainer({
     required this.chartWidget,
