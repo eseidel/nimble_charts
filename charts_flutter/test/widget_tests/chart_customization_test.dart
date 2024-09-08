@@ -51,7 +51,7 @@ void main() {
 
       expect(find.byType(charts.BarChart), findsOneWidget);
 
-      await matchesGolden<charts.BarChart>('golden_customized_bar_chart.png');
+      await matchesGolden<charts.BarChart>('golden_customized_bar_chart');
     });
 
     // Add more customization tests here

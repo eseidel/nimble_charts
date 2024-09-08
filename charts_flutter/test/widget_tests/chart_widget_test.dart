@@ -21,7 +21,7 @@ void main() {
         ),
       );
 
-      await matchesGolden<charts.BarChart>('golden_bar_chart.png');
+      await matchesGolden<charts.BarChart>('golden_bar_chart');
     });
 
     testWidgets('LineChart renders correctly', (tester) async {
@@ -57,9 +57,7 @@ void main() {
         ),
       );
 
-      await matchesGolden<charts.TimeSeriesChart>(
-        'golden_time_series_chart.png',
-      );
+      await matchesGolden<charts.TimeSeriesChart>('golden_time_series_chart');
     });
 
     testWidgets('BarChart with custom colors renders correctly',
@@ -78,9 +76,7 @@ void main() {
         ),
       );
 
-      await matchesGolden<charts.BarChart>(
-        'golden_bar_chart_custom_colors.png',
-      );
+      await matchesGolden<charts.BarChart>('golden_bar_chart_custom_colors');
     });
 
     testWidgets('LineChart with points renders correctly', (tester) async {
@@ -121,6 +117,146 @@ void main() {
       await matchesGolden<charts.TimeSeriesChart>(
         'golden_time_series_chart_multiple',
       );
+    });
+
+    testWidgets('NumericComboChart renders correctly', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SizedBox(
+              height: 400,
+              child: charts.NumericComboChart(
+                createSampleNumericComboData(),
+                animate: false,
+                defaultRenderer: charts.LineRendererConfig<num>(),
+                customSeriesRenderers: [
+                  charts.BarRendererConfig<num>(customRendererId: 'customBar'),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await matchesGolden<charts.NumericComboChart>(
+        'golden_numeric_combo_chart',
+      );
+    });
+
+    testWidgets('OrdinalComboChart renders correctly', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SizedBox(
+              height: 400,
+              child: charts.OrdinalComboChart(
+                createSampleOrdinalComboData(),
+                animate: false,
+                defaultRenderer: charts.LineRendererConfig<String>(),
+                customSeriesRenderers: [
+                  charts.BarRendererConfig<String>(
+                    customRendererId: 'customBar',
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await matchesGolden<charts.OrdinalComboChart>(
+        'golden_ordinal_combo_chart',
+      );
+    });
+
+    testWidgets('LineChart with custom axis renders correctly', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SizedBox(
+              height: 400,
+              child: charts.LineChart(
+                createSampleLineData(),
+                animate: false,
+                domainAxis: const charts.NumericAxisSpec(
+                  tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                    desiredTickCount: 5,
+                  ),
+                ),
+                primaryMeasureAxis: const charts.NumericAxisSpec(
+                  tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                    desiredTickCount: 3,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await matchesGolden<charts.LineChart>(
+        'golden_line_chart_custom_axis',
+      );
+    });
+
+    testWidgets('BarChart with stacked bars renders correctly', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SizedBox(
+              height: 400,
+              child: charts.BarChart(
+                createSampleStackedBarData(),
+                animate: false,
+                barGroupingType: charts.BarGroupingType.stacked,
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await matchesGolden<charts.BarChart>('golden_stacked_bar_chart');
+    });
+
+    testWidgets('BarChart with grouped bars renders correctly', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SizedBox(
+              height: 400,
+              child: charts.BarChart(
+                createSampleGroupedBarData(),
+                animate: false,
+                barGroupingType: charts.BarGroupingType.grouped,
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await matchesGolden<charts.BarChart>('golden_grouped_bar_chart');
+    });
+
+    testWidgets('RTL BarChart renders correctly', (tester) async {
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.rtl,
+          child: MaterialApp(
+            home: Scaffold(
+              body: SizedBox(
+                height: 400,
+                child: charts.BarChart(
+                  createSampleBarData(),
+                  animate: false,
+                  vertical: false,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await matchesGolden<charts.BarChart>('golden_rtl_bar_chart');
     });
   });
 }
@@ -241,6 +377,118 @@ List<charts.Series<TimeSeriesSales, DateTime>>
             measureFn: (sales, _) => sales.sales,
           ),
         ];
+
+/// Creates sample data for a numeric combo chart.
+List<charts.Series<LinearSales, num>> createSampleNumericComboData() => [
+      charts.Series<LinearSales, num>(
+        id: 'Desktop',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: [
+          LinearSales(2015, 5),
+          LinearSales(2016, 25),
+          LinearSales(2017, 100),
+          LinearSales(2018, 75),
+        ],
+      ),
+      charts.Series<LinearSales, num>(
+        id: 'customBar',
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: [
+          LinearSales(2015, 25),
+          LinearSales(2016, 50),
+          LinearSales(2017, 200),
+          LinearSales(2018, 150),
+        ],
+      ),
+    ];
+
+/// Creates sample data for an ordinal combo chart.
+List<charts.Series<OrdinalSales, String>> createSampleOrdinalComboData() => [
+      charts.Series<OrdinalSales, String>(
+        id: 'Desktop',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: [
+          OrdinalSales('2015', 5),
+          OrdinalSales('2016', 25),
+          OrdinalSales('2017', 100),
+          OrdinalSales('2018', 75),
+        ],
+      ),
+      charts.Series<OrdinalSales, String>(
+        id: 'customBar',
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: [
+          OrdinalSales('2015', 25),
+          OrdinalSales('2016', 50),
+          OrdinalSales('2017', 200),
+          OrdinalSales('2018', 150),
+        ],
+      ),
+    ];
+
+/// Creates sample data for a stacked bar chart.
+List<charts.Series<OrdinalSales, String>> createSampleStackedBarData() => [
+      charts.Series<OrdinalSales, String>(
+        id: 'Desktop',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: [
+          OrdinalSales('2015', 5),
+          OrdinalSales('2016', 25),
+          OrdinalSales('2017', 100),
+          OrdinalSales('2018', 75),
+        ],
+      ),
+      charts.Series<OrdinalSales, String>(
+        id: 'Mobile',
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: [
+          OrdinalSales('2015', 25),
+          OrdinalSales('2016', 50),
+          OrdinalSales('2017', 200),
+          OrdinalSales('2018', 150),
+        ],
+      ),
+    ];
+
+/// Creates sample data for a grouped bar chart.
+List<charts.Series<OrdinalSales, String>> createSampleGroupedBarData() => [
+      charts.Series<OrdinalSales, String>(
+        id: 'Desktop',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: [
+          OrdinalSales('2015', 5),
+          OrdinalSales('2016', 25),
+          OrdinalSales('2017', 100),
+          OrdinalSales('2018', 75),
+        ],
+      ),
+      charts.Series<OrdinalSales, String>(
+        id: 'Mobile',
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: [
+          OrdinalSales('2015', 25),
+          OrdinalSales('2016', 50),
+          OrdinalSales('2017', 200),
+          OrdinalSales('2018', 150),
+        ],
+      ),
+    ];
 
 /// Sample ordinal data type.
 class OrdinalSales {

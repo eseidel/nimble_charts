@@ -33,7 +33,7 @@ void main() {
 
       expect(find.byType(charts.BarChart), findsOneWidget);
 
-      await matchesGolden<charts.BarChart>('golden_empty_bar_chart.png');
+      await matchesGolden<charts.BarChart>('golden_empty_bar_chart');
     });
 
     testWidgets('Handles large datasets', (tester) async {
@@ -66,9 +66,7 @@ void main() {
 
       expect(find.byType(charts.BarChart), findsOneWidget);
 
-      await matchesGolden<charts.BarChart>(
-        'golden_large_dataset_bar_chart.png',
-      );
+      await matchesGolden<charts.BarChart>('golden_large_dataset_bar_chart');
     });
 
     // Add more corner case tests here
