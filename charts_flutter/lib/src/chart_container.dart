@@ -20,9 +20,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:nimble_charts/flutter.dart';
 import 'package:nimble_charts/src/base_chart_state.dart';
+import 'package:nimble_charts/src/chart_canvas.dart' as cc;
+import 'package:nimble_charts/src/graphics_factory.dart' as gf;
 import 'package:nimble_charts_common/common.dart' as common;
+import 'package:sky_engine/ui/text.dart' as sky;
 
-/// Widget that inflates to a [CustomPaint] that implements common 
+/// Widget that inflates to a [CustomPaint] that implements common
 /// [common.ChartContext].
 class ChartContainer<D> extends CustomPaint {
   const ChartContainer({
@@ -79,7 +82,7 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
     if (_chart == null) {
       common.Performance.time('chartsCreate');
       _chart = config.chartWidget.createCommonChart(_chartState);
-      _chart!.init(this, GraphicsFactory(context));
+      _chart!.init(this, gf.GraphicsFactory(context));
       common.Performance.timeEnd('chartsCreate');
     }
     common.Performance.time('chartsConfig');
@@ -256,8 +259,8 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
   /// Gets the chart's gesture listener.
   common.ProxyGestureListener get gestureProxy => _chart!.gestureProxy;
 
-  TextDirection get textDirection =>
-      _chartContainerIsRtl ? TextDirection.rtl : TextDirection.ltr;
+  sky.TextDirection get textDirection =>
+      _chartContainerIsRtl ? sky.TextDirection.rtl : sky.TextDirection.ltr;
 
   @override
   void enableA11yExploreMode(
@@ -280,7 +283,7 @@ class ChartContainerRenderObject<D> extends RenderCustomPaint
     _setNewPainter();
     requestRebuild();
     if (announcement != null) {
-      SemanticsService.announce(announcement, textDirection);
+      unawaited(SemanticsService.announce(announcement, textDirection));
     }
   }
 
@@ -327,12 +330,12 @@ class ChartContainerCustomPaint extends CustomPainter {
   final common.BaseChart chart;
   final bool exploreMode;
   final List<common.A11yNode> a11yNodes;
-  final TextDirection textDirection;
+  final sky.TextDirection textDirection;
 
   @override
   void paint(Canvas canvas, Size size) {
     common.Performance.time('chartsPaint');
-    final chartsCanvas = ChartCanvas(canvas, chart.graphicsFactory!);
+    final chartsCanvas = cc.ChartCanvas(canvas, chart.graphicsFactory!);
     chart.paint(chartsCanvas);
     common.Performance.timeEnd('chartsPaint');
   }

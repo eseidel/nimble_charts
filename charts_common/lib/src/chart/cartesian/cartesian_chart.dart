@@ -16,56 +16,24 @@
 import 'dart:collection' show LinkedHashMap;
 
 import 'package:meta/meta.dart' show protected;
-import 'package:nimble_charts_common/src/chart/bar/bar_renderer.dart'
-    show BarRenderer;
-import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
-    show
-        Axis,
-        AxisOrientation,
-        NumericAxis,
-        OrdinalAxis,
-        domainAxisKey,
-        measureAxisIdKey,
-        measureAxisKey;
-import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/gridline_draw_strategy.dart'
-    show GridlineRendererSpec;
-import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/none_draw_strategy.dart'
-    show NoneDrawStrategy;
-import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/small_tick_draw_strategy.dart'
-    show SmallTickRendererSpec;
-import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
-    show AxisSpec;
-import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/numeric_axis_spec.dart'
-    show NumericAxisSpec;
-import 'package:nimble_charts_common/src/chart/common/base_chart.dart'
-    show BaseChart;
-import 'package:nimble_charts_common/src/chart/common/chart_context.dart'
-    show ChartContext;
-import 'package:nimble_charts_common/src/chart/common/datum_details.dart'
-    show DatumDetails;
-import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
-    show MutableSeries;
-import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart'
-    show SelectionModelType;
-import 'package:nimble_charts_common/src/chart/common/series_renderer.dart'
-    show SeriesRenderer, rendererIdKey;
-import 'package:nimble_charts_common/src/chart/layout/layout_config.dart'
-    show LayoutConfig, MarginSpec;
-import 'package:nimble_charts_common/src/chart/layout/layout_view.dart'
-    show LayoutViewPaintOrder;
-import 'package:nimble_charts_common/src/common/graphics_factory.dart'
-    show GraphicsFactory;
-import 'package:nimble_charts_common/src/data/series.dart' show Series;
+import 'package:nimble_charts_common/common.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/none_draw_strategy.dart';
 
 class NumericCartesianChart extends CartesianChart<num> {
+  // ignore: use_super_parameters
   NumericCartesianChart({
-    super.vertical,
-    super.layoutConfig,
-    super.primaryMeasureAxis,
-    super.secondaryMeasureAxis,
-    super.disjointMeasureAxes,
+    bool? vertical,
+    LayoutConfig? layoutConfig,
+    NumericAxis? primaryMeasureAxis,
+    NumericAxis? secondaryMeasureAxis,
+    LinkedHashMap<String, NumericAxis>? disjointMeasureAxes,
   }) : super(
+          vertical: vertical,
+          layoutConfig: layoutConfig,
           domainAxis: NumericAxis(),
+          primaryMeasureAxis: primaryMeasureAxis,
+          secondaryMeasureAxis: secondaryMeasureAxis,
+          disjointMeasureAxes: disjointMeasureAxes,
         );
 
   @protected
@@ -77,14 +45,20 @@ class NumericCartesianChart extends CartesianChart<num> {
 }
 
 class OrdinalCartesianChart extends CartesianChart<String> {
+  // ignore: use_super_parameters
   OrdinalCartesianChart({
-    super.vertical,
-    super.layoutConfig,
-    super.primaryMeasureAxis,
-    super.secondaryMeasureAxis,
-    super.disjointMeasureAxes,
+    bool? vertical,
+    LayoutConfig? layoutConfig,
+    NumericAxis? primaryMeasureAxis,
+    NumericAxis? secondaryMeasureAxis,
+    LinkedHashMap<String, NumericAxis>? disjointMeasureAxes,
   }) : super(
+          vertical: vertical,
+          layoutConfig: layoutConfig,
           domainAxis: OrdinalAxis(),
+          primaryMeasureAxis: primaryMeasureAxis,
+          secondaryMeasureAxis: secondaryMeasureAxis,
+          disjointMeasureAxes: disjointMeasureAxes,
         );
 
   @protected
@@ -96,22 +70,6 @@ class OrdinalCartesianChart extends CartesianChart<String> {
 }
 
 abstract class CartesianChart<D> extends BaseChart<D> {
-  CartesianChart({
-    bool? vertical,
-    LayoutConfig? layoutConfig,
-    Axis<D>? domainAxis,
-    NumericAxis? primaryMeasureAxis,
-    NumericAxis? secondaryMeasureAxis,
-    LinkedHashMap<String, NumericAxis>? disjointMeasureAxes,
-  })  : vertical = vertical ?? true,
-        // [domainAxis] will be set to the new axis in [configurationChanged].
-        _newDomainAxis = domainAxis,
-        _primaryMeasureAxis = primaryMeasureAxis ?? NumericAxis(),
-        _secondaryMeasureAxis = secondaryMeasureAxis ?? NumericAxis(),
-        _disjointMeasureAxes =
-            // ignore: prefer_collection_literals
-            disjointMeasureAxes ?? LinkedHashMap<String, NumericAxis>(),
-        super(layoutConfig: layoutConfig ?? _defaultLayoutConfig);
   static final _defaultLayoutConfig = LayoutConfig(
     topSpec: MarginSpec.fromPixel(minPixel: 20),
     bottomSpec: MarginSpec.fromPixel(minPixel: 20),
@@ -171,6 +129,24 @@ abstract class CartesianChart<D> extends BaseChart<D> {
   bool _usePrimaryMeasureAxis = false;
   bool _useSecondaryMeasureAxis = false;
 
+  // ignore: sort_constructors_first
+  CartesianChart({
+    bool? vertical,
+    LayoutConfig? layoutConfig,
+    Axis<D>? domainAxis,
+    NumericAxis? primaryMeasureAxis,
+    NumericAxis? secondaryMeasureAxis,
+    LinkedHashMap<String, NumericAxis>? disjointMeasureAxes,
+  })  : vertical = vertical ?? true,
+        // [domainAxis] will be set to the new axis in [configurationChanged].
+        _newDomainAxis = domainAxis,
+        _primaryMeasureAxis = primaryMeasureAxis ?? NumericAxis(),
+        _secondaryMeasureAxis = secondaryMeasureAxis ?? NumericAxis(),
+        _disjointMeasureAxes =
+            // ignore: prefer_collection_literals
+            disjointMeasureAxes ?? LinkedHashMap<String, NumericAxis>(),
+        super(layoutConfig: layoutConfig ?? _defaultLayoutConfig);
+
   @override
   void init(ChartContext context, GraphicsFactory graphicsFactory) {
     super.init(context, graphicsFactory);
@@ -188,7 +164,9 @@ abstract class CartesianChart<D> extends BaseChart<D> {
     _disjointMeasureAxes.forEach((axisId, axis) {
       axis
         ..context = context
-        ..tickDrawStrategy = NoneDrawStrategy<num>(graphicsFactory);
+        ..tickDrawStrategy = NoneDrawStrategy<num>(
+          graphicsFactory,
+        );
     });
   }
 
@@ -361,10 +339,12 @@ abstract class CartesianChart<D> extends BaseChart<D> {
 
   @override
   MutableSeries<D> makeSeries(Series<dynamic, D> series) {
-    final s = super.makeSeries(series)
-      ..measureOffsetFn ??= ((_) => 0)
+    final s = super.makeSeries(series)..measureOffsetFn ??= (_) => 0;
 
-      // Setup the Axes
+    // Setup the Axes
+
+    // ignore: cascade_invocations
+    s
       ..setAttr(domainAxisKey, domainAxis)
       ..setAttr(
         measureAxisKey,
@@ -424,7 +404,7 @@ abstract class CartesianChart<D> extends BaseChart<D> {
       axis.resetDomains();
     });
 
-    final reverseAxisDirection = context.isRtl;
+    final reverseAxisDirection = context != null && context.isRtl;
 
     if (vertical) {
       domainAxis

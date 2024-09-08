@@ -14,9 +14,11 @@
 // limitations under the License.
 
 import 'package:nimble_charts/flutter.dart';
+import 'package:nimble_charts/src/base_chart_state.dart';
+import 'package:nimble_charts/src/cartesian_chart.dart' as cart;
 import 'package:nimble_charts_common/common.dart' as common;
 
-class TimeSeriesChart extends CartesianChart<DateTime> {
+class TimeSeriesChart extends cart.CartesianChart<DateTime> {
   /// Create a [TimeSeriesChart].
   ///
   /// [dateTimeFactory] allows specifying a factory that creates [DateTime] to

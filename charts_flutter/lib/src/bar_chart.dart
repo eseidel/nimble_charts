@@ -13,47 +13,66 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:flutter/material.dart';
+import 'dart:collection' show LinkedHashMap;
+
 import 'package:nimble_charts/flutter.dart';
 import 'package:nimble_charts/src/base_chart_state.dart';
+import 'package:nimble_charts/src/cartesian_chart.dart' as cart;
 import 'package:nimble_charts_common/common.dart' as common;
 
-@immutable
-class BarChart extends CartesianChart<String> {
+class BarChart extends cart.CartesianChart<String> {
+  final bool vertical;
+  final common.BarRendererDecorator<String>? barRendererDecorator;
+
+  // ignore: sort_constructors_first, use_super_parameters
   BarChart(
-    super.seriesList, {
+    List<common.Series<dynamic, String>> seriesList, {
     super.key,
-    super.animate,
-    super.animationDuration,
-    super.domainAxis,
-    super.primaryMeasureAxis,
-    super.secondaryMeasureAxis,
-    super.disjointMeasureAxes,
+    bool? animate,
+    Duration? animationDuration,
+    common.AxisSpec? domainAxis,
+    common.NumericAxisSpec? primaryMeasureAxis,
+    common.NumericAxisSpec? secondaryMeasureAxis,
+    LinkedHashMap<String, common.NumericAxisSpec>? disjointMeasureAxes,
     common.BarGroupingType? barGroupingType,
     common.BarRendererConfig<String>? defaultRenderer,
-    super.customSeriesRenderers,
-    super.behaviors,
-    super.selectionModels,
-    super.rtlSpec,
+    List<common.SeriesRendererConfig<String>>? customSeriesRenderers,
+    List<ChartBehavior<String>>? behaviors,
+    List<SelectionModelConfig<String>>? selectionModels,
+    common.RTLSpec? rtlSpec,
     this.vertical = true,
-    super.defaultInteractions,
-    super.layoutConfig,
-    super.userManagedState,
+    bool defaultInteractions = true,
+    LayoutConfig? layoutConfig,
+    UserManagedState<String>? userManagedState,
     this.barRendererDecorator,
-    super.flipVerticalAxis,
+    bool? flipVerticalAxis,
   }) : super(
+          seriesList,
+          animate: animate,
+          animationDuration: animationDuration,
+          domainAxis: domainAxis,
+          primaryMeasureAxis: primaryMeasureAxis,
+          secondaryMeasureAxis: secondaryMeasureAxis,
+          disjointMeasureAxes: disjointMeasureAxes,
           defaultRenderer: defaultRenderer ??
               common.BarRendererConfig<String>(
                 groupingType: barGroupingType,
                 barRendererDecorator: barRendererDecorator,
               ),
+          customSeriesRenderers: customSeriesRenderers,
+          behaviors: behaviors,
+          selectionModels: selectionModels,
+          rtlSpec: rtlSpec,
+          defaultInteractions: defaultInteractions,
+          layoutConfig: layoutConfig,
+          userManagedState: userManagedState,
+          flipVerticalAxis: flipVerticalAxis,
         );
 
   @override
-  final bool vertical;
-  final common.BarRendererDecorator<String>? barRendererDecorator;
-
-  common.BarChart createCommonChart(BaseChartState chartState) =>
+  common.BaseChart<String> createCommonChart(
+    BaseChartState<String> chartState,
+  ) =>
       // Optionally create primary and secondary measure axes if the chart was
       // configured with them. If no axes were configured, then the chart will
       // use its default types (usually a numeric axis).
@@ -65,7 +84,10 @@ class BarChart extends CartesianChart<String> {
         disjointMeasureAxes: createDisjointMeasureAxes(),
       );
 
+  @override
   void addDefaultInteractions(List<ChartBehavior> behaviors) {
+    super.addDefaultInteractions(behaviors);
+
     behaviors.add(DomainHighlighter<String>());
   }
 }

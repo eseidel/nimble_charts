@@ -15,9 +15,10 @@
 
 import 'package:nimble_charts/flutter.dart';
 import 'package:nimble_charts/src/base_chart_state.dart';
+import 'package:nimble_charts/src/cartesian_chart.dart' as cart;
 import 'package:nimble_charts_common/common.dart' as common;
 
-class LineChart extends CartesianChart<num> {
+class LineChart extends cart.CartesianChart<num> {
   const LineChart(
     super.seriesList, {
     super.key,

@@ -14,13 +14,10 @@
 // limitations under the License.
 
 import 'package:nimble_charts/src/base_chart_state.dart' show BaseChartState;
-import 'package:nimble_charts/src/cartesian_chart.dart' show CartesianChart;
-import 'package:nimble_charts_common/common.dart' as common
-    show
-        PointRendererConfig,
-        ScatterPlotChart;
+import 'package:nimble_charts/src/cartesian_chart.dart' as cart;
+import 'package:nimble_charts_common/common.dart' as common;
 
-class ScatterPlotChart extends CartesianChart<num> {
+class ScatterPlotChart extends cart.CartesianChart<num> {
   const ScatterPlotChart(
     super.seriesList, {
     super.key,
@@ -42,7 +39,7 @@ class ScatterPlotChart extends CartesianChart<num> {
   });
 
   @override
-  common.ScatterPlotChart createCommonChart(BaseChartState chartState) =>
+  common.BaseChart<num> createCommonChart(BaseChartState<num> chartState) =>
       // Optionally create primary and secondary measure axes if the chart was
       // configured with them. If no axes were configured, then the chart will
       // use its default types (usually a numeric axis).
