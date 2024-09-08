@@ -66,18 +66,23 @@ void main() {
 }
 
 class TestChart extends StatefulWidget {
-  const TestChart(this.selectionChangedListener, this.onTapSelection,
-      {super.key});
+  const TestChart(
+    this.selectionChangedListener,
+    this.onTapSelection, {
+    super.key,
+  });
   final charts.SelectionModelListener<String> selectionChangedListener;
   final charts.UserManagedSelectionModel<String> onTapSelection;
 
   @override
   TestChartState createState() =>
+      // ignore: no_logic_in_create_state
       TestChartState(selectionChangedListener, onTapSelection);
 }
 
 class TestChartState extends State<TestChart> {
   TestChartState(this.selectionChangedListener, this.onTapSelection);
+  // ignore: unreachable_from_main
   final charts.SelectionModelListener<String> selectionChangedListener;
   final charts.UserManagedSelectionModel<String> onTapSelection;
 

@@ -57,8 +57,8 @@ abstract class BuildableBehavior<B extends common.ChartBehavior> {
   common.OutsideJustification get outsideJustification;
 
   /// Justification of the widget if [position] is 
-  /// [common.BehaviorPosition.inside] [common.InsideJustification] get 
-  /// insideJustification;
+  /// [common.BehaviorPosition.inside].
+  common.InsideJustification get insideJustification;
 
   /// Chart's draw area bounds are used for positioning.
   Rectangle<int>? get drawAreaBounds;

@@ -34,7 +34,7 @@ void main() {
       final widgets = <Widget>[
         const Text('1'),
         const Text('2'),
-        const Text('3')
+        const Text('3'),
       ];
 
       final layout = builder.build(context, widgets) as Table;
@@ -48,7 +48,7 @@ void main() {
       final widgets = <Widget>[
         const Text('1'),
         const Text('2'),
-        const Text('3')
+        const Text('3'),
       ];
 
       final layout = builder.build(context, widgets) as Table;
@@ -84,7 +84,7 @@ void main() {
       final widgets = <Widget>[
         const Text('1'),
         const Text('2'),
-        const Text('3')
+        const Text('3'),
       ];
 
       final layout = builder.build(context, widgets) as Table;
@@ -99,7 +99,7 @@ void main() {
       final widgets = <Widget>[
         const Text('1'),
         const Text('2'),
-        const Text('3')
+        const Text('3'),
       ];
 
       final layout = builder.build(context, widgets) as Table;
