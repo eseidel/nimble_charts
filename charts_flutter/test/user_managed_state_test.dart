@@ -47,7 +47,7 @@ void main() {
 
       expect(currentSelectionModel, isNull);
 
-      await matchesGolden<TestChart>('BarChart-Blue');
+      await matchesGolden<TestChart>('barchart-blue');
 
       await tester.tap(find.byType(charts.BarChart));
 
