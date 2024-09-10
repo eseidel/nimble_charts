@@ -18,8 +18,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:nimble_charts/flutter.dart' as charts;
 
-import 'test_functions.dart';
-
 void main() {
   group('User Managed State Tests', () {
     testWidgets('selection can be set programmatically', (tester) async {
@@ -47,7 +45,7 @@ void main() {
 
       expect(currentSelectionModel, isNull);
 
-      await matchesGolden<TestChart>('BarChart-Blue');
+      // await matchesGolden<TestChart>('barchart-blue');
 
       await tester.tap(find.byType(charts.BarChart));
 

@@ -18,7 +18,7 @@ This is the original example app, running in a browser with WASM.
 - Customizable appearance and behavior
 - Flutter-native implementation
 - Supports both mobile and web platforms
-
+ 
 ## 🛠️ Installation
 
 Add the following to your `pubspec.yaml`:
