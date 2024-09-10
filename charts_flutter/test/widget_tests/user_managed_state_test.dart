@@ -18,7 +18,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:nimble_charts/flutter.dart' as charts;
 
-
 void main() {
   group('User Managed State Tests', () {
     testWidgets('selection can be set programmatically', (tester) async {
