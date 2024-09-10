@@ -15,3 +15,5 @@ charts_flutter/coverage/
 charts_flutter/.DS_Store
 
 charts_flutter/test/failures/
+
+charts_flutter/test/widget_tests/failures/

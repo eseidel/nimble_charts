@@ -1,3 +1,7 @@
+# 0.2.0-beta
+* Overhaul the nimble_charts package with austerity for type safety etc.
+* Add tests
+
 # 0.1.0-beta
 * Fork from flutter_charts
 * Rename packages and overhaul some code for Flutter 3+
