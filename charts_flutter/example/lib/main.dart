@@ -29,24 +29,13 @@ class GalleryApp extends StatefulWidget {
 ///
 /// Controls performance overlay, and instantiates a [Home] widget.
 class GalleryAppState extends State<GalleryApp> {
-  // Initialize app settings from the default configuration.
-  bool _showPerformanceOverlay = defaultConfig.showPerformanceOverlay;
-
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
         debugShowCheckedModeBanner: false,
         title: defaultConfig.appName,
         theme: defaultConfig.theme,
-        showPerformanceOverlay: _showPerformanceOverlay,
-        home: new Home(
-          showPerformanceOverlay: _showPerformanceOverlay,
-          onShowPerformanceOverlayChanged: (bool value) {
-            setState(() {
-              _showPerformanceOverlay = value;
-            });
-          },
-        ));
+        home: new Home());
   }
 }
 

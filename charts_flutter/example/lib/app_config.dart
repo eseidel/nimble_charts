@@ -20,13 +20,11 @@ class AppConfig {
   final String appName;
   final String appLink;
   final ThemeData theme;
-  final bool showPerformanceOverlay;
 
   AppConfig({
     required this.appName,
     required this.appLink,
     required this.theme,
-    required this.showPerformanceOverlay,
   });
 }
 
@@ -39,6 +37,5 @@ AppConfig get defaultConfig {
       brightness: Brightness.light,
       primarySwatch: Colors.lightBlue,
     ),
-    showPerformanceOverlay: false,
   );
 }

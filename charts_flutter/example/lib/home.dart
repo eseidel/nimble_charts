@@ -17,7 +17,6 @@ import 'package:nimble_charts/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'app_config.dart';
-import 'drawer.dart';
 import 'a11y/a11y_gallery.dart' as a11y show buildGallery;
 import 'bar_chart/bar_gallery.dart' as bar show buildGallery;
 import 'time_series_chart/time_series_gallery.dart' as time_series
@@ -36,8 +35,6 @@ import 'legends/legends_gallery.dart' as legends show buildGallery;
 ///
 /// This renders a list of all available demos.
 class Home extends StatelessWidget {
-  final bool showPerformanceOverlay;
-  final ValueChanged<bool> onShowPerformanceOverlayChanged;
   final a11yGalleries = a11y.buildGallery();
   final barGalleries = bar.buildGallery();
   final timeSeriesGalleries = time_series.buildGallery();
@@ -50,11 +47,9 @@ class Home extends StatelessWidget {
   final i18nGalleries = i18n.buildGallery();
   final legendsGalleries = legends.buildGallery();
 
-  Home(
-      {Key? key,
-      this.showPerformanceOverlay = false,
-      required this.onShowPerformanceOverlayChanged})
-      : super(key: key) {}
+  Home({
+    Key? key,
+  }) : super(key: key) {}
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +100,6 @@ class Home extends StatelessWidget {
     _setupPerformance();
 
     return new Scaffold(
-      drawer: new GalleryDrawer(
-          showPerformanceOverlay: showPerformanceOverlay,
-          onShowPerformanceOverlayChanged: onShowPerformanceOverlayChanged),
       appBar: new AppBar(title: new Text(defaultConfig.appName)),
       body: new ListView(padding: kMaterialListPadding, children: galleries),
     );
