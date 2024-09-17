@@ -36,11 +36,15 @@ import 'stacked_target_line.dart';
 import 'spark_bar.dart';
 import 'vertical_bar_label.dart';
 
+const simpleBarChartTileTitle = 'Simple Bar Chart';
+const stackedBarChartTileTitle = 'Stacked Bar Chart';
+const groupedBarChartTileTitle = 'Grouped Bar Chart';
+
 List<GalleryScaffold> buildGallery() {
   return [
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
-      title: 'Simple Bar Chart',
+      title: simpleBarChartTileTitle,
       subtitle: 'Simple bar chart with a single series',
       childBuilder: () => m.useRandomData
           ? SimpleBarChart.withRandomData()
@@ -48,15 +52,19 @@ List<GalleryScaffold> buildGallery() {
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
-      title: 'Stacked Bar Chart',
+      title: stackedBarChartTileTitle,
       subtitle: 'Stacked bar chart with multiple series',
-      childBuilder: () => new StackedBarChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? StackedBarChart.withRandomData()
+          : StackedBarChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
-      title: 'Grouped Bar Chart',
+      title: groupedBarChartTileTitle,
       subtitle: 'Grouped bar chart with multiple series',
-      childBuilder: () => new GroupedBarChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? GroupedBarChart.withRandomData()
+          : GroupedBarChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
