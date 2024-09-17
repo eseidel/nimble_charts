@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_relative_lib_imports
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
@@ -11,6 +12,25 @@ import '../test_functions.dart';
 void main() {
   group('ExampleApp Widget Tests', () {
     m.useRandomData = false;
+
+    testWidgets(
+      'Main Menu',
+      (tester) async {
+        final galleryApp = m.GalleryApp();
+
+        await tester.pumpWidget(galleryApp);
+
+        tester.viewOf(find.byWidget(galleryApp))
+          ..physicalSize = const Size(2000, 7000)
+          ..devicePixelRatio = 1;
+
+        await tester.pumpAndSettle();
+
+        await matchesGolden<m.GalleryApp>(
+          'example_menu',
+        );
+      },
+    );
 
     testWidgets(
       'Navigates to Simple Bar Chart and Renders',
@@ -43,7 +63,14 @@ extension ExampleWidgetTestExtensions on WidgetTester {
     String buttonText, {
     Future<void> Function()? extra,
   }) async {
-    await pumpWidget(m.GalleryApp());
+    final galleryApp = m.GalleryApp();
+
+    await pumpWidget(galleryApp);
+
+    viewOf(find.byWidget(galleryApp))
+      ..physicalSize = const Size(1200, 700)
+      ..devicePixelRatio = 1;
+      
     expect(find.byType(h.Home), findsOneWidget);
     await tap(find.text(buttonText));
     await pumpAndSettle();
