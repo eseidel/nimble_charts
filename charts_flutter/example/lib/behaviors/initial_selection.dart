@@ -23,62 +23,58 @@
 ///
 /// The selection will remain on the chart unless another behavior is added
 /// that updates the selection.
+library;
+
 
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class InitialSelection extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
 
-  InitialSelection(this.seriesList, {this.animate = false});
+  const InitialSelection(this.seriesList, {super.key, this.animate = false});
 
-  /// Creates a [BarChart] with initial selection behavior.
-  factory InitialSelection.withSampleData() {
-    return new InitialSelection(
+  /// Creates a [charts.BarChart] with initial selection behavior.
+  factory InitialSelection.withSampleData() => InitialSelection(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory InitialSelection.withRandomData() {
-    return new InitialSelection(_createRandomData());
-  }
+  factory InitialSelection.withRandomData() => InitialSelection(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.BarChart(
+  Widget build(BuildContext context) => charts.BarChart(
       seriesList,
       animate: animate,
       behaviors: [
@@ -92,38 +88,37 @@ class InitialSelection extends StatelessWidget {
         // [BarChart] by default includes behaviors [SelectNearest] and
         // [DomainHighlighter]. So this behavior shows the initial selection
         // highlighted and when another datum is tapped, the selection changes.
-        new charts.InitialSelection(selectedDataConfig: [
-          new charts.SeriesDatumConfig<String>('Sales', '2016')
-        ])
+        charts.InitialSelection(selectedDataConfig: [
+          charts.SeriesDatumConfig<String>('Sales', '2016'),
+        ],),
       ],
     );
-  }
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final data = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-      new OrdinalSales('2016', 100),
-      new OrdinalSales('2017', 75),
+      OrdinalSales('2014', 5),
+      OrdinalSales('2015', 25),
+      OrdinalSales('2016', 100),
+      OrdinalSales('2017', 75),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample ordinal data type.
 class OrdinalSales {
-  final String year;
-  final int sales;
 
   OrdinalSales(this.year, this.sales);
+  final String year;
+  final int sales;
 }

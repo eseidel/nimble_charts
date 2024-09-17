@@ -14,6 +14,8 @@
 // limitations under the License.
 
 /// Example of axis using statically provided ticks.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -25,52 +27,46 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// Specifying custom set of ticks allows specifying exactly what ticks are
 /// used in the axis. Each tick is also allowed to have a different style set.
 ///
-/// For an ordinal axis, the [StaticOrdinalTickProviderSpec] is shown in this
-/// example defining ticks to be used with [TickSpec] of String.
+/// For an ordinal axis, the [charts.StaticOrdinalTickProviderSpec] is shown in this
+/// example defining ticks to be used with [charts.TickSpec] of String.
 ///
-/// For numeric axis, the [StaticNumericTickProviderSpec] can be used by passing
-/// in a list of ticks defined with [TickSpec] of num.
+/// For numeric axis, the [charts.StaticNumericTickProviderSpec] can be used by passing
+/// in a list of ticks defined with [charts.TickSpec] of num.
 ///
-/// For datetime axis, the [StaticDateTimeTickProviderSpec] can be used by
-/// passing in a list of ticks defined with [TickSpec] of datetime.
+/// For datetime axis, the [charts.StaticDateTimeTickProviderSpec] can be used by
+/// passing in a list of ticks defined with [charts.TickSpec] of datetime.
 class StaticallyProvidedTicks extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
 
-  StaticallyProvidedTicks(this.seriesList, {this.animate = false});
+  const StaticallyProvidedTicks(this.seriesList, {super.key, this.animate = false});
 
-  factory StaticallyProvidedTicks.withSampleData() {
-    return new StaticallyProvidedTicks(
+  factory StaticallyProvidedTicks.withSampleData() => StaticallyProvidedTicks(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory StaticallyProvidedTicks.withRandomData() {
-    return new StaticallyProvidedTicks(_createRandomData());
-  }
+  factory StaticallyProvidedTicks.withRandomData() => StaticallyProvidedTicks(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final globalSalesData = [
-      new OrdinalSales('2014', random.nextInt(100) * 100),
-      new OrdinalSales('2015', random.nextInt(100) * 100),
-      new OrdinalSales('2016', random.nextInt(100) * 100),
-      new OrdinalSales('2017', random.nextInt(100) * 100),
+      OrdinalSales('2014', random.nextInt(100) * 100),
+      OrdinalSales('2015', random.nextInt(100) * 100),
+      OrdinalSales('2016', random.nextInt(100) * 100),
+      OrdinalSales('2017', random.nextInt(100) * 100),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Global Revenue',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: globalSalesData,
       ),
     ];
@@ -81,44 +77,44 @@ class StaticallyProvidedTicks extends StatelessWidget {
   Widget build(BuildContext context) {
     // Create the ticks to be used the domain axis.
     final staticTicks = <charts.TickSpec<String>>[
-      new charts.TickSpec(
+      const charts.TickSpec(
           // Value must match the domain value.
           '2014',
           // Optional label for this tick, defaults to domain value if not set.
           label: 'Year 2014',
           // The styling for this tick.
-          style: new charts.TextStyleSpec(
-              color: new charts.Color(r: 0x4C, g: 0xAF, b: 0x50))),
+          style: charts.TextStyleSpec(
+              color: charts.Color(r: 0x4C, g: 0xAF, b: 0x50),),),
       // If no text style is specified - the style from renderSpec will be used
       // if one is specified.
-      new charts.TickSpec('2015'),
-      new charts.TickSpec('2016'),
-      new charts.TickSpec('2017'),
+      const charts.TickSpec('2015'),
+      const charts.TickSpec('2016'),
+      const charts.TickSpec('2017'),
     ];
 
-    return new charts.BarChart(
+    return charts.BarChart(
       seriesList,
       animate: animate,
-      domainAxis: new charts.OrdinalAxisSpec(
+      domainAxis: charts.OrdinalAxisSpec(
           tickProviderSpec:
-              new charts.StaticOrdinalTickProviderSpec(staticTicks)),
+              charts.StaticOrdinalTickProviderSpec(staticTicks),),
     );
   }
 
   /// Create series list with single series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final globalSalesData = [
-      new OrdinalSales('2014', 5000),
-      new OrdinalSales('2015', 25000),
-      new OrdinalSales('2016', 100000),
-      new OrdinalSales('2017', 750000),
+      OrdinalSales('2014', 5000),
+      OrdinalSales('2015', 25000),
+      OrdinalSales('2016', 100000),
+      OrdinalSales('2017', 750000),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Global Revenue',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: globalSalesData,
       ),
     ];
@@ -127,8 +123,8 @@ class StaticallyProvidedTicks extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-  final String year;
-  final int sales;
 
   OrdinalSales(this.year, this.sales);
+  final String year;
+  final int sales;
 }

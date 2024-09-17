@@ -15,26 +15,29 @@
 
 /// Partial pie chart example, where the data does not cover a full revolution
 /// in the chart.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 /// Creates a partial pie chart where the data does not cover a full revolution.
 class PartialPieChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
 
-  const PartialPieChart(this.seriesList, {this.animate = false});
+  const PartialPieChart(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [PartialPieChart] with sample data and no transition.
   factory PartialPieChart.withSampleData() =>
-      PartialPieChart(_createSampleData(), animate: false);
+      PartialPieChart(_createSampleData());
 
   /// Creates a [PartialPieChart] with random data.
   factory PartialPieChart.withRandomData() =>
       PartialPieChart(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   @override
   Widget build(BuildContext context) => charts.PieChart<num>(
@@ -47,15 +50,15 @@ class PartialPieChart extends StatelessWidget {
   static List<charts.Series<LinearSales, int>> _createSampleData() => [
         charts.Series<LinearSales, int>(
           id: 'Sales',
-          domainFn: (LinearSales sales, _) => sales.year,
-          measureFn: (LinearSales sales, _) => sales.sales,
+          domainFn: (sales, _) => sales.year,
+          measureFn: (sales, _) => sales.sales,
           data: [
             LinearSales(0, 100),
             LinearSales(1, 75),
             LinearSales(2, 25),
             LinearSales(3, 5),
           ],
-        )
+        ),
       ];
 
   /// Creates random data.
@@ -64,19 +67,19 @@ class PartialPieChart extends StatelessWidget {
     return [
       charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: List.generate(
-            4, (index) => LinearSales(index, random.nextInt(100))),
-      )
+            4, (index) => LinearSales(index, random.nextInt(100)),),
+      ),
     ];
   }
 }
 
 /// Represents linear sales data.
 class LinearSales {
-  final int year;
-  final int sales;
 
   LinearSales(this.year, this.sales);
+  final int year;
+  final int sales;
 }

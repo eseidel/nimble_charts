@@ -14,53 +14,51 @@
 // limitations under the License.
 
 /// RTL Bar chart example
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
+import 'package:nimble_charts/flutter.dart';
 
 class RTLBarChart extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
 
-  RTLBarChart(this.seriesList, {this.animate = false});
+  const RTLBarChart(this.seriesList, {super.key, this.animate = false});
 
-  /// Creates a [BarChart] with sample data and no transition.
-  factory RTLBarChart.withSampleData() {
-    return new RTLBarChart(
+  /// Creates a [charts.BarChart] with sample data and no transition.
+  factory RTLBarChart.withSampleData() => RTLBarChart(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory RTLBarChart.withRandomData() {
-    return new RTLBarChart(_createRandomData());
-  }
+  factory RTLBarChart.withRandomData() => RTLBarChart(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Sales',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -81,39 +79,39 @@ class RTLBarChart extends StatelessWidget {
     //
     // Optionally, [RTLSpec] can be passed in when creating the chart to specify
     // chart display settings in RTL mode.
-    return new Directionality(
+    return Directionality(
         textDirection: TextDirection.rtl,
-        child: new charts.BarChart(
+        child: charts.BarChart(
           seriesList,
           animate: animate,
           vertical: false,
-        ));
+        ),);
   }
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final data = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-      new OrdinalSales('2016', 100),
-      new OrdinalSales('2017', 75),
+      OrdinalSales('2014', 5),
+      OrdinalSales('2015', 25),
+      OrdinalSales('2016', 100),
+      OrdinalSales('2017', 75),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Sales',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample ordinal data type.
 class OrdinalSales {
-  final String year;
-  final int sales;
 
   OrdinalSales(this.year, this.sales);
+  final String year;
+  final int sales;
 }

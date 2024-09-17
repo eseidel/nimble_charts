@@ -18,6 +18,8 @@
 /// to use the customizations, they do not necessary have to be used together in
 /// this way. Choosing [end] as the position does not require the justification
 /// to also be [endDrawArea].
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -29,82 +31,76 @@ import 'package:nimble_charts/flutter.dart' as charts;
 ///
 /// Also shows the option to provide a custom measure formatter.
 class LegendWithMeasures extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
 
-  LegendWithMeasures(this.seriesList, {this.animate = false});
+  const LegendWithMeasures(this.seriesList, {super.key, this.animate = false});
 
-  factory LegendWithMeasures.withSampleData() {
-    return new LegendWithMeasures(
+  factory LegendWithMeasures.withSampleData() => LegendWithMeasures(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory LegendWithMeasures.withRandomData() {
-    return new LegendWithMeasures(_createRandomData());
-  }
+  factory LegendWithMeasures.withRandomData() => LegendWithMeasures(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final desktopSalesData = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-      new OrdinalSales('2016', 100),
-      new OrdinalSales('2017', 75),
+      OrdinalSales('2014', 5),
+      OrdinalSales('2015', 25),
+      OrdinalSales('2016', 100),
+      OrdinalSales('2017', 75),
     ];
 
     final tabletSalesData = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     final mobileSalesData = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     final otherSalesData = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Desktop',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Tablet',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: tabletSalesData,
       ),
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Mobile',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: mobileSalesData,
       ),
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Other',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: otherSalesData,
       ),
     ];
@@ -112,8 +108,7 @@ class LegendWithMeasures extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.BarChart(
+  Widget build(BuildContext context) => charts.BarChart(
       seriesList,
       animate: animate,
       barGroupingType: charts.BarGroupingType.grouped,
@@ -125,16 +120,16 @@ class LegendWithMeasures extends StatelessWidget {
         // This section is excluded from being copied to the gallery.
         // This is added in order to generate the image for the gallery to show
         // an initial selection so that measure values are shown in the gallery.
-        new charts.InitialSelection(
+        charts.InitialSelection(
           selectedDataConfig: [
-            new charts.SeriesDatumConfig('Desktop', '2016'),
-            new charts.SeriesDatumConfig('Tablet', '2016'),
-            new charts.SeriesDatumConfig('Mobile', '2016'),
-            new charts.SeriesDatumConfig('Other', '2016'),
+            charts.SeriesDatumConfig('Desktop', '2016'),
+            charts.SeriesDatumConfig('Tablet', '2016'),
+            charts.SeriesDatumConfig('Mobile', '2016'),
+            charts.SeriesDatumConfig('Other', '2016'),
           ],
         ),
         // EXCLUDE_FROM_GALLERY_DOCS_END
-        new charts.SeriesLegend(
+        charts.SeriesLegend(
           // Positions for "start" and "end" will be left and right respectively
           // for widgets with a build context that has directionality ltr.
           // For rtl, "start" and "end" will be right and left respectively.
@@ -146,73 +141,70 @@ class LegendWithMeasures extends StatelessWidget {
           // legend entries will grow as new rows first instead of a new column.
           horizontalFirst: false,
           // This defines the padding around each legend entry.
-          cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
+          cellPadding: const EdgeInsets.only(right: 4, bottom: 4),
           // Set show measures to true to display measures in series legend,
           // when the datum is selected.
           showMeasures: true,
           // Optionally provide a measure formatter to format the measure value.
           // If none is specified the value is formatted as a decimal.
-          measureFormatter: (num? value) {
-            return value == null ? '-' : '${value}k';
-          },
+          measureFormatter: (value) => value == null ? '-' : '${value}k',
         ),
       ],
     );
-  }
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final desktopSalesData = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-      new OrdinalSales('2016', 100),
-      new OrdinalSales('2017', 75),
+      OrdinalSales('2014', 5),
+      OrdinalSales('2015', 25),
+      OrdinalSales('2016', 100),
+      OrdinalSales('2017', 75),
     ];
 
     final tabletSalesData = [
-      new OrdinalSales('2014', 25),
-      new OrdinalSales('2015', 50),
+      OrdinalSales('2014', 25),
+      OrdinalSales('2015', 50),
       // Purposely have a missing datum for 2016 to show the null measure format
-      new OrdinalSales('2017', 20),
+      OrdinalSales('2017', 20),
     ];
 
     final mobileSalesData = [
-      new OrdinalSales('2014', 10),
-      new OrdinalSales('2015', 15),
-      new OrdinalSales('2016', 50),
-      new OrdinalSales('2017', 45),
+      OrdinalSales('2014', 10),
+      OrdinalSales('2015', 15),
+      OrdinalSales('2016', 50),
+      OrdinalSales('2017', 45),
     ];
 
     final otherSalesData = [
-      new OrdinalSales('2014', 20),
-      new OrdinalSales('2015', 35),
-      new OrdinalSales('2016', 15),
-      new OrdinalSales('2017', 10),
+      OrdinalSales('2014', 20),
+      OrdinalSales('2015', 35),
+      OrdinalSales('2016', 15),
+      OrdinalSales('2017', 10),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Desktop',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: desktopSalesData,
       ),
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Tablet',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: tabletSalesData,
       ),
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Mobile',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: mobileSalesData,
       ),
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Other',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: otherSalesData,
       ),
     ];
@@ -221,8 +213,8 @@ class LegendWithMeasures extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-  final String year;
-  final int sales;
 
   OrdinalSales(this.year, this.sales);
+  final String year;
+  final int sales;
 }

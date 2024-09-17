@@ -13,45 +13,43 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:example/combo_chart/date_time_line_point.dart';
+import 'package:example/combo_chart/numeric_line_bar.dart';
+import 'package:example/combo_chart/numeric_line_point.dart';
+import 'package:example/combo_chart/ordinal_bar_line.dart';
+import 'package:example/combo_chart/scatter_plot_line.dart';
+import 'package:example/gallery_scaffold.dart';
 import 'package:flutter/material.dart';
-import '../gallery_scaffold.dart';
-import 'date_time_line_point.dart';
-import 'numeric_line_bar.dart';
-import 'numeric_line_point.dart';
-import 'ordinal_bar_line.dart';
-import 'scatter_plot_line.dart';
 
-List<GalleryScaffold> buildGallery() {
-  return [
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.insert_chart),
+List<GalleryScaffold> buildGallery() => [
+    const GalleryScaffold(
+      listTileIcon: Icon(Icons.insert_chart),
       title: 'Ordinal Combo Chart',
       subtitle: 'Ordinal combo chart with bars and lines',
-      childBuilder: () => new OrdinalComboBarLineChart.withRandomData(),
+      childBuilder: OrdinalComboBarLineChart.withRandomData,
     ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.show_chart),
+    const GalleryScaffold(
+      listTileIcon: Icon(Icons.show_chart),
       title: 'Numeric Line Bar Combo Chart',
       subtitle: 'Numeric combo chart with lines and bars',
-      childBuilder: () => new NumericComboLineBarChart.withRandomData(),
+      childBuilder: NumericComboLineBarChart.withRandomData,
     ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.show_chart),
+    const GalleryScaffold(
+      listTileIcon: Icon(Icons.show_chart),
       title: 'Numeric Line Points Combo Chart',
       subtitle: 'Numeric combo chart with lines and points',
-      childBuilder: () => new NumericComboLinePointChart.withRandomData(),
+      childBuilder: NumericComboLinePointChart.withRandomData,
     ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.show_chart),
+    const GalleryScaffold(
+      listTileIcon: Icon(Icons.show_chart),
       title: 'Time Series Combo Chart',
       subtitle: 'Time series combo chart with lines and points',
-      childBuilder: () => new DateTimeComboLinePointChart.withRandomData(),
+      childBuilder: DateTimeComboLinePointChart.withRandomData,
     ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.scatter_plot),
+    const GalleryScaffold(
+      listTileIcon: Icon(Icons.scatter_plot),
       title: 'Scatter Plot Combo Chart',
       subtitle: 'Scatter plot combo chart with a line',
-      childBuilder: () => new ScatterPlotComboLineChart.withRandomData(),
+      childBuilder: ScatterPlotComboLineChart.withRandomData,
     ),
   ];
-}

@@ -16,76 +16,73 @@
 /// Timeseries chart with example of updating external state based on selection.
 ///
 /// A SelectionModelConfig can be provided for each of the different
-/// [SelectionModel] (currently info and action).
+/// [charts.SelectionModel] (currently info and action).
 ///
-/// [SelectionModelType.info] is the default selection chart exploration type
+/// [charts.SelectionModelType.info] is the default selection chart exploration type
 /// initiated by some tap event. This is a different model from
-/// [SelectionModelType.action] which is typically used to select some value as
+/// [charts.SelectionModelType.action] which is typically used to select some value as
 /// an input to some other UI component. This allows dual state of exploring
 /// and selecting data via different touch events.
 ///
-/// See [SelectNearest] behavior on setting the different ways of triggering
-/// [SelectionModel] updates from hover & click events.
+/// See [charts.SelectNearest] behavior on setting the different ways of triggering
+/// [charts.SelectionModel] updates from hover & click events.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class SelectionCallbackExample extends StatefulWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
-  final bool animate;
 
-  SelectionCallbackExample(this.seriesList, {this.animate = false});
+  const SelectionCallbackExample(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
-  factory SelectionCallbackExample.withSampleData() {
-    return new SelectionCallbackExample(
+  factory SelectionCallbackExample.withSampleData() => SelectionCallbackExample(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SelectionCallbackExample.withRandomData() {
-    return new SelectionCallbackExample(_createRandomData());
-  }
+  factory SelectionCallbackExample.withRandomData() => SelectionCallbackExample(_createRandomData());
+  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
-    final us_data = [
-      new TimeSeriesSales(new DateTime(2017, 9, 19), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2017, 9, 26), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2017, 10, 3), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2017, 10, 10), random.nextInt(100)),
+    final usData = [
+      TimeSeriesSales(DateTime(2017, 9, 19), random.nextInt(100)),
+      TimeSeriesSales(DateTime(2017, 9, 26), random.nextInt(100)),
+      TimeSeriesSales(DateTime(2017, 10, 3), random.nextInt(100)),
+      TimeSeriesSales(DateTime(2017, 10, 10), random.nextInt(100)),
     ];
 
-    final uk_data = [
-      new TimeSeriesSales(new DateTime(2017, 9, 19), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2017, 9, 26), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2017, 10, 3), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2017, 10, 10), random.nextInt(100)),
+    final ukData = [
+      TimeSeriesSales(DateTime(2017, 9, 19), random.nextInt(100)),
+      TimeSeriesSales(DateTime(2017, 9, 26), random.nextInt(100)),
+      TimeSeriesSales(DateTime(2017, 10, 3), random.nextInt(100)),
+      TimeSeriesSales(DateTime(2017, 10, 10), random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'US Sales',
-        domainFn: (TimeSeriesSales sales, _) => sales.time,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
-        data: us_data,
+        domainFn: (sales, _) => sales.time,
+        measureFn: (sales, _) => sales.sales,
+        data: usData,
       ),
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'UK Sales',
-        domainFn: (TimeSeriesSales sales, _) => sales.time,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
-        data: uk_data,
-      )
+        domainFn: (sales, _) => sales.time,
+        measureFn: (sales, _) => sales.sales,
+        data: ukData,
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -93,37 +90,37 @@ class SelectionCallbackExample extends StatefulWidget {
   // We need a Stateful widget to build the selection details with the current
   // selection as the state.
   @override
-  State<StatefulWidget> createState() => new _SelectionCallbackState();
+  State<StatefulWidget> createState() => _SelectionCallbackState();
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
-    final us_data = [
-      new TimeSeriesSales(new DateTime(2017, 9, 19), 5),
-      new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
-      new TimeSeriesSales(new DateTime(2017, 10, 3), 78),
-      new TimeSeriesSales(new DateTime(2017, 10, 10), 54),
+    final usData = [
+      TimeSeriesSales(DateTime(2017, 9, 19), 5),
+      TimeSeriesSales(DateTime(2017, 9, 26), 25),
+      TimeSeriesSales(DateTime(2017, 10, 3), 78),
+      TimeSeriesSales(DateTime(2017, 10, 10), 54),
     ];
 
-    final uk_data = [
-      new TimeSeriesSales(new DateTime(2017, 9, 19), 15),
-      new TimeSeriesSales(new DateTime(2017, 9, 26), 33),
-      new TimeSeriesSales(new DateTime(2017, 10, 3), 68),
-      new TimeSeriesSales(new DateTime(2017, 10, 10), 48),
+    final ukData = [
+      TimeSeriesSales(DateTime(2017, 9, 19), 15),
+      TimeSeriesSales(DateTime(2017, 9, 26), 33),
+      TimeSeriesSales(DateTime(2017, 10, 3), 68),
+      TimeSeriesSales(DateTime(2017, 10, 10), 48),
     ];
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'US Sales',
-        domainFn: (TimeSeriesSales sales, _) => sales.time,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
-        data: us_data,
+        domainFn: (sales, _) => sales.time,
+        measureFn: (sales, _) => sales.sales,
+        data: usData,
       ),
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'UK Sales',
-        domainFn: (TimeSeriesSales sales, _) => sales.time,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
-        data: uk_data,
-      )
+        domainFn: (sales, _) => sales.time,
+        measureFn: (sales, _) => sales.sales,
+        data: ukData,
+      ),
     ];
   }
 }
@@ -148,9 +145,9 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
     // series name for each selection point.
     if (selectedDatum.isNotEmpty) {
       time = selectedDatum.first.datum.time;
-      selectedDatum.forEach((charts.SeriesDatum datumPair) {
+      for (final datumPair in selectedDatum) {
         measures[datumPair.series.displayName!] = datumPair.datum.sales;
-      });
+      }
     }
 
     // Request a build.
@@ -164,38 +161,37 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
   Widget build(BuildContext context) {
     // The children consist of a Chart and Text widgets below to hold the info.
     final children = <Widget>[
-      new SizedBox(
-          height: 150.0,
-          child: new charts.TimeSeriesChart(
+      SizedBox(
+          height: 150,
+          child: charts.TimeSeriesChart(
             widget.seriesList,
             animate: widget.animate,
             selectionModels: [
-              new charts.SelectionModelConfig(
-                type: charts.SelectionModelType.info,
+              charts.SelectionModelConfig(
                 changedListener: _onSelectionChanged,
-              )
+              ),
             ],
-          )),
+          ),),
     ];
 
     // If there is a selection, then include the details.
     if (_time != null) {
-      children.add(new Padding(
-          padding: new EdgeInsets.only(top: 5.0),
-          child: new Text(_time.toString())));
+      children.add(Padding(
+          padding: const EdgeInsets.only(top: 5),
+          child: Text(_time.toString()),),);
     }
-    _measures.forEach((String series, num value) {
-      children.add(new Text('${series}: ${value}'));
+    _measures.forEach((series, value) {
+      children.add(Text('$series: $value'));
     });
 
-    return new Column(children: children);
+    return Column(children: children);
   }
 }
 
 /// Sample time series data type.
 class TimeSeriesSales {
-  final DateTime time;
-  final int sales;
 
   TimeSeriesSales(this.time, this.sales);
+  final DateTime time;
+  final int sales;
 }

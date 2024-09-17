@@ -14,62 +14,58 @@
 // limitations under the License.
 
 /// Simple pie chart with outside labels example.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class PieOutsideLabelChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
 
-  PieOutsideLabelChart(this.seriesList, {this.animate = false});
+  const PieOutsideLabelChart(this.seriesList, {super.key, this.animate = false});
 
-  /// Creates a [PieChart] with sample data and no transition.
-  factory PieOutsideLabelChart.withSampleData() {
-    return new PieOutsideLabelChart(
+  /// Creates a [charts.PieChart] with sample data and no transition.
+  factory PieOutsideLabelChart.withSampleData() => PieOutsideLabelChart(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory PieOutsideLabelChart.withRandomData() {
-    return new PieOutsideLabelChart(_createRandomData());
-  }
+  factory PieOutsideLabelChart.withRandomData() => PieOutsideLabelChart(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, int>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new LinearSales(0, random.nextInt(100)),
-      new LinearSales(1, random.nextInt(100)),
-      new LinearSales(2, random.nextInt(100)),
-      new LinearSales(3, random.nextInt(100)),
+      LinearSales(0, random.nextInt(100)),
+      LinearSales(1, random.nextInt(100)),
+      LinearSales(2, random.nextInt(100)),
+      LinearSales(3, random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
         // Set a label accessor to control the text of the arc label.
-        labelAccessorFn: (LinearSales row, _) => '${row.year}: ${row.sales}',
-      )
+        labelAccessorFn: (row, _) => '${row.year}: ${row.sales}',
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.PieChart(seriesList,
+  Widget build(BuildContext context) => charts.PieChart(seriesList,
         animate: animate,
         // Add an [ArcLabelDecorator] configured to render labels outside of the
         // arc with a leader line.
@@ -81,38 +77,37 @@ class PieOutsideLabelChart extends StatelessWidget {
         //       new charts.ArcLabelDecorator(
         //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
         //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
-        defaultRenderer: new charts.ArcRendererConfig(arcRendererDecorators: [
-          new charts.ArcLabelDecorator(
-              labelPosition: charts.ArcLabelPosition.outside)
-        ]));
-  }
+        defaultRenderer: charts.ArcRendererConfig(arcRendererDecorators: [
+          charts.ArcLabelDecorator(
+              labelPosition: charts.ArcLabelPosition.outside,),
+        ],),);
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final data = [
-      new LinearSales(0, 100),
-      new LinearSales(1, 75),
-      new LinearSales(2, 25),
-      new LinearSales(3, 5),
+      LinearSales(0, 100),
+      LinearSales(1, 75),
+      LinearSales(2, 25),
+      LinearSales(3, 5),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
         // Set a label accessor to control the text of the arc label.
-        labelAccessorFn: (LinearSales row, _) => '${row.year}: ${row.sales}',
-      )
+        labelAccessorFn: (row, _) => '${row.year}: ${row.sales}',
+      ),
     ];
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
-  final int year;
-  final int sales;
 
   LinearSales(this.year, this.sales);
+  final int year;
+  final int sales;
 }

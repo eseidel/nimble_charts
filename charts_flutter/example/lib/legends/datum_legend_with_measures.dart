@@ -18,6 +18,8 @@
 /// to use the customizations, they do not necessary have to be used together in
 /// this way. Choosing [end] as the position does not require the justification
 /// to also be [endDrawArea].
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -28,52 +30,45 @@ import 'package:nimble_charts/flutter.dart' as charts;
 ///
 /// Also shows the option to provide a custom measure formatter.
 class DatumLegendWithMeasures extends StatelessWidget {
-  final List<charts.Series<dynamic, int>> seriesList;
-  final bool animate;
 
-  DatumLegendWithMeasures(this.seriesList, {this.animate = false});
+  const DatumLegendWithMeasures(this.seriesList, {super.key, this.animate = false});
 
-  factory DatumLegendWithMeasures.withSampleData() {
-    return new DatumLegendWithMeasures(
+  factory DatumLegendWithMeasures.withSampleData() => DatumLegendWithMeasures(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory DatumLegendWithMeasures.withRandomData() {
-    return new DatumLegendWithMeasures(_createRandomData());
-  }
+  factory DatumLegendWithMeasures.withRandomData() => DatumLegendWithMeasures(_createRandomData());
+  final List<charts.Series<dynamic, int>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, int>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new LinearSales(2014, random.nextInt(100)),
-      new LinearSales(2015, random.nextInt(100)),
-      new LinearSales(2016, random.nextInt(100)),
-      new LinearSales(2017, random.nextInt(100)),
+      LinearSales(2014, random.nextInt(100)),
+      LinearSales(2015, random.nextInt(100)),
+      LinearSales(2016, random.nextInt(100)),
+      LinearSales(2017, random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.PieChart<int>(
+  Widget build(BuildContext context) => charts.PieChart<int>(
       seriesList,
       animate: animate,
       // Add the legend behavior to the chart to turn on legends.
@@ -84,13 +79,13 @@ class DatumLegendWithMeasures extends StatelessWidget {
         // This section is excluded from being copied to the gallery.
         // This is added in order to generate the image for the gallery to show
         // an initial selection so that measure values are shown in the gallery.
-        new charts.InitialSelection(
+        charts.InitialSelection(
           selectedDataConfig: [
-            new charts.SeriesDatumConfig('Sales', 0),
+            charts.SeriesDatumConfig('Sales', 0),
           ],
         ),
         // EXCLUDE_FROM_GALLERY_DOCS_END
-        new charts.DatumLegend(
+        charts.DatumLegend(
           // Positions for "start" and "end" will be left and right respectively
           // for widgets with a build context that has directionality ltr.
           // For rtl, "start" and "end" will be right and left respectively.
@@ -102,45 +97,42 @@ class DatumLegendWithMeasures extends StatelessWidget {
           // legend entries will grow as new rows first instead of a new column.
           horizontalFirst: false,
           // This defines the padding around each legend entry.
-          cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
+          cellPadding: const EdgeInsets.only(right: 4, bottom: 4),
           // Set [showMeasures] to true to display measures in series legend.
           showMeasures: true,
           // Configure the measure value to be shown by default in the legend.
           legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
           // Optionally provide a measure formatter to format the measure value.
           // If none is specified the value is formatted as a decimal.
-          measureFormatter: (num? value) {
-            return value == null ? '-' : '${value}k';
-          },
+          measureFormatter: (value) => value == null ? '-' : '${value}k',
         ),
       ],
     );
-  }
 
   /// Create series list with one series
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final data = [
-      new LinearSales(2014, 100),
-      new LinearSales(2015, 75),
-      new LinearSales(2016, 25),
-      new LinearSales(2017, 5),
+      LinearSales(2014, 100),
+      LinearSales(2015, 75),
+      LinearSales(2016, 25),
+      LinearSales(2017, 5),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
-  final int year;
-  final int sales;
 
   LinearSales(this.year, this.sales);
+  final int year;
+  final int sales;
 }

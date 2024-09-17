@@ -13,22 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:example/gallery_scaffold.dart';
+import 'package:example/pie_chart/partial_pie.dart';
+import 'package:example/pie_chart/simple.dart';
 import 'package:flutter/material.dart';
-import '../gallery_scaffold.dart';
-import 'auto_label.dart';
-import 'donut.dart';
-import 'gauge.dart';
-import 'simple.dart';
-import 'outside_label.dart';
-import 'partial_pie.dart';
 
-List<GalleryScaffold> buildGallery() {
-  return [
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.pie_chart),
+List<GalleryScaffold> buildGallery() => [
+    const GalleryScaffold(
+      listTileIcon: Icon(Icons.pie_chart),
       title: 'Simple Pie Chart',
       subtitle: 'With a single series',
-      childBuilder: () => new SimplePieChart.withRandomData(),
+      childBuilder: SimplePieChart.withRandomData,
     ),
     //TODO:
     // new GalleryScaffold(
@@ -37,11 +32,11 @@ List<GalleryScaffold> buildGallery() {
     //   subtitle: 'With a single series and labels outside the arcs',
     //   childBuilder: () => new PieOutsideLabelChart.withRandomData(),
     // ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.pie_chart),
+    const GalleryScaffold(
+      listTileIcon: Icon(Icons.pie_chart),
       title: 'Partial Pie Chart',
-      subtitle: 'That doesn\'t cover a full revolution',
-      childBuilder: () => new PartialPieChart.withRandomData(),
+      subtitle: "That doesn't cover a full revolution",
+      childBuilder: PartialPieChart.withRandomData,
     ),
     //TODO:
     // new GalleryScaffold(
@@ -64,4 +59,3 @@ List<GalleryScaffold> buildGallery() {
     //   childBuilder: () => new GaugeChart.withRandomData(),
     // ),
   ];
-}

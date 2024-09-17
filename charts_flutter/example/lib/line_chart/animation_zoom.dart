@@ -15,87 +15,82 @@
 
 /// Example of a line chart with pan and zoom enabled via
 /// [Charts.PanAndZoomBehavior].
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class LineAnimationZoomChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
 
-  LineAnimationZoomChart(this.seriesList, {this.animate = false});
+  const LineAnimationZoomChart(this.seriesList, {super.key, this.animate = false});
 
-  /// Creates a [LineChart] with sample data and no transition.
-  factory LineAnimationZoomChart.withSampleData() {
-    return new LineAnimationZoomChart(
+  /// Creates a [charts.LineChart] with sample data and no transition.
+  factory LineAnimationZoomChart.withSampleData() => LineAnimationZoomChart(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory LineAnimationZoomChart.withRandomData() {
-    return new LineAnimationZoomChart(_createRandomData());
-  }
+  factory LineAnimationZoomChart.withRandomData() => LineAnimationZoomChart(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, num>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = <LinearSales>[];
 
     for (var i = 0; i < 100; i++) {
-      data.add(new LinearSales(i, random.nextInt(100)));
+      data.add(LinearSales(i, random.nextInt(100)));
     }
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList, animate: animate, behaviors: [
-      new charts.PanAndZoomBehavior(),
-    ]);
-  }
+  Widget build(BuildContext context) => charts.LineChart(seriesList, animate: animate, behaviors: [
+      charts.PanAndZoomBehavior(),
+    ],);
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final data = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 25),
-      new LinearSales(2, 100),
-      new LinearSales(3, 75),
+      LinearSales(0, 5),
+      LinearSales(1, 25),
+      LinearSales(2, 100),
+      LinearSales(3, 75),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
-  final int year;
-  final int sales;
 
   LinearSales(this.year, this.sales);
+  final int year;
+  final int sales;
 }

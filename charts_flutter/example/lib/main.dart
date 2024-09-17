@@ -13,16 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:example/app_config.dart';
+import 'package:example/home.dart';
 import 'package:flutter/material.dart';
-import 'app_config.dart';
-import 'home.dart';
 
 /// The main gallery app widget.
 class GalleryApp extends StatefulWidget {
-  GalleryApp({Key? key}) : super(key: key);
+  const GalleryApp({super.key});
 
   @override
-  GalleryAppState createState() => new GalleryAppState();
+  GalleryAppState createState() => GalleryAppState();
 }
 
 /// The main gallery app state.
@@ -30,15 +30,13 @@ class GalleryApp extends StatefulWidget {
 /// Controls performance overlay, and instantiates a [Home] widget.
 class GalleryAppState extends State<GalleryApp> {
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
+  Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: defaultConfig.appName,
         theme: defaultConfig.theme,
-        home: new Home());
-  }
+        home: Home(),);
 }
 
 void main() {
-  runApp(new GalleryApp());
+  runApp(const GalleryApp());
 }

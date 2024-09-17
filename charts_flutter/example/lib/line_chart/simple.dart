@@ -14,88 +14,83 @@
 // limitations under the License.
 
 /// Example of a simple line chart.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class SimpleLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
 
-  SimpleLineChart(this.seriesList, {this.animate = false});
+  const SimpleLineChart(this.seriesList, {super.key, this.animate = false});
 
-  /// Creates a [LineChart] with sample data and no transition.
-  factory SimpleLineChart.withSampleData() {
-    return new SimpleLineChart(
+  /// Creates a [charts.LineChart] with sample data and no transition.
+  factory SimpleLineChart.withSampleData() => SimpleLineChart(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SimpleLineChart.withRandomData() {
-    return new SimpleLineChart(_createRandomData());
-  }
+  factory SimpleLineChart.withRandomData() => SimpleLineChart(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, num>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new LinearSales(0, random.nextInt(100)),
-      new LinearSales(1, random.nextInt(100)),
-      new LinearSales(2, random.nextInt(100)),
-      new LinearSales(3, random.nextInt(100)),
+      LinearSales(0, random.nextInt(100)),
+      LinearSales(1, random.nextInt(100)),
+      LinearSales(2, random.nextInt(100)),
+      LinearSales(3, random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList, animate: animate);
-  }
+  Widget build(BuildContext context) => charts.LineChart(seriesList, animate: animate);
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final data = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 25),
-      new LinearSales(2, 100),
-      new LinearSales(3, 75),
+      LinearSales(0, 5),
+      LinearSales(1, 25),
+      LinearSales(2, 100),
+      LinearSales(3, 75),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
-  final int year;
-  final int sales;
 
   LinearSales(this.year, this.sales);
+  final int year;
+  final int sales;
 }

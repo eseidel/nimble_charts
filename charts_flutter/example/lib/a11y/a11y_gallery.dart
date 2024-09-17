@@ -12,18 +12,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+import 'package:example/a11y/domain_a11y_explore_bar_chart.dart';
+import 'package:example/gallery_scaffold.dart';
 import 'package:flutter/material.dart';
-import '../gallery_scaffold.dart';
-import 'domain_a11y_explore_bar_chart.dart';
 
-List<GalleryScaffold> buildGallery() {
-  return [
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.accessibility),
+List<GalleryScaffold> buildGallery() => [
+    const GalleryScaffold(
+      listTileIcon: Icon(Icons.accessibility),
       title: 'Screen reader enabled bar chart',
       subtitle: 'Requires TalkBack or Voiceover turned on to work. '
           'Bar chart with domain selection explore mode behavior.',
-      childBuilder: () => new DomainA11yExploreBarChart.withRandomData(),
+      childBuilder: DomainA11yExploreBarChart.withRandomData,
     ),
   ];
-}

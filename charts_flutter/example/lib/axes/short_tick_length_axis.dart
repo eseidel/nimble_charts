@@ -14,6 +14,8 @@
 // limitations under the License.
 
 /// Custom Tick Style Example
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -27,43 +29,37 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// There are many axis styling options in the SmallTickRenderer allowing you
 /// to customize the font, tick lengths, and offsets.
 class ShortTickLengthAxis extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
 
-  ShortTickLengthAxis(this.seriesList, {this.animate = false});
+  const ShortTickLengthAxis(this.seriesList, {super.key, this.animate = false});
 
-  factory ShortTickLengthAxis.withSampleData() {
-    return new ShortTickLengthAxis(
+  factory ShortTickLengthAxis.withSampleData() => ShortTickLengthAxis(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory ShortTickLengthAxis.withRandomData() {
-    return new ShortTickLengthAxis(_createRandomData());
-  }
+  factory ShortTickLengthAxis.withRandomData() => ShortTickLengthAxis(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final globalSalesData = [
-      new OrdinalSales('2014', random.nextInt(100) * 100),
-      new OrdinalSales('2015', random.nextInt(100) * 100),
-      new OrdinalSales('2016', random.nextInt(100) * 100),
-      new OrdinalSales('2017', random.nextInt(100) * 100),
+      OrdinalSales('2014', random.nextInt(100) * 100),
+      OrdinalSales('2015', random.nextInt(100) * 100),
+      OrdinalSales('2016', random.nextInt(100) * 100),
+      OrdinalSales('2017', random.nextInt(100) * 100),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Global Revenue',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: globalSalesData,
       ),
     ];
@@ -71,35 +67,33 @@ class ShortTickLengthAxis extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.BarChart(
+  Widget build(BuildContext context) => charts.BarChart(
       seriesList,
       animate: animate,
 
       /// Customize the primary measure axis using a small tick renderer.
       /// Note: use String instead of num for ordinal domain axis
       /// (typically bar charts).
-      primaryMeasureAxis: new charts.NumericAxisSpec(
-          renderSpec: new charts.SmallTickRendererSpec(
+      primaryMeasureAxis: const charts.NumericAxisSpec(
+          renderSpec: charts.SmallTickRendererSpec(
               // Tick and Label styling here.
-              )),
+              ),),
     );
-  }
 
   /// Create series list with single series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final globalSalesData = [
-      new OrdinalSales('2014', 5000),
-      new OrdinalSales('2015', 25000),
-      new OrdinalSales('2016', 100000),
-      new OrdinalSales('2017', 750000),
+      OrdinalSales('2014', 5000),
+      OrdinalSales('2015', 25000),
+      OrdinalSales('2016', 100000),
+      OrdinalSales('2017', 750000),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Global Revenue',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: globalSalesData,
       ),
     ];
@@ -108,8 +102,8 @@ class ShortTickLengthAxis extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-  final String year;
-  final int sales;
 
   OrdinalSales(this.year, this.sales);
+  final String year;
+  final int sales;
 }

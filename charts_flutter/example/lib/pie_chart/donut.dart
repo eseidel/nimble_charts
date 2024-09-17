@@ -14,90 +14,85 @@
 // limitations under the License.
 
 /// Donut chart example. This is a simple pie chart with a hole in the middle.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class DonutPieChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
 
-  DonutPieChart(this.seriesList, {this.animate = false});
+  const DonutPieChart(this.seriesList, {super.key, this.animate = false});
 
-  /// Creates a [PieChart] with sample data and no transition.
-  factory DonutPieChart.withSampleData() {
-    return new DonutPieChart(
+  /// Creates a [charts.PieChart] with sample data and no transition.
+  factory DonutPieChart.withSampleData() => DonutPieChart(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory DonutPieChart.withRandomData() {
-    return new DonutPieChart(_createRandomData());
-  }
+  factory DonutPieChart.withRandomData() => DonutPieChart(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, int>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new LinearSales(0, random.nextInt(100)),
-      new LinearSales(1, random.nextInt(100)),
-      new LinearSales(2, random.nextInt(100)),
-      new LinearSales(3, random.nextInt(100)),
+      LinearSales(0, random.nextInt(100)),
+      LinearSales(1, random.nextInt(100)),
+      LinearSales(2, random.nextInt(100)),
+      LinearSales(3, random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.PieChart(seriesList,
+  Widget build(BuildContext context) => charts.PieChart(seriesList,
         animate: animate,
         // Configure the width of the pie slices to 60px. The remaining space in
         // the chart will be left as a hole in the center.
-        defaultRenderer: new charts.ArcRendererConfig(arcWidth: 60));
-  }
+        defaultRenderer: charts.ArcRendererConfig(arcWidth: 60),);
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final data = [
-      new LinearSales(0, 100),
-      new LinearSales(1, 75),
-      new LinearSales(2, 25),
-      new LinearSales(3, 5),
+      LinearSales(0, 100),
+      LinearSales(1, 75),
+      LinearSales(2, 25),
+      LinearSales(3, 5),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
-  final int year;
-  final int sales;
 
   LinearSales(this.year, this.sales);
+  final int year;
+  final int sales;
 }

@@ -15,6 +15,8 @@
 
 /// Example of a percentage bar chart which shows each bar as the percentage of
 /// the total series measure value.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -22,48 +24,42 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class PercentOfSeriesBarChart extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
 
-  PercentOfSeriesBarChart(this.seriesList, {this.animate = false});
+  const PercentOfSeriesBarChart(this.seriesList, {super.key, this.animate = false});
 
-  /// Creates a stacked [BarChart] with sample data and no transition.
-  factory PercentOfSeriesBarChart.withSampleData() {
-    return new PercentOfSeriesBarChart(
+  /// Creates a stacked [charts.BarChart] with sample data and no transition.
+  factory PercentOfSeriesBarChart.withSampleData() => PercentOfSeriesBarChart(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory PercentOfSeriesBarChart.withRandomData() {
-    return new PercentOfSeriesBarChart(_createRandomData());
-  }
+  factory PercentOfSeriesBarChart.withRandomData() => PercentOfSeriesBarChart(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final desktopSalesData = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Desktop',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: desktopSalesData,
       ),
     ];
@@ -71,40 +67,38 @@ class PercentOfSeriesBarChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.BarChart(
+  Widget build(BuildContext context) => charts.BarChart(
       seriesList,
       animate: animate,
       barGroupingType: charts.BarGroupingType.grouped,
       // Configures a [PercentInjector] behavior that will calculate measure
       // values as the percentage of the total of all data in its series.
       behaviors: [
-        new charts.PercentInjector(
-            totalType: charts.PercentInjectorTotalType.series)
+        charts.PercentInjector(
+            totalType: charts.PercentInjectorTotalType.series,),
       ],
       // Configure the axis spec to show percentage values.
-      primaryMeasureAxis: new charts.PercentAxisSpec(),
+      primaryMeasureAxis: charts.PercentAxisSpec(),
     );
-  }
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final desktopSalesData = [
-      new OrdinalSales('2011', 5),
-      new OrdinalSales('2012', 25),
-      new OrdinalSales('2013', 50),
-      new OrdinalSales('2014', 75),
-      new OrdinalSales('2015', 100),
-      new OrdinalSales('2016', 125),
-      new OrdinalSales('2017', 200),
-      new OrdinalSales('2018', 150),
+      OrdinalSales('2011', 5),
+      OrdinalSales('2012', 25),
+      OrdinalSales('2013', 50),
+      OrdinalSales('2014', 75),
+      OrdinalSales('2015', 100),
+      OrdinalSales('2016', 125),
+      OrdinalSales('2017', 200),
+      OrdinalSales('2018', 150),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Desktop',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: desktopSalesData,
       ),
     ];
@@ -113,8 +107,8 @@ class PercentOfSeriesBarChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-  final String year;
-  final int sales;
 
   OrdinalSales(this.year, this.sales);
+  final String year;
+  final int sales;
 }

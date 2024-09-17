@@ -18,6 +18,8 @@
 /// an example of how to use the customizations, they do not necessary have to
 /// be used together in this way. Choosing [end] as the position does not
 /// require the justification to also be [endDrawArea].
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -25,59 +27,52 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class DatumLegendOptions extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
 
-  DatumLegendOptions(this.seriesList, {this.animate = false});
+  const DatumLegendOptions(this.seriesList, {super.key, this.animate = false});
 
-  factory DatumLegendOptions.withSampleData() {
-    return new DatumLegendOptions(
+  factory DatumLegendOptions.withSampleData() => DatumLegendOptions(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory DatumLegendOptions.withRandomData() {
-    return new DatumLegendOptions(_createRandomData());
-  }
+  factory DatumLegendOptions.withRandomData() => DatumLegendOptions(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, int>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new LinearSales(0, random.nextInt(100)),
-      new LinearSales(1, random.nextInt(100)),
-      new LinearSales(2, random.nextInt(100)),
-      new LinearSales(3, random.nextInt(100)),
+      LinearSales(0, random.nextInt(100)),
+      LinearSales(1, random.nextInt(100)),
+      LinearSales(2, random.nextInt(100)),
+      LinearSales(3, random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.PieChart(
+  Widget build(BuildContext context) => charts.PieChart(
       seriesList,
       animate: animate,
       // Add the legend behavior to the chart to turn on legends.
       // This example shows how to change the position and justification of
       // the legend, in addition to altering the max rows and padding.
       behaviors: [
-        new charts.DatumLegend(
+        charts.DatumLegend(
           // Positions for "start" and "end" will be left and right respectively
           // for widgets with a build context that has directionality ltr.
           // For rtl, "start" and "end" will be right and left respectively.
@@ -96,41 +91,40 @@ class DatumLegendOptions extends StatelessWidget {
           // rows before adding a new column.
           desiredMaxRows: 2,
           // This defines the padding around each legend entry.
-          cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
+          cellPadding: const EdgeInsets.only(right: 4, bottom: 4),
           // Render the legend entry text with custom styles.
           entryTextStyle: charts.TextStyleSpec(
               color: charts.MaterialPalette.purple.shadeDefault,
               fontFamily: 'Georgia',
-              fontSize: 11),
-        )
+              fontSize: 11,),
+        ),
       ],
     );
-  }
 
   /// Create series list with one series
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final data = [
-      new LinearSales(0, 100),
-      new LinearSales(1, 75),
-      new LinearSales(2, 25),
-      new LinearSales(3, 5),
+      LinearSales(0, 100),
+      LinearSales(1, 75),
+      LinearSales(2, 25),
+      LinearSales(3, 5),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
-  final int year;
-  final int sales;
 
   LinearSales(this.year, this.sales);
+  final int year;
+  final int sales;
 }

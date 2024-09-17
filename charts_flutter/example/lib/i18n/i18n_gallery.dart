@@ -13,38 +13,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:example/gallery_scaffold.dart';
+import 'package:example/i18n/rtl_bar_chart.dart';
+import 'package:example/i18n/rtl_line_chart.dart';
+import 'package:example/i18n/rtl_line_segments.dart';
+import 'package:example/i18n/rtl_series_legend.dart';
 import 'package:flutter/material.dart';
-import '../gallery_scaffold.dart';
-import 'rtl_bar_chart.dart';
-import 'rtl_line_chart.dart';
-import 'rtl_line_segments.dart';
-import 'rtl_series_legend.dart';
 
-List<GalleryScaffold> buildGallery() {
-  return [
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.flag),
+List<GalleryScaffold> buildGallery() => [
+    const GalleryScaffold(
+      listTileIcon: Icon(Icons.flag),
       title: 'RTL Bar Chart',
       subtitle: 'Simple bar chart in RTL',
-      childBuilder: () => new RTLBarChart.withRandomData(),
+      childBuilder: RTLBarChart.withRandomData,
     ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.flag),
+    const GalleryScaffold(
+      listTileIcon: Icon(Icons.flag),
       title: 'RTL Line Chart',
       subtitle: 'Simple line chart in RTL',
-      childBuilder: () => new RTLLineChart.withRandomData(),
+      childBuilder: RTLLineChart.withRandomData,
     ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.flag),
+    const GalleryScaffold(
+      listTileIcon: Icon(Icons.flag),
       title: 'RTL Line Segments',
       subtitle: 'Stacked area chart with style segments in RTL',
-      childBuilder: () => new RTLLineSegments.withRandomData(),
+      childBuilder: RTLLineSegments.withRandomData,
     ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.flag),
+    const GalleryScaffold(
+      listTileIcon: Icon(Icons.flag),
       title: 'RTL Series Legend',
       subtitle: 'Series legend in RTL',
-      childBuilder: () => new RTLSeriesLegend.withRandomData(),
+      childBuilder: RTLSeriesLegend.withRandomData,
     ),
   ];
-}

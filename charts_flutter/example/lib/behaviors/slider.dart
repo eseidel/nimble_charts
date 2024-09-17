@@ -14,10 +14,12 @@
 // limitations under the License.
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
 // EXCLUDE_FROM_GALLERY_DOCS_END
-import 'package:nimble_charts/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:nimble_charts/flutter.dart' as charts;
+import 'package:nimble_charts/flutter.dart';
 
 /// This is just a simple line chart with a behavior that adds slider controls.
 ///
@@ -29,49 +31,43 @@ import 'package:flutter/scheduler.dart';
 /// will be fired when the chart is drawn because an initial domain value is
 /// set.
 ///
-/// [Slider.moveSliderToDomain] can be called to programmatically position the
+/// [charts.Slider.moveSliderToDomain] can be called to programmatically position the
 /// slider. This is useful for synchronizing the slider with external elements.
 class SliderLine extends StatefulWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
 
-  SliderLine(this.seriesList, {this.animate = false});
+  const SliderLine(this.seriesList, {super.key, this.animate = false});
 
-  /// Creates a [LineChart] with sample data and no transition.
-  factory SliderLine.withSampleData() {
-    return new SliderLine(
+  /// Creates a [charts.LineChart] with sample data and no transition.
+  factory SliderLine.withSampleData() => SliderLine(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SliderLine.withRandomData() {
-    return new SliderLine(_createRandomData());
-  }
+  factory SliderLine.withRandomData() => SliderLine(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, num>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new LinearSales(0, random.nextInt(100)),
-      new LinearSales(1, random.nextInt(100)),
-      new LinearSales(2, random.nextInt(100)),
-      new LinearSales(3, random.nextInt(100)),
+      LinearSales(0, random.nextInt(100)),
+      LinearSales(1, random.nextInt(100)),
+      LinearSales(2, random.nextInt(100)),
+      LinearSales(3, random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -79,24 +75,24 @@ class SliderLine extends StatefulWidget {
   // We need a Stateful widget to build the selection details with the current
   // selection as the state.
   @override
-  State<StatefulWidget> createState() => new _SliderCallbackState();
+  State<StatefulWidget> createState() => _SliderCallbackState();
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final data = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 25),
-      new LinearSales(2, 100),
-      new LinearSales(3, 75),
+      LinearSales(0, 5),
+      LinearSales(1, 25),
+      LinearSales(2, 100),
+      LinearSales(3, 75),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
@@ -107,8 +103,8 @@ class _SliderCallbackState extends State<SliderLine> {
   Point<int>? _sliderPosition;
 
   // Handles callbacks when the user drags the slider.
-  _onSliderChange(Point<int> point, dynamic domain, String roleId,
-      charts.SliderListenerDragState dragState) {
+  _onSliderChange(Point<int> point, domain, String roleId,
+      charts.SliderListenerDragState dragState,) {
     // Request a build.
     void rebuild(_) {
       setState(() {
@@ -125,9 +121,9 @@ class _SliderCallbackState extends State<SliderLine> {
   Widget build(BuildContext context) {
     // The children consist of a Chart and Text widgets below to hold the info.
     final children = <Widget>[
-      new SizedBox(
-          height: 150.0,
-          child: new charts.LineChart(
+      SizedBox(
+          height: 150,
+          child: charts.LineChart(
             widget.seriesList,
             animate: widget.animate,
             // Configures a [Slider] behavior.
@@ -158,38 +154,38 @@ class _SliderCallbackState extends State<SliderLine> {
             // [style] takes in a [SliderStyle] configuration object, and
             // configures the color and sizing of the slider line and handle.
             behaviors: [
-              new charts.Slider(
-                  initialDomainValue: 1.0, onChangeCallback: _onSliderChange),
+              charts.Slider(
+                  initialDomainValue: 1.0, onChangeCallback: _onSliderChange,),
             ],
-          )),
+          ),),
     ];
 
     // If there is a slider change event, then include the details.
     if (_sliderDomainValue != null) {
-      children.add(new Padding(
-          padding: new EdgeInsets.only(top: 5.0),
-          child: new Text('Slider domain value: ${_sliderDomainValue}')));
+      children.add(Padding(
+          padding: const EdgeInsets.only(top: 5),
+          child: Text('Slider domain value: $_sliderDomainValue'),),);
     }
     if (_sliderPosition != null) {
-      children.add(new Padding(
-          padding: new EdgeInsets.only(top: 5.0),
-          child: new Text(
-              'Slider position: ${_sliderPosition!.x}, ${_sliderPosition!.y}')));
+      children.add(Padding(
+          padding: const EdgeInsets.only(top: 5),
+          child: Text(
+              'Slider position: ${_sliderPosition!.x}, ${_sliderPosition!.y}',),),);
     }
     if (_sliderDragState != null) {
-      children.add(new Padding(
-          padding: new EdgeInsets.only(top: 5.0),
-          child: new Text('Slider drag state: ${_sliderDragState}')));
+      children.add(Padding(
+          padding: const EdgeInsets.only(top: 5),
+          child: Text('Slider drag state: $_sliderDragState'),),);
     }
 
-    return new Column(children: children);
+    return Column(children: children);
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
-  final int year;
-  final int sales;
 
   LinearSales(this.year, this.sales);
+  final int year;
+  final int sales;
 }

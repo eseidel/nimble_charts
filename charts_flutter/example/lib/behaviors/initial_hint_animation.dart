@@ -19,7 +19,7 @@
 /// "Initial hint animation".
 ///
 /// This behavior is intended to be used with charts that also have pan/zoom
-/// behaviors added and/or the initial viewport set in [AxisSpec].
+/// behaviors added and/or the initial viewport set in [charts.AxisSpec].
 ///
 /// Adding this behavior will cause the chart to animate from a scale and/or
 /// offset of the desired final viewport. If the user taps the widget prior
@@ -35,80 +35,76 @@
 ///
 /// In this example, the series list has ordinal data from year 2014 to 2030,
 /// and we have the initial viewport set to start at 2018 that shows 4 values by
-/// specifying an [OrdinalViewport] in [OrdinalAxisSpec]. We can add the hint
-/// animation by adding behavior [InitialHintBehavior] with [maxHintTranslate]
+/// specifying an [charts.OrdinalViewport] in [charts.OrdinalAxisSpec]. We can add the hint
+/// animation by adding behavior [charts.InitialHintBehavior] with [maxHintTranslate]
 /// of 4. When the chart is drawn for the first time, the viewport will show
 /// 2022 as the first value and the viewport will animate by panning values to
 /// the right until 2018 is the first value in the viewport.
+library;
+
 
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class InitialHintAnimation extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
 
-  InitialHintAnimation(this.seriesList, {this.animate = false});
+  const InitialHintAnimation(this.seriesList, {super.key, this.animate = false});
 
-  /// Creates a [BarChart] with sample data and no transition.
-  factory InitialHintAnimation.withSampleData() {
-    return new InitialHintAnimation(
+  /// Creates a [charts.BarChart] with sample data and no transition.
+  factory InitialHintAnimation.withSampleData() => InitialHintAnimation(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory InitialHintAnimation.withRandomData() {
-    return new InitialHintAnimation(_createRandomData());
-  }
+  factory InitialHintAnimation.withRandomData() => InitialHintAnimation(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
-      new OrdinalSales('2018', random.nextInt(100)),
-      new OrdinalSales('2019', random.nextInt(100)),
-      new OrdinalSales('2020', random.nextInt(100)),
-      new OrdinalSales('2021', random.nextInt(100)),
-      new OrdinalSales('2022', random.nextInt(100)),
-      new OrdinalSales('2023', random.nextInt(100)),
-      new OrdinalSales('2024', random.nextInt(100)),
-      new OrdinalSales('2025', random.nextInt(100)),
-      new OrdinalSales('2026', random.nextInt(100)),
-      new OrdinalSales('2027', random.nextInt(100)),
-      new OrdinalSales('2028', random.nextInt(100)),
-      new OrdinalSales('2029', random.nextInt(100)),
-      new OrdinalSales('2030', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2018', random.nextInt(100)),
+      OrdinalSales('2019', random.nextInt(100)),
+      OrdinalSales('2020', random.nextInt(100)),
+      OrdinalSales('2021', random.nextInt(100)),
+      OrdinalSales('2022', random.nextInt(100)),
+      OrdinalSales('2023', random.nextInt(100)),
+      OrdinalSales('2024', random.nextInt(100)),
+      OrdinalSales('2025', random.nextInt(100)),
+      OrdinalSales('2026', random.nextInt(100)),
+      OrdinalSales('2027', random.nextInt(100)),
+      OrdinalSales('2028', random.nextInt(100)),
+      OrdinalSales('2029', random.nextInt(100)),
+      OrdinalSales('2030', random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.BarChart(
+  Widget build(BuildContext context) => charts.BarChart(
       seriesList,
       animate: animate,
       // Optionally turn off the animation that animates values up from the
@@ -117,59 +113,58 @@ class InitialHintAnimation extends StatelessWidget {
       animationDuration: Duration.zero,
       // Set the initial viewport by providing a new AxisSpec with the
       // desired viewport: a starting domain and the data size.
-      domainAxis: new charts.OrdinalAxisSpec(
-          viewport: new charts.OrdinalViewport('2018', 4)),
+      domainAxis: charts.OrdinalAxisSpec(
+          viewport: charts.OrdinalViewport('2018', 4),),
       behaviors: [
         // Add this behavior to show initial hint animation that will pan to the
         // final desired viewport.
         // The duration of the animation can be adjusted by pass in
         // [hintDuration]. By default this is 3000ms.
-        new charts.InitialHintBehavior(maxHintTranslate: 4.0),
+        charts.InitialHintBehavior(maxHintTranslate: 4),
         // Optionally add a pan or pan and zoom behavior.
         // If pan/zoom is not added, the viewport specified remains the viewport
-        new charts.PanAndZoomBehavior(),
+        charts.PanAndZoomBehavior(),
       ],
     );
-  }
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final data = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-      new OrdinalSales('2016', 100),
-      new OrdinalSales('2017', 75),
-      new OrdinalSales('2018', 33),
-      new OrdinalSales('2019', 80),
-      new OrdinalSales('2020', 21),
-      new OrdinalSales('2021', 77),
-      new OrdinalSales('2022', 8),
-      new OrdinalSales('2023', 12),
-      new OrdinalSales('2024', 42),
-      new OrdinalSales('2025', 70),
-      new OrdinalSales('2026', 77),
-      new OrdinalSales('2027', 55),
-      new OrdinalSales('2028', 19),
-      new OrdinalSales('2029', 66),
-      new OrdinalSales('2030', 27),
+      OrdinalSales('2014', 5),
+      OrdinalSales('2015', 25),
+      OrdinalSales('2016', 100),
+      OrdinalSales('2017', 75),
+      OrdinalSales('2018', 33),
+      OrdinalSales('2019', 80),
+      OrdinalSales('2020', 21),
+      OrdinalSales('2021', 77),
+      OrdinalSales('2022', 8),
+      OrdinalSales('2023', 12),
+      OrdinalSales('2024', 42),
+      OrdinalSales('2025', 70),
+      OrdinalSales('2026', 77),
+      OrdinalSales('2027', 55),
+      OrdinalSales('2028', 19),
+      OrdinalSales('2029', 66),
+      OrdinalSales('2030', 27),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample ordinal data type.
 class OrdinalSales {
-  final String year;
-  final int sales;
 
   OrdinalSales(this.year, this.sales);
+  final String year;
+  final int sales;
 }

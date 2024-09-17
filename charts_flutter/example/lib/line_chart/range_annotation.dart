@@ -14,111 +14,106 @@
 // limitations under the License.
 
 /// Line chart with range annotations example.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class LineRangeAnnotationChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
 
-  LineRangeAnnotationChart(this.seriesList, {this.animate = false});
+  const LineRangeAnnotationChart(this.seriesList, {super.key, this.animate = false});
 
-  /// Creates a [LineChart] with sample data and range annotations.
+  /// Creates a [charts.LineChart] with sample data and range annotations.
   ///
   /// The second annotation extends beyond the range of the series data,
   /// demonstrating the effect of the [Charts.RangeAnnotation.extendAxis] flag.
   /// This can be set to false to disable range extension.
-  factory LineRangeAnnotationChart.withSampleData() {
-    return new LineRangeAnnotationChart(
+  factory LineRangeAnnotationChart.withSampleData() => LineRangeAnnotationChart(
       _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
     );
-  }
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory LineRangeAnnotationChart.withRandomData() {
-    return new LineRangeAnnotationChart(_createRandomData());
-  }
+  factory LineRangeAnnotationChart.withRandomData() => LineRangeAnnotationChart(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, num>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new LinearSales(0, random.nextInt(100)),
-      new LinearSales(1, random.nextInt(100)),
-      new LinearSales(2, random.nextInt(100)),
+      LinearSales(0, random.nextInt(100)),
+      LinearSales(1, random.nextInt(100)),
+      LinearSales(2, random.nextInt(100)),
       // Fix one of the points to 100 so that the annotations are consistently
       // placed.
-      new LinearSales(3, 100),
+      LinearSales(3, 100),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList, animate: animate, behaviors: [
-      new charts.RangeAnnotation([
-        new charts.RangeAnnotationSegment(
+  Widget build(BuildContext context) => charts.LineChart(seriesList, animate: animate, behaviors: [
+      charts.RangeAnnotation([
+        charts.RangeAnnotationSegment(
             0.5, 1.0, charts.RangeAnnotationAxisType.domain,
-            startLabel: 'Domain 1'),
-        new charts.RangeAnnotationSegment(
+            startLabel: 'Domain 1',),
+        charts.RangeAnnotationSegment(
             2, 4, charts.RangeAnnotationAxisType.domain,
-            endLabel: 'Domain 2', color: charts.MaterialPalette.gray.shade200),
-        new charts.RangeAnnotationSegment(
+            endLabel: 'Domain 2', color: charts.MaterialPalette.gray.shade200,),
+        charts.RangeAnnotationSegment(
             15, 20, charts.RangeAnnotationAxisType.measure,
             startLabel: 'Measure 1 Start',
             endLabel: 'Measure 1 End',
-            color: charts.MaterialPalette.gray.shade300),
-        new charts.RangeAnnotationSegment(
+            color: charts.MaterialPalette.gray.shade300,),
+        charts.RangeAnnotationSegment(
             35, 65, charts.RangeAnnotationAxisType.measure,
             startLabel: 'Measure 2 Start',
             endLabel: 'Measure 2 End',
-            color: charts.MaterialPalette.gray.shade400),
+            color: charts.MaterialPalette.gray.shade400,),
       ]),
-    ]);
-  }
+    ],);
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final data = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 25),
-      new LinearSales(2, 100),
-      new LinearSales(3, 75),
+      LinearSales(0, 5),
+      LinearSales(1, 25),
+      LinearSales(2, 100),
+      LinearSales(3, 75),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
-  final int year;
-  final int sales;
 
   LinearSales(this.year, this.sales);
+  final int year;
+  final int sales;
 }
