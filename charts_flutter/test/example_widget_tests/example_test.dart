@@ -9,6 +9,8 @@ import '../test_functions.dart';
 
 void main() {
   group('ExampleApp Widget Tests', () {
+    m.useRandomData = false;
+
     testWidgets('Navigates to BarChart and verifies rendering', (tester) async {
       await tester.pumpWidget(m.GalleryApp());
       expect(find.byType(h.Home), findsOneWidget);
