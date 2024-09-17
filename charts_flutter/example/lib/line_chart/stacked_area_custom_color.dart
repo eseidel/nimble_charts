@@ -28,19 +28,24 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class StackedAreaCustomColorLineChart extends StatelessWidget {
-
-  const StackedAreaCustomColorLineChart(this.seriesList, {super.key, this.animate = false});
+  const StackedAreaCustomColorLineChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.LineChart] with sample data and no transition.
-  factory StackedAreaCustomColorLineChart.withSampleData() => StackedAreaCustomColorLineChart(
-      _createSampleData(),
-    );
+  factory StackedAreaCustomColorLineChart.withSampleData() =>
+      StackedAreaCustomColorLineChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory StackedAreaCustomColorLineChart.withRandomData() => StackedAreaCustomColorLineChart(_createRandomData());
+  factory StackedAreaCustomColorLineChart.withRandomData() =>
+      StackedAreaCustomColorLineChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -96,10 +101,12 @@ class StackedAreaCustomColorLineChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.LineChart(seriesList,
+  Widget build(BuildContext context) => charts.LineChart(
+        seriesList,
         defaultRenderer:
             charts.LineRendererConfig(includeArea: true, stacked: true),
-        animate: animate,);
+        animate: animate,
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -163,7 +170,6 @@ class StackedAreaCustomColorLineChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

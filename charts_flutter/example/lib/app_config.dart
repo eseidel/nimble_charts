@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 
 /// A particular configuration of the app.
 class AppConfig {
-
   AppConfig({
     required this.appName,
     required this.appLink,
@@ -30,10 +29,10 @@ class AppConfig {
 
 /// The default configuration of the app.
 AppConfig get defaultConfig => AppConfig(
-    appName: 'Charts Gallery',
-    appLink: '',
-    theme: ThemeData(
-      brightness: Brightness.light,
-      primarySwatch: Colors.lightBlue,
-    ),
-  );
+      appName: 'Charts Gallery',
+      appLink: '',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: Colors.lightBlue,
+      ),
+    );

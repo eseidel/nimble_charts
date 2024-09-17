@@ -25,13 +25,12 @@ import 'package:nimble_charts/flutter.dart' as charts;
 import 'package:nimble_charts/flutter.dart';
 
 class RTLBarChart extends StatelessWidget {
-
   const RTLBarChart(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory RTLBarChart.withSampleData() => RTLBarChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
@@ -80,12 +79,13 @@ class RTLBarChart extends StatelessWidget {
     // Optionally, [RTLSpec] can be passed in when creating the chart to specify
     // chart display settings in RTL mode.
     return Directionality(
-        textDirection: TextDirection.rtl,
-        child: charts.BarChart(
-          seriesList,
-          animate: animate,
-          vertical: false,
-        ),);
+      textDirection: TextDirection.rtl,
+      child: charts.BarChart(
+        seriesList,
+        animate: animate,
+        vertical: false,
+      ),
+    );
   }
 
   /// Create one series with sample hard coded data.
@@ -110,7 +110,6 @@ class RTLBarChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

@@ -17,11 +17,11 @@ import 'package:example/gallery_scaffold.dart';
 import 'package:flutter/material.dart';
 
 List<GalleryScaffold> buildGallery() => [
-    const GalleryScaffold(
-      listTileIcon: Icon(Icons.accessibility),
-      title: 'Screen reader enabled bar chart',
-      subtitle: 'Requires TalkBack or Voiceover turned on to work. '
-          'Bar chart with domain selection explore mode behavior.',
-      childBuilder: DomainA11yExploreBarChart.withRandomData,
-    ),
-  ];
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.accessibility),
+        title: 'Screen reader enabled bar chart',
+        subtitle: 'Requires TalkBack or Voiceover turned on to work. '
+            'Bar chart with domain selection explore mode behavior.',
+        childBuilder: DomainA11yExploreBarChart.withRandomData,
+      ),
+    ];

@@ -24,19 +24,20 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class PercentOfSeriesBarChart extends StatelessWidget {
-
-  const PercentOfSeriesBarChart(this.seriesList, {super.key, this.animate = false});
+  const PercentOfSeriesBarChart(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a stacked [charts.BarChart] with sample data and no transition.
   factory PercentOfSeriesBarChart.withSampleData() => PercentOfSeriesBarChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory PercentOfSeriesBarChart.withRandomData() => PercentOfSeriesBarChart(_createRandomData());
+  factory PercentOfSeriesBarChart.withRandomData() =>
+      PercentOfSeriesBarChart(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -68,18 +69,19 @@ class PercentOfSeriesBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      barGroupingType: charts.BarGroupingType.grouped,
-      // Configures a [PercentInjector] behavior that will calculate measure
-      // values as the percentage of the total of all data in its series.
-      behaviors: [
-        charts.PercentInjector(
-            totalType: charts.PercentInjectorTotalType.series,),
-      ],
-      // Configure the axis spec to show percentage values.
-      primaryMeasureAxis: charts.PercentAxisSpec(),
-    );
+        seriesList,
+        animate: animate,
+        barGroupingType: charts.BarGroupingType.grouped,
+        // Configures a [PercentInjector] behavior that will calculate measure
+        // values as the percentage of the total of all data in its series.
+        behaviors: [
+          charts.PercentInjector(
+            totalType: charts.PercentInjectorTotalType.series,
+          ),
+        ],
+        // Configure the axis spec to show percentage values.
+        primaryMeasureAxis: charts.PercentAxisSpec(),
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -107,7 +109,6 @@ class PercentOfSeriesBarChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

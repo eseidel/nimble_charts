@@ -24,12 +24,11 @@ import 'package:nimble_charts/flutter.dart' as charts;
 
 /// Example of a Spark Bar by hiding both axis, reducing the chart margins.
 class SparkBar extends StatelessWidget {
-
   const SparkBar(this.seriesList, {super.key, this.animate = false});
 
   factory SparkBar.withSampleData() => SparkBar(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
@@ -70,33 +69,35 @@ class SparkBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
+        seriesList,
+        animate: animate,
 
-      /// Assign a custom style for the measure axis.
-      ///
-      /// The NoneRenderSpec only draws an axis line (and even that can be 
-      /// hidden with showAxisLine=false).
-      primaryMeasureAxis:
-          const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
+        /// Assign a custom style for the measure axis.
+        ///
+        /// The NoneRenderSpec only draws an axis line (and even that can be
+        /// hidden with showAxisLine=false).
+        primaryMeasureAxis:
+            const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
 
-      /// This is an OrdinalAxisSpec to match up with BarChart's default
-      /// ordinal domain axis (use NumericAxisSpec or DateTimeAxisSpec for
-      /// other charts).
-      domainAxis: const charts.OrdinalAxisSpec(
+        /// This is an OrdinalAxisSpec to match up with BarChart's default
+        /// ordinal domain axis (use NumericAxisSpec or DateTimeAxisSpec for
+        /// other charts).
+        domainAxis: const charts.OrdinalAxisSpec(
           // Make sure that we draw the domain axis line.
           showAxisLine: true,
           // But don't draw anything else.
-          renderSpec: charts.NoneRenderSpec(),),
+          renderSpec: charts.NoneRenderSpec(),
+        ),
 
-      // With a spark chart we likely don't want large chart margins.
-      // 1px is the smallest we can make each margin.
-      layoutConfig: charts.LayoutConfig(
+        // With a spark chart we likely don't want large chart margins.
+        // 1px is the smallest we can make each margin.
+        layoutConfig: charts.LayoutConfig(
           leftMarginSpec: charts.MarginSpec.fixedPixel(0),
           topMarginSpec: charts.MarginSpec.fixedPixel(0),
           rightMarginSpec: charts.MarginSpec.fixedPixel(0),
-          bottomMarginSpec: charts.MarginSpec.fixedPixel(0),),
-    );
+          bottomMarginSpec: charts.MarginSpec.fixedPixel(0),
+        ),
+      );
 
   /// Create series list with single series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -127,7 +128,6 @@ class SparkBar extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

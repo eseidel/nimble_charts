@@ -108,11 +108,12 @@ class DomainA11yExploreBarChart extends StatelessWidget {
   /// domain, it vocalizes the series display name and the measure and a
   /// description of that measure.
   String vocalizeDomainAndMeasures(List<charts.SeriesDatum> seriesDatums) {
-    final buffer = StringBuffer()..
+    final buffer = StringBuffer()
+      ..
 
-    // The datum's type in this case is [OrdinalSales].
-    // So we can access year and sales information here.
-    write(seriesDatums.first.datum.year);
+          // The datum's type in this case is [OrdinalSales].
+          // So we can access year and sales information here.
+          write(seriesDatums.first.datum.year);
 
     for (final seriesDatum in seriesDatums) {
       final series = seriesDatum.series;

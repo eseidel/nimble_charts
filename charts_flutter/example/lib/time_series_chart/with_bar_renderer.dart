@@ -24,13 +24,12 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class TimeSeriesBar extends StatelessWidget {
-
   const TimeSeriesBar(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
   factory TimeSeriesBar.withSampleData() => TimeSeriesBar(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
@@ -82,19 +81,19 @@ class TimeSeriesBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.TimeSeriesChart(
-      seriesList,
-      animate: animate,
-      // Set the default renderer to a bar renderer.
-      // This can also be one of the custom renderers of the time series chart.
-      defaultRenderer: charts.BarRendererConfig<DateTime>(),
-      // It is recommended that default interactions be turned off if using bar
-      // renderer, because the line point highlighter is the default for time
-      // series chart.
-      defaultInteractions: false,
-      // If default interactions were removed, optionally add select nearest
-      // and the domain highlighter that are typical for bar charts.
-      behaviors: [charts.SelectNearest(), charts.DomainHighlighter()],
-    );
+        seriesList,
+        animate: animate,
+        // Set the default renderer to a bar renderer.
+        // This can also be one of the custom renderers of the time series chart.
+        defaultRenderer: charts.BarRendererConfig<DateTime>(),
+        // It is recommended that default interactions be turned off if using bar
+        // renderer, because the line point highlighter is the default for time
+        // series chart.
+        defaultInteractions: false,
+        // If default interactions were removed, optionally add select nearest
+        // and the domain highlighter that are typical for bar charts.
+        behaviors: [charts.SelectNearest(), charts.DomainHighlighter()],
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
@@ -136,7 +135,6 @@ class TimeSeriesBar extends StatelessWidget {
 
 /// Sample time series data type.
 class TimeSeriesSales {
-
   TimeSeriesSales(this.time, this.sales);
   final DateTime time;
   final int sales;

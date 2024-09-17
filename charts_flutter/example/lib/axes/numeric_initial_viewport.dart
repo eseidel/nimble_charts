@@ -20,7 +20,7 @@
 ///
 /// In this example, the series list has numeric data from 0 to 10, but we
 /// want to show from 3 to 7.
-/// We can do this by specifying an [charts.NumericExtents] in 
+/// We can do this by specifying an [charts.NumericExtents] in
 /// [charts.NumericAxisSpec].
 library;
 

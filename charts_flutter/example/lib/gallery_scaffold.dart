@@ -19,9 +19,14 @@ typedef GalleryWidgetBuilder = Widget Function();
 
 /// Helper to build gallery.
 class GalleryScaffold extends StatefulWidget {
-
-  const GalleryScaffold({required this.listTileIcon, required this.title, required this.subtitle, required this.childBuilder, super.key,
+  const GalleryScaffold({
+    required this.listTileIcon,
+    required this.title,
+    required this.subtitle,
+    required this.childBuilder,
+    super.key,
   });
+
   /// The widget used for leading in a [ListTile].
   final Widget listTileIcon;
   final String title;
@@ -30,31 +35,37 @@ class GalleryScaffold extends StatefulWidget {
 
   /// Gets the gallery
   Widget buildGalleryListTile(BuildContext context) => ListTile(
-      leading: listTileIcon,
-      title: Text(title),
-      subtitle: Text(subtitle),
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) => this));
-      },);
+        leading: listTileIcon,
+        title: Text(title),
+        subtitle: Text(subtitle),
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => this));
+        },
+      );
 
   @override
-  _GalleryScaffoldState createState() => _GalleryScaffoldState();
+  GalleryScaffoldState createState() => GalleryScaffoldState();
 }
 
-class _GalleryScaffoldState extends State<GalleryScaffold> {
+class GalleryScaffoldState extends State<GalleryScaffold> {
   void _handleButtonPress() {
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Padding(
+        appBar: AppBar(title: Text(widget.title)),
+        body: Padding(
           padding: const EdgeInsets.all(8),
-          child: Column(children: <Widget>[
-            SizedBox(height: 250, child: widget.childBuilder()),
-          ],),),
-      floatingActionButton: FloatingActionButton(
-          onPressed: _handleButtonPress, child: const Icon(Icons.refresh),),
-    );
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 250, child: widget.childBuilder()),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _handleButtonPress,
+          child: const Icon(Icons.refresh),
+        ),
+      );
 }

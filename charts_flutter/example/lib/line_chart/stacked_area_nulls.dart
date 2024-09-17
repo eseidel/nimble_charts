@@ -37,19 +37,21 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class StackedAreaNullsLineChart extends StatelessWidget {
-
-  const StackedAreaNullsLineChart(this.seriesList, {super.key, this.animate = false});
+  const StackedAreaNullsLineChart(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
-  factory StackedAreaNullsLineChart.withSampleData() => StackedAreaNullsLineChart(
-      _createSampleData(),
-    );
+  factory StackedAreaNullsLineChart.withSampleData() =>
+      StackedAreaNullsLineChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory StackedAreaNullsLineChart.withRandomData() => StackedAreaNullsLineChart(_createRandomData());
+  factory StackedAreaNullsLineChart.withRandomData() =>
+      StackedAreaNullsLineChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -114,10 +116,12 @@ class StackedAreaNullsLineChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.LineChart(seriesList,
+  Widget build(BuildContext context) => charts.LineChart(
+        seriesList,
         defaultRenderer:
             charts.LineRendererConfig(includeArea: true, stacked: true),
-        animate: animate,);
+        animate: animate,
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -179,7 +183,6 @@ class StackedAreaNullsLineChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int? sales;

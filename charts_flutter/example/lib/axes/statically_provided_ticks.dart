@@ -36,18 +36,19 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// For datetime axis, the [charts.StaticDateTimeTickProviderSpec] can be used by
 /// passing in a list of ticks defined with [charts.TickSpec] of datetime.
 class StaticallyProvidedTicks extends StatelessWidget {
-
-  const StaticallyProvidedTicks(this.seriesList, {super.key, this.animate = false});
+  const StaticallyProvidedTicks(this.seriesList,
+      {super.key, this.animate = false});
 
   factory StaticallyProvidedTicks.withSampleData() => StaticallyProvidedTicks(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory StaticallyProvidedTicks.withRandomData() => StaticallyProvidedTicks(_createRandomData());
+  factory StaticallyProvidedTicks.withRandomData() =>
+      StaticallyProvidedTicks(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -78,13 +79,15 @@ class StaticallyProvidedTicks extends StatelessWidget {
     // Create the ticks to be used the domain axis.
     final staticTicks = <charts.TickSpec<String>>[
       const charts.TickSpec(
-          // Value must match the domain value.
-          '2014',
-          // Optional label for this tick, defaults to domain value if not set.
-          label: 'Year 2014',
-          // The styling for this tick.
-          style: charts.TextStyleSpec(
-              color: charts.Color(r: 0x4C, g: 0xAF, b: 0x50),),),
+        // Value must match the domain value.
+        '2014',
+        // Optional label for this tick, defaults to domain value if not set.
+        label: 'Year 2014',
+        // The styling for this tick.
+        style: charts.TextStyleSpec(
+          color: charts.Color(r: 0x4C, g: 0xAF, b: 0x50),
+        ),
+      ),
       // If no text style is specified - the style from renderSpec will be used
       // if one is specified.
       const charts.TickSpec('2015'),
@@ -96,8 +99,8 @@ class StaticallyProvidedTicks extends StatelessWidget {
       seriesList,
       animate: animate,
       domainAxis: charts.OrdinalAxisSpec(
-          tickProviderSpec:
-              charts.StaticOrdinalTickProviderSpec(staticTicks),),
+        tickProviderSpec: charts.StaticOrdinalTickProviderSpec(staticTicks),
+      ),
     );
   }
 
@@ -123,7 +126,6 @@ class StaticallyProvidedTicks extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

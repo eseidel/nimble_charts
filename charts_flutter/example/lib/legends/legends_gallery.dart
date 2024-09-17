@@ -23,55 +23,55 @@ import 'package:example/legends/simple_series_legend.dart';
 import 'package:flutter/material.dart';
 
 List<GalleryScaffold> buildGallery() => [
-    const GalleryScaffold(
-      listTileIcon: Icon(Icons.insert_chart),
-      title: 'Series Legend',
-      subtitle: 'A series legend for a bar chart with default settings',
-      childBuilder: SimpleSeriesLegend.withRandomData,
-    ),
-    const GalleryScaffold(
-      listTileIcon: Icon(Icons.insert_chart),
-      title: 'Series Legend Options',
-      subtitle:
-          'A series legend with custom positioning and spacing for a bar chart',
-      childBuilder: LegendOptions.withRandomData,
-    ),
-    const GalleryScaffold(
-      listTileIcon: Icon(Icons.insert_chart),
-      title: 'Series Legend Custom Symbol',
-      subtitle: 'A series legend using a custom symbol renderer',
-      childBuilder: LegendWithCustomSymbol.withRandomData,
-    ),
-    const GalleryScaffold(
-      listTileIcon: Icon(Icons.insert_chart),
-      title: 'Default Hidden Series Legend',
-      subtitle: 'A series legend showing a series hidden by default',
-      childBuilder: DefaultHiddenSeriesLegend.withRandomData,
-    ),
-    const GalleryScaffold(
-      listTileIcon: Icon(Icons.insert_chart),
-      title: 'Series legend with measures',
-      subtitle: 'Series legend with measures and measure formatting',
-      childBuilder: LegendWithMeasures.withRandomData,
-    ),
-    //TODO:
-    // new GalleryScaffold(
-    //   listTileIcon: new Icon(Icons.pie_chart),
-    //   title: 'Datum Legend',
-    //   subtitle: 'A datum legend for a pie chart with default settings',
-    //   childBuilder: () => new SimpleDatumLegend.withRandomData(),
-    // ),
-    // new GalleryScaffold(
-    //   listTileIcon: new Icon(Icons.pie_chart),
-    //   title: 'Datum Legend Options',
-    //   subtitle:
-    //       'A datum legend with custom positioning and spacing for a pie chart',
-    //   childBuilder: () => new DatumLegendOptions.withRandomData(),
-    // ),
-    const GalleryScaffold(
-      listTileIcon: Icon(Icons.pie_chart),
-      title: 'Datum legend with measures',
-      subtitle: 'Datum legend with measures and measure formatting',
-      childBuilder: DatumLegendWithMeasures.withRandomData,
-    ),
-  ];
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.insert_chart),
+        title: 'Series Legend',
+        subtitle: 'A series legend for a bar chart with default settings',
+        childBuilder: SimpleSeriesLegend.withRandomData,
+      ),
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.insert_chart),
+        title: 'Series Legend Options',
+        subtitle:
+            'A series legend with custom positioning and spacing for a bar chart',
+        childBuilder: LegendOptions.withRandomData,
+      ),
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.insert_chart),
+        title: 'Series Legend Custom Symbol',
+        subtitle: 'A series legend using a custom symbol renderer',
+        childBuilder: LegendWithCustomSymbol.withRandomData,
+      ),
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.insert_chart),
+        title: 'Default Hidden Series Legend',
+        subtitle: 'A series legend showing a series hidden by default',
+        childBuilder: DefaultHiddenSeriesLegend.withRandomData,
+      ),
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.insert_chart),
+        title: 'Series legend with measures',
+        subtitle: 'Series legend with measures and measure formatting',
+        childBuilder: LegendWithMeasures.withRandomData,
+      ),
+      //TODO:
+      // new GalleryScaffold(
+      //   listTileIcon: new Icon(Icons.pie_chart),
+      //   title: 'Datum Legend',
+      //   subtitle: 'A datum legend for a pie chart with default settings',
+      //   childBuilder: () => new SimpleDatumLegend.withRandomData(),
+      // ),
+      // new GalleryScaffold(
+      //   listTileIcon: new Icon(Icons.pie_chart),
+      //   title: 'Datum Legend Options',
+      //   subtitle:
+      //       'A datum legend with custom positioning and spacing for a pie chart',
+      //   childBuilder: () => new DatumLegendOptions.withRandomData(),
+      // ),
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.pie_chart),
+        title: 'Datum legend with measures',
+        subtitle: 'Datum legend with measures and measure formatting',
+        childBuilder: DatumLegendWithMeasures.withRandomData,
+      ),
+    ];

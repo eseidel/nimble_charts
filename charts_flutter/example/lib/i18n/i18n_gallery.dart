@@ -21,28 +21,28 @@ import 'package:example/i18n/rtl_series_legend.dart';
 import 'package:flutter/material.dart';
 
 List<GalleryScaffold> buildGallery() => [
-    const GalleryScaffold(
-      listTileIcon: Icon(Icons.flag),
-      title: 'RTL Bar Chart',
-      subtitle: 'Simple bar chart in RTL',
-      childBuilder: RTLBarChart.withRandomData,
-    ),
-    const GalleryScaffold(
-      listTileIcon: Icon(Icons.flag),
-      title: 'RTL Line Chart',
-      subtitle: 'Simple line chart in RTL',
-      childBuilder: RTLLineChart.withRandomData,
-    ),
-    const GalleryScaffold(
-      listTileIcon: Icon(Icons.flag),
-      title: 'RTL Line Segments',
-      subtitle: 'Stacked area chart with style segments in RTL',
-      childBuilder: RTLLineSegments.withRandomData,
-    ),
-    const GalleryScaffold(
-      listTileIcon: Icon(Icons.flag),
-      title: 'RTL Series Legend',
-      subtitle: 'Series legend in RTL',
-      childBuilder: RTLSeriesLegend.withRandomData,
-    ),
-  ];
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.flag),
+        title: 'RTL Bar Chart',
+        subtitle: 'Simple bar chart in RTL',
+        childBuilder: RTLBarChart.withRandomData,
+      ),
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.flag),
+        title: 'RTL Line Chart',
+        subtitle: 'Simple line chart in RTL',
+        childBuilder: RTLLineChart.withRandomData,
+      ),
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.flag),
+        title: 'RTL Line Segments',
+        subtitle: 'Stacked area chart with style segments in RTL',
+        childBuilder: RTLLineSegments.withRandomData,
+      ),
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.flag),
+        title: 'RTL Series Legend',
+        subtitle: 'Series legend in RTL',
+        childBuilder: RTLSeriesLegend.withRandomData,
+      ),
+    ];

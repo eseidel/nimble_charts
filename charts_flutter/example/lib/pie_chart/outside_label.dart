@@ -24,19 +24,23 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class PieOutsideLabelChart extends StatelessWidget {
-
-  const PieOutsideLabelChart(this.seriesList, {super.key, this.animate = false});
+  const PieOutsideLabelChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.PieChart] with sample data and no transition.
   factory PieOutsideLabelChart.withSampleData() => PieOutsideLabelChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory PieOutsideLabelChart.withRandomData() => PieOutsideLabelChart(_createRandomData());
+  factory PieOutsideLabelChart.withRandomData() =>
+      PieOutsideLabelChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -65,7 +69,8 @@ class PieOutsideLabelChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.PieChart(seriesList,
+  Widget build(BuildContext context) => charts.PieChart(
+        seriesList,
         animate: animate,
         // Add an [ArcLabelDecorator] configured to render labels outside of the
         // arc with a leader line.
@@ -77,10 +82,14 @@ class PieOutsideLabelChart extends StatelessWidget {
         //       new charts.ArcLabelDecorator(
         //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
         //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
-        defaultRenderer: charts.ArcRendererConfig(arcRendererDecorators: [
-          charts.ArcLabelDecorator(
-              labelPosition: charts.ArcLabelPosition.outside,),
-        ],),);
+        defaultRenderer: charts.ArcRendererConfig(
+          arcRendererDecorators: [
+            charts.ArcLabelDecorator(
+              labelPosition: charts.ArcLabelPosition.outside,
+            ),
+          ],
+        ),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -106,7 +115,6 @@ class PieOutsideLabelChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

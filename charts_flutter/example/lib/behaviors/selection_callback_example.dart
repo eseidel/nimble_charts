@@ -38,19 +38,20 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SelectionCallbackExample extends StatefulWidget {
-
-  const SelectionCallbackExample(this.seriesList, {super.key, this.animate = false});
+  const SelectionCallbackExample(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
   factory SelectionCallbackExample.withSampleData() => SelectionCallbackExample(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SelectionCallbackExample.withRandomData() => SelectionCallbackExample(_createRandomData());
+  factory SelectionCallbackExample.withRandomData() =>
+      SelectionCallbackExample(_createRandomData());
   final List<charts.Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
@@ -164,23 +165,27 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
     // The children consist of a Chart and Text widgets below to hold the info.
     final children = <Widget>[
       SizedBox(
-          height: 150,
-          child: charts.TimeSeriesChart(
-            widget.seriesList,
-            animate: widget.animate,
-            selectionModels: [
-              charts.SelectionModelConfig(
-                changedListener: _onSelectionChanged,
-              ),
-            ],
-          ),),
+        height: 150,
+        child: charts.TimeSeriesChart(
+          widget.seriesList,
+          animate: widget.animate,
+          selectionModels: [
+            charts.SelectionModelConfig(
+              changedListener: _onSelectionChanged,
+            ),
+          ],
+        ),
+      ),
     ];
 
     // If there is a selection, then include the details.
     if (_time != null) {
-      children.add(Padding(
+      children.add(
+        Padding(
           padding: const EdgeInsets.only(top: 5),
-          child: Text(_time.toString()),),);
+          child: Text(_time.toString()),
+        ),
+      );
     }
     _measures.forEach((series, value) {
       children.add(Text('$series: $value'));
@@ -192,7 +197,6 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
 
 /// Sample time series data type.
 class TimeSeriesSales {
-
   TimeSeriesSales(this.time, this.sales);
   final DateTime time;
   final int sales;

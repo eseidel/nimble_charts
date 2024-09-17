@@ -20,19 +20,21 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SelectionLineHighlightCustomShape extends StatelessWidget {
-
-  const SelectionLineHighlightCustomShape(this.seriesList, {super.key, this.animate = false});
+  const SelectionLineHighlightCustomShape(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
-  factory SelectionLineHighlightCustomShape.withSampleData() => SelectionLineHighlightCustomShape(
-      _createSampleData(),
-    );
+  factory SelectionLineHighlightCustomShape.withSampleData() =>
+      SelectionLineHighlightCustomShape(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SelectionLineHighlightCustomShape.withRandomData() => SelectionLineHighlightCustomShape(_createRandomData());
+  factory SelectionLineHighlightCustomShape.withRandomData() =>
+      SelectionLineHighlightCustomShape(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -69,31 +71,36 @@ class SelectionLineHighlightCustomShape extends StatelessWidget {
     //
     // As an alternative, [defaultInteractions] can be set to true to include
     // the default chart interactions, including a LinePointHighlighter.
-    return charts.LineChart(seriesList, animate: animate, behaviors: [
-      // Optional - Configures a [LinePointHighlighter] behavior with a
-      // vertical follow line. A vertical follow line is included by
-      // default, but is shown here as an example configuration.
-      //
-      // By default, the line has default dash pattern of [1,3]. This can be
-      // set by providing a [dashPattern] or it can be turned off by passing in
-      // an empty list. An empty list is necessary because passing in a null
-      // value will be treated the same as not passing in a value at all.
-      //
-      // The symbol renderer is configured to render a hollow shape, for
-      // demonstration.
-      charts.LinePointHighlighter(
+    return charts.LineChart(
+      seriesList,
+      animate: animate,
+      behaviors: [
+        // Optional - Configures a [LinePointHighlighter] behavior with a
+        // vertical follow line. A vertical follow line is included by
+        // default, but is shown here as an example configuration.
+        //
+        // By default, the line has default dash pattern of [1,3]. This can be
+        // set by providing a [dashPattern] or it can be turned off by passing in
+        // an empty list. An empty list is necessary because passing in a null
+        // value will be treated the same as not passing in a value at all.
+        //
+        // The symbol renderer is configured to render a hollow shape, for
+        // demonstration.
+        charts.LinePointHighlighter(
           showHorizontalFollowLine:
               charts.LinePointHighlighterFollowLineType.none,
           showVerticalFollowLine:
               charts.LinePointHighlighterFollowLineType.nearest,
-          symbolRenderer: charts.RectSymbolRenderer(isSolid: false),),
-      // Optional - By default, select nearest is configured to trigger
-      // with tap so that a user can have pan/zoom behavior and line point
-      // highlighter. Changing the trigger to tap and drag allows the
-      // highlighter to follow the dragging gesture but it is not
-      // recommended to be used when pan/zoom behavior is enabled.
-      charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag),
-    ],);
+          symbolRenderer: charts.RectSymbolRenderer(isSolid: false),
+        ),
+        // Optional - By default, select nearest is configured to trigger
+        // with tap so that a user can have pan/zoom behavior and line point
+        // highlighter. Changing the trigger to tap and drag allows the
+        // highlighter to follow the dragging gesture but it is not
+        // recommended to be used when pan/zoom behavior is enabled.
+        charts.SelectNearest(eventTrigger: charts.SelectionTrigger.tapAndDrag),
+      ],
+    );
   }
 
   /// Create one series with sample hard coded data.
@@ -118,7 +125,6 @@ class SelectionLineHighlightCustomShape extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

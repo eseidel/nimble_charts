@@ -26,7 +26,6 @@ import 'package:nimble_charts/flutter.dart' as charts;
 
 /// Creates a partial pie chart where the data does not cover a full revolution.
 class PartialPieChart extends StatelessWidget {
-
   const PartialPieChart(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [PartialPieChart] with sample data and no transition.
@@ -70,7 +69,9 @@ class PartialPieChart extends StatelessWidget {
         domainFn: (sales, _) => sales.year,
         measureFn: (sales, _) => sales.sales,
         data: List.generate(
-            4, (index) => LinearSales(index, random.nextInt(100)),),
+          4,
+          (index) => LinearSales(index, random.nextInt(100)),
+        ),
       ),
     ];
   }
@@ -78,7 +79,6 @@ class PartialPieChart extends StatelessWidget {
 
 /// Represents linear sales data.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

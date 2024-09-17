@@ -25,19 +25,19 @@ import 'package:nimble_charts/flutter.dart' as charts;
 import 'package:nimble_charts/flutter.dart';
 
 class RTLSeriesLegend extends StatelessWidget {
-
   const RTLSeriesLegend(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory RTLSeriesLegend.withSampleData() => RTLSeriesLegend(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory RTLSeriesLegend.withRandomData() => RTLSeriesLegend(_createRandomData());
+  factory RTLSeriesLegend.withRandomData() =>
+      RTLSeriesLegend(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -125,15 +125,18 @@ class RTLSeriesLegend extends StatelessWidget {
     // order to show these effects, but are not required for SeriesLegend to
     // work with the correct directionality.
     return Directionality(
-        textDirection: TextDirection.rtl,
-        child: charts.BarChart(
-          seriesList,
-          animate: animate,
-          behaviors: [
-            charts.SeriesLegend(
-                position: charts.BehaviorPosition.end, desiredMaxRows: 2,),
-          ],
-        ),);
+      textDirection: TextDirection.rtl,
+      child: charts.BarChart(
+        seriesList,
+        animate: animate,
+        behaviors: [
+          charts.SeriesLegend(
+            position: charts.BehaviorPosition.end,
+            desiredMaxRows: 2,
+          ),
+        ],
+      ),
+    );
   }
 
   /// Create series list with multiple series
@@ -197,7 +200,6 @@ class RTLSeriesLegend extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

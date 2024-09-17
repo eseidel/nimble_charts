@@ -25,23 +25,28 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class LineRangeAnnotationMarginChart extends StatelessWidget {
-
-  const LineRangeAnnotationMarginChart(this.seriesList, {super.key, this.animate = false});
+  const LineRangeAnnotationMarginChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.LineChart] with sample data and range annotations.
   ///
   /// The second annotation extends beyond the range of the series data,
   /// demonstrating the effect of the [Charts.RangeAnnotation.extendAxis] flag.
   /// This can be set to false to disable range extension.
-  factory LineRangeAnnotationMarginChart.withSampleData() => LineRangeAnnotationMarginChart(
-      _createSampleData(),
-    );
+  factory LineRangeAnnotationMarginChart.withSampleData() =>
+      LineRangeAnnotationMarginChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory LineRangeAnnotationMarginChart.withRandomData() => LineRangeAnnotationMarginChart(_createRandomData());
+  factory LineRangeAnnotationMarginChart.withRandomData() =>
+      LineRangeAnnotationMarginChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -70,42 +75,55 @@ class LineRangeAnnotationMarginChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.LineChart(seriesList,
+  Widget build(BuildContext context) => charts.LineChart(
+        seriesList,
         animate: animate,
 
         // Allow enough space in the left and right chart margins for the
         // annotations.
         layoutConfig: charts.LayoutConfig(
-            leftMarginSpec: charts.MarginSpec.fixedPixel(60),
-            topMarginSpec: charts.MarginSpec.fixedPixel(20),
-            rightMarginSpec: charts.MarginSpec.fixedPixel(60),
-            bottomMarginSpec: charts.MarginSpec.fixedPixel(20),),
+          leftMarginSpec: charts.MarginSpec.fixedPixel(60),
+          topMarginSpec: charts.MarginSpec.fixedPixel(20),
+          rightMarginSpec: charts.MarginSpec.fixedPixel(60),
+          bottomMarginSpec: charts.MarginSpec.fixedPixel(20),
+        ),
         behaviors: [
           // Define one domain and two measure annotations configured to render
           // labels in the chart margins.
-          charts.RangeAnnotation([
-            charts.RangeAnnotationSegment(
+          charts.RangeAnnotation(
+            [
+              charts.RangeAnnotationSegment(
                 0.5, 1.0, charts.RangeAnnotationAxisType.domain,
                 startLabel: 'D1 Start',
                 endLabel: 'D1 End',
                 labelAnchor: charts.AnnotationLabelAnchor.end,
                 color: charts.MaterialPalette.gray.shade200,
                 // Override the default vertical direction for domain labels.
-                labelDirection: charts.AnnotationLabelDirection.horizontal,),
-            charts.RangeAnnotationSegment(
-                15, 20, charts.RangeAnnotationAxisType.measure,
+                labelDirection: charts.AnnotationLabelDirection.horizontal,
+              ),
+              charts.RangeAnnotationSegment(
+                15,
+                20,
+                charts.RangeAnnotationAxisType.measure,
                 startLabel: 'M1 Start',
                 endLabel: 'M1 End',
                 labelAnchor: charts.AnnotationLabelAnchor.end,
-                color: charts.MaterialPalette.gray.shade300,),
-            charts.RangeAnnotationSegment(
-                35, 65, charts.RangeAnnotationAxisType.measure,
+                color: charts.MaterialPalette.gray.shade300,
+              ),
+              charts.RangeAnnotationSegment(
+                35,
+                65,
+                charts.RangeAnnotationAxisType.measure,
                 startLabel: 'M2 Start',
                 endLabel: 'M2 End',
                 labelAnchor: charts.AnnotationLabelAnchor.start,
-                color: charts.MaterialPalette.gray.shade400,),
-          ], defaultLabelPosition: charts.AnnotationLabelPosition.margin,),
-        ],);
+                color: charts.MaterialPalette.gray.shade400,
+              ),
+            ],
+            defaultLabelPosition: charts.AnnotationLabelPosition.margin,
+          ),
+        ],
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -129,7 +147,6 @@ class LineRangeAnnotationMarginChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

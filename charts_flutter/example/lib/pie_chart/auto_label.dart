@@ -25,19 +25,19 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class DonutAutoLabelChart extends StatelessWidget {
-
   const DonutAutoLabelChart(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [charts.PieChart] with sample data and no transition.
   factory DonutAutoLabelChart.withSampleData() => DonutAutoLabelChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory DonutAutoLabelChart.withRandomData() => DonutAutoLabelChart(_createRandomData());
+  factory DonutAutoLabelChart.withRandomData() =>
+      DonutAutoLabelChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -66,7 +66,8 @@ class DonutAutoLabelChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.PieChart(seriesList,
+  Widget build(BuildContext context) => charts.PieChart(
+        seriesList,
         animate: animate,
         // Configure the width of the pie slices to 60px. The remaining space in
         // the chart will be left as a hole in the center.
@@ -84,8 +85,10 @@ class DonutAutoLabelChart extends StatelessWidget {
         //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
         //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
         defaultRenderer: charts.ArcRendererConfig(
-            arcWidth: 60,
-            arcRendererDecorators: [charts.ArcLabelDecorator()],),);
+          arcWidth: 60,
+          arcRendererDecorators: [charts.ArcLabelDecorator()],
+        ),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -111,7 +114,6 @@ class DonutAutoLabelChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

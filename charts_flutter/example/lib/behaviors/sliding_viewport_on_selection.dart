@@ -16,7 +16,6 @@
 /// Example of the chart behavior that centers the viewport on domain selection.
 library;
 
-
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 
@@ -25,19 +24,21 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SlidingViewportOnSelection extends StatelessWidget {
-
-  const SlidingViewportOnSelection(this.seriesList, {super.key, this.animate = false});
+  const SlidingViewportOnSelection(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.BarChart] with sample data and no transition.
-  factory SlidingViewportOnSelection.withSampleData() => SlidingViewportOnSelection(
-      _createSampleData(),
-    );
+  factory SlidingViewportOnSelection.withSampleData() =>
+      SlidingViewportOnSelection(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SlidingViewportOnSelection.withRandomData() => SlidingViewportOnSelection(_createRandomData());
+  factory SlidingViewportOnSelection.withRandomData() =>
+      SlidingViewportOnSelection(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -79,22 +80,23 @@ class SlidingViewportOnSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      behaviors: [
-        // Add the sliding viewport behavior to have the viewport center on the
-        // domain that is currently selected.
-        charts.SlidingViewport(),
-        // A pan and zoom behavior helps demonstrate the sliding viewport
-        // behavior by allowing the data visible in the viewport to be adjusted
-        // dynamically.
-        charts.PanAndZoomBehavior(),
-      ],
-      // Set an initial viewport to demonstrate the sliding viewport behavior on
-      // initial chart load.
-      domainAxis: charts.OrdinalAxisSpec(
-          viewport: charts.OrdinalViewport('2018', 4),),
-    );
+        seriesList,
+        animate: animate,
+        behaviors: [
+          // Add the sliding viewport behavior to have the viewport center on the
+          // domain that is currently selected.
+          charts.SlidingViewport(),
+          // A pan and zoom behavior helps demonstrate the sliding viewport
+          // behavior by allowing the data visible in the viewport to be adjusted
+          // dynamically.
+          charts.PanAndZoomBehavior(),
+        ],
+        // Set an initial viewport to demonstrate the sliding viewport behavior on
+        // initial chart load.
+        domainAxis: charts.OrdinalAxisSpec(
+          viewport: charts.OrdinalViewport('2018', 4),
+        ),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -132,7 +134,6 @@ class SlidingViewportOnSelection extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

@@ -27,12 +27,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class LegendOptions extends StatelessWidget {
-
   const LegendOptions(this.seriesList, {super.key, this.animate = false});
 
   factory LegendOptions.withSampleData() => LegendOptions(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
@@ -105,41 +104,42 @@ class LegendOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      barGroupingType: charts.BarGroupingType.grouped,
-      // Add the legend behavior to the chart to turn on legends.
-      // This example shows how to change the position and justification of
-      // the legend, in addition to altering the max rows and padding.
-      behaviors: [
-        charts.SeriesLegend(
-          // Positions for "start" and "end" will be left and right respectively
-          // for widgets with a build context that has directionality ltr.
-          // For rtl, "start" and "end" will be right and left respectively.
-          // Since this example has directionality of ltr, the legend is
-          // positioned on the right side of the chart.
-          position: charts.BehaviorPosition.end,
-          // For a legend that is positioned on the left or right of the chart,
-          // setting the justification for [endDrawArea] is aligned to the
-          // bottom of the chart draw area.
-          outsideJustification: charts.OutsideJustification.endDrawArea,
-          // By default, if the position of the chart is on the left or right of
-          // the chart, [horizontalFirst] is set to false. This means that the
-          // legend entries will grow as new rows first instead of a new column.
-          horizontalFirst: false,
-          // By setting this value to 2, the legend entries will grow up to two
-          // rows before adding a new column.
-          desiredMaxRows: 2,
-          // This defines the padding around each legend entry.
-          cellPadding: const EdgeInsets.only(right: 4, bottom: 4),
-          // Render the legend entry text with custom styles.
-          entryTextStyle: charts.TextStyleSpec(
+        seriesList,
+        animate: animate,
+        barGroupingType: charts.BarGroupingType.grouped,
+        // Add the legend behavior to the chart to turn on legends.
+        // This example shows how to change the position and justification of
+        // the legend, in addition to altering the max rows and padding.
+        behaviors: [
+          charts.SeriesLegend(
+            // Positions for "start" and "end" will be left and right respectively
+            // for widgets with a build context that has directionality ltr.
+            // For rtl, "start" and "end" will be right and left respectively.
+            // Since this example has directionality of ltr, the legend is
+            // positioned on the right side of the chart.
+            position: charts.BehaviorPosition.end,
+            // For a legend that is positioned on the left or right of the chart,
+            // setting the justification for [endDrawArea] is aligned to the
+            // bottom of the chart draw area.
+            outsideJustification: charts.OutsideJustification.endDrawArea,
+            // By default, if the position of the chart is on the left or right of
+            // the chart, [horizontalFirst] is set to false. This means that the
+            // legend entries will grow as new rows first instead of a new column.
+            horizontalFirst: false,
+            // By setting this value to 2, the legend entries will grow up to two
+            // rows before adding a new column.
+            desiredMaxRows: 2,
+            // This defines the padding around each legend entry.
+            cellPadding: const EdgeInsets.only(right: 4, bottom: 4),
+            // Render the legend entry text with custom styles.
+            entryTextStyle: charts.TextStyleSpec(
               color: charts.MaterialPalette.purple.shadeDefault,
               fontFamily: 'Georgia',
-              fontSize: 11,),
-        ),
-      ],
-    );
+              fontSize: 11,
+            ),
+          ),
+        ],
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -202,7 +202,6 @@ class LegendOptions extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

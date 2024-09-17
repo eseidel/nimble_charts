@@ -25,19 +25,21 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class ScatterPlotComboLineChart extends StatelessWidget {
-
-  const ScatterPlotComboLineChart(this.seriesList, {super.key, this.animate = false});
+  const ScatterPlotComboLineChart(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.ScatterPlotChart] with sample data and no transition.
-  factory ScatterPlotComboLineChart.withSampleData() => ScatterPlotComboLineChart(
-      _createSampleData(),
-    );
+  factory ScatterPlotComboLineChart.withSampleData() =>
+      ScatterPlotComboLineChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory ScatterPlotComboLineChart.withRandomData() => ScatterPlotComboLineChart(_createRandomData());
+  factory ScatterPlotComboLineChart.withRandomData() =>
+      ScatterPlotComboLineChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -65,7 +67,10 @@ class ScatterPlotComboLineChart extends StatelessWidget {
     final myRegressionData = [
       LinearSales(0, desktopSalesData[0].sales, 3.5),
       LinearSales(
-          100, desktopSalesData[desktopSalesData.length - 1].sales, 7.5,),
+        100,
+        desktopSalesData[desktopSalesData.length - 1].sales,
+        7.5,
+      ),
     ];
 
     const maxMeasure = 100;
@@ -93,11 +98,12 @@ class ScatterPlotComboLineChart extends StatelessWidget {
         data: desktopSalesData,
       ),
       charts.Series<LinearSales, int>(
-          id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
-          domainFn: (sales, _) => sales.year,
-          measureFn: (sales, _) => sales.sales,
-          data: myRegressionData,)
+        id: 'Mobile',
+        colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: myRegressionData,
+      )
         // Configure our custom line renderer for this series.
         ..setAttribute(charts.rendererIdKey, 'customLine'),
     ];
@@ -105,7 +111,8 @@ class ScatterPlotComboLineChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.ScatterPlotChart(seriesList,
+  Widget build(BuildContext context) => charts.ScatterPlotChart(
+        seriesList,
         animate: animate,
         // Configure the default renderer as a point renderer. This will be used
         // for any series that does not define a rendererIdKey.
@@ -116,14 +123,16 @@ class ScatterPlotComboLineChart extends StatelessWidget {
         // Custom renderer configuration for the line series.
         customSeriesRenderers: [
           charts.LineRendererConfig(
-              // ID used to link series to this renderer.
-              customRendererId: 'customLine',
-              // Configure the regression line to be painted above the points.
-              //
-              // By default, series drawn by the point renderer are painted on
-              // top of those drawn by a line renderer.
-              layoutPaintOrder: charts.LayoutViewPaintOrder.point + 1,),
-        ],);
+            // ID used to link series to this renderer.
+            customRendererId: 'customLine',
+            // Configure the regression line to be painted above the points.
+            //
+            // By default, series drawn by the point renderer are painted on
+            // top of those drawn by a line renderer.
+            layoutPaintOrder: charts.LayoutViewPaintOrder.point + 1,
+          ),
+        ],
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -172,11 +181,12 @@ class ScatterPlotComboLineChart extends StatelessWidget {
         data: desktopSalesData,
       ),
       charts.Series<LinearSales, int>(
-          id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
-          domainFn: (sales, _) => sales.year,
-          measureFn: (sales, _) => sales.sales,
-          data: myRegressionData,)
+        id: 'Mobile',
+        colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: myRegressionData,
+      )
         // Configure our custom line renderer for this series.
         ..setAttribute(charts.rendererIdKey, 'customLine'),
     ];
@@ -185,7 +195,6 @@ class ScatterPlotComboLineChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales, this.radius);
   final int year;
   final int sales;

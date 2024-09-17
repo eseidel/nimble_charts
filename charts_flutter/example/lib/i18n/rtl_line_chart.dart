@@ -25,13 +25,12 @@ import 'package:nimble_charts/flutter.dart' as charts;
 import 'package:nimble_charts/flutter.dart';
 
 class RTLLineChart extends StatelessWidget {
-
   const RTLLineChart(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory RTLLineChart.withSampleData() => RTLLineChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
@@ -77,11 +76,12 @@ class RTLLineChart extends StatelessWidget {
     // and the secondary measure axis is on the left (when used).
     // Domain axis' first domain starts on the right and grows left.
     return Directionality(
-        textDirection: TextDirection.rtl,
-        child: charts.LineChart(
-          seriesList,
-          animate: animate,
-        ),);
+      textDirection: TextDirection.rtl,
+      child: charts.LineChart(
+        seriesList,
+        animate: animate,
+      ),
+    );
   }
 
   /// Create one series with sample hard coded data.
@@ -106,7 +106,6 @@ class RTLLineChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

@@ -23,18 +23,18 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SimpleSeriesLegend extends StatelessWidget {
-
   const SimpleSeriesLegend(this.seriesList, {super.key, this.animate = false});
 
   factory SimpleSeriesLegend.withSampleData() => SimpleSeriesLegend(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SimpleSeriesLegend.withRandomData() => SimpleSeriesLegend(_createRandomData());
+  factory SimpleSeriesLegend.withRandomData() =>
+      SimpleSeriesLegend(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -101,13 +101,13 @@ class SimpleSeriesLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      barGroupingType: charts.BarGroupingType.grouped,
-      // Add the series legend behavior to the chart to turn on series legends.
-      // By default the legend will display above the chart.
-      behaviors: [charts.SeriesLegend()],
-    );
+        seriesList,
+        animate: animate,
+        barGroupingType: charts.BarGroupingType.grouped,
+        // Add the series legend behavior to the chart to turn on series legends.
+        // By default the legend will display above the chart.
+        behaviors: [charts.SeriesLegend()],
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -170,7 +170,6 @@ class SimpleSeriesLegend extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

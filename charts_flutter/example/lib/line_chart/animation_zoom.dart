@@ -25,19 +25,20 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class LineAnimationZoomChart extends StatelessWidget {
-
-  const LineAnimationZoomChart(this.seriesList, {super.key, this.animate = false});
+  const LineAnimationZoomChart(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory LineAnimationZoomChart.withSampleData() => LineAnimationZoomChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory LineAnimationZoomChart.withRandomData() => LineAnimationZoomChart(_createRandomData());
+  factory LineAnimationZoomChart.withRandomData() =>
+      LineAnimationZoomChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -63,9 +64,13 @@ class LineAnimationZoomChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.LineChart(seriesList, animate: animate, behaviors: [
-      charts.PanAndZoomBehavior(),
-    ],);
+  Widget build(BuildContext context) => charts.LineChart(
+        seriesList,
+        animate: animate,
+        behaviors: [
+          charts.PanAndZoomBehavior(),
+        ],
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -89,7 +94,6 @@ class LineAnimationZoomChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

@@ -28,19 +28,20 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SimpleNullsLineChart extends StatelessWidget {
-
-  const SimpleNullsLineChart(this.seriesList, {super.key, this.animate = false});
+  const SimpleNullsLineChart(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory SimpleNullsLineChart.withSampleData() => SimpleNullsLineChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SimpleNullsLineChart.withRandomData() => SimpleNullsLineChart(_createRandomData());
+  factory SimpleNullsLineChart.withRandomData() =>
+      SimpleNullsLineChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -105,7 +106,8 @@ class SimpleNullsLineChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.LineChart(seriesList, animate: animate);
+  Widget build(BuildContext context) =>
+      charts.LineChart(seriesList, animate: animate);
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -167,7 +169,6 @@ class SimpleNullsLineChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int? sales;

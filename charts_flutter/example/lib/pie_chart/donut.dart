@@ -24,13 +24,12 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class DonutPieChart extends StatelessWidget {
-
   const DonutPieChart(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [charts.PieChart] with sample data and no transition.
   factory DonutPieChart.withSampleData() => DonutPieChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
@@ -63,11 +62,13 @@ class DonutPieChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.PieChart(seriesList,
+  Widget build(BuildContext context) => charts.PieChart(
+        seriesList,
         animate: animate,
         // Configure the width of the pie slices to 60px. The remaining space in
         // the chart will be left as a hole in the center.
-        defaultRenderer: charts.ArcRendererConfig(arcWidth: 60),);
+        defaultRenderer: charts.ArcRendererConfig(arcWidth: 60),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -91,7 +92,6 @@ class DonutPieChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

@@ -27,19 +27,21 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class TimeSeriesConfidenceInterval extends StatelessWidget {
-
-  const TimeSeriesConfidenceInterval(this.seriesList, {super.key, this.animate = false});
+  const TimeSeriesConfidenceInterval(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
-  factory TimeSeriesConfidenceInterval.withSampleData() => TimeSeriesConfidenceInterval(
-      _createSampleData(),
-    );
+  factory TimeSeriesConfidenceInterval.withSampleData() =>
+      TimeSeriesConfidenceInterval(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory TimeSeriesConfidenceInterval.withRandomData() => TimeSeriesConfidenceInterval(_createRandomData());
+  factory TimeSeriesConfidenceInterval.withRandomData() =>
+      TimeSeriesConfidenceInterval(_createRandomData());
   final List<charts.Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
@@ -72,13 +74,13 @@ class TimeSeriesConfidenceInterval extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.TimeSeriesChart(
-      seriesList,
-      animate: animate,
-      // Optionally pass in a [DateTimeFactory] used by the chart. The factory
-      // should create the same type of [DateTime] as the data provided. If none
-      // specified, the default creates local date time.
-      dateTimeFactory: const charts.LocalDateTimeFactory(),
-    );
+        seriesList,
+        animate: animate,
+        // Optionally pass in a [DateTimeFactory] used by the chart. The factory
+        // should create the same type of [DateTime] as the data provided. If none
+        // specified, the default creates local date time.
+        dateTimeFactory: const charts.LocalDateTimeFactory(),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
@@ -107,7 +109,6 @@ class TimeSeriesConfidenceInterval extends StatelessWidget {
 
 /// Sample time series data type.
 class TimeSeriesSales {
-
   TimeSeriesSales(this.time, this.sales);
   final DateTime time;
   final int sales;

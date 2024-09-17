@@ -31,18 +31,18 @@ import 'package:nimble_charts/flutter.dart' as charts;
 ///
 /// Also shows the option to provide a custom measure formatter.
 class LegendWithMeasures extends StatelessWidget {
-
   const LegendWithMeasures(this.seriesList, {super.key, this.animate = false});
 
   factory LegendWithMeasures.withSampleData() => LegendWithMeasures(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory LegendWithMeasures.withRandomData() => LegendWithMeasures(_createRandomData());
+  factory LegendWithMeasures.withRandomData() =>
+      LegendWithMeasures(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -109,48 +109,48 @@ class LegendWithMeasures extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      barGroupingType: charts.BarGroupingType.grouped,
-      // Add the legend behavior to the chart to turn on legends.
-      // This example shows how to optionally show measure and provide a custom
-      // formatter.
-      behaviors: [
-        // EXCLUDE_FROM_GALLERY_DOCS_START
-        // This section is excluded from being copied to the gallery.
-        // This is added in order to generate the image for the gallery to show
-        // an initial selection so that measure values are shown in the gallery.
-        charts.InitialSelection(
-          selectedDataConfig: [
-            charts.SeriesDatumConfig('Desktop', '2016'),
-            charts.SeriesDatumConfig('Tablet', '2016'),
-            charts.SeriesDatumConfig('Mobile', '2016'),
-            charts.SeriesDatumConfig('Other', '2016'),
-          ],
-        ),
-        // EXCLUDE_FROM_GALLERY_DOCS_END
-        charts.SeriesLegend(
-          // Positions for "start" and "end" will be left and right respectively
-          // for widgets with a build context that has directionality ltr.
-          // For rtl, "start" and "end" will be right and left respectively.
-          // Since this example has directionality of ltr, the legend is
-          // positioned on the right side of the chart.
-          position: charts.BehaviorPosition.end,
-          // By default, if the position of the chart is on the left or right of
-          // the chart, [horizontalFirst] is set to false. This means that the
-          // legend entries will grow as new rows first instead of a new column.
-          horizontalFirst: false,
-          // This defines the padding around each legend entry.
-          cellPadding: const EdgeInsets.only(right: 4, bottom: 4),
-          // Set show measures to true to display measures in series legend,
-          // when the datum is selected.
-          showMeasures: true,
-          // Optionally provide a measure formatter to format the measure value.
-          // If none is specified the value is formatted as a decimal.
-          measureFormatter: (value) => value == null ? '-' : '${value}k',
-        ),
-      ],
-    );
+        seriesList,
+        animate: animate,
+        barGroupingType: charts.BarGroupingType.grouped,
+        // Add the legend behavior to the chart to turn on legends.
+        // This example shows how to optionally show measure and provide a custom
+        // formatter.
+        behaviors: [
+          // EXCLUDE_FROM_GALLERY_DOCS_START
+          // This section is excluded from being copied to the gallery.
+          // This is added in order to generate the image for the gallery to show
+          // an initial selection so that measure values are shown in the gallery.
+          charts.InitialSelection(
+            selectedDataConfig: [
+              charts.SeriesDatumConfig('Desktop', '2016'),
+              charts.SeriesDatumConfig('Tablet', '2016'),
+              charts.SeriesDatumConfig('Mobile', '2016'),
+              charts.SeriesDatumConfig('Other', '2016'),
+            ],
+          ),
+          // EXCLUDE_FROM_GALLERY_DOCS_END
+          charts.SeriesLegend(
+            // Positions for "start" and "end" will be left and right respectively
+            // for widgets with a build context that has directionality ltr.
+            // For rtl, "start" and "end" will be right and left respectively.
+            // Since this example has directionality of ltr, the legend is
+            // positioned on the right side of the chart.
+            position: charts.BehaviorPosition.end,
+            // By default, if the position of the chart is on the left or right of
+            // the chart, [horizontalFirst] is set to false. This means that the
+            // legend entries will grow as new rows first instead of a new column.
+            horizontalFirst: false,
+            // This defines the padding around each legend entry.
+            cellPadding: const EdgeInsets.only(right: 4, bottom: 4),
+            // Set show measures to true to display measures in series legend,
+            // when the datum is selected.
+            showMeasures: true,
+            // Optionally provide a measure formatter to format the measure value.
+            // If none is specified the value is formatted as a decimal.
+            measureFormatter: (value) => value == null ? '-' : '${value}k',
+          ),
+        ],
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -213,7 +213,6 @@ class LegendWithMeasures extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

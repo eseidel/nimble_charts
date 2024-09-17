@@ -35,19 +35,19 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SegmentsLineChart extends StatelessWidget {
-
   const SegmentsLineChart(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory SegmentsLineChart.withSampleData() => SegmentsLineChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SegmentsLineChart.withRandomData() => SegmentsLineChart(_createRandomData());
+  factory SegmentsLineChart.withRandomData() =>
+      SegmentsLineChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -98,8 +98,7 @@ class SegmentsLineChart extends StatelessWidget {
       charts.Series<LinearSales, int>(
         id: 'Color Change',
         // Light shade for even years, dark shade for odd.
-        colorFn: (sales, _) =>
-            sales.year.isEven ? blue[1] : blue[0],
+        colorFn: (sales, _) => sales.year.isEven ? blue[1] : blue[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -109,8 +108,7 @@ class SegmentsLineChart extends StatelessWidget {
       charts.Series<LinearSales, int>(
         id: 'Dash Pattern Change',
         // Light shade for even years, dark shade for odd.
-        colorFn: (sales, _) =>
-            sales.year.isEven ? red[1] : red[0],
+        colorFn: (sales, _) => sales.year.isEven ? red[1] : red[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -120,8 +118,7 @@ class SegmentsLineChart extends StatelessWidget {
       charts.Series<LinearSales, int>(
         id: 'Stroke Width Change',
         // Light shade for even years, dark shade for odd.
-        colorFn: (sales, _) =>
-            sales.year.isEven ? green[1] : green[0],
+        colorFn: (sales, _) => sales.year.isEven ? green[1] : green[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -133,10 +130,12 @@ class SegmentsLineChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.LineChart(seriesList,
+  Widget build(BuildContext context) => charts.LineChart(
+        seriesList,
         defaultRenderer:
             charts.LineRendererConfig(includeArea: true, stacked: true),
-        animate: animate,);
+        animate: animate,
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -183,8 +182,7 @@ class SegmentsLineChart extends StatelessWidget {
       charts.Series<LinearSales, int>(
         id: 'Color Change',
         // Light shade for even years, dark shade for odd.
-        colorFn: (sales, _) =>
-            sales.year.isEven ? blue[1] : blue[0],
+        colorFn: (sales, _) => sales.year.isEven ? blue[1] : blue[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -194,8 +192,7 @@ class SegmentsLineChart extends StatelessWidget {
       charts.Series<LinearSales, int>(
         id: 'Dash Pattern Change',
         // Light shade for even years, dark shade for odd.
-        colorFn: (sales, _) =>
-            sales.year.isEven ? red[1] : red[0],
+        colorFn: (sales, _) => sales.year.isEven ? red[1] : red[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -205,8 +202,7 @@ class SegmentsLineChart extends StatelessWidget {
       charts.Series<LinearSales, int>(
         id: 'Stroke Width Change',
         // Light shade for even years, dark shade for odd.
-        colorFn: (sales, _) =>
-            sales.year.isEven ? green[1] : green[0],
+        colorFn: (sales, _) => sales.year.isEven ? green[1] : green[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -219,7 +215,6 @@ class SegmentsLineChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales, this.dashPattern, this.strokeWidthPx);
   final int year;
   final int sales;

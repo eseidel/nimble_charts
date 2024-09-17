@@ -30,19 +30,21 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class NumericComboLinePointChart extends StatelessWidget {
-
-  const NumericComboLinePointChart(this.seriesList, {super.key, this.animate = false});
+  const NumericComboLinePointChart(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
-  factory NumericComboLinePointChart.withSampleData() => NumericComboLinePointChart(
-      _createSampleData(),
-    );
+  factory NumericComboLinePointChart.withSampleData() =>
+      NumericComboLinePointChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory NumericComboLinePointChart.withRandomData() => NumericComboLinePointChart(_createRandomData());
+  factory NumericComboLinePointChart.withRandomData() =>
+      NumericComboLinePointChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -87,11 +89,12 @@ class NumericComboLinePointChart extends StatelessWidget {
         data: tableSalesData,
       ),
       charts.Series<LinearSales, int>(
-          id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-          domainFn: (sales, _) => sales.year,
-          measureFn: (sales, _) => sales.sales,
-          data: mobileSalesData,)
+        id: 'Mobile',
+        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: mobileSalesData,
+      )
         // Configure our custom point renderer for this series.
         ..setAttribute(charts.rendererIdKey, 'customPoint'),
     ];
@@ -99,7 +102,8 @@ class NumericComboLinePointChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.NumericComboChart(seriesList,
+  Widget build(BuildContext context) => charts.NumericComboChart(
+        seriesList,
         animate: animate,
         // Configure the default renderer as a line renderer. This will be used
         // for any series that does not define a rendererIdKey.
@@ -107,9 +111,11 @@ class NumericComboLinePointChart extends StatelessWidget {
         // Custom renderer configuration for the point series.
         customSeriesRenderers: [
           charts.PointRendererConfig(
-              // ID used to link series to this renderer.
-              customRendererId: 'customPoint',),
-        ],);
+            // ID used to link series to this renderer.
+            customRendererId: 'customPoint',
+          ),
+        ],
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -150,11 +156,12 @@ class NumericComboLinePointChart extends StatelessWidget {
         data: tableSalesData,
       ),
       charts.Series<LinearSales, int>(
-          id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-          domainFn: (sales, _) => sales.year,
-          measureFn: (sales, _) => sales.sales,
-          data: mobileSalesData,)
+        id: 'Mobile',
+        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: mobileSalesData,
+      )
         // Configure our custom point renderer for this series.
         ..setAttribute(charts.rendererIdKey, 'customPoint'),
     ];
@@ -163,7 +170,6 @@ class NumericComboLinePointChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

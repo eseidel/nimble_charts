@@ -34,7 +34,8 @@ class GalleryAppState extends State<GalleryApp> {
         debugShowCheckedModeBanner: false,
         title: defaultConfig.appName,
         theme: defaultConfig.theme,
-        home: Home(),);
+        home: Home(),
+      );
 }
 
 void main() {

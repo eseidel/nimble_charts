@@ -23,18 +23,18 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SimpleDatumLegend extends StatelessWidget {
-
   const SimpleDatumLegend(this.seriesList, {super.key, this.animate = false});
 
   factory SimpleDatumLegend.withSampleData() => SimpleDatumLegend(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SimpleDatumLegend.withRandomData() => SimpleDatumLegend(_createRandomData());
+  factory SimpleDatumLegend.withRandomData() =>
+      SimpleDatumLegend(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -62,12 +62,12 @@ class SimpleDatumLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.PieChart(
-      seriesList,
-      animate: animate,
-      // Add the series legend behavior to the chart to turn on series legends.
-      // By default the legend will display above the chart.
-      behaviors: [charts.DatumLegend()],
-    );
+        seriesList,
+        animate: animate,
+        // Add the series legend behavior to the chart to turn on series legends.
+        // By default the legend will display above the chart.
+        behaviors: [charts.DatumLegend()],
+      );
 
   /// Create series list with one series
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -91,7 +91,6 @@ class SimpleDatumLegend extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

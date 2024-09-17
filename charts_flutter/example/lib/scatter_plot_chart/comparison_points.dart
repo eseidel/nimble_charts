@@ -24,19 +24,21 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class ComparisonPointsScatterPlotChart extends StatelessWidget {
-
-  const ComparisonPointsScatterPlotChart(this.seriesList, {super.key, this.animate = false});
+  const ComparisonPointsScatterPlotChart(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.ScatterPlotChart] with sample data and no transition.
-  factory ComparisonPointsScatterPlotChart.withSampleData() => ComparisonPointsScatterPlotChart(
-      _createSampleData(),
-    );
+  factory ComparisonPointsScatterPlotChart.withSampleData() =>
+      ComparisonPointsScatterPlotChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory ComparisonPointsScatterPlotChart.withRandomData() => ComparisonPointsScatterPlotChart(_createRandomData());
+  factory ComparisonPointsScatterPlotChart.withRandomData() =>
+      ComparisonPointsScatterPlotChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -92,19 +94,30 @@ class ComparisonPointsScatterPlotChart extends StatelessWidget {
     final salesLower = (sales * 0.8).round();
     final salesUpper = sales;
 
-    return LinearSales(year, yearLower, yearUpper, sales, salesLower,
-        salesUpper, makeRadius(4),);
+    return LinearSales(
+      year,
+      yearLower,
+      yearUpper,
+      sales,
+      salesLower,
+      salesUpper,
+      makeRadius(4),
+    );
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.ScatterPlotChart(seriesList,
+  Widget build(BuildContext context) => charts.ScatterPlotChart(
+        seriesList,
         animate: animate,
-        defaultRenderer:
-            charts.PointRendererConfig(pointRendererDecorators: [
-          charts.ComparisonPointsDecorator(
-              symbolRenderer: charts.CylinderSymbolRenderer(),),
-        ],),);
+        defaultRenderer: charts.PointRendererConfig(
+          pointRendererDecorators: [
+            charts.ComparisonPointsDecorator(
+              symbolRenderer: charts.CylinderSymbolRenderer(),
+            ),
+          ],
+        ),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -151,9 +164,15 @@ class ComparisonPointsScatterPlotChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
-  LinearSales(this.year, this.yearLower, this.yearUpper, this.sales,
-      this.salesLower, this.salesUpper, this.radius,);
+  LinearSales(
+    this.year,
+    this.yearLower,
+    this.yearUpper,
+    this.sales,
+    this.salesLower,
+    this.salesUpper,
+    this.radius,
+  );
   final int year;
   final int yearLower;
   final int yearUpper;

@@ -25,7 +25,6 @@
 /// that updates the selection.
 library;
 
-
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 
@@ -34,19 +33,19 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class InitialSelection extends StatelessWidget {
-
   const InitialSelection(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [charts.BarChart] with initial selection behavior.
   factory InitialSelection.withSampleData() => InitialSelection(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory InitialSelection.withRandomData() => InitialSelection(_createRandomData());
+  factory InitialSelection.withRandomData() =>
+      InitialSelection(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -75,24 +74,26 @@ class InitialSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      behaviors: [
-        // Initial selection can be configured by passing in:
-        //
-        // A list of datum config, specified with series ID and domain value.
-        // A list of series config, which is a list of series ID(s).
-        //
-        // Initial selection can be applied to any chart type.
-        //
-        // [BarChart] by default includes behaviors [SelectNearest] and
-        // [DomainHighlighter]. So this behavior shows the initial selection
-        // highlighted and when another datum is tapped, the selection changes.
-        charts.InitialSelection(selectedDataConfig: [
-          charts.SeriesDatumConfig<String>('Sales', '2016'),
-        ],),
-      ],
-    );
+        seriesList,
+        animate: animate,
+        behaviors: [
+          // Initial selection can be configured by passing in:
+          //
+          // A list of datum config, specified with series ID and domain value.
+          // A list of series config, which is a list of series ID(s).
+          //
+          // Initial selection can be applied to any chart type.
+          //
+          // [BarChart] by default includes behaviors [SelectNearest] and
+          // [DomainHighlighter]. So this behavior shows the initial selection
+          // highlighted and when another datum is tapped, the selection changes.
+          charts.InitialSelection(
+            selectedDataConfig: [
+              charts.SeriesDatumConfig<String>('Sales', '2016'),
+            ],
+          ),
+        ],
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -117,7 +118,6 @@ class InitialSelection extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

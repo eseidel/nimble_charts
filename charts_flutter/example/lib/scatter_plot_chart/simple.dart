@@ -24,19 +24,20 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SimpleScatterPlotChart extends StatelessWidget {
-
-  const SimpleScatterPlotChart(this.seriesList, {super.key, this.animate = false});
+  const SimpleScatterPlotChart(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.ScatterPlotChart] with sample data and no transition.
   factory SimpleScatterPlotChart.withSampleData() => SimpleScatterPlotChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SimpleScatterPlotChart.withRandomData() => SimpleScatterPlotChart(_createRandomData());
+  factory SimpleScatterPlotChart.withRandomData() =>
+      SimpleScatterPlotChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -88,7 +89,8 @@ class SimpleScatterPlotChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.ScatterPlotChart(seriesList, animate: animate);
+  Widget build(BuildContext context) =>
+      charts.ScatterPlotChart(seriesList, animate: animate);
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -137,7 +139,6 @@ class SimpleScatterPlotChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales, this.radius);
   final int year;
   final int sales;

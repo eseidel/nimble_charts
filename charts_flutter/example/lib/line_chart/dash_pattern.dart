@@ -25,19 +25,20 @@ import 'package:nimble_charts/flutter.dart' as charts;
 
 /// Example of a line chart rendered with dash patterns.
 class DashPatternLineChart extends StatelessWidget {
-
-  const DashPatternLineChart(this.seriesList, {super.key, this.animate = false});
+  const DashPatternLineChart(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory DashPatternLineChart.withSampleData() => DashPatternLineChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory DashPatternLineChart.withRandomData() => DashPatternLineChart(_createRandomData());
+  factory DashPatternLineChart.withRandomData() =>
+      DashPatternLineChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -95,7 +96,8 @@ class DashPatternLineChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.LineChart(seriesList, animate: animate);
+  Widget build(BuildContext context) =>
+      charts.LineChart(seriesList, animate: animate);
 
   /// Create three series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -150,7 +152,6 @@ class DashPatternLineChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

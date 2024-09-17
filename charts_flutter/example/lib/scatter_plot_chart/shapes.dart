@@ -36,19 +36,23 @@ import 'package:nimble_charts/flutter.dart' as charts;
 import 'package:nimble_charts/flutter.dart';
 
 class ShapesScatterPlotChart extends StatelessWidget {
-
-  const ShapesScatterPlotChart(this.seriesList, {super.key, this.animate = false});
+  const ShapesScatterPlotChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.ScatterPlotChart] with sample data and no transition.
   factory ShapesScatterPlotChart.withSampleData() => ShapesScatterPlotChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory ShapesScatterPlotChart.withRandomData() => ShapesScatterPlotChart(_createRandomData());
+  factory ShapesScatterPlotChart.withRandomData() =>
+      ShapesScatterPlotChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -59,33 +63,105 @@ class ShapesScatterPlotChart extends StatelessWidget {
     double makeRadius(int value) => (random.nextInt(value) + 2).toDouble();
 
     final data = [
-      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          'circle', null, null,),
-      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null,),
-      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null,),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        'circle',
+        null,
+        null,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
       // Render a hollow circle, filled in with white.
-      LinearSales(random.nextInt(100), random.nextInt(100),
-          makeRadius(4) + 4, 'circle', charts.MaterialPalette.white, 2,),
-      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null,),
-      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null,),
-      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          'circle', null, null,),
-      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null,),
-      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null,),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(4) + 4,
+        'circle',
+        charts.MaterialPalette.white,
+        2,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        'circle',
+        null,
+        null,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
       // Render a hollow circle, filled in with white.
-      LinearSales(random.nextInt(100), random.nextInt(100),
-          makeRadius(4) + 4, 'circle', charts.MaterialPalette.white, 2,),
-      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null,),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(4) + 4,
+        'circle',
+        charts.MaterialPalette.white,
+        2,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
       // Render a hollow square, filled in with white.
-      LinearSales(random.nextInt(100), random.nextInt(100),
-          makeRadius(4) + 4, null, charts.MaterialPalette.white, 2,),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(4) + 4,
+        null,
+        charts.MaterialPalette.white,
+        2,
+      ),
     ];
 
     const maxMeasure = 100;
@@ -114,7 +190,9 @@ class ShapesScatterPlotChart extends StatelessWidget {
       )
         // Accessor function that associates each datum with a symbol renderer.
         ..setAttribute(
-            charts.pointSymbolRendererFnKey, (index) => data[index].shape,)
+          charts.pointSymbolRendererFnKey,
+          (index) => data[index].shape,
+        )
         // Default symbol renderer ID for data that have no defined shape.
         ..setAttribute(charts.pointSymbolRendererIdKey, 'rect'),
     ];
@@ -122,15 +200,18 @@ class ShapesScatterPlotChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.ScatterPlotChart(seriesList,
+  Widget build(BuildContext context) => charts.ScatterPlotChart(
+        seriesList,
         animate: animate,
         // Configure the point renderer to have a map of custom symbol
         // renderers.
-        defaultRenderer:
-            charts.PointRendererConfig<num>(customSymbolRenderers: {
-          'circle': charts.CircleSymbolRenderer(),
-          'rect': charts.RectSymbolRenderer(),
-        },),);
+        defaultRenderer: charts.PointRendererConfig<num>(
+          customSymbolRenderers: {
+            'circle': charts.CircleSymbolRenderer(),
+            'rect': charts.RectSymbolRenderer(),
+          },
+        ),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -140,7 +221,13 @@ class ShapesScatterPlotChart extends StatelessWidget {
       LinearSales(12, 75, 4, null, null, null),
       // Render a hollow circle, filled in with white.
       LinearSales(
-          13, 225, 5, 'circle', charts.MaterialPalette.white, 2,),
+        13,
+        225,
+        5,
+        'circle',
+        charts.MaterialPalette.white,
+        2,
+      ),
       LinearSales(16, 50, 4, null, null, null),
       LinearSales(24, 75, 3, null, null, null),
       LinearSales(25, 100, 3, 'circle', null, null),
@@ -148,7 +235,13 @@ class ShapesScatterPlotChart extends StatelessWidget {
       LinearSales(37, 10, 4.5, null, null, null),
       // Render a hollow circle, filled in with white.
       LinearSales(
-          45, 300, 8, 'circle', charts.MaterialPalette.white, 2,),
+        45,
+        300,
+        8,
+        'circle',
+        charts.MaterialPalette.white,
+        2,
+      ),
       LinearSales(52, 15, 4, null, null, null),
       // Render a hollow square, filled in with white.
       LinearSales(56, 200, 7, null, charts.MaterialPalette.white, 2),
@@ -181,7 +274,9 @@ class ShapesScatterPlotChart extends StatelessWidget {
       )
         // Accessor function that associates each datum with a symbol renderer.
         ..setAttribute(
-            charts.pointSymbolRendererFnKey, (index) => data[index].shape,)
+          charts.pointSymbolRendererFnKey,
+          (index) => data[index].shape,
+        )
         // Default symbol renderer ID for data that have no defined shape.
         ..setAttribute(charts.pointSymbolRendererIdKey, 'rect'),
     ];
@@ -190,9 +285,14 @@ class ShapesScatterPlotChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
-  LinearSales(this.year, this.sales, this.radius, this.shape, this.fillColor,
-      this.strokeWidth,);
+  LinearSales(
+    this.year,
+    this.sales,
+    this.radius,
+    this.shape,
+    this.fillColor,
+    this.strokeWidth,
+  );
   final int year;
   final int sales;
   final double radius;
