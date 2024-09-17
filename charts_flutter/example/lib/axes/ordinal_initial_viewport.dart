@@ -20,9 +20,9 @@
 ///
 /// In this example, the series list has ordinal data from year 2014 to 2030,
 /// but we want to show starting at 2018 and we only want to show 4 values.
-/// We can do this by specifying an [charts.OrdinalViewport] in [charts.OrdinalAxisSpec].
+/// We can do this by specifying an [charts.OrdinalViewport] in
+/// [charts.OrdinalAxisSpec].
 library;
-
 
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
@@ -32,19 +32,23 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class OrdinalInitialViewport extends StatelessWidget {
-
-  const OrdinalInitialViewport(this.seriesList, {super.key, this.animate = false});
+  const OrdinalInitialViewport(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory OrdinalInitialViewport.withSampleData() => OrdinalInitialViewport(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory OrdinalInitialViewport.withRandomData() => OrdinalInitialViewport(_createRandomData());
+  factory OrdinalInitialViewport.withRandomData() =>
+      OrdinalInitialViewport(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -86,16 +90,17 @@ class OrdinalInitialViewport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      // Set the initial viewport by providing a new AxisSpec with the
-      // desired viewport: a starting domain and the data size.
-      domainAxis: charts.OrdinalAxisSpec(
-          viewport: charts.OrdinalViewport('2018', 4),),
-      // Optionally add a pan or pan and zoom behavior.
-      // If pan/zoom is not added, the viewport specified remains the viewport.
-      behaviors: [charts.PanAndZoomBehavior()],
-    );
+        seriesList,
+        animate: animate,
+        // Set the initial viewport by providing a new AxisSpec with the
+        // desired viewport: a starting domain and the data size.
+        domainAxis: charts.OrdinalAxisSpec(
+          viewport: charts.OrdinalViewport('2018', 4),
+        ),
+        // Optionally add a pan or pan and zoom behavior.
+        // If pan/zoom is not added, the viewport specified remains the viewport.
+        behaviors: [charts.PanAndZoomBehavior()],
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -133,7 +138,6 @@ class OrdinalInitialViewport extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

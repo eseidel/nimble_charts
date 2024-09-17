@@ -23,18 +23,23 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class GroupedBarTargetLineChart extends StatelessWidget {
+  const GroupedBarTargetLineChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  const GroupedBarTargetLineChart(this.seriesList, {super.key, this.animate = false});
-
-  factory GroupedBarTargetLineChart.withSampleData() => GroupedBarTargetLineChart(
-      _createSampleData(),
-    );
+  factory GroupedBarTargetLineChart.withSampleData() =>
+      GroupedBarTargetLineChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory GroupedBarTargetLineChart.withRandomData() => GroupedBarTargetLineChart(_createRandomData());
+  factory GroupedBarTargetLineChart.withRandomData() =>
+      GroupedBarTargetLineChart(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -132,14 +137,17 @@ class GroupedBarTargetLineChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.BarChart(seriesList,
+  Widget build(BuildContext context) => charts.BarChart(
+        seriesList,
         animate: animate,
         barGroupingType: charts.BarGroupingType.grouped,
         customSeriesRenderers: [
           charts.BarTargetLineRendererConfig<String>(
-              // ID used to link series to this renderer.
-              customRendererId: 'customTargetLine',),
-        ],);
+            // ID used to link series to this renderer.
+            customRendererId: 'customTargetLine',
+          ),
+        ],
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -234,7 +242,6 @@ class GroupedBarTargetLineChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

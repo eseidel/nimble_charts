@@ -24,21 +24,27 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class HorizontalBarLabelCustomChart extends StatelessWidget {
-
-  const HorizontalBarLabelCustomChart(this.seriesList, {super.key, this.animate = false});
+  const HorizontalBarLabelCustomChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory HorizontalBarLabelCustomChart.withRandomData() => HorizontalBarLabelCustomChart(_createRandomData());
+  factory HorizontalBarLabelCustomChart.withRandomData() =>
+      HorizontalBarLabelCustomChart(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
   /// Creates a [charts.BarChart] with sample data and no transition.
-  static HorizontalBarLabelCustomChart createWithSampleData() => HorizontalBarLabelCustomChart(
-      _createSampleData(),
-    );
+  // ignore: sort_constructors_first
+  factory HorizontalBarLabelCustomChart.createWithSampleData() =>
+      HorizontalBarLabelCustomChart(
+        _createSampleData(),
+      );
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
@@ -58,8 +64,7 @@ class HorizontalBarLabelCustomChart extends StatelessWidget {
         measureFn: (sales, _) => sales.sales,
         data: data,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (sales, _) =>
-            '${sales.year}: \$${sales.sales}',
+        labelAccessorFn: (sales, _) => '${sales.year}: \$${sales.sales}',
         insideLabelStyleAccessorFn: (sales, _) {
           final color = (sales.year == '2014')
               ? charts.MaterialPalette.red.shadeDefault
@@ -82,14 +87,14 @@ class HorizontalBarLabelCustomChart extends StatelessWidget {
   // style, set the style accessor functions on the series.
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      vertical: false,
-      barRendererDecorator: charts.BarLabelDecorator<String>(),
-      // Hide domain axis.
-      domainAxis:
-          const charts.OrdinalAxisSpec(renderSpec: charts.NoneRenderSpec()),
-    );
+        seriesList,
+        animate: animate,
+        vertical: false,
+        barRendererDecorator: charts.BarLabelDecorator<String>(),
+        // Hide domain axis.
+        domainAxis:
+            const charts.OrdinalAxisSpec(renderSpec: charts.NoneRenderSpec()),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -107,8 +112,7 @@ class HorizontalBarLabelCustomChart extends StatelessWidget {
         measureFn: (sales, _) => sales.sales,
         data: data,
         // Set a label accessor to control the text of the bar label.
-        labelAccessorFn: (sales, _) =>
-            '${sales.year}: \$${sales.sales}',
+        labelAccessorFn: (sales, _) => '${sales.year}: \$${sales.sales}',
         insideLabelStyleAccessorFn: (sales, _) {
           final color = (sales.year == '2014')
               ? charts.MaterialPalette.red.shadeDefault
@@ -128,7 +132,6 @@ class HorizontalBarLabelCustomChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

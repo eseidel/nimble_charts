@@ -26,18 +26,23 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class PatternForwardHatchBarChart extends StatelessWidget {
+  const PatternForwardHatchBarChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  const PatternForwardHatchBarChart(this.seriesList, {super.key, this.animate = false});
-
-  factory PatternForwardHatchBarChart.withSampleData() => PatternForwardHatchBarChart(
-      _createSampleData(),
-    );
+  factory PatternForwardHatchBarChart.withSampleData() =>
+      PatternForwardHatchBarChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory PatternForwardHatchBarChart.withRandomData() => PatternForwardHatchBarChart(_createRandomData());
+  factory PatternForwardHatchBarChart.withRandomData() =>
+      PatternForwardHatchBarChart(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -78,8 +83,7 @@ class PatternForwardHatchBarChart extends StatelessWidget {
         domainFn: (sales, _) => sales.year,
         measureFn: (sales, _) => sales.sales,
         data: tableSalesData,
-        fillPatternFn: (sales, _) =>
-            charts.FillPatternType.forwardHatch,
+        fillPatternFn: (sales, _) => charts.FillPatternType.forwardHatch,
       ),
       charts.Series<OrdinalSales, String>(
         id: 'Mobile',
@@ -93,10 +97,10 @@ class PatternForwardHatchBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      barGroupingType: charts.BarGroupingType.grouped,
-    );
+        seriesList,
+        animate: animate,
+        barGroupingType: charts.BarGroupingType.grouped,
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -133,8 +137,7 @@ class PatternForwardHatchBarChart extends StatelessWidget {
         domainFn: (sales, _) => sales.year,
         measureFn: (sales, _) => sales.sales,
         data: tableSalesData,
-        fillPatternFn: (sales, _) =>
-            charts.FillPatternType.forwardHatch,
+        fillPatternFn: (sales, _) => charts.FillPatternType.forwardHatch,
       ),
       charts.Series<OrdinalSales, String>(
         id: 'Mobile',
@@ -148,7 +151,6 @@ class PatternForwardHatchBarChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

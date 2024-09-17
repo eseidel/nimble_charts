@@ -24,19 +24,23 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class VerticalBarLabelChart extends StatelessWidget {
-
-  const VerticalBarLabelChart(this.seriesList, {super.key, this.animate = false});
+  const VerticalBarLabelChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory VerticalBarLabelChart.withSampleData() => VerticalBarLabelChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory VerticalBarLabelChart.withRandomData() => VerticalBarLabelChart(_createRandomData());
+  factory VerticalBarLabelChart.withRandomData() =>
+      VerticalBarLabelChart(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -53,13 +57,13 @@ class VerticalBarLabelChart extends StatelessWidget {
 
     return [
       charts.Series<OrdinalSales, String>(
-          id: 'Sales',
-          domainFn: (sales, _) => sales.year,
-          measureFn: (sales, _) => sales.sales,
-          data: data,
-          // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (sales, _) =>
-              sales.sales,),
+        id: 'Sales',
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: data,
+        // Set a label accessor to control the text of the bar label.
+        labelAccessorFn: (sales, _) => sales.sales,
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -73,16 +77,16 @@ class VerticalBarLabelChart extends StatelessWidget {
   // [insideLabelStyleSpec] and [outsideLabelStyleSpec].
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      // Set a bar label decorator.
-      // Example configuring different styles for inside/outside:
-      //       barRendererDecorator: new charts.BarLabelDecorator(
-      //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
-      //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
-      barRendererDecorator: charts.BarLabelDecorator<String>(),
-      domainAxis: const charts.OrdinalAxisSpec(),
-    );
+        seriesList,
+        animate: animate,
+        // Set a bar label decorator.
+        // Example configuring different styles for inside/outside:
+        //       barRendererDecorator: new charts.BarLabelDecorator(
+        //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
+        //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
+        barRendererDecorator: charts.BarLabelDecorator<String>(),
+        domainAxis: const charts.OrdinalAxisSpec(),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -95,20 +99,19 @@ class VerticalBarLabelChart extends StatelessWidget {
 
     return [
       charts.Series<OrdinalSales, String>(
-          id: 'Sales',
-          domainFn: (sales, _) => sales.year,
-          measureFn: (sales, _) => sales.sales,
-          data: data,
-          // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (sales, _) =>
-              '\$${sales.sales}',),
+        id: 'Sales',
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: data,
+        // Set a label accessor to control the text of the bar label.
+        labelAccessorFn: (sales, _) => '\$${sales.sales}',
+      ),
     ];
   }
 }
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

@@ -31,19 +31,21 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class TimeSeriesLineAnnotationChart extends StatelessWidget {
-
-  const TimeSeriesLineAnnotationChart(this.seriesList, {super.key, this.animate = false});
+  const TimeSeriesLineAnnotationChart(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
-  factory TimeSeriesLineAnnotationChart.withSampleData() => TimeSeriesLineAnnotationChart(
-      _createSampleData(),
-    );
+  factory TimeSeriesLineAnnotationChart.withSampleData() =>
+      TimeSeriesLineAnnotationChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory TimeSeriesLineAnnotationChart.withRandomData() => TimeSeriesLineAnnotationChart(_createRandomData());
+  factory TimeSeriesLineAnnotationChart.withRandomData() =>
+      TimeSeriesLineAnnotationChart(_createRandomData());
   final List<charts.Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
@@ -70,16 +72,24 @@ class TimeSeriesLineAnnotationChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.TimeSeriesChart(seriesList, animate: animate, behaviors: [
-      charts.RangeAnnotation([
-        charts.LineAnnotationSegment(
-            DateTime(2017, 10, 4), charts.RangeAnnotationAxisType.domain,
-            startLabel: 'Oct 4',),
-        charts.LineAnnotationSegment(
-            DateTime(2017, 10, 15), charts.RangeAnnotationAxisType.domain,
-            endLabel: 'Oct 15',),
-      ]),
-    ],);
+  Widget build(BuildContext context) => charts.TimeSeriesChart(
+        seriesList,
+        animate: animate,
+        behaviors: [
+          charts.RangeAnnotation([
+            charts.LineAnnotationSegment(
+              DateTime(2017, 10, 4),
+              charts.RangeAnnotationAxisType.domain,
+              startLabel: 'Oct 4',
+            ),
+            charts.LineAnnotationSegment(
+              DateTime(2017, 10, 15),
+              charts.RangeAnnotationAxisType.domain,
+              endLabel: 'Oct 15',
+            ),
+          ]),
+        ],
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
@@ -103,7 +113,6 @@ class TimeSeriesLineAnnotationChart extends StatelessWidget {
 
 /// Sample time series data type.
 class TimeSeriesSales {
-
   TimeSeriesSales(this.time, this.sales);
   final DateTime time;
   final int sales;

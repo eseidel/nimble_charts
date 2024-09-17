@@ -35,19 +35,24 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
-
-  const TimeSeriesSymbolAnnotationChart(this.seriesList, {super.key, this.animate = false});
+  const TimeSeriesSymbolAnnotationChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
-  factory TimeSeriesSymbolAnnotationChart.withSampleData() => TimeSeriesSymbolAnnotationChart(
-      _createSampleData(),
-    );
+  factory TimeSeriesSymbolAnnotationChart.withSampleData() =>
+      TimeSeriesSymbolAnnotationChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory TimeSeriesSymbolAnnotationChart.withRandomData() => TimeSeriesSymbolAnnotationChart(_createRandomData());
+  factory TimeSeriesSymbolAnnotationChart.withRandomData() =>
+      TimeSeriesSymbolAnnotationChart(_createRandomData());
   final List<charts.Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
@@ -57,24 +62,40 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
 
     final myDesktopData = [
       TimeSeriesSales(
-          timeCurrent: DateTime(2017, 9, 19), sales: random.nextInt(100),),
+        timeCurrent: DateTime(2017, 9, 19),
+        sales: random.nextInt(100),
+      ),
       TimeSeriesSales(
-          timeCurrent: DateTime(2017, 9, 26), sales: random.nextInt(100),),
+        timeCurrent: DateTime(2017, 9, 26),
+        sales: random.nextInt(100),
+      ),
       TimeSeriesSales(
-          timeCurrent: DateTime(2017, 10, 3), sales: random.nextInt(100),),
+        timeCurrent: DateTime(2017, 10, 3),
+        sales: random.nextInt(100),
+      ),
       TimeSeriesSales(
-          timeCurrent: DateTime(2017, 10, 10), sales: random.nextInt(100),),
+        timeCurrent: DateTime(2017, 10, 10),
+        sales: random.nextInt(100),
+      ),
     ];
 
     final myTabletData = [
       TimeSeriesSales(
-          timeCurrent: DateTime(2017, 9, 19), sales: random.nextInt(100),),
+        timeCurrent: DateTime(2017, 9, 19),
+        sales: random.nextInt(100),
+      ),
       TimeSeriesSales(
-          timeCurrent: DateTime(2017, 9, 26), sales: random.nextInt(100),),
+        timeCurrent: DateTime(2017, 9, 26),
+        sales: random.nextInt(100),
+      ),
       TimeSeriesSales(
-          timeCurrent: DateTime(2017, 10, 3), sales: random.nextInt(100),),
+        timeCurrent: DateTime(2017, 10, 3),
+        sales: random.nextInt(100),
+      ),
       TimeSeriesSales(
-          timeCurrent: DateTime(2017, 10, 10), sales: random.nextInt(100),),
+        timeCurrent: DateTime(2017, 10, 10),
+        sales: random.nextInt(100),
+      ),
     ];
 
     // Example of a series with two range annotations. A regular point shape
@@ -160,19 +181,20 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.TimeSeriesChart(
-      seriesList,
-      animate: animate,
-      // Custom renderer configuration for the point series.
-      customSeriesRenderers: [
-        charts.SymbolAnnotationRendererConfig(
+        seriesList,
+        animate: animate,
+        // Custom renderer configuration for the point series.
+        customSeriesRenderers: [
+          charts.SymbolAnnotationRendererConfig(
             // ID used to link series to this renderer.
-            customRendererId: 'customSymbolAnnotation',),
-      ],
-      // Optionally pass in a [DateTimeFactory] used by the chart. The factory
-      // should create the same type of [DateTime] as the data provided. If none
-      // specified, the default creates local date time.
-      dateTimeFactory: const charts.LocalDateTimeFactory(),
-    );
+            customRendererId: 'customSymbolAnnotation',
+          ),
+        ],
+        // Optionally pass in a [DateTimeFactory] used by the chart. The factory
+        // should create the same type of [DateTime] as the data provided. 
+        // If none specified, the default creates local date time.
+        dateTimeFactory: const charts.LocalDateTimeFactory(),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
@@ -279,7 +301,6 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
 
 /// Sample time series data type.
 class TimeSeriesSales {
-
   TimeSeriesSales({
     required this.timeCurrent,
     this.timePrevious,

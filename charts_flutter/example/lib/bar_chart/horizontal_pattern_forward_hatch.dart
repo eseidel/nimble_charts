@@ -27,19 +27,23 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// The second series of bars is rendered with a pattern by defining a
 /// fillPatternFn mapping function.
 class HorizontalPatternForwardHatchBarChart extends StatelessWidget {
+  const HorizontalPatternForwardHatchBarChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  const HorizontalPatternForwardHatchBarChart(this.seriesList,
-      {super.key, this.animate = false,});
-
-  factory HorizontalPatternForwardHatchBarChart.withSampleData() => HorizontalPatternForwardHatchBarChart(
-      _createSampleData(),
-    );
+  factory HorizontalPatternForwardHatchBarChart.withSampleData() =>
+      HorizontalPatternForwardHatchBarChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory HorizontalPatternForwardHatchBarChart.withRandomData() => HorizontalPatternForwardHatchBarChart(_createRandomData());
+  factory HorizontalPatternForwardHatchBarChart.withRandomData() =>
+      HorizontalPatternForwardHatchBarChart(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -80,8 +84,7 @@ class HorizontalPatternForwardHatchBarChart extends StatelessWidget {
         domainFn: (sales, _) => sales.year,
         measureFn: (sales, _) => sales.sales,
         data: tableSalesData,
-        fillPatternFn: (sales, _) =>
-            charts.FillPatternType.forwardHatch,
+        fillPatternFn: (sales, _) => charts.FillPatternType.forwardHatch,
       ),
       charts.Series<OrdinalSales, String>(
         id: 'Mobile',
@@ -95,11 +98,11 @@ class HorizontalPatternForwardHatchBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      barGroupingType: charts.BarGroupingType.grouped,
-      vertical: false,
-    );
+        seriesList,
+        animate: animate,
+        barGroupingType: charts.BarGroupingType.grouped,
+        vertical: false,
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -136,8 +139,7 @@ class HorizontalPatternForwardHatchBarChart extends StatelessWidget {
         domainFn: (sales, _) => sales.year,
         measureFn: (sales, _) => sales.sales,
         data: tableSalesData,
-        fillPatternFn: (sales, _) =>
-            charts.FillPatternType.forwardHatch,
+        fillPatternFn: (sales, _) => charts.FillPatternType.forwardHatch,
       ),
       charts.Series<OrdinalSales, String>(
         id: 'Mobile',
@@ -151,7 +153,6 @@ class HorizontalPatternForwardHatchBarChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

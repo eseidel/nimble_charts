@@ -25,18 +25,23 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// Example of using a custom primary measure replacing the renderSpec with one
 /// that aligns the text under the tick and left justifies.
 class MeasureAxisLabelAlignment extends StatelessWidget {
+  const MeasureAxisLabelAlignment(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  const MeasureAxisLabelAlignment(this.seriesList, {super.key, this.animate = false});
-
-  factory MeasureAxisLabelAlignment.withSampleData() => MeasureAxisLabelAlignment(
-      _createSampleData(),
-    );
+  factory MeasureAxisLabelAlignment.withSampleData() =>
+      MeasureAxisLabelAlignment(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory MeasureAxisLabelAlignment.withRandomData() => MeasureAxisLabelAlignment(_createRandomData());
+  factory MeasureAxisLabelAlignment.withRandomData() =>
+      MeasureAxisLabelAlignment(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -64,28 +69,29 @@ class MeasureAxisLabelAlignment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
+        seriesList,
+        animate: animate,
 
-      /// Customize the primary measure axis using a small tick renderer.
-      /// Use String instead of num for ordinal domain axis
-      /// (typically bar charts).
-      primaryMeasureAxis: const charts.NumericAxisSpec(
+        /// Customize the primary measure axis using a small tick renderer.
+        /// Use String instead of num for ordinal domain axis
+        /// (typically bar charts).
+        primaryMeasureAxis: const charts.NumericAxisSpec(
           renderSpec: charts.GridlineRendererSpec(
-        // Display the measure axis labels below the gridline.
-        //
-        // 'Before' & 'after' follow the axis value direction.
-        // Vertical axes draw 'before' below & 'after' above the tick.
-        // Horizontal axes draw 'before' left & 'after' right the tick.
-        labelAnchor: charts.TickLabelAnchor.before,
+            // Display the measure axis labels below the gridline.
+            //
+            // 'Before' & 'after' follow the axis value direction.
+            // Vertical axes draw 'before' below & 'after' above the tick.
+            // Horizontal axes draw 'before' left & 'after' right the tick.
+            labelAnchor: charts.TickLabelAnchor.before,
 
-        // Left justify the text in the axis.
-        //
-        // Note: outside means that the secondary measure axis would right
-        // justify.
-        labelJustification: charts.TickLabelJustification.outside,
-      ),),
-    );
+            // Left justify the text in the axis.
+            //
+            // Note: outside means that the secondary measure axis would right
+            // justify.
+            labelJustification: charts.TickLabelJustification.outside,
+          ),
+        ),
+      );
 
   /// Create series list with single series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -109,7 +115,6 @@ class MeasureAxisLabelAlignment extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

@@ -25,18 +25,22 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// Example of a grouped bar chart with three series, each rendered with
 /// different fill colors.
 class GroupedFillColorBarChart extends StatelessWidget {
-
-  const GroupedFillColorBarChart(this.seriesList, {super.key, this.animate = false});
+  const GroupedFillColorBarChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   factory GroupedFillColorBarChart.withSampleData() => GroupedFillColorBarChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory GroupedFillColorBarChart.withRandomData() => GroupedFillColorBarChart(_createRandomData());
+  factory GroupedFillColorBarChart.withRandomData() =>
+      GroupedFillColorBarChart(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -100,12 +104,14 @@ class GroupedFillColorBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      // Configure a stroke width to enable borders on the bars.
-      defaultRenderer: charts.BarRendererConfig(
-          groupingType: charts.BarGroupingType.grouped, strokeWidthPx: 2,),
-    );
+        seriesList,
+        animate: animate,
+        // Configure a stroke width to enable borders on the bars.
+        defaultRenderer: charts.BarRendererConfig(
+          groupingType: charts.BarGroupingType.grouped,
+          strokeWidthPx: 2,
+        ),
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -165,7 +171,6 @@ class GroupedFillColorBarChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

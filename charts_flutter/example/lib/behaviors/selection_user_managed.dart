@@ -32,19 +32,20 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SelectionUserManaged extends StatefulWidget {
-
-  const SelectionUserManaged(this.seriesList, {super.key, this.animate = false});
+  const SelectionUserManaged(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory SelectionUserManaged.withSampleData() => SelectionUserManaged(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SelectionUserManaged.withRandomData() => SelectionUserManaged(_createRandomData());
+  factory SelectionUserManaged.withRandomData() =>
+      SelectionUserManaged(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -105,7 +106,8 @@ class SelectionUserManagedState extends State<SelectionUserManaged> {
       animate: false, //widget.animate,
       selectionModels: [
         charts.SelectionModelConfig(
-            updatedListener: _infoSelectionModelUpdated,),
+          updatedListener: _infoSelectionModelUpdated,
+        ),
       ],
       // Pass in the state you manage to the chart. This will be used to
       // override the internal chart state.
@@ -113,17 +115,22 @@ class SelectionUserManagedState extends State<SelectionUserManaged> {
       // The initial selection can still be optionally added by adding the
       // initial selection behavior.
       behaviors: [
-        charts.InitialSelection(selectedDataConfig: [
-          charts.SeriesDatumConfig<String>('Sales', '2016'),
-        ],),
+        charts.InitialSelection(
+          selectedDataConfig: [
+            charts.SeriesDatumConfig<String>('Sales', '2016'),
+          ],
+        ),
       ],
     );
 
     final clearSelection = MaterialButton(
-        onPressed: _handleClearSelection, child: const Text('Clear Selection'),);
+      onPressed: _handleClearSelection,
+      child: const Text('Clear Selection'),
+    );
 
     return Column(
-        children: [SizedBox(height: 150, child: chart), clearSelection],);
+      children: [SizedBox(height: 150, child: chart), clearSelection],
+    );
   }
 
   void _infoSelectionModelUpdated(charts.SelectionModel<String> model) {
@@ -151,7 +158,6 @@ class SelectionUserManagedState extends State<SelectionUserManaged> {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

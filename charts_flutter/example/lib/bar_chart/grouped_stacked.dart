@@ -23,18 +23,22 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class GroupedStackedBarChart extends StatelessWidget {
-
-  const GroupedStackedBarChart(this.seriesList, {super.key, this.animate = false});
+  const GroupedStackedBarChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   factory GroupedStackedBarChart.withSampleData() => GroupedStackedBarChart(
-      createSampleData(),
-    );
+        createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory GroupedStackedBarChart.withRandomData() => GroupedStackedBarChart(_createRandomData());
+  factory GroupedStackedBarChart.withRandomData() =>
+      GroupedStackedBarChart(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -133,10 +137,10 @@ class GroupedStackedBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      barGroupingType: charts.BarGroupingType.groupedStacked,
-    );
+        seriesList,
+        animate: animate,
+        barGroupingType: charts.BarGroupingType.groupedStacked,
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> createSampleData() {
@@ -231,7 +235,6 @@ class GroupedStackedBarChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

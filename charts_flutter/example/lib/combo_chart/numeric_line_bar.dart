@@ -25,19 +25,23 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class NumericComboLineBarChart extends StatelessWidget {
-
-  const NumericComboLineBarChart(this.seriesList, {super.key, this.animate = false});
+  const NumericComboLineBarChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory NumericComboLineBarChart.withSampleData() => NumericComboLineBarChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory NumericComboLineBarChart.withRandomData() => NumericComboLineBarChart(_createRandomData());
+  factory NumericComboLineBarChart.withRandomData() =>
+      NumericComboLineBarChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -86,17 +90,19 @@ class NumericComboLineBarChart extends StatelessWidget {
         // Configure our custom bar renderer for this series.
         ..setAttribute(charts.rendererIdKey, 'customBar'),
       charts.Series<LinearSales, int>(
-          id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-          domainFn: (sales, _) => sales.year,
-          measureFn: (sales, _) => sales.sales,
-          data: mobileSalesData,),
+        id: 'Mobile',
+        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: mobileSalesData,
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.NumericComboChart(seriesList,
+  Widget build(BuildContext context) => charts.NumericComboChart(
+        seriesList,
         animate: animate,
         // Configure the default renderer as a line renderer. This will be used
         // for any series that does not define a rendererIdKey.
@@ -104,9 +110,11 @@ class NumericComboLineBarChart extends StatelessWidget {
         // Custom renderer configuration for the bar series.
         customSeriesRenderers: [
           charts.BarRendererConfig(
-              // ID used to link series to this renderer.
-              customRendererId: 'customBar',),
-        ],);
+            // ID used to link series to this renderer.
+            customRendererId: 'customBar',
+          ),
+        ],
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -151,18 +159,18 @@ class NumericComboLineBarChart extends StatelessWidget {
         // Configure our custom bar renderer for this series.
         ..setAttribute(charts.rendererIdKey, 'customBar'),
       charts.Series<LinearSales, int>(
-          id: 'Mobile',
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-          domainFn: (sales, _) => sales.year,
-          measureFn: (sales, _) => sales.sales,
-          data: mobileSalesData,),
+        id: 'Mobile',
+        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: mobileSalesData,
+      ),
     ];
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

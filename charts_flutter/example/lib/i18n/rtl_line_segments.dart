@@ -36,19 +36,19 @@ import 'package:nimble_charts/flutter.dart' as charts;
 import 'package:nimble_charts/flutter.dart';
 
 class RTLLineSegments extends StatelessWidget {
-
   const RTLLineSegments(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory RTLLineSegments.withSampleData() => RTLLineSegments(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory RTLLineSegments.withRandomData() => RTLLineSegments(_createRandomData());
+  factory RTLLineSegments.withRandomData() =>
+      RTLLineSegments(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -99,8 +99,7 @@ class RTLLineSegments extends StatelessWidget {
       charts.Series<LinearSales, int>(
         id: 'Color Change',
         // Light shade for even years, dark shade for odd.
-        colorFn: (sales, _) =>
-            sales.year % 2 == 0 ? blue[1] : blue[0],
+        colorFn: (sales, _) => sales.year.isEven ? blue[1] : blue[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -110,8 +109,7 @@ class RTLLineSegments extends StatelessWidget {
       charts.Series<LinearSales, int>(
         id: 'Dash Pattern Change',
         // Light shade for even years, dark shade for odd.
-        colorFn: (sales, _) =>
-            sales.year % 2 == 0 ? red[1] : red[0],
+        colorFn: (sales, _) => sales.year.isEven ? red[1] : red[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -121,8 +119,7 @@ class RTLLineSegments extends StatelessWidget {
       charts.Series<LinearSales, int>(
         id: 'Stroke Width Change',
         // Light shade for even years, dark shade for odd.
-        colorFn: (sales, _) =>
-            sales.year % 2 == 0 ? green[1] : green[0],
+        colorFn: (sales, _) => sales.year.isEven ? green[1] : green[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -134,27 +131,27 @@ class RTLLineSegments extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    // Charts will determine if RTL is enabled by checking the directionality by
-    // requesting Directionality.of(context). This returns the text direction
-    // from the closest instance of that encloses the context passed to build
-    // the chart. A [TextDirection.rtl] will be treated as a RTL chart. This
-    // means that the directionality widget does not have to directly wrap each
-    // chart. It is show here as an example only.
-    //
-    // By default, when a chart detects RTL:
-    // Measure axis positions are flipped. Primary measure axis is on the right
-    // and the secondary measure axis is on the left (when used).
-    // Domain axis' first domain starts on the right and grows left.
-    return Directionality(
+  Widget build(BuildContext context) =>
+      // Charts will determine if RTL is enabled by checking the directionality by
+      // requesting Directionality.of(context). This returns the text direction
+      // from the closest instance of that encloses the context passed to build
+      // the chart. A [TextDirection.rtl] will be treated as a RTL chart. This
+      // means that the directionality widget does not have to directly wrap each
+      // chart. It is show here as an example only.
+      //
+      // By default, when a chart detects RTL:
+      // Measure axis positions are flipped. Primary measure axis is on the right
+      // and the secondary measure axis is on the left (when used).
+      // Domain axis' first domain starts on the right and grows left.
+      Directionality(
         textDirection: TextDirection.rtl,
         child: charts.LineChart(
           seriesList,
           defaultRenderer:
               charts.LineRendererConfig(includeArea: true, stacked: true),
           animate: animate,
-        ),);
-  }
+        ),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -201,8 +198,7 @@ class RTLLineSegments extends StatelessWidget {
       charts.Series<LinearSales, int>(
         id: 'Color Change',
         // Light shade for even years, dark shade for odd.
-        colorFn: (sales, _) =>
-            sales.year % 2 == 0 ? blue[1] : blue[0],
+        colorFn: (sales, _) => sales.year.isEven ? blue[1] : blue[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -212,8 +208,7 @@ class RTLLineSegments extends StatelessWidget {
       charts.Series<LinearSales, int>(
         id: 'Dash Pattern Change',
         // Light shade for even years, dark shade for odd.
-        colorFn: (sales, _) =>
-            sales.year % 2 == 0 ? red[1] : red[0],
+        colorFn: (sales, _) => sales.year.isEven ? red[1] : red[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -223,8 +218,7 @@ class RTLLineSegments extends StatelessWidget {
       charts.Series<LinearSales, int>(
         id: 'Stroke Width Change',
         // Light shade for even years, dark shade for odd.
-        colorFn: (sales, _) =>
-            sales.year % 2 == 0 ? green[1] : green[0],
+        colorFn: (sales, _) => sales.year.isEven ? green[1] : green[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -237,7 +231,6 @@ class RTLLineSegments extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales, this.dashPattern, this.strokeWidthPx);
   final int year;
   final int sales;

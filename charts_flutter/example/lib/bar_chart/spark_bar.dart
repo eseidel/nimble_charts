@@ -75,8 +75,8 @@ class SparkBar extends StatelessWidget {
 
       /// Assign a custom style for the measure axis.
       ///
-      /// The NoneRenderSpec only draws an axis line (and even that can be hidden
-      /// with showAxisLine=false).
+      /// The NoneRenderSpec only draws an axis line (and even that can be 
+      /// hidden with showAxisLine=false).
       primaryMeasureAxis:
           const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
 

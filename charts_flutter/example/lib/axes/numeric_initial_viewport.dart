@@ -20,9 +20,9 @@
 ///
 /// In this example, the series list has numeric data from 0 to 10, but we
 /// want to show from 3 to 7.
-/// We can do this by specifying an [charts.NumericExtents] in [charts.NumericAxisSpec].
+/// We can do this by specifying an [charts.NumericExtents] in 
+/// [charts.NumericAxisSpec].
 library;
-
 
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
@@ -32,19 +32,23 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class NumericInitialViewport extends StatelessWidget {
-
-  const NumericInitialViewport(this.seriesList, {super.key, this.animate = false});
+  const NumericInitialViewport(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory NumericInitialViewport.withSampleData() => NumericInitialViewport(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory NumericInitialViewport.withRandomData() => NumericInitialViewport(_createRandomData());
+  factory NumericInitialViewport.withRandomData() =>
+      NumericInitialViewport(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -80,16 +84,17 @@ class NumericInitialViewport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.LineChart(
-      seriesList,
-      animate: animate,
-      domainAxis: const charts.NumericAxisSpec(
+        seriesList,
+        animate: animate,
+        domainAxis: const charts.NumericAxisSpec(
           // Set the initial viewport by providing a new AxisSpec with the
           // desired viewport, in NumericExtents.
-          viewport: charts.NumericExtents(3.0, 7.0),),
-      // Optionally add a pan or pan and zoom behavior.
-      // If pan/zoom is not added, the viewport specified remains the viewport.
-      behaviors: [charts.PanAndZoomBehavior()],
-    );
+          viewport: charts.NumericExtents(3.0, 7.0),
+        ),
+        // Optionally add a pan or pan and zoom behavior.
+        // If pan/zoom is not added, the viewport specified remains the viewport.
+        behaviors: [charts.PanAndZoomBehavior()],
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
@@ -121,7 +126,6 @@ class NumericInitialViewport extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-
   LinearSales(this.year, this.sales);
   final int year;
   final int sales;

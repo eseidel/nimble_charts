@@ -26,19 +26,21 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class EndPointsAxisTimeSeriesChart extends StatelessWidget {
-
-  const EndPointsAxisTimeSeriesChart(this.seriesList, {super.key, this.animate = false});
+  const EndPointsAxisTimeSeriesChart(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
-  factory EndPointsAxisTimeSeriesChart.withSampleData() => EndPointsAxisTimeSeriesChart(
-      _createSampleData(),
-    );
+  factory EndPointsAxisTimeSeriesChart.withSampleData() =>
+      EndPointsAxisTimeSeriesChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory EndPointsAxisTimeSeriesChart.withRandomData() => EndPointsAxisTimeSeriesChart(_createRandomData());
+  factory EndPointsAxisTimeSeriesChart.withRandomData() =>
+      EndPointsAxisTimeSeriesChart(_createRandomData());
   final List<charts.Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
@@ -67,14 +69,14 @@ class EndPointsAxisTimeSeriesChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.TimeSeriesChart(
-      seriesList,
-      animate: animate,
-      // Configures an axis spec that is configured to render one tick at each
-      // end of the axis range, anchored "inside" the axis. The start tick label
-      // will be left-aligned with its tick mark, and the end tick label will be
-      // right-aligned with its tick mark.
-      domainAxis: const charts.EndPointsTimeAxisSpec(),
-    );
+        seriesList,
+        animate: animate,
+        // Configures an axis spec that is configured to render one tick at each
+        // end of the axis range, anchored "inside" the axis. The start tick label
+        // will be left-aligned with its tick mark, and the end tick label will be
+        // right-aligned with its tick mark.
+        domainAxis: const charts.EndPointsTimeAxisSpec(),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
@@ -99,7 +101,6 @@ class EndPointsAxisTimeSeriesChart extends StatelessWidget {
 
 /// Sample time series data type.
 class TimeSeriesSales {
-
   TimeSeriesSales(this.time, this.sales);
   final DateTime time;
   final int sales;

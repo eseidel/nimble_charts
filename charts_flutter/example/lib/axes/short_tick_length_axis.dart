@@ -29,18 +29,18 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// There are many axis styling options in the SmallTickRenderer allowing you
 /// to customize the font, tick lengths, and offsets.
 class ShortTickLengthAxis extends StatelessWidget {
-
   const ShortTickLengthAxis(this.seriesList, {super.key, this.animate = false});
 
   factory ShortTickLengthAxis.withSampleData() => ShortTickLengthAxis(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory ShortTickLengthAxis.withRandomData() => ShortTickLengthAxis(_createRandomData());
+  factory ShortTickLengthAxis.withRandomData() =>
+      ShortTickLengthAxis(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -68,17 +68,18 @@ class ShortTickLengthAxis extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
+        seriesList,
+        animate: animate,
 
-      /// Customize the primary measure axis using a small tick renderer.
-      /// Note: use String instead of num for ordinal domain axis
-      /// (typically bar charts).
-      primaryMeasureAxis: const charts.NumericAxisSpec(
+        /// Customize the primary measure axis using a small tick renderer.
+        /// Note: use String instead of num for ordinal domain axis
+        /// (typically bar charts).
+        primaryMeasureAxis: const charts.NumericAxisSpec(
           renderSpec: charts.SmallTickRendererSpec(
               // Tick and Label styling here.
-              ),),
-    );
+              ),
+        ),
+      );
 
   /// Create series list with single series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -102,7 +103,6 @@ class ShortTickLengthAxis extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

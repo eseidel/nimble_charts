@@ -23,19 +23,24 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class StackedHorizontalBarChart extends StatelessWidget {
-
-  const StackedHorizontalBarChart(this.seriesList, {super.key, this.animate = false});
+  const StackedHorizontalBarChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a stacked [charts.BarChart] with sample data and no transition.
-  factory StackedHorizontalBarChart.withSampleData() => StackedHorizontalBarChart(
-      _createSampleData(),
-    );
+  factory StackedHorizontalBarChart.withSampleData() =>
+      StackedHorizontalBarChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory StackedHorizontalBarChart.withRandomData() => StackedHorizontalBarChart(_createRandomData());
+  factory StackedHorizontalBarChart.withRandomData() =>
+      StackedHorizontalBarChart(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -88,15 +93,14 @@ class StackedHorizontalBarChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    // For horizontal bar charts, set the [vertical] flag to false.
-    return charts.BarChart(
-      seriesList,
-      animate: animate,
-      barGroupingType: charts.BarGroupingType.stacked,
-      vertical: false,
-    );
-  }
+  Widget build(BuildContext context) =>
+      // For horizontal bar charts, set the [vertical] flag to false.
+      charts.BarChart(
+        seriesList,
+        animate: animate,
+        barGroupingType: charts.BarGroupingType.stacked,
+        vertical: false,
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -146,7 +150,6 @@ class StackedHorizontalBarChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

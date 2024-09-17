@@ -99,7 +99,7 @@ class SegmentsLineChart extends StatelessWidget {
         id: 'Color Change',
         // Light shade for even years, dark shade for odd.
         colorFn: (sales, _) =>
-            sales.year % 2 == 0 ? blue[1] : blue[0],
+            sales.year.isEven ? blue[1] : blue[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -110,7 +110,7 @@ class SegmentsLineChart extends StatelessWidget {
         id: 'Dash Pattern Change',
         // Light shade for even years, dark shade for odd.
         colorFn: (sales, _) =>
-            sales.year % 2 == 0 ? red[1] : red[0],
+            sales.year.isEven ? red[1] : red[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -121,7 +121,7 @@ class SegmentsLineChart extends StatelessWidget {
         id: 'Stroke Width Change',
         // Light shade for even years, dark shade for odd.
         colorFn: (sales, _) =>
-            sales.year % 2 == 0 ? green[1] : green[0],
+            sales.year.isEven ? green[1] : green[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -184,7 +184,7 @@ class SegmentsLineChart extends StatelessWidget {
         id: 'Color Change',
         // Light shade for even years, dark shade for odd.
         colorFn: (sales, _) =>
-            sales.year % 2 == 0 ? blue[1] : blue[0],
+            sales.year.isEven ? blue[1] : blue[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -195,7 +195,7 @@ class SegmentsLineChart extends StatelessWidget {
         id: 'Dash Pattern Change',
         // Light shade for even years, dark shade for odd.
         colorFn: (sales, _) =>
-            sales.year % 2 == 0 ? red[1] : red[0],
+            sales.year.isEven ? red[1] : red[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,
@@ -206,7 +206,7 @@ class SegmentsLineChart extends StatelessWidget {
         id: 'Stroke Width Change',
         // Light shade for even years, dark shade for odd.
         colorFn: (sales, _) =>
-            sales.year % 2 == 0 ? green[1] : green[0],
+            sales.year.isEven ? green[1] : green[0],
         dashPatternFn: (sales, _) => sales.dashPattern,
         strokeWidthPxFn: (sales, _) => sales.strokeWidthPx,
         domainFn: (sales, _) => sales.year,

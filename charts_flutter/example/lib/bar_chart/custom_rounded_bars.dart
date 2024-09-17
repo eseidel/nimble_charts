@@ -24,19 +24,19 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class CustomRoundedBars extends StatelessWidget {
-
   const CustomRoundedBars(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [charts.BarChart] with custom rounded bars.
   factory CustomRoundedBars.withSampleData() => CustomRoundedBars(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory CustomRoundedBars.withRandomData() => CustomRoundedBars(_createRandomData());
+  factory CustomRoundedBars.withRandomData() =>
+      CustomRoundedBars(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -65,15 +65,16 @@ class CustomRoundedBars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      defaultRenderer: charts.BarRendererConfig(
+        seriesList,
+        animate: animate,
+        defaultRenderer: charts.BarRendererConfig(
           // By default, bar renderer will draw rounded bars with a constant
           // radius of 30.
           // To not have any rounded corners, use [NoCornerStrategy]
           // To change the radius of the bars, use [ConstCornerStrategy]
-          cornerStrategy: const charts.ConstCornerStrategy(30),),
-    );
+          cornerStrategy: const charts.ConstCornerStrategy(30),
+        ),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -98,7 +99,6 @@ class CustomRoundedBars extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

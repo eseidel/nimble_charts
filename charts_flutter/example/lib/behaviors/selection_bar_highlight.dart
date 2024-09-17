@@ -20,19 +20,20 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SelectionBarHighlight extends StatelessWidget {
-
-  const SelectionBarHighlight(this.seriesList, {super.key, this.animate = false});
+  const SelectionBarHighlight(this.seriesList,
+      {super.key, this.animate = false});
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory SelectionBarHighlight.withSampleData() => SelectionBarHighlight(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SelectionBarHighlight.withRandomData() => SelectionBarHighlight(_createRandomData());
+  factory SelectionBarHighlight.withRandomData() =>
+      SelectionBarHighlight(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -59,21 +60,20 @@ class SelectionBarHighlight extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    // This is just a simple bar chart with optional property
-    // [defaultInteractions] set to true to include the default
-    // interactions/behaviors when building the chart.
-    // This includes bar highlighting.
-    //
-    // Note: defaultInteractions defaults to true.
-    //
-    // [defaultInteractions] can be set to false to avoid the default
-    // interactions.
-    return charts.BarChart(
-      seriesList,
-      animate: animate,
-    );
-  }
+  Widget build(BuildContext context) =>
+      // This is just a simple bar chart with optional property
+      // [defaultInteractions] set to true to include the default
+      // interactions/behaviors when building the chart.
+      // This includes bar highlighting.
+      //
+      // Note: defaultInteractions defaults to true.
+      //
+      // [defaultInteractions] can be set to false to avoid the default
+      // interactions.
+      charts.BarChart(
+        seriesList,
+        animate: animate,
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -97,7 +97,6 @@ class SelectionBarHighlight extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

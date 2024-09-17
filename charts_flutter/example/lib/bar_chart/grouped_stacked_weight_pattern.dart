@@ -27,18 +27,23 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class GroupedStackedWeightPatternBarChart extends StatelessWidget {
+  const GroupedStackedWeightPatternBarChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  const GroupedStackedWeightPatternBarChart(this.seriesList, {super.key, this.animate = false});
-
-  factory GroupedStackedWeightPatternBarChart.withSampleData() => GroupedStackedWeightPatternBarChart(
-      createSampleData(),
-    );
+  factory GroupedStackedWeightPatternBarChart.withSampleData() =>
+      GroupedStackedWeightPatternBarChart(
+        createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory GroupedStackedWeightPatternBarChart.withRandomData() => GroupedStackedWeightPatternBarChart(_createRandomData());
+  factory GroupedStackedWeightPatternBarChart.withRandomData() =>
+      GroupedStackedWeightPatternBarChart(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -137,18 +142,18 @@ class GroupedStackedWeightPatternBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      // Configure the bar renderer in grouped stacked rendering mode with a
-      // custom weight pattern.
-      //
-      // The first stack of bars in each group is configured to be twice as wide
-      // as the second stack of bars in each group.
-      defaultRenderer: charts.BarRendererConfig(
-        groupingType: charts.BarGroupingType.groupedStacked,
-        weightPattern: [2, 1],
-      ),
-    );
+        seriesList,
+        animate: animate,
+        // Configure the bar renderer in grouped stacked rendering mode with a
+        // custom weight pattern.
+        //
+        // The first stack of bars in each group is configured to be twice as wide
+        // as the second stack of bars in each group.
+        defaultRenderer: charts.BarRendererConfig(
+          groupingType: charts.BarGroupingType.groupedStacked,
+          weightPattern: [2, 1],
+        ),
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> createSampleData() {
@@ -243,7 +248,6 @@ class GroupedStackedWeightPatternBarChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

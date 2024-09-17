@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 /// Timeseries chart with example of updating external state based on selection.
 ///
 /// A SelectionModelConfig can be provided for each of the different
@@ -132,7 +134,7 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
   // Listens to the underlying selection changes, and updates the information
   // relevant to building the primitive legend like information under the
   // chart.
-  _onSelectionChanged(charts.SelectionModel model) {
+  void _onSelectionChanged(charts.SelectionModel model) {
     final selectedDatum = model.selectedDatum;
 
     DateTime? time;

@@ -31,19 +31,24 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class DisjointMeasureAxisLineChart extends StatelessWidget {
-
-  const DisjointMeasureAxisLineChart(this.seriesList, {super.key, this.animate = false});
+  const DisjointMeasureAxisLineChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.LineChart] with sample data and no transition.
-  factory DisjointMeasureAxisLineChart.withSampleData() => DisjointMeasureAxisLineChart(
-      _createSampleData(),
-    );
+  factory DisjointMeasureAxisLineChart.withSampleData() =>
+      DisjointMeasureAxisLineChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory DisjointMeasureAxisLineChart.withRandomData() => DisjointMeasureAxisLineChart(_createRandomData());
+  factory DisjointMeasureAxisLineChart.withRandomData() =>
+      DisjointMeasureAxisLineChart(_createRandomData());
   final List<charts.Series<dynamic, num>> seriesList;
   final bool animate;
 
@@ -91,10 +96,11 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
       // the axis itself gets rendered. This helps us draw the gridlines on the
       // chart.
       charts.Series<LinearClicks, int>(
-          id: 'Fake Series',
-          domainFn: (clickCount, _) => clickCount.year,
-          measureFn: (clickCount, _) => clickCount.clickCount,
-          data: [],),
+        id: 'Fake Series',
+        domainFn: (clickCount, _) => clickCount.year,
+        measureFn: (clickCount, _) => clickCount.clickCount,
+        data: [],
+      ),
       charts.Series<LinearClicks, int>(
         id: 'Desktop',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
@@ -136,7 +142,8 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) => charts.LineChart(seriesList,
+  Widget build(BuildContext context) => charts.LineChart(
+        seriesList,
         animate: animate,
         // Configure a primary measure axis that will render gridlines across
         // the chart. This axis uses fake ticks with no labels to ensure that we
@@ -145,16 +152,17 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         // We do this because disjoint measure axes do not draw any tick
         // elements on the chart.
         primaryMeasureAxis: const charts.NumericAxisSpec(
-            tickProviderSpec: charts.StaticNumericTickProviderSpec(
-          // Create the ticks to be used the domain axis.
-          <charts.TickSpec<num>>[
-            charts.TickSpec(0, label: ''),
-            charts.TickSpec(1, label: ''),
-            charts.TickSpec(2, label: ''),
-            charts.TickSpec(3, label: ''),
-            charts.TickSpec(4, label: ''),
-          ],
-        ),),
+          tickProviderSpec: charts.StaticNumericTickProviderSpec(
+            // Create the ticks to be used the domain axis.
+            <charts.TickSpec<num>>[
+              charts.TickSpec(0, label: ''),
+              charts.TickSpec(1, label: ''),
+              charts.TickSpec(2, label: ''),
+              charts.TickSpec(3, label: ''),
+              charts.TickSpec(4, label: ''),
+            ],
+          ),
+        ),
         // Create one disjoint measure axis per series on the chart.
         //
         // Disjoint measure axes will be used to scale the rendered data,
@@ -165,7 +173,8 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
           'axis 2': const charts.NumericAxisSpec(),
           'axis 3': const charts.NumericAxisSpec(),
           'axis 4': const charts.NumericAxisSpec(),
-        }),);
+        }),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearClicks, int>> _createSampleData() {
@@ -209,10 +218,11 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
       // the axis itself gets rendered. This helps us draw the gridlines on the
       // chart.
       charts.Series<LinearClicks, int>(
-          id: 'Fake Series',
-          domainFn: (clickCount, _) => clickCount.year,
-          measureFn: (clickCount, _) => clickCount.clickCount,
-          data: [],),
+        id: 'Fake Series',
+        domainFn: (clickCount, _) => clickCount.year,
+        measureFn: (clickCount, _) => clickCount.clickCount,
+        data: [],
+      ),
       charts.Series<LinearClicks, int>(
         id: 'Desktop',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
@@ -255,7 +265,6 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearClicks {
-
   LinearClicks(this.year, {this.clickCount, this.clickRate});
   final int year;
   final int? clickCount;

@@ -103,7 +103,7 @@ class _SliderCallbackState extends State<SliderLine> {
   Point<int>? _sliderPosition;
 
   // Handles callbacks when the user drags the slider.
-  _onSliderChange(Point<int> point, domain, String roleId,
+  void _onSliderChange(Point<int> point, domain, String roleId,
       charts.SliderListenerDragState dragState,) {
     // Request a build.
     void rebuild(_) {

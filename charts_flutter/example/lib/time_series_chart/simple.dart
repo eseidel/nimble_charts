@@ -24,19 +24,23 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SimpleTimeSeriesChart extends StatelessWidget {
-
-  const SimpleTimeSeriesChart(this.seriesList, {super.key, this.animate = false});
+  const SimpleTimeSeriesChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
   factory SimpleTimeSeriesChart.withSampleData() => SimpleTimeSeriesChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SimpleTimeSeriesChart.withRandomData() => SimpleTimeSeriesChart(_createRandomData());
+  factory SimpleTimeSeriesChart.withRandomData() =>
+      SimpleTimeSeriesChart(_createRandomData());
   final List<charts.Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
@@ -65,13 +69,13 @@ class SimpleTimeSeriesChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.TimeSeriesChart(
-      seriesList,
-      animate: animate,
-      // Optionally pass in a [DateTimeFactory] used by the chart. The factory
-      // should create the same type of [DateTime] as the data provided. If none
-      // specified, the default creates local date time.
-      dateTimeFactory: const charts.LocalDateTimeFactory(),
-    );
+        seriesList,
+        animate: animate,
+        // Optionally pass in a [DateTimeFactory] used by the chart. The factory
+        // should create the same type of [DateTime] as the data provided. If none
+        // specified, the default creates local date time.
+        dateTimeFactory: const charts.LocalDateTimeFactory(),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
@@ -96,7 +100,6 @@ class SimpleTimeSeriesChart extends StatelessWidget {
 
 /// Sample time series data type.
 class TimeSeriesSales {
-
   TimeSeriesSales(this.time, this.sales);
   final DateTime time;
   final int sales;

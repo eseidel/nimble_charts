@@ -24,19 +24,23 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class HorizontalBarLabelChart extends StatelessWidget {
-
-  const HorizontalBarLabelChart(this.seriesList, {super.key, this.animate = false});
+  const HorizontalBarLabelChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory HorizontalBarLabelChart.withSampleData() => HorizontalBarLabelChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory HorizontalBarLabelChart.withRandomData() => HorizontalBarLabelChart(_createRandomData());
+  factory HorizontalBarLabelChart.withRandomData() =>
+      HorizontalBarLabelChart(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -53,13 +57,13 @@ class HorizontalBarLabelChart extends StatelessWidget {
 
     return [
       charts.Series<OrdinalSales, String>(
-          id: 'Sales',
-          domainFn: (sales, _) => sales.year,
-          measureFn: (sales, _) => sales.sales,
-          data: data,
-          // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (sales, _) =>
-              '${sales.year}: \$${sales.sales}',),
+        id: 'Sales',
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: data,
+        // Set a label accessor to control the text of the bar label.
+        labelAccessorFn: (sales, _) => '${sales.year}: \$${sales.sales}',
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -73,19 +77,19 @@ class HorizontalBarLabelChart extends StatelessWidget {
   // [insideLabelStyleSpec] and [outsideLabelStyleSpec].
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-      vertical: false,
-      // Set a bar label decorator.
-      // Example configuring different styles for inside/outside:
-      //       barRendererDecorator: new charts.BarLabelDecorator(
-      //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
-      //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
-      barRendererDecorator: charts.BarLabelDecorator<String>(),
-      // Hide domain axis.
-      domainAxis:
-          const charts.OrdinalAxisSpec(renderSpec: charts.NoneRenderSpec()),
-    );
+        seriesList,
+        animate: animate,
+        vertical: false,
+        // Set a bar label decorator.
+        // Example configuring different styles for inside/outside:
+        //       barRendererDecorator: new charts.BarLabelDecorator(
+        //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
+        //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
+        barRendererDecorator: charts.BarLabelDecorator<String>(),
+        // Hide domain axis.
+        domainAxis:
+            const charts.OrdinalAxisSpec(renderSpec: charts.NoneRenderSpec()),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -98,20 +102,19 @@ class HorizontalBarLabelChart extends StatelessWidget {
 
     return [
       charts.Series<OrdinalSales, String>(
-          id: 'Sales',
-          domainFn: (sales, _) => sales.year,
-          measureFn: (sales, _) => sales.sales,
-          data: data,
-          // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (sales, _) =>
-              '${sales.year}: \$${sales.sales}',),
+        id: 'Sales',
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: data,
+        // Set a label accessor to control the text of the bar label.
+        labelAccessorFn: (sales, _) => '${sales.year}: \$${sales.sales}',
+      ),
     ];
   }
 }
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;

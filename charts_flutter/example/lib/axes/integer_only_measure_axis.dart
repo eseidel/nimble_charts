@@ -29,19 +29,23 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class IntegerOnlyMeasureAxis extends StatelessWidget {
-
-  const IntegerOnlyMeasureAxis(this.seriesList, {super.key, this.animate = false});
+  const IntegerOnlyMeasureAxis(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
   factory IntegerOnlyMeasureAxis.withSampleData() => IntegerOnlyMeasureAxis(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory IntegerOnlyMeasureAxis.withRandomData() => IntegerOnlyMeasureAxis(_createRandomData());
+  factory IntegerOnlyMeasureAxis.withRandomData() =>
+      IntegerOnlyMeasureAxis(_createRandomData());
   final List<charts.Series<dynamic, DateTime>> seriesList;
   final bool animate;
 
@@ -76,18 +80,20 @@ class IntegerOnlyMeasureAxis extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.TimeSeriesChart(
-      seriesList,
-      animate: animate,
-      // Provides a custom axis ensuring that the ticks are in whole numbers.
-      primaryMeasureAxis: const charts.NumericAxisSpec(
+        seriesList,
+        animate: animate,
+        // Provides a custom axis ensuring that the ticks are in whole numbers.
+        primaryMeasureAxis: const charts.NumericAxisSpec(
           tickProviderSpec: charts.BasicNumericTickProviderSpec(
-              // Make sure we don't have values less than 1 as ticks
-              // (ie: counts).
-              dataIsInWholeNumbers: true,
-              // Fixed tick count to highlight the integer only behavior
-              // generating ticks [0, 1, 2, 3, 4].
-              desiredTickCount: 5,),),
-    );
+            // Make sure we don't have values less than 1 as ticks
+            // (ie: counts).
+            dataIsInWholeNumbers: true,
+            // Fixed tick count to highlight the integer only behavior
+            // generating ticks [0, 1, 2, 3, 4].
+            desiredTickCount: 5,
+          ),
+        ),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<MyRow, DateTime>> _createSampleData() {

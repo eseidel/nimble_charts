@@ -6,9 +6,9 @@ environment:
   flutter: '>=3.0.0 <4.0.0'
 
 dependencies:
+  cupertino_icons: ^1.0.8
   nimble_charts:
     path: ../
-  cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
   flutter_web_plugins:

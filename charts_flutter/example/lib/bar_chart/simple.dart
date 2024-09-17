@@ -24,19 +24,19 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SimpleBarChart extends StatelessWidget {
-
   const SimpleBarChart(this.seriesList, {super.key, this.animate = false});
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory SimpleBarChart.withSampleData() => SimpleBarChart(
-      _createSampleData(),
-    );
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SimpleBarChart.withRandomData() => SimpleBarChart(_createRandomData());
+  factory SimpleBarChart.withRandomData() =>
+      SimpleBarChart(_createRandomData());
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;
 
@@ -65,9 +65,9 @@ class SimpleBarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => charts.BarChart(
-      seriesList,
-      animate: animate,
-    );
+        seriesList,
+        animate: animate,
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
@@ -92,7 +92,6 @@ class SimpleBarChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
-
   OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;
