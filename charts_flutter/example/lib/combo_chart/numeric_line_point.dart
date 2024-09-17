@@ -30,8 +30,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class NumericComboLinePointChart extends StatelessWidget {
-  const NumericComboLinePointChart(this.seriesList,
-      {super.key, this.animate = false});
+  const NumericComboLinePointChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory NumericComboLinePointChart.withSampleData() =>

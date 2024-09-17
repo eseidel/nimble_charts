@@ -37,8 +37,11 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// Note: primary and secondary may flip left and right positioning when
 /// RTL.flipAxisLocations is set.
 class BarChartWithSecondaryAxis extends StatelessWidget {
-  const BarChartWithSecondaryAxis(this.seriesList,
-      {super.key, this.animate = false});
+  const BarChartWithSecondaryAxis(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   factory BarChartWithSecondaryAxis.withSampleData() =>
       BarChartWithSecondaryAxis(

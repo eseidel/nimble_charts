@@ -24,8 +24,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class OrdinalComboBarLineChart extends StatelessWidget {
-  const OrdinalComboBarLineChart(this.seriesList,
-      {super.key, this.animate = false});
+  const OrdinalComboBarLineChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   factory OrdinalComboBarLineChart.withSampleData() => OrdinalComboBarLineChart(
         _createSampleData(),
@@ -101,8 +104,8 @@ class OrdinalComboBarLineChart extends StatelessWidget {
         defaultRenderer: charts.BarRendererConfig(
           groupingType: charts.BarGroupingType.grouped,
         ),
-        // Custom renderer configuration for the line series. This will be used for
-        // any series that does not define a rendererIdKey.
+        // Custom renderer configuration for the line series. This will be used 
+        // for any series that does not define a rendererIdKey.
         customSeriesRenderers: [
           charts.LineRendererConfig(
             // ID used to link series to this renderer.

@@ -147,8 +147,8 @@ class GroupedStackedWeightPatternBarChart extends StatelessWidget {
         // Configure the bar renderer in grouped stacked rendering mode with a
         // custom weight pattern.
         //
-        // The first stack of bars in each group is configured to be twice as wide
-        // as the second stack of bars in each group.
+        // The first stack of bars in each group is configured to be twice as 
+        // wide as the second stack of bars in each group.
         defaultRenderer: charts.BarRendererConfig(
           groupingType: charts.BarGroupingType.groupedStacked,
           weightPattern: [2, 1],

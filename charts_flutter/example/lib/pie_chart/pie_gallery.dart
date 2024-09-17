@@ -49,7 +49,8 @@ List<GalleryScaffold> buildGallery() => [
       //   listTileIcon: new Icon(Icons.pie_chart),
       //   title: 'Auto Label Donut Chart',
       //   subtitle:
-      //       'With a single series, a hole in the middle, and auto-positioned labels',
+      //       'With a single series, a hole in the middle, '
+      //'and auto-positioned labels',
       //   childBuilder: () => new DonutAutoLabelChart.withRandomData(),
       // ),
       // new GalleryScaffold(

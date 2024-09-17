@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 /// Example of the chart behavior that centers the viewport on domain selection.
 library;
 
@@ -24,8 +26,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SlidingViewportOnSelection extends StatelessWidget {
-  const SlidingViewportOnSelection(this.seriesList,
-      {super.key, this.animate = false});
+  const SlidingViewportOnSelection(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory SlidingViewportOnSelection.withSampleData() =>

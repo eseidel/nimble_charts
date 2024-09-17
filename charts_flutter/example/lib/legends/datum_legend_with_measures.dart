@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 /// Bar chart with example of a legend with customized position, justification,
 /// desired max rows, and padding. These options are shown as an example of how
 /// to use the customizations, they do not necessary have to be used together in
@@ -30,8 +32,11 @@ import 'package:nimble_charts/flutter.dart' as charts;
 ///
 /// Also shows the option to provide a custom measure formatter.
 class DatumLegendWithMeasures extends StatelessWidget {
-  const DatumLegendWithMeasures(this.seriesList,
-      {super.key, this.animate = false});
+  const DatumLegendWithMeasures(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   factory DatumLegendWithMeasures.withSampleData() => DatumLegendWithMeasures(
         _createSampleData(),

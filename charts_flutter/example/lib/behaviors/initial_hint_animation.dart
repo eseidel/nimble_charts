@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 /// Example of initial hint animation behavior.
 ///
 /// To see the animation, please run the example app and select
@@ -50,8 +52,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class InitialHintAnimation extends StatelessWidget {
-  const InitialHintAnimation(this.seriesList,
-      {super.key, this.animate = false});
+  const InitialHintAnimation(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory InitialHintAnimation.withSampleData() => InitialHintAnimation(

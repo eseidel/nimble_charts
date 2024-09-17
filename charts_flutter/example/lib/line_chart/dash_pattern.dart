@@ -25,8 +25,11 @@ import 'package:nimble_charts/flutter.dart' as charts;
 
 /// Example of a line chart rendered with dash patterns.
 class DashPatternLineChart extends StatelessWidget {
-  const DashPatternLineChart(this.seriesList,
-      {super.key, this.animate = false});
+  const DashPatternLineChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory DashPatternLineChart.withSampleData() => DashPatternLineChart(

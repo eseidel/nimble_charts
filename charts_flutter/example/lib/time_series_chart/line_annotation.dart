@@ -31,8 +31,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class TimeSeriesLineAnnotationChart extends StatelessWidget {
-  const TimeSeriesLineAnnotationChart(this.seriesList,
-      {super.key, this.animate = false});
+  const TimeSeriesLineAnnotationChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
   factory TimeSeriesLineAnnotationChart.withSampleData() =>

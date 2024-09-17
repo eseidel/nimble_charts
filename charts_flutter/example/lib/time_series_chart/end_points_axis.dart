@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 /// Example of a time series chart with an end points domain axis.
 ///
 /// An end points axis generates two ticks, one at each end of the axis range.
@@ -26,8 +28,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class EndPointsAxisTimeSeriesChart extends StatelessWidget {
-  const EndPointsAxisTimeSeriesChart(this.seriesList,
-      {super.key, this.animate = false});
+  const EndPointsAxisTimeSeriesChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
   factory EndPointsAxisTimeSeriesChart.withSampleData() =>

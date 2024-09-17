@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 /// Example of axis using statically provided ticks.
 library;
 
@@ -36,8 +38,11 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// For datetime axis, the [charts.StaticDateTimeTickProviderSpec] can be used by
 /// passing in a list of ticks defined with [charts.TickSpec] of datetime.
 class StaticallyProvidedTicks extends StatelessWidget {
-  const StaticallyProvidedTicks(this.seriesList,
-      {super.key, this.animate = false});
+  const StaticallyProvidedTicks(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   factory StaticallyProvidedTicks.withSampleData() => StaticallyProvidedTicks(
         _createSampleData(),

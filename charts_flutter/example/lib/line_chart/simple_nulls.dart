@@ -28,8 +28,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SimpleNullsLineChart extends StatelessWidget {
-  const SimpleNullsLineChart(this.seriesList,
-      {super.key, this.animate = false});
+  const SimpleNullsLineChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory SimpleNullsLineChart.withSampleData() => SimpleNullsLineChart(

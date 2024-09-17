@@ -24,8 +24,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class PercentOfSeriesBarChart extends StatelessWidget {
-  const PercentOfSeriesBarChart(this.seriesList,
-      {super.key, this.animate = false});
+  const PercentOfSeriesBarChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a stacked [charts.BarChart] with sample data and no transition.
   factory PercentOfSeriesBarChart.withSampleData() => PercentOfSeriesBarChart(

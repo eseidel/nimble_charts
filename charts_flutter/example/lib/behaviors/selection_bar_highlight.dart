@@ -20,8 +20,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SelectionBarHighlight extends StatelessWidget {
-  const SelectionBarHighlight(this.seriesList,
-      {super.key, this.animate = false});
+  const SelectionBarHighlight(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory SelectionBarHighlight.withSampleData() => SelectionBarHighlight(

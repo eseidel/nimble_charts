@@ -24,8 +24,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SimpleScatterPlotChart extends StatelessWidget {
-  const SimpleScatterPlotChart(this.seriesList,
-      {super.key, this.animate = false});
+  const SimpleScatterPlotChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.ScatterPlotChart] with sample data and no transition.
   factory SimpleScatterPlotChart.withSampleData() => SimpleScatterPlotChart(

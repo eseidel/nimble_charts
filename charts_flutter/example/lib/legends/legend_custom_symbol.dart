@@ -53,8 +53,11 @@ class IconRenderer extends charts.CustomSymbolRenderer {
 }
 
 class LegendWithCustomSymbol extends StatelessWidget {
-  const LegendWithCustomSymbol(this.seriesList,
-      {super.key, this.animate = false});
+  const LegendWithCustomSymbol(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   factory LegendWithCustomSymbol.withSampleData() => LegendWithCustomSymbol(
         _createSampleData(),

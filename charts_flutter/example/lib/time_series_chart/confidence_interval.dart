@@ -27,8 +27,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class TimeSeriesConfidenceInterval extends StatelessWidget {
-  const TimeSeriesConfidenceInterval(this.seriesList,
-      {super.key, this.animate = false});
+  const TimeSeriesConfidenceInterval(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
   factory TimeSeriesConfidenceInterval.withSampleData() =>
@@ -77,8 +80,8 @@ class TimeSeriesConfidenceInterval extends StatelessWidget {
         seriesList,
         animate: animate,
         // Optionally pass in a [DateTimeFactory] used by the chart. The factory
-        // should create the same type of [DateTime] as the data provided. If none
-        // specified, the default creates local date time.
+        // should create the same type of [DateTime] as the data provided. If 
+        // none specified, the default creates local date time.
         dateTimeFactory: const charts.LocalDateTimeFactory(),
       );
 

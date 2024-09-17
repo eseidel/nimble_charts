@@ -38,8 +38,11 @@ class GalleryScaffold extends StatefulWidget {
         leading: listTileIcon,
         title: Text(title),
         subtitle: Text(subtitle),
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => this));
+        onTap: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => this),
+          );
         },
       );
 

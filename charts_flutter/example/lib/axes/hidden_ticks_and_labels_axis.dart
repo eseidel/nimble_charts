@@ -24,8 +24,11 @@ import 'package:nimble_charts/flutter.dart' as charts;
 
 /// Example of hiding both axis.
 class HiddenTicksAndLabelsAxis extends StatelessWidget {
-  const HiddenTicksAndLabelsAxis(this.seriesList,
-      {super.key, this.animate = false});
+  const HiddenTicksAndLabelsAxis(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   factory HiddenTicksAndLabelsAxis.withSampleData() => HiddenTicksAndLabelsAxis(
         _createSampleData(),

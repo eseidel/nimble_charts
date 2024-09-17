@@ -72,8 +72,8 @@ class SimpleTimeSeriesChart extends StatelessWidget {
         seriesList,
         animate: animate,
         // Optionally pass in a [DateTimeFactory] used by the chart. The factory
-        // should create the same type of [DateTime] as the data provided. If none
-        // specified, the default creates local date time.
+        // should create the same type of [DateTime] as the data provided. If 
+        // none specified, the default creates local date time.
         dateTimeFactory: const charts.LocalDateTimeFactory(),
       );
 

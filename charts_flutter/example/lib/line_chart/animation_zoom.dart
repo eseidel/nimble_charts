@@ -25,8 +25,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class LineAnimationZoomChart extends StatelessWidget {
-  const LineAnimationZoomChart(this.seriesList,
-      {super.key, this.animate = false});
+  const LineAnimationZoomChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory LineAnimationZoomChart.withSampleData() => LineAnimationZoomChart(

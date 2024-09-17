@@ -41,8 +41,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SelectionScatterPlotHighlight extends StatelessWidget {
-  const SelectionScatterPlotHighlight(this.seriesList,
-      {super.key, this.animate = false});
+  const SelectionScatterPlotHighlight(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.ScatterPlotChart] with sample data and no transition.
   factory SelectionScatterPlotHighlight.withSampleData() =>

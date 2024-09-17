@@ -70,7 +70,8 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: Icon(Icons.insert_chart),
         title: 'Grouped Bar Single Target Line Chart',
         subtitle:
-            'Grouped bar target line chart with multiple series and a single target',
+            'Grouped bar target line chart with '
+            'multiple series and a single target',
         childBuilder: GroupedBarSingleTargetLineChart.withRandomData,
       ),
       const GalleryScaffold(

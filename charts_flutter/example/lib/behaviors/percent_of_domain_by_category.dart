@@ -27,8 +27,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class PercentOfDomainByCategoryBarChart extends StatelessWidget {
-  const PercentOfDomainByCategoryBarChart(this.seriesList,
-      {super.key, this.animate = false});
+  const PercentOfDomainByCategoryBarChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   factory PercentOfDomainByCategoryBarChart.withSampleData() =>
       PercentOfDomainByCategoryBarChart(

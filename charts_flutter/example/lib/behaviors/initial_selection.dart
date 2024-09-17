@@ -86,7 +86,8 @@ class InitialSelection extends StatelessWidget {
           //
           // [BarChart] by default includes behaviors [SelectNearest] and
           // [DomainHighlighter]. So this behavior shows the initial selection
-          // highlighted and when another datum is tapped, the selection changes.
+          // highlighted and when another datum is tapped, the selection changes
+          // .
           charts.InitialSelection(
             selectedDataConfig: [
               charts.SeriesDatumConfig<String>('Sales', '2016'),

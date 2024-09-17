@@ -25,8 +25,11 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class ScatterPlotComboLineChart extends StatelessWidget {
-  const ScatterPlotComboLineChart(this.seriesList,
-      {super.key, this.animate = false});
+  const ScatterPlotComboLineChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
   /// Creates a [charts.ScatterPlotChart] with sample data and no transition.
   factory ScatterPlotComboLineChart.withSampleData() =>
