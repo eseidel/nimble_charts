@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:example/main.dart';
 import 'package:flutter/material.dart';
 import '../gallery_scaffold.dart';
 import 'custom_rounded_bars.dart';
@@ -41,7 +42,9 @@ List<GalleryScaffold> buildGallery() {
       listTileIcon: new Icon(Icons.insert_chart),
       title: 'Simple Bar Chart',
       subtitle: 'Simple bar chart with a single series',
-      childBuilder: () => new SimpleBarChart.withRandomData(),
+      childBuilder: () => useRandomData
+          ? SimpleBarChart.withRandomData()
+          : SimpleBarChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
