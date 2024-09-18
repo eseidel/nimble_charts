@@ -19,3 +19,5 @@ charts_flutter/test/failures/
 charts_flutter/test/widget_tests/failures/
 
 charts_flutter/test/example_widget_tests/failures/
+
+charts_flutter/test/.DS_Store
