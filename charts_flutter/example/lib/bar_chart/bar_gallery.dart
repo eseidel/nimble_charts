@@ -166,7 +166,7 @@ List<GalleryScaffold> buildGallery() {
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
       title: sparkBarChart,
-      subtitle: 'Spark Bar Charts',
+      subtitle: 'Spark Bar Chart',
       childBuilder: () => m.useRandomData
           ? SparkBar.withRandomData()
           : SparkBar.withSampleData(),
@@ -190,7 +190,7 @@ List<GalleryScaffold> buildGallery() {
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
       title: patternForwardHatchChart,
-      subtitle: 'Pattern Forward Hatch Bar Charts',
+      subtitle: 'Pattern Forward Hatch Bar Chart',
       childBuilder: () => m.useRandomData
           ? PatternForwardHatchBarChart.withRandomData()
           : PatternForwardHatchBarChart.withSampleData(),
@@ -199,7 +199,7 @@ List<GalleryScaffold> buildGallery() {
       listTileIcon: new Transform.rotate(
           angle: 1.5708, child: new Icon(Icons.insert_chart)),
       title: horizontalPatternForwardHatchChart,
-      subtitle: 'Horizontal Pattern Forward Hatch Bar Charts',
+      subtitle: 'Horizontal Pattern Forward Hatch Bar Chart',
       childBuilder: () => m.useRandomData
           ? HorizontalPatternForwardHatchBarChart.withRandomData()
           : HorizontalPatternForwardHatchBarChart.withSampleData(),
