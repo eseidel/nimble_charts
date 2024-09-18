@@ -39,6 +39,8 @@ import 'vertical_bar_label.dart';
 const simpleBarChartTileTitle = 'Simple Bar Chart';
 const stackedBarChartTileTitle = 'Stacked Bar Chart';
 const groupedBarChartTileTitle = 'Grouped Bar Chart';
+const groupedStackedBarChartTileTitle = 'Grouped Stacked Bar Chart';
+const groupedBarTargetLineChartTileTitle = 'Grouped Bar Target Line Chart';
 
 List<GalleryScaffold> buildGallery() {
   return [
@@ -68,15 +70,19 @@ List<GalleryScaffold> buildGallery() {
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
-      title: 'Grouped Stacked Bar Chart',
+      title: groupedStackedBarChartTileTitle,
       subtitle: 'Grouped and stacked bar chart with multiple series',
-      childBuilder: () => new GroupedStackedBarChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? GroupedStackedBarChart.withRandomData()
+          : GroupedStackedBarChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
-      title: 'Grouped Bar Target Line Chart',
+      title: groupedBarTargetLineChartTileTitle,
       subtitle: 'Grouped bar target line chart with multiple series',
-      childBuilder: () => new GroupedBarTargetLineChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? GroupedBarTargetLineChart.withRandomData()
+          : GroupedBarTargetLineChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),

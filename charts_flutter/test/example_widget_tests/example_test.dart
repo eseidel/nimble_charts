@@ -54,6 +54,18 @@ void main() {
       (tester) async =>
           tester.navigateToChartAndGolden(b.groupedBarChartTileTitle),
     );
+
+    testWidgets(
+      'Navigates to Grouped Stacked Bar Chart and Renders',
+      (tester) async =>
+          tester.navigateToChartAndGolden(b.groupedStackedBarChartTileTitle),
+    );
+
+    testWidgets(
+      'Navigates to Grouped Bar Target Line Chart and Renders',
+      (tester) async =>
+          tester.navigateToChartAndGolden(b.groupedBarTargetLineChartTileTitle),
+    );
   });
 }
 
