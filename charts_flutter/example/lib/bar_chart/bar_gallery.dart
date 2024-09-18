@@ -56,7 +56,7 @@ const stackedFillColorChart = 'Stacked Fill Color Bar Chart';
 const patternForwardHatchChart = 'Pattern Forward Hatch Bar Chart';
 const horizontalPatternForwardHatchChart =
     'Horizontal Pattern Forward Hatch Bar Chart';
-const weightedPatternChart = 'Weighted Pattern Bar Chart';
+const weightedPatternChart = 'Weight Pattern Bar Chart';
 const barChartWithCustomBarRadius = 'Bar Chart with custom bar radius';
 
 List<GalleryScaffold> buildGallery() {
