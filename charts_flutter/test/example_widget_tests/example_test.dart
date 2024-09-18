@@ -81,6 +81,7 @@ extension ExampleWidgetTestExtensions on WidgetTester {
   Future<void> navigateToChartAndGolden(
     String buttonText, {
     Future<void> Function()? extra,
+    bool scroll = false,
   }) async {
     final galleryApp = m.GalleryApp();
 
@@ -91,6 +92,9 @@ extension ExampleWidgetTestExtensions on WidgetTester {
       ..devicePixelRatio = 1;
 
     expect(find.byType(h.Home), findsOneWidget);
+    if (scroll) {
+      await scrollUntilVisible(find.text(buttonText), 200);
+    }
     await tap(find.text(buttonText));
     await pumpAndSettle();
     expect(find.byType(charts.BarChart), findsOneWidget);
