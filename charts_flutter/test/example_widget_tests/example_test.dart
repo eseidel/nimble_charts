@@ -73,6 +73,22 @@ void main() {
         b.groupedBarSingleTargetLineChartTileTitle,
       ),
     );
+
+    testWidgets(
+      'Navigates to Stacked Bar Target Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.stackedBarTargetLineChart,
+        scroll: true,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Horizontal Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.horizontalBarChart,
+        scroll: true,
+      ),
+    );
   });
 }
 

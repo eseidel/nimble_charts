@@ -43,6 +43,8 @@ const groupedStackedBarChartTileTitle = 'Grouped Stacked Bar Chart';
 const groupedBarTargetLineChartTileTitle = 'Grouped Bar Target Line Chart';
 const groupedBarSingleTargetLineChartTileTitle =
     'Grouped Bar Single Target Line Chart';
+const stackedBarTargetLineChart = 'Stacked Bar Target Line Chart';
+const horizontalBarChart = 'Horizontal Bar Chart';
 
 List<GalleryScaffold> buildGallery() {
   return [
@@ -97,16 +99,20 @@ List<GalleryScaffold> buildGallery() {
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
-      title: 'Stacked Bar Target Line Chart',
+      title: stackedBarTargetLineChart,
       subtitle: 'Stacked bar target line chart with multiple series',
-      childBuilder: () => new StackedBarTargetLineChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? StackedBarTargetLineChart.withRandomData()
+          : StackedBarTargetLineChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Transform.rotate(
           angle: 1.5708, child: new Icon(Icons.insert_chart)),
-      title: 'Horizontal Bar Chart',
+      title: horizontalBarChart,
       subtitle: 'Horizontal bar chart with a single series',
-      childBuilder: () => new HorizontalBarChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? HorizontalBarChart.withRandomData()
+          : HorizontalBarChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Transform.rotate(
