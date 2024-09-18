@@ -41,7 +41,13 @@ jobs:
             cd $GITHUB_WORKSPACE
           done
 
-      - name: Run Tests
+      - name: Run Common Tests
+        run: |
+          cd charts_common
+          flutter test --coverage
+          cd $GITHUB_WORKSPACE
+
+      - name: Run UI Tests
         run: |
           cd charts_flutter
           flutter test --coverage

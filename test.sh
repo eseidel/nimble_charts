@@ -1,4 +1,8 @@
-cd charts_flutter 
+cd charts_common 
+
+flutter test --update-goldens --coverage
+
+cd ../charts_flutter 
 
 flutter test --update-goldens --coverage
 
