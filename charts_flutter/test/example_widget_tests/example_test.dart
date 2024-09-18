@@ -113,6 +113,70 @@ void main() {
         scrollDelta: 300,
       ),
     );
+
+    testWidgets(
+      'Navigates to Vertical Bar Chart with Bar Labels and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.verticalBarLabelChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Spark Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.sparkBarChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Grouped Fill Color Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.groupedFillColorChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Stacked Fill Color Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.stackedFillColorChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Pattern Forward Hatch Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.patternForwardHatchChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Horizontal Pattern Forward Hatch Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.horizontalPatternForwardHatchChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Weighted Pattern Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.weightedPatternChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Bar Chart with custom bar radius and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.barChartWithCustomBarRadius,
+        scrollDelta: 300,
+      ),
+    );
   });
 }
 
