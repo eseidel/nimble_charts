@@ -105,6 +105,14 @@ void main() {
         scrollDelta: 200,
       ),
     );
+
+    testWidgets(
+      'Navigates to Horizontal Bar Chart with Custom Bar Labels and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.horizontalBarLabelCustomChart,
+        scrollDelta: 300,
+      ),
+    );
   });
 }
 

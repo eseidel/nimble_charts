@@ -47,6 +47,8 @@ const stackedBarTargetLineChart = 'Stacked Bar Target Line Chart';
 const horizontalBarChart = 'Horizontal Bar Chart';
 const stackedHorizontalBarChart = 'Stacked Horizontal Bar Chart';
 const horizontalBarLabelChart = 'Horizontal Bar Chart with Bar Labels';
+const horizontalBarLabelCustomChart =
+    'Horizontal Bar Chart with Custom Bar Labels';
 
 List<GalleryScaffold> buildGallery() {
   return [
@@ -137,9 +139,11 @@ List<GalleryScaffold> buildGallery() {
     new GalleryScaffold(
       listTileIcon: new Transform.rotate(
           angle: 1.5708, child: new Icon(Icons.insert_chart)),
-      title: 'Horizontal Bar Chart with Custom Bar Labels',
+      title: horizontalBarLabelCustomChart,
       subtitle: 'Bar labels with customized styling',
-      childBuilder: () => new HorizontalBarLabelCustomChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? HorizontalBarLabelCustomChart.withRandomData()
+          : HorizontalBarLabelCustomChart.createWithSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Transform.rotate(
