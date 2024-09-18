@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import '../main.dart' as m;
 import 'package:flutter/material.dart';
 import '../gallery_scaffold.dart';
 import 'custom_rounded_bars.dart';
@@ -35,25 +36,35 @@ import 'stacked_target_line.dart';
 import 'spark_bar.dart';
 import 'vertical_bar_label.dart';
 
+const simpleBarChartTileTitle = 'Simple Bar Chart';
+const stackedBarChartTileTitle = 'Stacked Bar Chart';
+const groupedBarChartTileTitle = 'Grouped Bar Chart';
+
 List<GalleryScaffold> buildGallery() {
   return [
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
-      title: 'Simple Bar Chart',
+      title: simpleBarChartTileTitle,
       subtitle: 'Simple bar chart with a single series',
-      childBuilder: () => new SimpleBarChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? SimpleBarChart.withRandomData()
+          : SimpleBarChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
-      title: 'Stacked Bar Chart',
+      title: stackedBarChartTileTitle,
       subtitle: 'Stacked bar chart with multiple series',
-      childBuilder: () => new StackedBarChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? StackedBarChart.withRandomData()
+          : StackedBarChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),
-      title: 'Grouped Bar Chart',
+      title: groupedBarChartTileTitle,
       subtitle: 'Grouped bar chart with multiple series',
-      childBuilder: () => new GroupedBarChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? GroupedBarChart.withRandomData()
+          : GroupedBarChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.insert_chart),

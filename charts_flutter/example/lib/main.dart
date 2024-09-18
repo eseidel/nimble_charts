@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'app_config.dart';
 import 'home.dart';
 
+bool useRandomData = true;
+
 /// The main gallery app widget.
 class GalleryApp extends StatefulWidget {
   GalleryApp({Key? key}) : super(key: key);
