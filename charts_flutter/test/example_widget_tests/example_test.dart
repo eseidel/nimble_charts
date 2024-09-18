@@ -70,7 +70,7 @@ extension ExampleWidgetTestExtensions on WidgetTester {
     viewOf(find.byWidget(galleryApp))
       ..physicalSize = const Size(1200, 700)
       ..devicePixelRatio = 1;
-      
+
     expect(find.byType(h.Home), findsOneWidget);
     await tap(find.text(buttonText));
     await pumpAndSettle();

@@ -166,8 +166,7 @@ void main() {
       );
     });
 
-    testWidgets('Position bottom - end draw area justified',
-        (tester) async {
+    testWidgets('Position bottom - end draw area justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.bottom;
       const outsideJustification = common.OutsideJustification.endDrawArea;
       const drawAreaBounds = Rectangle<int>(25, 0, 125, 50);
@@ -197,8 +196,7 @@ void main() {
       );
     });
 
-    testWidgets('Position start - start draw area justified',
-        (tester) async {
+    testWidgets('Position start - start draw area justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.start;
       const drawAreaBounds = Rectangle<int>(75, 25, 150, 50);
 
@@ -227,8 +225,7 @@ void main() {
       );
     });
 
-    testWidgets('Position end - end draw area justified',
-        (tester) async {
+    testWidgets('Position end - end draw area justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.end;
       const outsideJustification = common.OutsideJustification.endDrawArea;
       const drawAreaBounds = Rectangle<int>(25, 25, 150, 50);
@@ -321,8 +318,7 @@ void main() {
       );
     });
 
-    testWidgets('Position start - start justified',
-        (tester) async {
+    testWidgets('Position start - start justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.start;
       const outsideJustification = common.OutsideJustification.start;
       const drawAreaBounds = Rectangle<int>(75, 25, 150, 50);
@@ -384,8 +380,7 @@ void main() {
       );
     });
 
-    testWidgets('Position inside - top start justified',
-        (tester) async {
+    testWidgets('Position inside - top start justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.inside;
       const drawAreaBounds = Rectangle<int>(25, 25, 175, 75);
 
@@ -413,8 +408,7 @@ void main() {
       );
     });
 
-    testWidgets('Position inside - top end justified',
-        (tester) async {
+    testWidgets('Position inside - top end justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.inside;
       const insideJustification = common.InsideJustification.topEnd;
       const drawAreaBounds = Rectangle<int>(25, 25, 175, 75);
@@ -536,8 +530,7 @@ void main() {
       );
     });
 
-    testWidgets('RTL - Position end - end draw area justified',
-        (tester) async {
+    testWidgets('RTL - Position end - end draw area justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.end;
       const outsideJustification = common.OutsideJustification.endDrawArea;
       const drawAreaBounds = Rectangle<int>(75, 25, 125, 75);
@@ -568,8 +561,7 @@ void main() {
       );
     });
 
-    testWidgets('RTL - Position top - start justified',
-        (tester) async {
+    testWidgets('RTL - Position top - start justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.top;
       const outsideJustification = common.OutsideJustification.start;
       const drawAreaBounds = Rectangle<int>(25, 50, 150, 50);
@@ -600,8 +592,7 @@ void main() {
       );
     });
 
-    testWidgets('RTL - Position top - end justified',
-        (tester) async {
+    testWidgets('RTL - Position top - end justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.top;
       const outsideJustification = common.OutsideJustification.end;
       const drawAreaBounds = Rectangle<int>(25, 50, 150, 50);
@@ -632,8 +623,7 @@ void main() {
       );
     });
 
-    testWidgets('RTL - Position start - start justified',
-        (tester) async {
+    testWidgets('RTL - Position start - start justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.start;
       const outsideJustification = common.OutsideJustification.start;
       const drawAreaBounds = Rectangle<int>(75, 25, 150, 50);
@@ -665,8 +655,7 @@ void main() {
       );
     });
 
-    testWidgets('RTL - Position start - end justified',
-        (tester) async {
+    testWidgets('RTL - Position start - end justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.start;
       const outsideJustification = common.OutsideJustification.end;
       const drawAreaBounds = Rectangle<int>(75, 25, 150, 50);
@@ -698,8 +687,7 @@ void main() {
       );
     });
 
-    testWidgets('RTL - Position inside - top start justified',
-        (tester) async {
+    testWidgets('RTL - Position inside - top start justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.inside;
       const drawAreaBounds = Rectangle<int>(25, 25, 175, 75);
 
@@ -728,8 +716,7 @@ void main() {
       );
     });
 
-    testWidgets('RTL - Position inside - top end justified',
-        (tester) async {
+    testWidgets('RTL - Position inside - top end justified', (tester) async {
       const behaviorPosition = common.BehaviorPosition.inside;
       const insideJustification = common.InsideJustification.topEnd;
       const drawAreaBounds = Rectangle<int>(25, 25, 175, 75);
