@@ -54,6 +54,129 @@ void main() {
       (tester) async =>
           tester.navigateToChartAndGolden(b.groupedBarChartTileTitle),
     );
+
+    testWidgets(
+      'Navigates to Grouped Stacked Bar Chart and Renders',
+      (tester) async =>
+          tester.navigateToChartAndGolden(b.groupedStackedBarChartTileTitle),
+    );
+
+    testWidgets(
+      'Navigates to Grouped Bar Target Line Chart and Renders',
+      (tester) async =>
+          tester.navigateToChartAndGolden(b.groupedBarTargetLineChartTileTitle),
+    );
+
+    testWidgets(
+      'Navigates to Grouped Bar Single Target Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.groupedBarSingleTargetLineChartTileTitle,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Stacked Bar Target Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.stackedBarTargetLineChart,
+        scrollDelta: 200,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Horizontal Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.horizontalBarChart,
+        scrollDelta: 200,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Stacked Horizontal Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.stackedHorizontalBarChart,
+        scrollDelta: 200,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Horizontal Bar Chart with Bar Labels and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.horizontalBarLabelChart,
+        scrollDelta: 200,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Horizontal Bar Chart with Custom Bar Labels and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.horizontalBarLabelCustomChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Vertical Bar Chart with Bar Labels and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.verticalBarLabelChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Spark Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.sparkBarChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Grouped Fill Color Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.groupedFillColorChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Stacked Fill Color Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.stackedFillColorChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Pattern Forward Hatch Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.patternForwardHatchChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Horizontal Pattern Forward Hatch Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.horizontalPatternForwardHatchChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Weighted Pattern Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.weightedPatternChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Bar Chart with custom bar radius and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.barChartWithCustomBarRadius,
+        scrollDelta: 300,
+      ),
+    );
   });
 }
 
@@ -62,6 +185,7 @@ extension ExampleWidgetTestExtensions on WidgetTester {
   Future<void> navigateToChartAndGolden(
     String buttonText, {
     Future<void> Function()? extra,
+    double? scrollDelta,
   }) async {
     final galleryApp = m.GalleryApp();
 
@@ -72,6 +196,9 @@ extension ExampleWidgetTestExtensions on WidgetTester {
       ..devicePixelRatio = 1;
 
     expect(find.byType(h.Home), findsOneWidget);
+    if (scrollDelta != null) {
+      await scrollUntilVisible(find.text(buttonText), scrollDelta);
+    }
     await tap(find.text(buttonText));
     await pumpAndSettle();
     expect(find.byType(charts.BarChart), findsOneWidget);
