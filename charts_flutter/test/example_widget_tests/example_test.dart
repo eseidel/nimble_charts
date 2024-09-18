@@ -66,6 +66,13 @@ void main() {
       (tester) async =>
           tester.navigateToChartAndGolden(b.groupedBarTargetLineChartTileTitle),
     );
+
+    testWidgets(
+      'Navigates to Grouped Bar Single Target Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.groupedBarSingleTargetLineChartTileTitle,
+      ),
+    );
   });
 }
 
