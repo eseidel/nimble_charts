@@ -89,6 +89,22 @@ void main() {
         scroll: true,
       ),
     );
+
+    testWidgets(
+      'Navigates to Stacked Horizontal Bar Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.stackedHorizontalBarChart,
+        scroll: true,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Horizontal Bar Chart with Bar Labels and Renders',
+      (tester) async => tester.navigateToChartAndGolden(
+        b.horizontalBarLabelChart,
+        scroll: true,
+      ),
+    );
   });
 }
 
