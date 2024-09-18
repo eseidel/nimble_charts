@@ -15,6 +15,7 @@
 
 import 'dart:math';
 
+import 'package:mockito/mockito.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/cartesian_renderer.dart';
 import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart';
@@ -22,8 +23,6 @@ import 'package:nimble_charts_common/src/chart/common/datum_details.dart';
 import 'package:nimble_charts_common/src/chart/common/processed_series.dart';
 import 'package:nimble_charts_common/src/chart/common/series_datum.dart';
 import 'package:nimble_charts_common/src/common/symbol_renderer.dart';
-
-import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 /// For testing viewport start / end.
@@ -35,8 +34,8 @@ class FakeCartesianRenderer extends BaseCartesianRenderer {
     Point<double> chartPoint,
     bool byDomain,
     Rectangle<int> boundsOverride, {
-    selectOverlappingPoints = false,
-    selectExactEventLocation = false,
+    bool selectOverlappingPoints = false,
+    bool selectExactEventLocation = false,
   }) =>
       null;
 
@@ -51,10 +50,10 @@ class FakeCartesianRenderer extends BaseCartesianRenderer {
 
   @override
   DatumDetails addPositionToDetailsForSeriesDatum(
-      DatumDetails details, SeriesDatum seriesDatum) {
-    assert(details != null);
-    return details;
-  }
+    DatumDetails details,
+    SeriesDatum seriesDatum,
+  ) =>
+      details;
 }
 
 class MockAxis extends Mock implements Axis {}
@@ -69,7 +68,7 @@ void main() {
   group('find viewport start', () {
     test('several domains are in the viewport', () {
       final data = [0, 1, 2, 3, 4, 5, 6];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(0)).thenReturn(-1);
       when(axis.compareDomainValueToViewport(1)).thenReturn(-1);
@@ -87,7 +86,7 @@ void main() {
     test('extents are all in the viewport, use the first domain', () {
       // Start of viewport is the same as the start of the domain.
       final data = [0, 1, 2, 3];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(any)).thenReturn(0);
 
@@ -98,7 +97,7 @@ void main() {
 
     test('is the first domain', () {
       final data = [0, 1, 2, 3];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(0)).thenReturn(0);
       when(axis.compareDomainValueToViewport(1)).thenReturn(1);
@@ -112,7 +111,7 @@ void main() {
 
     test('is the last domain', () {
       final data = [0, 1, 2, 3];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(0)).thenReturn(-1);
       when(axis.compareDomainValueToViewport(1)).thenReturn(-1);
@@ -126,7 +125,7 @@ void main() {
 
     test('is the middle', () {
       final data = [0, 1, 2, 3, 4, 5, 6];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(0)).thenReturn(-1);
       when(axis.compareDomainValueToViewport(1)).thenReturn(-1);
@@ -143,7 +142,7 @@ void main() {
 
     test('viewport is between data', () {
       final data = [0, 1, 2, 3];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(0)).thenReturn(-1);
       when(axis.compareDomainValueToViewport(1)).thenReturn(-1);
@@ -160,7 +159,7 @@ void main() {
     test('all extents greater than viewport ', () {
       // Return the right most value as start of viewport.
       final data = [0, 1, 2, 3];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(any)).thenReturn(1);
 
@@ -174,7 +173,7 @@ void main() {
     test('all extents less than viewport ', () {
       // Return the left most value as the start of the viewport.
       final data = [0, 1, 2, 3];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(any)).thenReturn(-1);
 
@@ -187,7 +186,7 @@ void main() {
   group('find viewport end', () {
     test('several domains are in the viewport', () {
       final data = [0, 1, 2, 3, 4, 5, 6];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(0)).thenReturn(-1);
       when(axis.compareDomainValueToViewport(1)).thenReturn(-1);
@@ -205,7 +204,7 @@ void main() {
     test('extents are all in the viewport, use the last domain', () {
       // Start of viewport is the same as the end of the domain.
       final data = [0, 1, 2, 3];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(any)).thenReturn(0);
 
@@ -216,7 +215,7 @@ void main() {
 
     test('is the first domain', () {
       final data = [0, 1, 2, 3];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(0)).thenReturn(0);
       when(axis.compareDomainValueToViewport(1)).thenReturn(1);
@@ -230,7 +229,7 @@ void main() {
 
     test('is the last domain', () {
       final data = [0, 1, 2, 3];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(0)).thenReturn(-1);
       when(axis.compareDomainValueToViewport(1)).thenReturn(-1);
@@ -244,7 +243,7 @@ void main() {
 
     test('is the middle', () {
       final data = [0, 1, 2, 3, 4, 5, 6];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(0)).thenReturn(-1);
       when(axis.compareDomainValueToViewport(1)).thenReturn(-1);
@@ -261,7 +260,7 @@ void main() {
 
     test('viewport is between data', () {
       final data = [0, 1, 2, 3];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(0)).thenReturn(-1);
       when(axis.compareDomainValueToViewport(1)).thenReturn(-1);
@@ -278,7 +277,7 @@ void main() {
     test('all extents greater than viewport ', () {
       // Return the right most value as start of viewport.
       final data = [0, 1, 2, 3];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(any)).thenReturn(1);
 
@@ -292,7 +291,7 @@ void main() {
     test('all extents less than viewport ', () {
       // Return the left most value as the start of the viewport.
       final data = [0, 1, 2, 3];
-      final domainFn = (int index) => data[index];
+      int domainFn(int index) => data[index];
       final axis = MockAxis();
       when(axis.compareDomainValueToViewport(any)).thenReturn(-1);
 

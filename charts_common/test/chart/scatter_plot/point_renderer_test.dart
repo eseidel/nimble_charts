@@ -25,14 +25,20 @@ import 'package:test/test.dart';
 
 /// Datum/Row for the chart.
 class MyRow {
+  MyRow(
+    this.campaignString,
+    this.campaign,
+    this.clickCount,
+    this.radius,
+    this.boundsRadius,
+    this.shape,
+  );
   final String campaignString;
   final int campaign;
   final int clickCount;
   final double radius;
   final double boundsRadius;
   final String shape;
-  MyRow(this.campaignString, this.campaign, this.clickCount, this.radius,
-      this.boundsRadius, this.shape);
 }
 
 void main() {
@@ -40,21 +46,22 @@ void main() {
   List<MutableSeries<int>> numericSeriesList;
 
   setUp(() {
-    var myFakeDesktopData = [
+    final myFakeDesktopData = [
       // This datum should get a default bounds line radius value.
-      MyRow('MyCampaign1', 0, 5, 3.0, null, null),
-      MyRow('MyCampaign2', 10, 25, 5.0, 4.0, 'shape 1'),
-      MyRow('MyCampaign3', 12, 75, 4.0, 4.0, 'shape 2'),
+      MyRow('MyCampaign1', 0, 5, 3, null, null),
+      MyRow('MyCampaign2', 10, 25, 5, 4, 'shape 1'),
+      MyRow('MyCampaign3', 12, 75, 4, 4, 'shape 2'),
       // This datum should always get default radius values.
       MyRow('MyCampaign4', 13, 225, null, null, null),
     ];
 
-    final maxMeasure = 300;
+    const maxMeasure = 300;
 
     numericSeriesList = [
-      MutableSeries<int>(Series<MyRow, int>(
+      MutableSeries<int>(
+        Series<MyRow, int>(
           id: 'Desktop',
-          colorFn: (MyRow row, _) {
+          colorFn: (row, _) {
             // Color bucket the measure column value into 3 distinct colors.
             final bucket = row.clickCount / maxMeasure;
 
@@ -66,14 +73,18 @@ void main() {
               return MaterialPalette.green.shadeDefault;
             }
           },
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          radiusPxFn: (MyRow row, _) => row.radius,
-          data: myFakeDesktopData)
-        // Define a bounds line radius function.
-        ..setAttribute(boundsLineRadiusPxFnKey,
-            (int index) => myFakeDesktopData[index].boundsRadius))
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          radiusPxFn: (row, _) => row.radius,
+          data: myFakeDesktopData,
+        )
+          // Define a bounds line radius function.
+          ..setAttribute(
+            boundsLineRadiusPxFnKey,
+            (index) => myFakeDesktopData[index].boundsRadius,
+          ),
+      ),
     ];
   });
 
@@ -86,11 +97,11 @@ void main() {
       expect(numericSeriesList.length, equals(1));
 
       // Validate Desktop series.
-      var series = numericSeriesList[0];
+      final series = numericSeriesList[0];
 
-      var keyFn = series.keyFn;
+      final keyFn = series.keyFn;
 
-      var elementsList = series.getAttr(pointElementsKey);
+      final elementsList = series.getAttr(pointElementsKey);
       expect(elementsList.length, equals(4));
 
       expect(elementsList[0].index, equals(0));
@@ -121,7 +132,8 @@ void main() {
 
     test('with numeric data and missing radiusPxFn', () {
       renderer = PointRenderer<int>(
-          config: PointRendererConfig(radiusPx: 2.0, boundsLineRadiusPx: 1.5));
+        config: PointRendererConfig(radiusPx: 2, boundsLineRadiusPx: 1.5),
+      );
 
       // Remove the radius functions to test configured defaults.
       numericSeriesList[0].radiusPxFn = null;
@@ -132,9 +144,9 @@ void main() {
       expect(numericSeriesList.length, equals(1));
 
       // Validate Desktop series.
-      var series = numericSeriesList[0];
+      final series = numericSeriesList[0];
 
-      var elementsList = series.getAttr(pointElementsKey);
+      final elementsList = series.getAttr(pointElementsKey);
       expect(elementsList.length, equals(4));
 
       expect(elementsList[0].radiusPx, equals(2.0));
@@ -151,17 +163,19 @@ void main() {
     test('with custom symbol renderer ID in data', () {
       renderer = PointRenderer<int>(config: PointRendererConfig());
 
-      numericSeriesList[0].setAttr(pointSymbolRendererFnKey,
-          (int index) => numericSeriesList[0].data[index].shape as String);
+      numericSeriesList[0].setAttr(
+        pointSymbolRendererFnKey,
+        (index) => numericSeriesList[0].data[index].shape as String,
+      );
 
       renderer.preprocessSeries(numericSeriesList);
 
       expect(numericSeriesList.length, equals(1));
 
       // Validate Desktop series.
-      var series = numericSeriesList[0];
+      final series = numericSeriesList[0];
 
-      var elementsList = series.getAttr(pointElementsKey);
+      final elementsList = series.getAttr(pointElementsKey);
       expect(elementsList.length, equals(4));
 
       expect(elementsList[0].symbolRendererId, equals(defaultSymbolRendererId));
@@ -173,8 +187,10 @@ void main() {
     test('with custom symbol renderer ID in series and data', () {
       renderer = PointRenderer<int>(config: PointRendererConfig());
 
-      numericSeriesList[0].setAttr(pointSymbolRendererFnKey,
-          (int index) => numericSeriesList[0].data[index].shape as String);
+      numericSeriesList[0].setAttr(
+        pointSymbolRendererFnKey,
+        (index) => numericSeriesList[0].data[index].shape as String,
+      );
       numericSeriesList[0].setAttr(pointSymbolRendererIdKey, 'shape 0');
 
       renderer.preprocessSeries(numericSeriesList);
@@ -182,9 +198,9 @@ void main() {
       expect(numericSeriesList.length, equals(1));
 
       // Validate Desktop series.
-      var series = numericSeriesList[0];
+      final series = numericSeriesList[0];
 
-      var elementsList = series.getAttr(pointElementsKey);
+      final elementsList = series.getAttr(pointElementsKey);
       expect(elementsList.length, equals(4));
 
       expect(elementsList[0].symbolRendererId, equals('shape 0'));

@@ -21,16 +21,17 @@ import 'package:test/test.dart';
 
 /// Datum/Row for the chart.
 class MyRow {
+  MyRow(this.campaign, this.clickCount);
   final int campaign;
   final int clickCount;
-  MyRow(this.campaign, this.clickCount);
 }
 
 class TestComparisonPointsDecorator<D> extends ComparisonPointsDecorator<D> {
   List<Point<double>> testComputeBoundedPointsForElement(
-      PointRendererElement<D> pointElement, Rectangle drawBounds) {
-    return computeBoundedPointsForElement(pointElement, drawBounds);
-  }
+    PointRendererElement<D> pointElement,
+    Rectangle drawBounds,
+  ) =>
+      computeBoundedPointsForElement(pointElement, drawBounds);
 }
 
 void main() {
@@ -39,19 +40,20 @@ void main() {
 
   setUp(() {
     decorator = TestComparisonPointsDecorator<num>();
-    bounds = Rectangle<int>(0, 0, 100, 100);
+    bounds = const Rectangle<int>(0, 0, 100, 100);
   });
 
   group('compute bounded points', () {
     test('with line inside bounds', () {
       final element = PointRendererElement<num>(
         point: DatumPoint<num>(
-            x: 10.0,
-            xLower: 5.0,
-            xUpper: 50.0,
-            y: 20.0,
-            yLower: 20.0,
-            yUpper: 20.0),
+          x: 10,
+          xLower: 5,
+          xUpper: 50,
+          y: 20,
+          yLower: 20,
+          yUpper: 20,
+        ),
         radiusPx: 0,
         boundsLineRadiusPx: 0,
         strokeWidthPx: 0,
@@ -72,12 +74,13 @@ void main() {
     test('with line entirely above bounds', () {
       final element = PointRendererElement<num>(
         point: DatumPoint<num>(
-            x: 10.0,
-            xLower: 5.0,
-            xUpper: 50.0,
-            y: -20.0,
-            yLower: -20.0,
-            yUpper: -20.0),
+          x: 10,
+          xLower: 5,
+          xUpper: 50,
+          y: -20,
+          yLower: -20,
+          yUpper: -20,
+        ),
         radiusPx: 0,
         boundsLineRadiusPx: 0,
         strokeWidthPx: 0,
@@ -92,12 +95,13 @@ void main() {
     test('with line entirely below bounds', () {
       final element = PointRendererElement<num>(
         point: DatumPoint<num>(
-            x: 10.0,
-            xLower: 5.0,
-            xUpper: 50.0,
-            y: 120.0,
-            yLower: 120.0,
-            yUpper: 120.0),
+          x: 10,
+          xLower: 5,
+          xUpper: 50,
+          y: 120,
+          yLower: 120,
+          yUpper: 120,
+        ),
         radiusPx: 0,
         boundsLineRadiusPx: 0,
         strokeWidthPx: 0,
@@ -112,12 +116,13 @@ void main() {
     test('with line entirely left of bounds', () {
       final element = PointRendererElement<num>(
         point: DatumPoint<num>(
-            x: -10.0,
-            xLower: -5.0,
-            xUpper: -50.0,
-            y: 20.0,
-            yLower: 20.0,
-            yUpper: 50.0),
+          x: -10,
+          xLower: -5,
+          xUpper: -50,
+          y: 20,
+          yLower: 20,
+          yUpper: 50,
+        ),
         radiusPx: 0,
         boundsLineRadiusPx: 0,
         strokeWidthPx: 0,
@@ -132,12 +137,13 @@ void main() {
     test('with line entirely right of bounds', () {
       final element = PointRendererElement<num>(
         point: DatumPoint<num>(
-            x: 110.0,
-            xLower: 105.0,
-            xUpper: 150.0,
-            y: 20.0,
-            yLower: 20.0,
-            yUpper: 50.0),
+          x: 110,
+          xLower: 105,
+          xUpper: 150,
+          y: 20,
+          yLower: 20,
+          yUpper: 50,
+        ),
         radiusPx: 0,
         boundsLineRadiusPx: 0,
         strokeWidthPx: 0,
@@ -152,12 +158,13 @@ void main() {
     test('with horizontal line extending beyond bounds', () {
       final element = PointRendererElement<num>(
         point: DatumPoint<num>(
-            x: 10.0,
-            xLower: -10.0,
-            xUpper: 110.0,
-            y: 20.0,
-            yLower: 20.0,
-            yUpper: 20.0),
+          x: 10,
+          xLower: -10,
+          xUpper: 110,
+          y: 20,
+          yLower: 20,
+          yUpper: 20,
+        ),
         radiusPx: 0,
         boundsLineRadiusPx: 0,
         strokeWidthPx: 0,
@@ -178,12 +185,13 @@ void main() {
     test('with vertical line extending beyond bounds', () {
       final element = PointRendererElement<num>(
         point: DatumPoint<num>(
-            x: 20.0,
-            xLower: 20.0,
-            xUpper: 20.0,
-            y: 10.0,
-            yLower: -10.0,
-            yUpper: 110.0),
+          x: 20,
+          xLower: 20,
+          xUpper: 20,
+          y: 10,
+          yLower: -10,
+          yUpper: 110,
+        ),
         radiusPx: 0,
         boundsLineRadiusPx: 0,
         strokeWidthPx: 0,
@@ -204,12 +212,13 @@ void main() {
     test('with diagonal from top left to bottom right', () {
       final element = PointRendererElement<num>(
         point: DatumPoint<num>(
-            x: 50.0,
-            xLower: -50.0,
-            xUpper: 150.0,
-            y: 50.0,
-            yLower: -50.0,
-            yUpper: 150.0),
+          x: 50,
+          xLower: -50,
+          xUpper: 150,
+          y: 50,
+          yLower: -50,
+          yUpper: 150,
+        ),
         radiusPx: 0,
         boundsLineRadiusPx: 0,
         strokeWidthPx: 0,
@@ -230,12 +239,13 @@ void main() {
     test('with diagonal from bottom left to top right', () {
       final element = PointRendererElement<num>(
         point: DatumPoint<num>(
-            x: 50.0,
-            xLower: -50.0,
-            xUpper: 150.0,
-            y: 50.0,
-            yLower: 150.0,
-            yUpper: -50.0),
+          x: 50,
+          xLower: -50,
+          xUpper: 150,
+          y: 50,
+          yLower: 150,
+          yUpper: -50,
+        ),
         radiusPx: 0,
         boundsLineRadiusPx: 0,
         strokeWidthPx: 0,

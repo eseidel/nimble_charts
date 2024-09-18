@@ -14,13 +14,14 @@
 // limitations under the License.
 
 import 'dart:math' show Rectangle;
+
+import 'package:mockito/mockito.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart';
+import 'package:nimble_charts_common/src/chart/common/behavior/a11y/domain_a11y_explore_behavior.dart';
 import 'package:nimble_charts_common/src/chart/common/chart_context.dart';
 import 'package:nimble_charts_common/src/chart/common/processed_series.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart';
-import 'package:nimble_charts_common/src/chart/common/behavior/a11y/domain_a11y_explore_behavior.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart';
 import 'package:nimble_charts_common/src/data/series.dart';
-import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 class MockContext extends Mock implements ChartContext {}
@@ -44,26 +45,29 @@ void main() {
   DomainA11yExploreBehavior<String> behavior;
   MockAxis domainAxis;
 
-  MutableSeries<String> _series1;
-  final _s1D1 = MyRow('s1d1', 11, 'a11yd1');
-  final _s1D2 = MyRow('s1d2', 12, 'a11yd2');
-  final _s1D3 = MyRow('s1d3', 13, 'a11yd3');
+  MutableSeries<String> series1;
+  final s1D1 = MyRow('s1d1', 11, 'a11yd1');
+  final s1D2 = MyRow('s1d2', 12, 'a11yd2');
+  final s1D3 = MyRow('s1d3', 13, 'a11yd3');
 
   setUp(() {
-    chart = FakeCartesianChart()..drawAreaBounds = Rectangle(50, 20, 150, 80);
+    chart = FakeCartesianChart()
+      ..drawAreaBounds = const Rectangle(50, 20, 150, 80);
 
     behavior = DomainA11yExploreBehavior<String>(
-        vocalizationCallback: domainVocalization);
+      vocalizationCallback: domainVocalization,
+    );
     behavior.attachTo(chart);
 
     domainAxis = MockAxis();
-    _series1 = MutableSeries(Series<MyRow, String>(
-      id: 's1',
-      data: [_s1D1, _s1D2, _s1D3],
-      domainFn: (MyRow row, _) => row.campaign,
-      measureFn: (MyRow row, _) => row.count,
-    ))
-      ..setAttr(domainAxisKey, domainAxis);
+    series1 = MutableSeries(
+      Series<MyRow, String>(
+        id: 's1',
+        data: [s1D1, s1D2, s1D3],
+        domainFn: (row, _) => row.campaign,
+        measureFn: (row, _) => row.count,
+      ),
+    )..setAttr(domainAxisKey, domainAxis);
   });
 
   test('creates nodes for vertically drawn charts', () {
@@ -75,22 +79,22 @@ void main() {
     // Drawn vertically
     chart.vertical = true;
     // Set step size of 50, which should be the width of the bounding box
-    when(domainAxis.stepSize).thenReturn(50.0);
-    when(domainAxis.getLocation('s1d1')).thenReturn(75.0);
-    when(domainAxis.getLocation('s1d2')).thenReturn(125.0);
-    when(domainAxis.getLocation('s1d3')).thenReturn(175.0);
+    when(domainAxis.stepSize).thenReturn(50);
+    when(domainAxis.getLocation('s1d1')).thenReturn(75);
+    when(domainAxis.getLocation('s1d2')).thenReturn(125);
+    when(domainAxis.getLocation('s1d3')).thenReturn(175);
     // Call fire on post process for the behavior to get the series list.
-    chart.callFireOnPostprocess([_series1]);
+    chart.callFireOnPostprocess([series1]);
 
     final nodes = behavior.createA11yNodes();
 
     expect(nodes, hasLength(3));
     expect(nodes[0].label, equals('s1d1'));
-    expect(nodes[0].boundingBox, equals(Rectangle(50, 20, 50, 80)));
+    expect(nodes[0].boundingBox, equals(const Rectangle(50, 20, 50, 80)));
     expect(nodes[1].label, equals('s1d2'));
-    expect(nodes[1].boundingBox, equals(Rectangle(100, 20, 50, 80)));
+    expect(nodes[1].boundingBox, equals(const Rectangle(100, 20, 50, 80)));
     expect(nodes[2].label, equals('s1d3'));
-    expect(nodes[2].boundingBox, equals(Rectangle(150, 20, 50, 80)));
+    expect(nodes[2].boundingBox, equals(const Rectangle(150, 20, 50, 80)));
   });
 
   test('creates nodes for vertically drawn RTL charts', () {
@@ -102,22 +106,22 @@ void main() {
     // Drawn vertically
     chart.vertical = true;
     // Set step size of 50, which should be the width of the bounding box
-    when(domainAxis.stepSize).thenReturn(50.0);
-    when(domainAxis.getLocation('s1d1')).thenReturn(175.0);
-    when(domainAxis.getLocation('s1d2')).thenReturn(125.0);
-    when(domainAxis.getLocation('s1d3')).thenReturn(75.0);
+    when(domainAxis.stepSize).thenReturn(50);
+    when(domainAxis.getLocation('s1d1')).thenReturn(175);
+    when(domainAxis.getLocation('s1d2')).thenReturn(125);
+    when(domainAxis.getLocation('s1d3')).thenReturn(75);
     // Call fire on post process for the behavior to get the series list.
-    chart.callFireOnPostprocess([_series1]);
+    chart.callFireOnPostprocess([series1]);
 
     final nodes = behavior.createA11yNodes();
 
     expect(nodes, hasLength(3));
     expect(nodes[0].label, equals('s1d1'));
-    expect(nodes[0].boundingBox, equals(Rectangle(150, 20, 50, 80)));
+    expect(nodes[0].boundingBox, equals(const Rectangle(150, 20, 50, 80)));
     expect(nodes[1].label, equals('s1d2'));
-    expect(nodes[1].boundingBox, equals(Rectangle(100, 20, 50, 80)));
+    expect(nodes[1].boundingBox, equals(const Rectangle(100, 20, 50, 80)));
     expect(nodes[2].label, equals('s1d3'));
-    expect(nodes[2].boundingBox, equals(Rectangle(50, 20, 50, 80)));
+    expect(nodes[2].boundingBox, equals(const Rectangle(50, 20, 50, 80)));
   });
 
   test('creates nodes for horizontally drawn charts', () {
@@ -129,22 +133,22 @@ void main() {
     // Drawn horizontally
     chart.vertical = false;
     // Set step size of 20, which should be the height of the bounding box
-    when(domainAxis.stepSize).thenReturn(20.0);
-    when(domainAxis.getLocation('s1d1')).thenReturn(30.0);
-    when(domainAxis.getLocation('s1d2')).thenReturn(50.0);
-    when(domainAxis.getLocation('s1d3')).thenReturn(70.0);
+    when(domainAxis.stepSize).thenReturn(20);
+    when(domainAxis.getLocation('s1d1')).thenReturn(30);
+    when(domainAxis.getLocation('s1d2')).thenReturn(50);
+    when(domainAxis.getLocation('s1d3')).thenReturn(70);
     // Call fire on post process for the behavior to get the series list.
-    chart.callFireOnPostprocess([_series1]);
+    chart.callFireOnPostprocess([series1]);
 
     final nodes = behavior.createA11yNodes();
 
     expect(nodes, hasLength(3));
     expect(nodes[0].label, equals('s1d1'));
-    expect(nodes[0].boundingBox, equals(Rectangle(50, 20, 150, 20)));
+    expect(nodes[0].boundingBox, equals(const Rectangle(50, 20, 150, 20)));
     expect(nodes[1].label, equals('s1d2'));
-    expect(nodes[1].boundingBox, equals(Rectangle(50, 40, 150, 20)));
+    expect(nodes[1].boundingBox, equals(const Rectangle(50, 40, 150, 20)));
     expect(nodes[2].label, equals('s1d3'));
-    expect(nodes[2].boundingBox, equals(Rectangle(50, 60, 150, 20)));
+    expect(nodes[2].boundingBox, equals(const Rectangle(50, 60, 150, 20)));
   });
 
   test('creates nodes for horizontally drawn RTL charts', () {
@@ -156,22 +160,22 @@ void main() {
     // Drawn horizontally
     chart.vertical = false;
     // Set step size of 20, which should be the height of the bounding box
-    when(domainAxis.stepSize).thenReturn(20.0);
-    when(domainAxis.getLocation('s1d1')).thenReturn(30.0);
-    when(domainAxis.getLocation('s1d2')).thenReturn(50.0);
-    when(domainAxis.getLocation('s1d3')).thenReturn(70.0);
+    when(domainAxis.stepSize).thenReturn(20);
+    when(domainAxis.getLocation('s1d1')).thenReturn(30);
+    when(domainAxis.getLocation('s1d2')).thenReturn(50);
+    when(domainAxis.getLocation('s1d3')).thenReturn(70);
     // Call fire on post process for the behavior to get the series list.
-    chart.callFireOnPostprocess([_series1]);
+    chart.callFireOnPostprocess([series1]);
 
     final nodes = behavior.createA11yNodes();
 
     expect(nodes, hasLength(3));
     expect(nodes[0].label, equals('s1d1'));
-    expect(nodes[0].boundingBox, equals(Rectangle(50, 20, 150, 20)));
+    expect(nodes[0].boundingBox, equals(const Rectangle(50, 20, 150, 20)));
     expect(nodes[1].label, equals('s1d2'));
-    expect(nodes[1].boundingBox, equals(Rectangle(50, 40, 150, 20)));
+    expect(nodes[1].boundingBox, equals(const Rectangle(50, 40, 150, 20)));
     expect(nodes[2].label, equals('s1d3'));
-    expect(nodes[2].boundingBox, equals(Rectangle(50, 60, 150, 20)));
+    expect(nodes[2].boundingBox, equals(const Rectangle(50, 60, 150, 20)));
   });
 
   test('nodes ordered correctly with a series missing a domain', () {
@@ -183,37 +187,38 @@ void main() {
     // Drawn vertically
     chart.vertical = true;
     // Set step size of 50, which should be the width of the bounding box
-    when(domainAxis.stepSize).thenReturn(50.0);
-    when(domainAxis.getLocation('s1d1')).thenReturn(75.0);
-    when(domainAxis.getLocation('s1d2')).thenReturn(125.0);
-    when(domainAxis.getLocation('s1d3')).thenReturn(175.0);
+    when(domainAxis.stepSize).thenReturn(50);
+    when(domainAxis.getLocation('s1d1')).thenReturn(75);
+    when(domainAxis.getLocation('s1d2')).thenReturn(125);
+    when(domainAxis.getLocation('s1d3')).thenReturn(175);
     // Create a series with a missing domain
-    final seriesWithMissingDomain = MutableSeries(Series<MyRow, String>(
-      id: 'm1',
-      data: [_s1D1, _s1D3],
-      domainFn: (MyRow row, _) => row.campaign,
-      measureFn: (MyRow row, _) => row.count,
-    ))
-      ..setAttr(domainAxisKey, domainAxis);
+    final seriesWithMissingDomain = MutableSeries(
+      Series<MyRow, String>(
+        id: 'm1',
+        data: [s1D1, s1D3],
+        domainFn: (row, _) => row.campaign,
+        measureFn: (row, _) => row.count,
+      ),
+    )..setAttr(domainAxisKey, domainAxis);
 
     // Call fire on post process for the behavior to get the series list.
-    chart.callFireOnPostprocess([seriesWithMissingDomain, _series1]);
+    chart.callFireOnPostprocess([seriesWithMissingDomain, series1]);
 
     final nodes = behavior.createA11yNodes();
 
     expect(nodes, hasLength(3));
     expect(nodes[0].label, equals('s1d1'));
-    expect(nodes[0].boundingBox, equals(Rectangle(50, 20, 50, 80)));
+    expect(nodes[0].boundingBox, equals(const Rectangle(50, 20, 50, 80)));
     expect(nodes[1].label, equals('s1d2'));
-    expect(nodes[1].boundingBox, equals(Rectangle(100, 20, 50, 80)));
+    expect(nodes[1].boundingBox, equals(const Rectangle(100, 20, 50, 80)));
     expect(nodes[2].label, equals('s1d3'));
-    expect(nodes[2].boundingBox, equals(Rectangle(150, 20, 50, 80)));
+    expect(nodes[2].boundingBox, equals(const Rectangle(150, 20, 50, 80)));
   });
 
   test('creates nodes with minimum width', () {
     // A behavior with minimum width of 50
     final behaviorWithMinWidth =
-        DomainA11yExploreBehavior<String>(minimumWidth: 50.0);
+        DomainA11yExploreBehavior<String>(minimumWidth: 50);
     behaviorWithMinWidth.attachTo(chart);
 
     // A LTR chart
@@ -225,28 +230,28 @@ void main() {
     chart.vertical = true;
     // Return a step size of 20, which is less than the minimum width.
     // Expect the results to use the minimum width of 50 instead.
-    when(domainAxis.stepSize).thenReturn(20.0);
-    when(domainAxis.getLocation('s1d1')).thenReturn(75.0);
-    when(domainAxis.getLocation('s1d2')).thenReturn(125.0);
-    when(domainAxis.getLocation('s1d3')).thenReturn(175.0);
+    when(domainAxis.stepSize).thenReturn(20);
+    when(domainAxis.getLocation('s1d1')).thenReturn(75);
+    when(domainAxis.getLocation('s1d2')).thenReturn(125);
+    when(domainAxis.getLocation('s1d3')).thenReturn(175);
     // Call fire on post process for the behavior to get the series list.
-    chart.callFireOnPostprocess([_series1]);
+    chart.callFireOnPostprocess([series1]);
 
     final nodes = behaviorWithMinWidth.createA11yNodes();
 
     expect(nodes, hasLength(3));
     expect(nodes[0].label, equals('s1d1'));
-    expect(nodes[0].boundingBox, equals(Rectangle(50, 20, 50, 80)));
+    expect(nodes[0].boundingBox, equals(const Rectangle(50, 20, 50, 80)));
     expect(nodes[1].label, equals('s1d2'));
-    expect(nodes[1].boundingBox, equals(Rectangle(100, 20, 50, 80)));
+    expect(nodes[1].boundingBox, equals(const Rectangle(100, 20, 50, 80)));
     expect(nodes[2].label, equals('s1d3'));
-    expect(nodes[2].boundingBox, equals(Rectangle(150, 20, 50, 80)));
+    expect(nodes[2].boundingBox, equals(const Rectangle(150, 20, 50, 80)));
   });
 }
 
 class MyRow {
+  MyRow(this.campaign, this.count, this.a11yDescription);
   final String campaign;
   final int count;
   final String a11yDescription;
-  MyRow(this.campaign, this.count, this.a11yDescription);
 }

@@ -13,22 +13,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/src/chart/cartesian/axis/time/simple_time_tick_formatter.dart';
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/time/simple_time_tick_formatter.dart';
 import 'package:test/test.dart';
 
 void main() {
-  const String tickLabel = '-tick-';
-  final DateTime testDate1 = DateTime.utc(1984, 11, 11);
-  final DateTime testDate2 = DateTime.utc(1984, 11, 12);
+  const tickLabel = '-tick-';
+  final testDate1 = DateTime.utc(1984, 11, 11);
+  final testDate2 = DateTime.utc(1984, 11, 12);
 
   SimpleTimeTickFormatter simpleTimeFormatter;
   SimpleTimeTickFormatter simpleTimeFormatterWithDateFormat;
   DateFormat dateFormat;
 
-  String testFormatter(DateTime dateTime) {
-    return tickLabel;
-  }
+  String testFormatter(DateTime dateTime) => tickLabel;
 
   setUp(() {
     dateFormat = DateFormat.yMMMd();
@@ -55,7 +53,7 @@ void main() {
     });
 
     test('formatter with DateFormat formatting function', () {
-      final expectedLabel = 'Nov 11, 1984';
+      const expectedLabel = 'Nov 11, 1984';
 
       final actualLabelFirstTick =
           simpleTimeFormatterWithDateFormat.formatFirstTick(testDate1);

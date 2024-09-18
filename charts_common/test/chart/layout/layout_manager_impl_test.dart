@@ -20,7 +20,7 @@ import 'package:test/test.dart';
 
 void main() {
   test('default layout', () {
-    var layout = LayoutManagerImpl();
+    final layout = LayoutManagerImpl();
     layout.measure(400, 300);
 
     expect(layout.marginTop, equals(0));
@@ -30,7 +30,7 @@ void main() {
   });
 
   test('all fixed margin', () {
-    var layout = LayoutManagerImpl(
+    final layout = LayoutManagerImpl(
       config: LayoutConfig(
         topSpec: MarginSpec.fixedPixel(12),
         rightSpec: MarginSpec.fixedPixel(11),

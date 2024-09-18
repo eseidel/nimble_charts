@@ -404,16 +404,16 @@ void main() {
           data,
         ),
       ];
-      final insideColor = const Color(r: 0, g: 0, b: 0);
-      final outsideColor = const Color(r: 255, g: 255, b: 255);
+      const insideColor = Color(r: 0, g: 0, b: 0);
+      const outsideColor = Color(r: 255, g: 255, b: 255);
       final decorator = BarLabelDecorator<String>(
         labelPadding: 0,
-        insideLabelStyleSpec: TextStyleSpec(
+        insideLabelStyleSpec: const TextStyleSpec(
           fontSize: 10,
           fontFamily: 'insideFont',
           color: insideColor,
         ),
-        outsideLabelStyleSpec: TextStyleSpec(
+        outsideLabelStyleSpec: const TextStyleSpec(
           fontSize: 8,
           fontFamily: 'outsideFont',
           color: outsideColor,
@@ -461,7 +461,11 @@ void main() {
       test('Skip label if label accessor does not exist', () {
         final barElements = [
           FakeBarRendererElement(
-              'A', const Rectangle(0, 0, 10, 20), null, ['A']),
+            'A',
+            const Rectangle(0, 0, 10, 20),
+            null,
+            ['A'],
+          ),
         ];
 
         BarLabelDecorator<String>().decorate(
@@ -480,7 +484,11 @@ void main() {
         final data = ['A', 'B'];
         final barElements = [
           FakeBarRendererElement(
-              'A', const Rectangle(0, 0, 10, 20), null, data),
+            'A',
+            const Rectangle(0, 0, 10, 20),
+            null,
+            data,
+          ),
           FakeBarRendererElement(
             'B',
             const Rectangle(0, 50, 10, 20),
@@ -730,7 +738,7 @@ void main() {
         ),
       ];
       // Draw bounds with width of 14 means that space inside the bar is larger.
-      final smallDrawBounds = const Rectangle(0, 0, 14, 20);
+      const smallDrawBounds = Rectangle(0, 0, 14, 20);
 
       BarLabelDecorator<String>(
         labelPadding: 0, // Turn off label padding for testing.
@@ -801,7 +809,7 @@ void main() {
 
       // Draw bounds with width of 12 means that label can fit neither inside
       // nor outside.
-      final smallDrawBounds = const Rectangle(0, 0, 12, 20);
+      const smallDrawBounds = Rectangle(0, 0, 12, 20);
 
       BarLabelDecorator<String>(
         labelPadding: 0, // Turn off label padding for testing.
@@ -869,16 +877,16 @@ void main() {
           data,
         ),
       ];
-      final insideColor = const Color(r: 0, g: 0, b: 0);
-      final outsideColor = const Color(r: 255, g: 255, b: 255);
+      const insideColor = Color(r: 0, g: 0, b: 0);
+      const outsideColor = Color(r: 255, g: 255, b: 255);
       final decorator = BarLabelDecorator<String>(
         labelPadding: 0,
-        insideLabelStyleSpec: TextStyleSpec(
+        insideLabelStyleSpec: const TextStyleSpec(
           fontSize: 10,
           fontFamily: 'insideFont',
           color: insideColor,
         ),
-        outsideLabelStyleSpec: TextStyleSpec(
+        outsideLabelStyleSpec: const TextStyleSpec(
           fontSize: 8,
           fontFamily: 'outsideFont',
           color: outsideColor,
@@ -1083,7 +1091,11 @@ void main() {
       test('Skip label if label accessor does not exist', () {
         final barElements = [
           FakeBarRendererElement(
-              'A', const Rectangle(0, 0, 10, 20), null, ['A']),
+            'A',
+            const Rectangle(0, 0, 10, 20),
+            null,
+            ['A'],
+          ),
         ];
 
         BarLabelDecorator<String>().decorate(
@@ -1102,7 +1114,11 @@ void main() {
         final data = ['A', 'B'];
         final barElements = [
           FakeBarRendererElement(
-              'A', const Rectangle(0, 0, 10, 20), null, data),
+            'A',
+            const Rectangle(0, 0, 10, 20),
+            null,
+            data,
+          ),
           FakeBarRendererElement(
             'B',
             const Rectangle(0, 50, 10, 20),

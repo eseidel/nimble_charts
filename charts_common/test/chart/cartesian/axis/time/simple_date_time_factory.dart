@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/src/common/date_time_factory.dart';
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:nimble_charts_common/src/common/date_time_factory.dart';
 
 /// Returns DateTime for testing.
 class SimpleDateTimeFactory implements DateTimeFactory {
@@ -22,20 +22,31 @@ class SimpleDateTimeFactory implements DateTimeFactory {
 
   @override
   DateTime createDateTimeFromMilliSecondsSinceEpoch(
-          int millisecondsSinceEpoch) =>
+    int millisecondsSinceEpoch,
+  ) =>
       DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
 
   @override
-  DateTime createDateTime(int year,
-          [int month = 1,
-          int day = 1,
-          int hour = 0,
-          int minute = 0,
-          int second = 0,
-          int millisecond = 0,
-          int microsecond = 0]) =>
+  DateTime createDateTime(
+    int year, [
+    int month = 1,
+    int day = 1,
+    int hour = 0,
+    int minute = 0,
+    int second = 0,
+    int millisecond = 0,
+    int microsecond = 0,
+  ]) =>
       DateTime(
-          year, month, day, hour, minute, second, millisecond, microsecond);
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        second,
+        millisecond,
+        microsecond,
+      );
 
   @override
   DateFormat createDateFormat(String pattern) => DateFormat(pattern);

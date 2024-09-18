@@ -15,26 +15,26 @@
 
 import 'dart:math';
 
+import 'package:meta/meta.dart' show required;
+import 'package:mockito/mockito.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart';
-import 'package:nimble_charts_common/src/common/graphics_factory.dart';
-import 'package:nimble_charts_common/src/common/line_style.dart';
-import 'package:nimble_charts_common/src/common/text_style.dart';
-import 'package:nimble_charts_common/src/common/text_element.dart';
-import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart';
-import 'package:nimble_charts_common/src/chart/common/chart_context.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/collision_report.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/end_points_tick_provider.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_extents.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_scale.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/simple_ordinal_scale.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_extents.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_extents.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_scale.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_tick_formatter.dart';
-import 'package:meta/meta.dart' show required;
-import 'package:mockito/mockito.dart';
+import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart';
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart';
+import 'package:nimble_charts_common/src/common/graphics_factory.dart';
+import 'package:nimble_charts_common/src/common/line_style.dart';
+import 'package:nimble_charts_common/src/common/text_element.dart';
+import 'package:nimble_charts_common/src/common/text_style.dart';
 import 'package:test/test.dart';
 
 import 'time/simple_date_time_factory.dart' show SimpleDateTimeFactory;
@@ -53,12 +53,12 @@ class MockOrdinalScale extends Mock implements SimpleOrdinalScale {}
 /// Reports alternate rendering after tick count is greater than or equal to
 /// [alternateRenderingAfterTickCount].
 class FakeDrawStrategy<D> extends BaseTickDrawStrategy<D> {
+  FakeDrawStrategy(
+    this.collidesAfterTickCount,
+    this.alternateRenderingAfterTickCount,
+  ) : super(null, FakeGraphicsFactory());
   final int collidesAfterTickCount;
   final int alternateRenderingAfterTickCount;
-
-  FakeDrawStrategy(
-      this.collidesAfterTickCount, this.alternateRenderingAfterTickCount)
-      : super(null, FakeGraphicsFactory());
 
   @override
   CollisionReport<D> collides(List<Tick<D>> ticks, _) {
@@ -66,19 +66,23 @@ class FakeDrawStrategy<D> extends BaseTickDrawStrategy<D> {
     final alternateTicksUsed = ticks.length >= alternateRenderingAfterTickCount;
 
     return CollisionReport(
-        ticksCollide: ticksCollide,
-        ticks: ticks,
-        alternateTicksUsed: alternateTicksUsed);
+      ticksCollide: ticksCollide,
+      ticks: ticks,
+      alternateTicksUsed: alternateTicksUsed,
+    );
   }
 
   @override
-  void draw(ChartCanvas canvas, Tick<D> tick,
-      {@required AxisOrientation orientation,
-      @required Rectangle<int> axisBounds,
-      @required Rectangle<int> drawAreaBounds,
-      @required bool isFirst,
-      @required bool isLast,
-      bool collision = false}) {}
+  void draw(
+    ChartCanvas canvas,
+    Tick<D> tick, {
+    @required AxisOrientation orientation,
+    @required Rectangle<int> axisBounds,
+    @required Rectangle<int> drawAreaBounds,
+    @required bool isFirst,
+    @required bool isLast,
+    bool collision = false,
+  }) {}
 }
 
 /// A fake [GraphicsFactory] that returns [MockTextStyle] and [MockTextElement].
@@ -118,22 +122,27 @@ void main() {
     tickProvider = EndPointsTickProvider<DateTime>();
 
     final drawStrategy = FakeDrawStrategy<DateTime>(10, 10);
-    when(scale.viewportDomain).thenReturn(DateTimeExtents(
-        start: DateTime(2018, 8, 1), end: DateTime(2018, 8, 11)));
+    when(scale.viewportDomain).thenReturn(
+      DateTimeExtents(
+        start: DateTime(2018, 8),
+        end: DateTime(2018, 8, 11),
+      ),
+    );
     when(scale.rangeWidth).thenReturn(1000);
-    when(scale.domainStepSize).thenReturn(1000.0);
+    when(scale.domainStepSize).thenReturn(1000);
 
     final ticks = tickProvider.getTicks(
-        context: context,
-        graphicsFactory: graphicsFactory,
-        scale: scale,
-        formatter: formatter,
-        formatterValueCache: <DateTime, String>{},
-        tickDrawStrategy: drawStrategy,
-        orientation: null);
+      context: context,
+      graphicsFactory: graphicsFactory,
+      scale: scale,
+      formatter: formatter,
+      formatterValueCache: <DateTime, String>{},
+      tickDrawStrategy: drawStrategy,
+      orientation: null,
+    );
 
     expect(ticks, hasLength(2));
-    expect(ticks[0].value, equals(DateTime(2018, 8, 1)));
+    expect(ticks[0].value, equals(DateTime(2018, 8)));
     expect(ticks[1].value, equals(DateTime(2018, 8, 11)));
   });
 
@@ -143,18 +152,19 @@ void main() {
     tickProvider = EndPointsTickProvider<num>();
 
     final drawStrategy = FakeDrawStrategy<num>(10, 10);
-    when(scale.viewportDomain).thenReturn(NumericExtents(10.0, 70.0));
+    when(scale.viewportDomain).thenReturn(const NumericExtents(10.0, 70.0));
     when(scale.rangeWidth).thenReturn(1000);
-    when(scale.domainStepSize).thenReturn(1000.0);
+    when(scale.domainStepSize).thenReturn(1000);
 
     final ticks = tickProvider.getTicks(
-        context: context,
-        graphicsFactory: graphicsFactory,
-        scale: scale,
-        formatter: formatter,
-        formatterValueCache: <num, String>{},
-        tickDrawStrategy: drawStrategy,
-        orientation: null);
+      context: context,
+      graphicsFactory: graphicsFactory,
+      scale: scale,
+      formatter: formatter,
+      formatterValueCache: <num, String>{},
+      tickDrawStrategy: drawStrategy,
+      orientation: null,
+    );
 
     expect(ticks, hasLength(2));
     expect(ticks[0].value, equals(10));
@@ -162,7 +172,7 @@ void main() {
   });
 
   test('ordinal_choosesEndPointTicks', () {
-    final formatter = OrdinalTickFormatter();
+    const formatter = OrdinalTickFormatter();
     final scale = SimpleOrdinalScale();
     scale.addDomain('A');
     scale.addDomain('B');
@@ -173,13 +183,14 @@ void main() {
     final drawStrategy = FakeDrawStrategy<String>(10, 10);
 
     final ticks = tickProvider.getTicks(
-        context: context,
-        graphicsFactory: graphicsFactory,
-        scale: scale,
-        formatter: formatter,
-        formatterValueCache: <String, String>{},
-        tickDrawStrategy: drawStrategy,
-        orientation: null);
+      context: context,
+      graphicsFactory: graphicsFactory,
+      scale: scale,
+      formatter: formatter,
+      formatterValueCache: <String, String>{},
+      tickDrawStrategy: drawStrategy,
+      orientation: null,
+    );
 
     expect(ticks, hasLength(2));
     expect(ticks[0].value, equals('A'));
@@ -192,8 +203,12 @@ void main() {
     tickProvider = EndPointsTickProvider<DateTime>();
 
     final drawStrategy = FakeDrawStrategy<DateTime>(10, 10);
-    when(scale.viewportDomain).thenReturn(DateTimeExtents(
-        start: DateTime(2018, 8, 1), end: DateTime(2018, 8, 11)));
+    when(scale.viewportDomain).thenReturn(
+      DateTimeExtents(
+        start: DateTime(2018, 8),
+        end: DateTime(2018, 8, 11),
+      ),
+    );
     when(scale.rangeWidth).thenReturn(1000);
 
     // An un-configured axis has no domain step size, and its scale defaults to
@@ -201,13 +216,14 @@ void main() {
     when(scale.domainStepSize).thenReturn(double.infinity);
 
     final ticks = tickProvider.getTicks(
-        context: context,
-        graphicsFactory: graphicsFactory,
-        scale: scale,
-        formatter: formatter,
-        formatterValueCache: <DateTime, String>{},
-        tickDrawStrategy: drawStrategy,
-        orientation: null);
+      context: context,
+      graphicsFactory: graphicsFactory,
+      scale: scale,
+      formatter: formatter,
+      formatterValueCache: <DateTime, String>{},
+      tickDrawStrategy: drawStrategy,
+      orientation: null,
+    );
 
     expect(ticks, hasLength(0));
   });
@@ -218,7 +234,7 @@ void main() {
     tickProvider = EndPointsTickProvider<num>();
 
     final drawStrategy = FakeDrawStrategy<num>(10, 10);
-    when(scale.viewportDomain).thenReturn(NumericExtents(10.0, 70.0));
+    when(scale.viewportDomain).thenReturn(const NumericExtents(10.0, 70.0));
     when(scale.rangeWidth).thenReturn(1000);
 
     // An un-configured axis has no domain step size, and its scale defaults to
@@ -226,13 +242,14 @@ void main() {
     when(scale.domainStepSize).thenReturn(double.infinity);
 
     final ticks = tickProvider.getTicks(
-        context: context,
-        graphicsFactory: graphicsFactory,
-        scale: scale,
-        formatter: formatter,
-        formatterValueCache: <num, String>{},
-        tickDrawStrategy: drawStrategy,
-        orientation: null);
+      context: context,
+      graphicsFactory: graphicsFactory,
+      scale: scale,
+      formatter: formatter,
+      formatterValueCache: <num, String>{},
+      tickDrawStrategy: drawStrategy,
+      orientation: null,
+    );
 
     expect(ticks, hasLength(0));
   });

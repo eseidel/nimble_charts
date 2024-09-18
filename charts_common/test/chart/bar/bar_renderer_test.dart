@@ -62,13 +62,16 @@ class FakeBarRenderer<D> extends BarRenderer<D> {
   }
 
   FakeBarRenderer._internal({
-    @required BarRendererConfig config,
-    @required String rendererId,
-  }) : super.internal(config: config, rendererId: rendererId);
+    @required BarRendererConfig super.config,
+    @required super.rendererId,
+  }) : super.internal();
 
   @override
-  void paintBar(ChartCanvas canvas, double animationPercent,
-      Iterable<BarRendererElement<D>> barElements) {
+  void paintBar(
+    ChartCanvas canvas,
+    double animationPercent,
+    Iterable<BarRendererElement<D>> barElements,
+  ) {
     paintBarCallCount += 1;
     elementsPainted.add(List.of(barElements));
   }
@@ -82,8 +85,11 @@ void main() {
   /////////////////////////////////////////
   // Convenience methods for creating mocks.
   /////////////////////////////////////////
+  // ignore: no_leading_underscores_for_local_identifiers
   BaseBarRenderer _configureBaseRenderer(
-      BaseBarRenderer renderer, bool vertical) {
+    BaseBarRenderer renderer,
+    bool vertical,
+  ) {
     final context = MockContext();
     when(context.chartContainerIsRtl).thenReturn(false);
     when(context.isRtl).thenReturn(false);
@@ -108,42 +114,42 @@ void main() {
   }
 
   setUp(() {
-    var myFakeDesktopAData = [
+    final myFakeDesktopAData = [
       MyRow('MyCampaign1', 5),
       MyRow('MyCampaign2', 25),
       MyRow('MyCampaign3', 100),
       MyRow('MyOtherCampaign', 75),
     ];
 
-    var myFakeTabletAData = [
+    final myFakeTabletAData = [
       MyRow('MyCampaign1', 5),
       MyRow('MyCampaign2', 25),
       MyRow('MyCampaign3', 100),
       MyRow('MyOtherCampaign', 75),
     ];
 
-    var myFakeMobileAData = [
+    final myFakeMobileAData = [
       MyRow('MyCampaign1', 5),
       MyRow('MyCampaign2', 25),
       MyRow('MyCampaign3', 100),
       MyRow('MyOtherCampaign', 75),
     ];
 
-    var myFakeDesktopBData = [
+    final myFakeDesktopBData = [
       MyRow('MyCampaign1', 5),
       MyRow('MyCampaign2', 25),
       MyRow('MyCampaign3', 100),
       MyRow('MyOtherCampaign', 75),
     ];
 
-    var myFakeTabletBData = [
+    final myFakeTabletBData = [
       MyRow('MyCampaign1', 5),
       MyRow('MyCampaign2', 25),
       MyRow('MyCampaign3', 100),
       MyRow('MyOtherCampaign', 75),
     ];
 
-    var myFakeMobileBData = [
+    final myFakeMobileBData = [
       MyRow('MyCampaign1', 5),
       MyRow('MyCampaign2', 25),
       MyRow('MyCampaign3', 100),
@@ -151,87 +157,113 @@ void main() {
     ];
 
     seriesList = [
-      MutableSeries<String>(Series<MyRow, String>(
+      MutableSeries<String>(
+        Series<MyRow, String>(
           id: 'Desktop',
           colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          data: myFakeDesktopAData)),
-      MutableSeries<String>(Series<MyRow, String>(
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          data: myFakeDesktopAData,
+        ),
+      ),
+      MutableSeries<String>(
+        Series<MyRow, String>(
           id: 'Tablet',
           colorFn: (_, __) => MaterialPalette.red.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          data: myFakeTabletAData)),
-      MutableSeries<String>(Series<MyRow, String>(
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          data: myFakeTabletAData,
+        ),
+      ),
+      MutableSeries<String>(
+        Series<MyRow, String>(
           id: 'Mobile',
           colorFn: (_, __) => MaterialPalette.green.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          data: myFakeMobileAData))
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          data: myFakeMobileAData,
+        ),
+      ),
     ];
 
     groupedStackedSeriesList = [
-      MutableSeries<String>(Series<MyRow, String>(
+      MutableSeries<String>(
+        Series<MyRow, String>(
           id: 'Desktop A',
           seriesCategory: 'A',
           colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          data: myFakeDesktopAData)),
-      MutableSeries<String>(Series<MyRow, String>(
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          data: myFakeDesktopAData,
+        ),
+      ),
+      MutableSeries<String>(
+        Series<MyRow, String>(
           id: 'Tablet A',
           seriesCategory: 'A',
           colorFn: (_, __) => MaterialPalette.red.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          data: myFakeTabletAData)),
-      MutableSeries<String>(Series<MyRow, String>(
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          data: myFakeTabletAData,
+        ),
+      ),
+      MutableSeries<String>(
+        Series<MyRow, String>(
           id: 'Mobile A',
           seriesCategory: 'A',
           colorFn: (_, __) => MaterialPalette.green.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          data: myFakeMobileAData)),
-      MutableSeries<String>(Series<MyRow, String>(
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          data: myFakeMobileAData,
+        ),
+      ),
+      MutableSeries<String>(
+        Series<MyRow, String>(
           id: 'Desktop B',
           seriesCategory: 'B',
           colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          data: myFakeDesktopBData)),
-      MutableSeries<String>(Series<MyRow, String>(
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          data: myFakeDesktopBData,
+        ),
+      ),
+      MutableSeries<String>(
+        Series<MyRow, String>(
           id: 'Tablet B',
           seriesCategory: 'B',
           colorFn: (_, __) => MaterialPalette.red.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          data: myFakeTabletBData)),
-      MutableSeries<String>(Series<MyRow, String>(
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          data: myFakeTabletBData,
+        ),
+      ),
+      MutableSeries<String>(
+        Series<MyRow, String>(
           id: 'Mobile B',
           seriesCategory: 'B',
           colorFn: (_, __) => MaterialPalette.green.shadeDefault,
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          data: myFakeMobileBData))
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          data: myFakeMobileBData,
+        ),
+      ),
     ];
   });
 
   group('preprocess', () {
     test('with grouped bars', () {
       renderer = makeRenderer(
-          config: BarRendererConfig(groupingType: BarGroupingType.grouped));
-
-      renderer.preprocessSeries(seriesList);
+        config: BarRendererConfig(groupingType: BarGroupingType.grouped),
+      )..preprocessSeries(seriesList);
 
       expect(seriesList.length, equals(3));
 
@@ -289,8 +321,8 @@ void main() {
 
     test('with grouped stacked bars', () {
       renderer = makeRenderer(
-          config:
-              BarRendererConfig(groupingType: BarGroupingType.groupedStacked));
+        config: BarRendererConfig(groupingType: BarGroupingType.groupedStacked),
+      );
 
       renderer.preprocessSeries(groupedStackedSeriesList);
 
@@ -401,7 +433,8 @@ void main() {
 
     test('with stacked bars', () {
       renderer = makeRenderer(
-          config: BarRendererConfig(groupingType: BarGroupingType.stacked));
+        config: BarRendererConfig(groupingType: BarGroupingType.stacked),
+      );
 
       renderer.preprocessSeries(seriesList);
 
@@ -470,7 +503,8 @@ void main() {
       seriesList[0].data[2] = MyRow('MyCampaign3', 0);
 
       renderer = makeRenderer(
-          config: BarRendererConfig(groupingType: BarGroupingType.stacked));
+        config: BarRendererConfig(groupingType: BarGroupingType.stacked),
+      );
 
       renderer.preprocessSeries(seriesList);
 
@@ -558,8 +592,11 @@ void main() {
   group('preprocess weight pattern', () {
     test('with grouped bars', () {
       renderer = makeRenderer(
-          config: BarRendererConfig(
-              groupingType: BarGroupingType.grouped, weightPattern: [3, 2, 1]));
+        config: BarRendererConfig(
+          groupingType: BarGroupingType.grouped,
+          weightPattern: [3, 2, 1],
+        ),
+      );
 
       renderer.preprocessSeries(seriesList);
 
@@ -623,9 +660,11 @@ void main() {
 
     test('with grouped stacked bars', () {
       renderer = makeRenderer(
-          config: BarRendererConfig(
-              groupingType: BarGroupingType.groupedStacked,
-              weightPattern: [2, 1]));
+        config: BarRendererConfig(
+          groupingType: BarGroupingType.groupedStacked,
+          weightPattern: [2, 1],
+        ),
+      );
 
       renderer.preprocessSeries(groupedStackedSeriesList);
 
@@ -740,8 +779,11 @@ void main() {
 
     test('with stacked bars - weightPattern not used', () {
       renderer = makeRenderer(
-          config: BarRendererConfig(
-              groupingType: BarGroupingType.stacked, weightPattern: [2, 1]));
+        config: BarRendererConfig(
+          groupingType: BarGroupingType.stacked,
+          weightPattern: [2, 1],
+        ),
+      );
 
       renderer.preprocessSeries(seriesList);
 
@@ -804,30 +846,33 @@ void main() {
 
     test('with bar max width', () {
       // Helper to create series list for this test only.
-      List<MutableSeries<String>> _createSeriesList(List<MyRow> data) {
+      List<MutableSeries<String>> createSeriesList(List<MyRow> data) {
         final domainAxis = MockAxis<dynamic>();
-        when(domainAxis.rangeBand).thenReturn(100.0);
-        when(domainAxis.getLocation('MyCampaign1')).thenReturn(20.0);
-        when(domainAxis.getLocation('MyCampaign2')).thenReturn(40.0);
-        when(domainAxis.getLocation('MyCampaign3')).thenReturn(60.0);
-        when(domainAxis.getLocation('MyOtherCampaign')).thenReturn(80.0);
+        when(domainAxis.rangeBand).thenReturn(100);
+        when(domainAxis.getLocation('MyCampaign1')).thenReturn(20);
+        when(domainAxis.getLocation('MyCampaign2')).thenReturn(40);
+        when(domainAxis.getLocation('MyCampaign3')).thenReturn(60);
+        when(domainAxis.getLocation('MyOtherCampaign')).thenReturn(80);
         final measureAxis = MockAxis<num>();
-        when(measureAxis.getLocation(0)).thenReturn(0.0);
-        when(measureAxis.getLocation(5)).thenReturn(5.0);
-        when(measureAxis.getLocation(75)).thenReturn(75.0);
-        when(measureAxis.getLocation(100)).thenReturn(100.0);
+        when(measureAxis.getLocation(0)).thenReturn(0);
+        when(measureAxis.getLocation(5)).thenReturn(5);
+        when(measureAxis.getLocation(75)).thenReturn(75);
+        when(measureAxis.getLocation(100)).thenReturn(100);
 
         final color = Color.fromHex(code: '#000000');
 
-        final series = MutableSeries<String>(Series<MyRow, String>(
+        final series = MutableSeries<String>(
+          Series<MyRow, String>(
             id: 'Desktop',
-            domainFn: (MyRow row, _) => row.campaign,
-            measureFn: (MyRow row, _) => row.clickCount,
+            domainFn: (row, _) => row.campaign,
+            measureFn: (row, _) => row.clickCount,
             measureOffsetFn: (_, __) => 0,
             colorFn: (_, __) => color,
             fillColorFn: (_, __) => color,
             dashPatternFn: (_, __) => [1],
-            data: data))
+            data: data,
+          ),
+        )
           ..setAttr(domainAxisKey, domainAxis)
           ..setAttr(measureAxisKey, measureAxis);
 
@@ -842,14 +887,14 @@ void main() {
         MyRow('MyCampaign3', 100),
         MyRow('MyOtherCampaign', 75),
       ];
-      final seriesList = _createSeriesList(data);
+      final seriesList = createSeriesList(data);
 
       final renderer =
           makeFakeRenderer(config: BarRendererConfig(maxBarWidthPx: 40));
 
       renderer.preprocessSeries(seriesList);
       renderer.update(seriesList, false);
-      renderer.paint(canvas, 1.0);
+      renderer.paint(canvas, 1);
 
       expect(renderer.elementsPainted.length, 4);
       for (var i = 0; i < 4; i++) {
@@ -862,30 +907,33 @@ void main() {
   group('null measure', () {
     test('only include null in draw if animating from a non null measure', () {
       // Helper to create series list for this test only.
-      List<MutableSeries<String>> _createSeriesList(List<MyRow> data) {
+      List<MutableSeries<String>> createSeriesList(List<MyRow> data) {
         final domainAxis = MockAxis<dynamic>();
-        when(domainAxis.rangeBand).thenReturn(100.0);
-        when(domainAxis.getLocation('MyCampaign1')).thenReturn(20.0);
-        when(domainAxis.getLocation('MyCampaign2')).thenReturn(40.0);
-        when(domainAxis.getLocation('MyCampaign3')).thenReturn(60.0);
-        when(domainAxis.getLocation('MyOtherCampaign')).thenReturn(80.0);
+        when(domainAxis.rangeBand).thenReturn(100);
+        when(domainAxis.getLocation('MyCampaign1')).thenReturn(20);
+        when(domainAxis.getLocation('MyCampaign2')).thenReturn(40);
+        when(domainAxis.getLocation('MyCampaign3')).thenReturn(60);
+        when(domainAxis.getLocation('MyOtherCampaign')).thenReturn(80);
         final measureAxis = MockAxis<num>();
-        when(measureAxis.getLocation(0)).thenReturn(0.0);
-        when(measureAxis.getLocation(5)).thenReturn(5.0);
-        when(measureAxis.getLocation(75)).thenReturn(75.0);
-        when(measureAxis.getLocation(100)).thenReturn(100.0);
+        when(measureAxis.getLocation(0)).thenReturn(0);
+        when(measureAxis.getLocation(5)).thenReturn(5);
+        when(measureAxis.getLocation(75)).thenReturn(75);
+        when(measureAxis.getLocation(100)).thenReturn(100);
 
         final color = Color.fromHex(code: '#000000');
 
-        final series = MutableSeries<String>(Series<MyRow, String>(
+        final series = MutableSeries<String>(
+          Series<MyRow, String>(
             id: 'Desktop',
-            domainFn: (MyRow row, _) => row.campaign,
-            measureFn: (MyRow row, _) => row.clickCount,
+            domainFn: (row, _) => row.campaign,
+            measureFn: (row, _) => row.clickCount,
             measureOffsetFn: (_, __) => 0,
             colorFn: (_, __) => color,
             fillColorFn: (_, __) => color,
             dashPatternFn: (_, __) => [1],
-            data: data))
+            data: data,
+          ),
+        )
           ..setAttr(domainAxisKey, domainAxis)
           ..setAttr(measureAxisKey, measureAxis);
 
@@ -900,7 +948,7 @@ void main() {
         MyRow('MyCampaign3', 100),
         MyRow('MyOtherCampaign', 75),
       ];
-      final seriesListWithNull = _createSeriesList(myDataWithNull);
+      final seriesListWithNull = createSeriesList(myDataWithNull);
 
       final myDataWithMeasures = [
         MyRow('MyCampaign1', 5),
@@ -908,10 +956,11 @@ void main() {
         MyRow('MyCampaign3', 100),
         MyRow('MyOtherCampaign', 75),
       ];
-      final seriesListWithMeasures = _createSeriesList(myDataWithMeasures);
+      final seriesListWithMeasures = createSeriesList(myDataWithMeasures);
 
       final renderer = makeFakeRenderer(
-          config: BarRendererConfig(groupingType: BarGroupingType.grouped));
+        config: BarRendererConfig(groupingType: BarGroupingType.grouped),
+      );
 
       // Verify that only 3 bars are drawn for an initial draw with null data.
       renderer.preprocessSeries(seriesListWithNull);
@@ -922,7 +971,7 @@ void main() {
 
       // On animation complete, verify that only 3 bars are drawn.
       renderer.paintBarCallCount = 0;
-      renderer.paint(canvas, 1.0);
+      renderer.paint(canvas, 1);
       expect(renderer.paintBarCallCount, equals(3));
 
       // Change series list where there are measures on all values, verify all
@@ -942,29 +991,29 @@ void main() {
 
       // On animation complete, verify that only 3 bars are drawn.
       renderer.paintBarCallCount = 0;
-      renderer.paint(canvas, 1.0);
+      renderer.paint(canvas, 1);
       expect(renderer.paintBarCallCount, equals(3));
     });
   });
 
   group('renderer configuration', () {
     test('NoCornerStrategy always equals', () {
-      final strategyOne = NoCornerStrategy();
-      final strategyTwo = NoCornerStrategy();
+      const strategyOne = NoCornerStrategy();
+      const strategyTwo = NoCornerStrategy();
 
       expect(strategyOne, equals(strategyTwo));
     });
 
     test('CornerStrategy with same radius is equals', () {
-      final strategyOne = ConstCornerStrategy(1);
-      final strategyTwo = ConstCornerStrategy(1);
+      const strategyOne = ConstCornerStrategy(1);
+      const strategyTwo = ConstCornerStrategy(1);
 
       expect(strategyOne, equals(strategyTwo));
     });
 
     test('CornerStrategy with different radius is not equal', () {
-      final strategyOne = ConstCornerStrategy(1);
-      final strategyTwo = ConstCornerStrategy(2);
+      const strategyOne = ConstCornerStrategy(1);
+      const strategyTwo = ConstCornerStrategy(2);
 
       expect(strategyOne, isNot(equals(strategyTwo)));
     });

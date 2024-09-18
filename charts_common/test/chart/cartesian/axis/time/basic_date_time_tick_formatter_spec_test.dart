@@ -13,29 +13,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/date_time_axis_spec.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_tick_formatter.dart';
-import 'package:nimble_charts_common/src/chart/common/chart_context.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:mockito/mockito.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/date_time_axis_spec.dart';
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart';
 import 'package:test/test.dart';
 
 class MockContext extends Mock implements ChartContext {}
 
 void main() {
-  const String tickLabel = '-tick-';
-  final DateTime testDate1 = DateTime.utc(1984, 11, 11);
-  final DateTime testDate2 = DateTime.utc(1984, 11, 12);
-  final DateTime testDate3 = DateTime.utc(1984, 11, 13);
+  const tickLabel = '-tick-';
+  final testDate1 = DateTime.utc(1984, 11, 11);
+  final testDate2 = DateTime.utc(1984, 11, 12);
+  final testDate3 = DateTime.utc(1984, 11, 13);
 
   BasicDateTimeTickFormatterSpec dateTimeTickSpec;
   BasicDateTimeTickFormatterSpec dateTimeTickSpecWithDateFormat;
   DateFormat dateFormat;
   MockContext mockContext;
 
-  String testFormatter(DateTime dateTime) {
-    return tickLabel;
-  }
+  String testFormatter(DateTime dateTime) => tickLabel;
 
   setUp(() {
     dateFormat = DateFormat.yMMMd();
@@ -48,7 +45,7 @@ void main() {
 
   group(BasicDateTimeTickFormatterSpec, () {
     test('formats ticks with custom formatter', () {
-      final DateTimeTickFormatter dateTimeTickFormatter =
+      final dateTimeTickFormatter =
           dateTimeTickSpec.createTickFormatter(mockContext);
 
       final ticks = [testDate1, testDate2, testDate3];
@@ -60,7 +57,7 @@ void main() {
     });
 
     test('formats ticks with provided DateFormat', () {
-      final DateTimeTickFormatter dateTimeTickFormatter =
+      final dateTimeTickFormatter =
           dateTimeTickSpecWithDateFormat.createTickFormatter(mockContext);
 
       final ticks = [testDate1, testDate2, testDate3];
@@ -83,8 +80,9 @@ void main() {
 
       expect(dateTimeTickSpec == otherDateTimeTickSpec, isTrue);
       expect(
-          dateTimeTickSpecWithDateFormat == otherDateTimeTickSpecWithDateFormat,
-          isTrue);
+        dateTimeTickSpecWithDateFormat == otherDateTimeTickSpecWithDateFormat,
+        isTrue,
+      );
     });
 
     test('hash code works correctly', () {

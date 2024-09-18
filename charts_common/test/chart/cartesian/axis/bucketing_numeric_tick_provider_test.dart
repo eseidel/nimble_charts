@@ -15,23 +15,23 @@
 
 import 'dart:math';
 
+import 'package:meta/meta.dart' show required;
+import 'package:mockito/mockito.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/collision_report.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/linear/bucketing_numeric_tick_provider.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_extents.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_scale.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/numeric_extents.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/linear/bucketing_numeric_tick_provider.dart';
 import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart';
 import 'package:nimble_charts_common/src/chart/common/chart_context.dart';
 import 'package:nimble_charts_common/src/chart/common/unitconverter/unit_converter.dart';
 import 'package:nimble_charts_common/src/common/graphics_factory.dart';
 import 'package:nimble_charts_common/src/common/line_style.dart';
-import 'package:nimble_charts_common/src/common/text_style.dart';
 import 'package:nimble_charts_common/src/common/text_element.dart';
-import 'package:meta/meta.dart' show required;
-import 'package:mockito/mockito.dart';
+import 'package:nimble_charts_common/src/common/text_style.dart';
 import 'package:test/test.dart';
 
 class MockNumericScale extends Mock implements NumericScale {}
@@ -44,12 +44,12 @@ class MockNumericScale extends Mock implements NumericScale {}
 /// Reports alternate rendering after tick count is greater than or equal to
 /// [alternateRenderingAfterTickCount].
 class FakeDrawStrategy extends BaseTickDrawStrategy<num> {
+  FakeDrawStrategy(
+    this.collidesAfterTickCount,
+    this.alternateRenderingAfterTickCount,
+  ) : super(null, FakeGraphicsFactory());
   final int collidesAfterTickCount;
   final int alternateRenderingAfterTickCount;
-
-  FakeDrawStrategy(
-      this.collidesAfterTickCount, this.alternateRenderingAfterTickCount)
-      : super(null, FakeGraphicsFactory());
 
   @override
   CollisionReport<num> collides(List<Tick<num>> ticks, _) {
@@ -57,19 +57,23 @@ class FakeDrawStrategy extends BaseTickDrawStrategy<num> {
     final alternateTicksUsed = ticks.length >= alternateRenderingAfterTickCount;
 
     return CollisionReport(
-        ticksCollide: ticksCollide,
-        ticks: ticks,
-        alternateTicksUsed: alternateTicksUsed);
+      ticksCollide: ticksCollide,
+      ticks: ticks,
+      alternateTicksUsed: alternateTicksUsed,
+    );
   }
 
   @override
-  void draw(ChartCanvas canvas, Tick<num> tick,
-      {@required AxisOrientation orientation,
-      @required Rectangle<int> axisBounds,
-      @required Rectangle<int> drawAreaBounds,
-      @required bool isFirst,
-      @required bool isLast,
-      bool collision = false}) {}
+  void draw(
+    ChartCanvas canvas,
+    Tick<num> tick, {
+    @required AxisOrientation orientation,
+    @required Rectangle<int> axisBounds,
+    @required Rectangle<int> drawAreaBounds,
+    @required bool isFirst,
+    @required bool isLast,
+    bool collision = false,
+  }) {}
 }
 
 /// A fake [GraphicsFactory] that returns [MockTextStyle] and [MockTextElement].
@@ -87,10 +91,9 @@ class FakeGraphicsFactory extends GraphicsFactory {
 class MockTextStyle extends Mock implements TextStyle {}
 
 class MockTextElement extends Mock implements TextElement {
+  MockTextElement(this.text);
   @override
   String text;
-
-  MockTextElement(this.text);
 }
 
 class MockLinePaint extends Mock implements LineStyle {}
@@ -132,19 +135,20 @@ void main() {
         ..setFixedTickCount(21)
         ..allowedSteps = [1.0, 2.5, 5.0];
       final drawStrategy = FakeDrawStrategy(10, 10);
-      when(scale.viewportDomain).thenReturn(NumericExtents(0.1, 0.7));
+      when(scale.viewportDomain).thenReturn(const NumericExtents(0.1, 0.7));
       when(scale.rangeWidth).thenReturn(1000);
       when(scale[0.1]).thenReturn(90.0);
       when(scale[0]).thenReturn(100.0);
 
       final ticks = tickProvider.getTicks(
-          context: context,
-          graphicsFactory: graphicsFactory,
-          scale: scale,
-          formatter: formatter,
-          formatterValueCache: <num, String>{},
-          tickDrawStrategy: drawStrategy,
-          orientation: null);
+        context: context,
+        graphicsFactory: graphicsFactory,
+        scale: scale,
+        formatter: formatter,
+        formatterValueCache: <num, String>{},
+        tickDrawStrategy: drawStrategy,
+        orientation: null,
+      );
 
       // Verify.
       // We expect to have 20 ticks, because the expected tick at 0.05 should be
@@ -170,8 +174,10 @@ void main() {
       expect(aboveThresholdTicks, hasLength(18));
 
       aboveThresholdTicks = ticks.sublist(2);
-      aboveThresholdTicks.retainWhere((tick) =>
-          tick.textElement.text != '' && !tick.textElement.text.contains('<'));
+      aboveThresholdTicks.retainWhere(
+        (tick) =>
+            tick.textElement.text != '' && !tick.textElement.text.contains('<'),
+      );
       expect(aboveThresholdTicks, hasLength(18));
 
       aboveThresholdTicks = ticks.sublist(2);

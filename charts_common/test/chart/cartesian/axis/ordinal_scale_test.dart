@@ -37,7 +37,7 @@ void main() {
     scale.addDomain('c');
     scale.addDomain('d');
 
-    scale.range = ScaleOutputExtent(2000, 1000);
+    scale.range = const ScaleOutputExtent(2000, 1000);
   });
 
   group('conversion', () {
@@ -88,7 +88,7 @@ void main() {
 
   group('set RangeBandConfig', () {
     test('fixed pixel range band changes range band', () {
-      scale.rangeBandConfig = RangeBandConfig.fixedPixel(123.0);
+      scale.rangeBandConfig = const RangeBandConfig.fixedPixel(123);
 
       expect(scale.rangeBand, closeTo(123.0, EPSILON));
 
@@ -104,19 +104,24 @@ void main() {
     });
 
     test('space from step changes range band', () {
-      scale.rangeBandConfig = RangeBandConfig.fixedPixelSpaceBetweenStep(50.0);
+      scale.rangeBandConfig =
+          const RangeBandConfig.fixedPixelSpaceBetweenStep(50);
       // 200 = 1000pixels / 4domains) - 50
       expect(scale.rangeBand, closeTo(200.0, EPSILON));
     });
 
     test('fixed domain throws argument exception', () {
-      expect(() => scale.rangeBandConfig = RangeBandConfig.fixedDomain(5.0),
-          throwsArgumentError);
+      expect(
+        () => scale.rangeBandConfig = const RangeBandConfig.fixedDomain(5),
+        throwsArgumentError,
+      );
     });
 
     test('type of none throws argument exception', () {
-      expect(() => scale.rangeBandConfig = RangeBandConfig.none(),
-          throwsArgumentError);
+      expect(
+        () => scale.rangeBandConfig = const RangeBandConfig.none(),
+        throwsArgumentError,
+      );
     });
 
     test('set to null throws argument exception', () {
@@ -124,7 +129,7 @@ void main() {
     });
 
     test('range band size used from style', () {
-      var oldStyle = StyleFactory.style;
+      final oldStyle = StyleFactory.style;
       StyleFactory.style = TestStyle()..rangeBandSize = 0.4;
 
       scale.rangeBandConfig = RangeBandConfig.styleAssignedPercent();
@@ -142,17 +147,21 @@ void main() {
     });
 
     test('to auto does not throw', () {
-      scale.stepSizeConfig = StepSizeConfig.auto();
+      scale.stepSizeConfig = const StepSizeConfig.auto();
     });
 
     test('to fixed domain throw arugment exception', () {
-      expect(() => scale.stepSizeConfig = StepSizeConfig.fixedDomain(1.0),
-          throwsArgumentError);
+      expect(
+        () => scale.stepSizeConfig = const StepSizeConfig.fixedDomain(1),
+        throwsArgumentError,
+      );
     });
 
     test('to fixed pixel throw arugment exception', () {
-      expect(() => scale.stepSizeConfig = StepSizeConfig.fixedPixels(1.0),
-          throwsArgumentError);
+      expect(
+        () => scale.stepSizeConfig = const StepSizeConfig.fixedPixels(1),
+        throwsArgumentError,
+      );
     });
   });
 
@@ -164,82 +173,87 @@ void main() {
       expect(scale.range.max, equals(2000));
       expect(scale.rangeWidth, equals(1000));
 
-      expect(scale.isRangeValueWithinViewport(1500.0), isTrue);
-      expect(scale.isRangeValueWithinViewport(1000.0), isTrue);
-      expect(scale.isRangeValueWithinViewport(2000.0), isTrue);
+      expect(scale.isRangeValueWithinViewport(1500), isTrue);
+      expect(scale.isRangeValueWithinViewport(1000), isTrue);
+      expect(scale.isRangeValueWithinViewport(2000), isTrue);
 
-      expect(scale.isRangeValueWithinViewport(500.0), isFalse);
-      expect(scale.isRangeValueWithinViewport(2500.0), isFalse);
+      expect(scale.isRangeValueWithinViewport(500), isFalse);
+      expect(scale.isRangeValueWithinViewport(2500), isFalse);
     });
   });
 
   group('scale factor', () {
     test('sets horizontally', () {
-      scale.range = ScaleOutputExtent(1000, 2000);
-      scale.setViewportSettings(2.0, -700.0);
+      scale.range = const ScaleOutputExtent(1000, 2000);
+      scale.setViewportSettings(2, -700);
 
       expect(scale.viewportScalingFactor, closeTo(2.0, EPSILON));
       expect(scale.viewportTranslatePx, closeTo(-700.0, EPSILON));
     });
 
     test('sets vertically', () {
-      scale.range = ScaleOutputExtent(2000, 1000);
-      scale.setViewportSettings(2.0, 700.0);
+      scale.range = const ScaleOutputExtent(2000, 1000);
+      scale.setViewportSettings(2, 700);
 
       expect(scale.viewportScalingFactor, closeTo(2.0, EPSILON));
       expect(scale.viewportTranslatePx, closeTo(700.0, EPSILON));
     });
 
     test('rangeband is scaled horizontally', () {
-      scale.range = ScaleOutputExtent(1000, 2000);
-      scale.setViewportSettings(2.0, -700.0);
-      scale.rangeBandConfig = RangeBandConfig.percentOfStep(1.0);
+      scale.range = const ScaleOutputExtent(1000, 2000);
+      scale.setViewportSettings(2, -700);
+      scale.rangeBandConfig = RangeBandConfig.percentOfStep(1);
 
       expect(scale.rangeBand, closeTo(500.0, EPSILON));
     });
 
     test('rangeband is scaled vertically', () {
-      scale.range = ScaleOutputExtent(2000, 1000);
-      scale.setViewportSettings(2.0, 700.0);
-      scale.rangeBandConfig = RangeBandConfig.percentOfStep(1.0);
+      scale.range = const ScaleOutputExtent(2000, 1000);
+      scale.setViewportSettings(2, 700);
+      scale.rangeBandConfig = RangeBandConfig.percentOfStep(1);
 
       expect(scale.rangeBand, closeTo(500.0, EPSILON));
     });
 
     test('translate to pixels is scaled horizontally', () {
-      scale.rangeBandConfig = RangeBandConfig.percentOfStep(1.0);
-      scale.range = ScaleOutputExtent(1000, 2000);
-      scale.setViewportSettings(2.0, -700.0);
+      scale.rangeBandConfig = RangeBandConfig.percentOfStep(1);
+      scale.range = const ScaleOutputExtent(1000, 2000);
+      scale.setViewportSettings(2, -700);
 
-      final scaledStepWidth = 500.0;
-      final scaledInitialShift = 250.0;
+      const scaledStepWidth = 500.0;
+      const scaledInitialShift = 250.0;
 
       expect(scale['a'], closeTo(1000 + scaledInitialShift - 700, EPSILON));
 
-      expect(scale['b'],
-          closeTo(1000 + scaledInitialShift - 700 + scaledStepWidth, EPSILON));
+      expect(
+        scale['b'],
+        closeTo(1000 + scaledInitialShift - 700 + scaledStepWidth, EPSILON),
+      );
     });
 
     test('translate to pixels is scaled vertically', () {
-      scale.rangeBandConfig = RangeBandConfig.percentOfStep(1.0);
-      scale.range = ScaleOutputExtent(2000, 1000);
-      scale.setViewportSettings(2.0, 700.0);
+      scale.rangeBandConfig = RangeBandConfig.percentOfStep(1);
+      scale.range = const ScaleOutputExtent(2000, 1000);
+      scale.setViewportSettings(2, 700);
 
-      final scaledStepWidth = 500.0;
-      final scaledInitialShift = 250.0;
+      const scaledStepWidth = 500.0;
+      const scaledInitialShift = 250.0;
 
       expect(scale['a'], closeTo(2000 - scaledInitialShift + 700, EPSILON));
 
       expect(
-          scale['b'],
-          closeTo(2000 - scaledInitialShift + 700 - (scaledStepWidth * 1),
-              EPSILON));
+        scale['b'],
+        closeTo(
+          2000 - scaledInitialShift + 700 - (scaledStepWidth * 1),
+          EPSILON,
+        ),
+      );
     });
 
     test('only b and c should be within the viewport horizontally', () {
-      scale.rangeBandConfig = RangeBandConfig.percentOfStep(1.0);
-      scale.range = ScaleOutputExtent(1000, 2000);
-      scale.setViewportSettings(2.0, -700.0);
+      scale.rangeBandConfig = RangeBandConfig.percentOfStep(1);
+      scale.range = const ScaleOutputExtent(1000, 2000);
+      scale.setViewportSettings(2, -700);
 
       expect(scale.compareDomainValueToViewport('a'), equals(-1));
       expect(scale.compareDomainValueToViewport('c'), equals(0));
@@ -248,9 +262,9 @@ void main() {
     });
 
     test('only b and c should be within the viewport vertically', () {
-      scale.rangeBandConfig = RangeBandConfig.percentOfStep(1.0);
-      scale.range = ScaleOutputExtent(2000, 1000);
-      scale.setViewportSettings(2.0, 700.0);
+      scale.rangeBandConfig = RangeBandConfig.percentOfStep(1);
+      scale.range = const ScaleOutputExtent(2000, 1000);
+      scale.setViewportSettings(2, 700);
 
       expect(scale.compareDomainValueToViewport('a'), equals(1));
       expect(scale.compareDomainValueToViewport('c'), equals(0));
@@ -259,8 +273,8 @@ void main() {
     });
 
     test('applies in reverse horizontally', () {
-      scale.range = ScaleOutputExtent(1000, 2000);
-      scale.setViewportSettings(2.0, -700.0);
+      scale.range = const ScaleOutputExtent(1000, 2000);
+      scale.setViewportSettings(2, -700);
 
       expect(scale.reverse(scale['d']), 'd');
       expect(scale.reverse(scale['b']), 'b');
@@ -269,8 +283,8 @@ void main() {
     });
 
     test('applies in reverse vertically', () {
-      scale.range = ScaleOutputExtent(2000, 1000);
-      scale.setViewportSettings(2.0, 700.0);
+      scale.range = const ScaleOutputExtent(2000, 1000);
+      scale.setViewportSettings(2, 700);
 
       expect(scale.reverse(scale['d']), 'd');
       expect(scale.reverse(scale['b']), 'b');
@@ -281,7 +295,7 @@ void main() {
 
   group('viewport', () {
     test('set adjust scale to show viewport horizontally', () {
-      scale.range = ScaleOutputExtent(1000, 2000);
+      scale.range = const ScaleOutputExtent(1000, 2000);
       scale.rangeBandConfig = RangeBandConfig.percentOfStep(0.5);
       scale.setViewport(2, 'b');
 
@@ -296,7 +310,7 @@ void main() {
     });
 
     test('set adjust scale to show viewport vertically', () {
-      scale.range = ScaleOutputExtent(2000, 1000);
+      scale.range = const ScaleOutputExtent(2000, 1000);
       scale.rangeBandConfig = RangeBandConfig.percentOfStep(0.5);
       // Bottom up as domain values are usually reversed.
       scale.setViewport(2, 'c');
@@ -318,7 +332,7 @@ void main() {
     test(
         'set starting value if starting domain is not in domain list '
         'horizontally', () {
-      scale.range = ScaleOutputExtent(1000, 2000);
+      scale.range = const ScaleOutputExtent(1000, 2000);
       scale.rangeBandConfig = RangeBandConfig.percentOfStep(0.5);
       scale.setViewport(2, 'f');
 
@@ -331,7 +345,7 @@ void main() {
     test(
         'set starting value if starting domain is not in domain list '
         'vertically', () {
-      scale.range = ScaleOutputExtent(2000, 1000);
+      scale.range = const ScaleOutputExtent(2000, 1000);
       scale.rangeBandConfig = RangeBandConfig.percentOfStep(0.5);
       scale.setViewport(2, 'f');
 
@@ -344,46 +358,46 @@ void main() {
     test(
         'get size returns number of full steps that fit scale range '
         'horizontally ', () {
-      scale.range = ScaleOutputExtent(1000, 2000);
+      scale.range = const ScaleOutputExtent(1000, 2000);
 
-      scale.setViewportSettings(2.0, 0.0);
+      scale.setViewportSettings(2, 0);
       expect(scale.viewportDataSize, equals(2));
 
-      scale.setViewportSettings(5.0, 0.0);
+      scale.setViewportSettings(5, 0);
       expect(scale.viewportDataSize, equals(0));
     });
 
     test(
         'get size returns number of full steps that fit scale range '
         'vertically ', () {
-      scale.range = ScaleOutputExtent(2000, 1000);
+      scale.range = const ScaleOutputExtent(2000, 1000);
 
-      scale.setViewportSettings(2.0, 0.0);
+      scale.setViewportSettings(2, 0);
       expect(scale.viewportDataSize, equals(2));
 
-      scale.setViewportSettings(5.0, 0.0);
+      scale.setViewportSettings(5, 0);
       expect(scale.viewportDataSize, equals(0));
     });
 
     test('get starting viewport gets first fully visible domain horizontally',
         () {
-      scale.range = ScaleOutputExtent(1000, 2000);
+      scale.range = const ScaleOutputExtent(1000, 2000);
 
-      scale.setViewportSettings(2.0, -500.0);
+      scale.setViewportSettings(2, -500);
       expect(scale.viewportStartingDomain, equals('b'));
 
-      scale.setViewportSettings(2.0, -100.0);
+      scale.setViewportSettings(2, -100);
       expect(scale.viewportStartingDomain, equals('b'));
     });
 
     test('get starting viewport gets first fully visible domain vertically',
         () {
-      scale.range = ScaleOutputExtent(2000, 1000);
+      scale.range = const ScaleOutputExtent(2000, 1000);
 
-      scale.setViewportSettings(2.0, 500.0);
+      scale.setViewportSettings(2, 500);
       expect(scale.viewportStartingDomain, equals('c'));
 
-      scale.setViewportSettings(2.0, 500.0);
+      scale.setViewportSettings(2, 500);
       expect(scale.viewportStartingDomain, equals('c'));
     });
   });

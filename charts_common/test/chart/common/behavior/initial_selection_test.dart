@@ -16,15 +16,14 @@
 import 'dart:math';
 
 import 'package:nimble_charts_common/src/chart/common/base_chart.dart';
+import 'package:nimble_charts_common/src/chart/common/behavior/initial_selection.dart';
 import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart';
 import 'package:nimble_charts_common/src/chart/common/datum_details.dart';
-import 'package:nimble_charts_common/src/chart/common/behavior/initial_selection.dart';
 import 'package:nimble_charts_common/src/chart/common/processed_series.dart';
+import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart';
 import 'package:nimble_charts_common/src/chart/common/series_datum.dart';
 import 'package:nimble_charts_common/src/chart/common/series_renderer.dart';
-import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart';
 import 'package:nimble_charts_common/src/data/series.dart';
-
 import 'package:test/test.dart';
 
 class FakeRenderer<D> extends BaseSeriesRenderer<D> {
@@ -32,17 +31,15 @@ class FakeRenderer<D> extends BaseSeriesRenderer<D> {
 
   @override
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
-    return null;
-  }
+      DatumDetails<D> details, SeriesDatum<D> seriesDatum,) => null;
 
   @override
   List<DatumDetails<D>> getNearestDatumDetailPerSeries(
     Point<double> chartPoint,
     bool byDomain,
     Rectangle<int> boundsOverride, {
-    selectOverlappingPoints = false,
-    selectExactEventLocation = false,
+    bool selectOverlappingPoints = false,
+    bool selectExactEventLocation = false,
   }) =>
       null;
 
@@ -66,149 +63,149 @@ class FakeChart extends BaseChart {
 }
 
 void main() {
-  FakeChart _chart;
-  MutableSeries _series1;
-  MutableSeries _series2;
-  MutableSeries _series3;
-  MutableSeries _series4;
-  final infoSelectionType = SelectionModelType.info;
+  FakeChart chart;
+  MutableSeries series1;
+  MutableSeries series2;
+  MutableSeries series3;
+  MutableSeries series4;
+  const infoSelectionType = SelectionModelType.info;
 
-  InitialSelection _makeBehavior(SelectionModelType selectionModelType,
-      {List<String> selectedSeries, List<SeriesDatumConfig> selectedData}) {
-    InitialSelection behavior = InitialSelection(
+  InitialSelection makeBehavior(SelectionModelType selectionModelType,
+      {List<String> selectedSeries, List<SeriesDatumConfig> selectedData,}) {
+    final var behavior = InitialSelection(
         selectionModelType: selectionModelType,
         selectedSeriesConfig: selectedSeries,
-        selectedDataConfig: selectedData);
+        selectedDataConfig: selectedData,);
 
-    behavior.attachTo(_chart);
+    behavior.attachTo(chart);
 
     return behavior;
   }
 
   setUp(() {
-    _chart = FakeChart();
+    chart = FakeChart();
 
-    _series1 = MutableSeries(Series(
+    series1 = MutableSeries(Series(
         id: 'mySeries1',
         data: ['A', 'B', 'C', 'D'],
-        domainFn: (dynamic datum, __) => datum,
-        measureFn: (_, __) => null));
+        domainFn: (datum, __) => datum,
+        measureFn: (_, __) => null,),);
 
-    _series2 = MutableSeries(Series(
+    series2 = MutableSeries(Series(
         id: 'mySeries2',
         data: ['W', 'X', 'Y', 'Z'],
-        domainFn: (dynamic datum, __) => datum,
-        measureFn: (_, __) => null));
+        domainFn: (datum, __) => datum,
+        measureFn: (_, __) => null,),);
 
-    _series3 = MutableSeries(Series(
+    series3 = MutableSeries(Series(
         id: 'mySeries3',
         data: ['W', 'X', 'Y', 'Z'],
-        domainFn: (dynamic datum, __) => datum,
-        measureFn: (_, __) => null));
+        domainFn: (datum, __) => datum,
+        measureFn: (_, __) => null,),);
 
-    _series4 = MutableSeries(Series(
+    series4 = MutableSeries(Series(
         id: 'mySeries4',
         data: ['W', 'X', 'Y', 'Z'],
-        domainFn: (dynamic datum, __) => datum,
-        measureFn: (_, __) => null));
+        domainFn: (datum, __) => datum,
+        measureFn: (_, __) => null,),);
   });
 
   test('selects initial datum', () {
-    _makeBehavior(infoSelectionType,
-        selectedData: [SeriesDatumConfig('mySeries1', 'C')]);
+    makeBehavior(infoSelectionType,
+        selectedData: [SeriesDatumConfig('mySeries1', 'C')],);
 
-    _chart.requestOnDraw([_series1, _series2]);
+    chart.requestOnDraw([series1, series2]);
 
-    final model = _chart.getSelectionModel(infoSelectionType);
+    final model = chart.getSelectionModel(infoSelectionType);
 
     expect(model.selectedSeries, hasLength(1));
-    expect(model.selectedSeries[0], equals(_series1));
+    expect(model.selectedSeries[0], equals(series1));
     expect(model.selectedDatum, hasLength(1));
-    expect(model.selectedDatum[0].series, equals(_series1));
+    expect(model.selectedDatum[0].series, equals(series1));
     expect(model.selectedDatum[0].datum, equals('C'));
   });
 
   test('selects multiple initial data', () {
-    _makeBehavior(infoSelectionType, selectedData: [
+    makeBehavior(infoSelectionType, selectedData: [
       SeriesDatumConfig('mySeries1', 'C'),
-      SeriesDatumConfig('mySeries1', 'D')
-    ]);
+      SeriesDatumConfig('mySeries1', 'D'),
+    ],);
 
-    _chart.requestOnDraw([_series1, _series2]);
+    chart.requestOnDraw([series1, series2]);
 
-    final model = _chart.getSelectionModel(infoSelectionType);
+    final model = chart.getSelectionModel(infoSelectionType);
 
     expect(model.selectedSeries, hasLength(1));
-    expect(model.selectedSeries[0], equals(_series1));
+    expect(model.selectedSeries[0], equals(series1));
     expect(model.selectedDatum, hasLength(2));
-    expect(model.selectedDatum[0].series, equals(_series1));
+    expect(model.selectedDatum[0].series, equals(series1));
     expect(model.selectedDatum[0].datum, equals('C'));
-    expect(model.selectedDatum[1].series, equals(_series1));
+    expect(model.selectedDatum[1].series, equals(series1));
     expect(model.selectedDatum[1].datum, equals('D'));
   });
 
   test('selects initial series', () {
-    _makeBehavior(infoSelectionType, selectedSeries: ['mySeries2']);
+    makeBehavior(infoSelectionType, selectedSeries: ['mySeries2']);
 
-    _chart.requestOnDraw([_series1, _series2, _series3, _series4]);
+    chart.requestOnDraw([series1, series2, series3, series4]);
 
-    final model = _chart.getSelectionModel(infoSelectionType);
+    final model = chart.getSelectionModel(infoSelectionType);
 
     expect(model.selectedSeries, hasLength(1));
-    expect(model.selectedSeries[0], equals(_series2));
+    expect(model.selectedSeries[0], equals(series2));
     expect(model.selectedDatum, isEmpty);
   });
 
   test('selects multiple series', () {
-    _makeBehavior(infoSelectionType,
-        selectedSeries: ['mySeries2', 'mySeries4']);
+    makeBehavior(infoSelectionType,
+        selectedSeries: ['mySeries2', 'mySeries4'],);
 
-    _chart.requestOnDraw([_series1, _series2, _series3, _series4]);
+    chart.requestOnDraw([series1, series2, series3, series4]);
 
-    final model = _chart.getSelectionModel(infoSelectionType);
+    final model = chart.getSelectionModel(infoSelectionType);
 
     expect(model.selectedSeries, hasLength(2));
-    expect(model.selectedSeries[0], equals(_series2));
-    expect(model.selectedSeries[1], equals(_series4));
+    expect(model.selectedSeries[0], equals(series2));
+    expect(model.selectedSeries[1], equals(series4));
     expect(model.selectedDatum, isEmpty);
   });
 
   test('selects series and datum', () {
-    _makeBehavior(infoSelectionType,
+    makeBehavior(infoSelectionType,
         selectedData: [SeriesDatumConfig('mySeries1', 'C')],
-        selectedSeries: ['mySeries4']);
+        selectedSeries: ['mySeries4'],);
 
-    _chart.requestOnDraw([_series1, _series2, _series3, _series4]);
+    chart.requestOnDraw([series1, series2, series3, series4]);
 
-    final model = _chart.getSelectionModel(infoSelectionType);
+    final model = chart.getSelectionModel(infoSelectionType);
 
     expect(model.selectedSeries, hasLength(2));
-    expect(model.selectedSeries[0], equals(_series1));
-    expect(model.selectedSeries[1], equals(_series4));
-    expect(model.selectedDatum[0].series, equals(_series1));
+    expect(model.selectedSeries[0], equals(series1));
+    expect(model.selectedSeries[1], equals(series4));
+    expect(model.selectedDatum[0].series, equals(series1));
     expect(model.selectedDatum[0].datum, equals('C'));
   });
 
   test('selection model is reset when a new series is drawn', () {
-    _makeBehavior(infoSelectionType, selectedSeries: ['mySeries2']);
+    makeBehavior(infoSelectionType, selectedSeries: ['mySeries2']);
 
-    _chart.requestOnDraw([_series1, _series2, _series3, _series4]);
+    chart.requestOnDraw([series1, series2, series3, series4]);
 
-    final model = _chart.getSelectionModel(infoSelectionType);
+    final model = chart.getSelectionModel(infoSelectionType);
 
     // Verify initial selection is selected on first draw
     expect(model.selectedSeries, hasLength(1));
-    expect(model.selectedSeries[0], equals(_series2));
+    expect(model.selectedSeries[0], equals(series2));
     expect(model.selectedDatum, isEmpty);
 
     // Request a draw with a new series list.
-    _chart.draw(
+    chart.draw(
       [
         Series(
             id: 'mySeries2',
             data: ['W', 'X', 'Y', 'Z'],
-            domainFn: (dynamic datum, __) => datum,
-            measureFn: (_, __) => null)
+            domainFn: (datum, __) => datum,
+            measureFn: (_, __) => null,),
       ],
     );
 

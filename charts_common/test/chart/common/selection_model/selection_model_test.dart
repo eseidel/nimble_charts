@@ -13,172 +13,191 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart';
 import 'package:nimble_charts_common/src/chart/common/processed_series.dart';
+import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart';
 import 'package:nimble_charts_common/src/chart/common/series_datum.dart';
 import 'package:nimble_charts_common/src/data/series.dart';
 import 'package:test/test.dart';
 
 void main() {
-  MutableSelectionModel<String> _selectionModel;
+  MutableSelectionModel<String> selectionModel;
 
-  ImmutableSeries<String> _closestSeries;
-  MyDatum _closestDatumClosestSeries;
-  SeriesDatum<String> _closestDatumClosestSeriesPair;
-  MyDatum _otherDatumClosestSeries;
-  SeriesDatum<String> _otherDatumClosestSeriesPair;
+  ImmutableSeries<String> closestSeries;
+  MyDatum closestDatumClosestSeries;
+  SeriesDatum<String> closestDatumClosestSeriesPair;
+  MyDatum otherDatumClosestSeries;
+  SeriesDatum<String> otherDatumClosestSeriesPair;
 
-  ImmutableSeries<String> _otherSeries;
-  MyDatum _closestDatumOtherSeries;
-  SeriesDatum<String> _closestDatumOtherSeriesPair;
-  MyDatum _otherDatumOtherSeries;
-  SeriesDatum<String> _otherDatumOtherSeriesPair;
+  ImmutableSeries<String> otherSeries;
+  MyDatum closestDatumOtherSeries;
+  SeriesDatum<String> closestDatumOtherSeriesPair;
+  MyDatum otherDatumOtherSeries;
+  SeriesDatum<String> otherDatumOtherSeriesPair;
 
   setUp(() {
-    _selectionModel = MutableSelectionModel<String>();
+    selectionModel = MutableSelectionModel<String>();
 
-    _closestDatumClosestSeries = MyDatum('cDcS');
-    _otherDatumClosestSeries = MyDatum('oDcS');
-    _closestSeries = MutableSeries<String>(Series<MyDatum, String>(
+    closestDatumClosestSeries = MyDatum('cDcS');
+    otherDatumClosestSeries = MyDatum('oDcS');
+    closestSeries = MutableSeries<String>(
+      Series<MyDatum, String>(
         id: 'closest',
-        data: [_closestDatumClosestSeries, _otherDatumClosestSeries],
+        data: [closestDatumClosestSeries, otherDatumClosestSeries],
         domainFn: (d, _) => d.id,
-        measureFn: (_, __) => 0));
-    _closestDatumClosestSeriesPair =
-        SeriesDatum<String>(_closestSeries, _closestDatumClosestSeries);
-    _otherDatumClosestSeriesPair =
-        SeriesDatum<String>(_closestSeries, _otherDatumClosestSeries);
+        measureFn: (_, __) => 0,
+      ),
+    );
+    closestDatumClosestSeriesPair =
+        SeriesDatum<String>(closestSeries, closestDatumClosestSeries);
+    otherDatumClosestSeriesPair =
+        SeriesDatum<String>(closestSeries, otherDatumClosestSeries);
 
-    _closestDatumOtherSeries = MyDatum('cDoS');
-    _otherDatumOtherSeries = MyDatum('oDoS');
-    _otherSeries = MutableSeries<String>(Series<MyDatum, String>(
+    closestDatumOtherSeries = MyDatum('cDoS');
+    otherDatumOtherSeries = MyDatum('oDoS');
+    otherSeries = MutableSeries<String>(
+      Series<MyDatum, String>(
         id: 'other',
-        data: [_closestDatumOtherSeries, _otherDatumOtherSeries],
+        data: [closestDatumOtherSeries, otherDatumOtherSeries],
         domainFn: (d, _) => d.id,
-        measureFn: (_, __) => 0));
-    _closestDatumOtherSeriesPair =
-        SeriesDatum<String>(_otherSeries, _closestDatumOtherSeries);
-    _otherDatumOtherSeriesPair =
-        SeriesDatum<String>(_otherSeries, _otherDatumOtherSeries);
+        measureFn: (_, __) => 0,
+      ),
+    );
+    closestDatumOtherSeriesPair =
+        SeriesDatum<String>(otherSeries, closestDatumOtherSeries);
+    otherDatumOtherSeriesPair =
+        SeriesDatum<String>(otherSeries, otherDatumOtherSeries);
   });
 
   group('SelectionModel persists values', () {
     test('selection model is empty by default', () {
-      expect(_selectionModel.hasDatumSelection, isFalse);
-      expect(_selectionModel.hasSeriesSelection, isFalse);
+      expect(selectionModel.hasDatumSelection, isFalse);
+      expect(selectionModel.hasSeriesSelection, isFalse);
     });
 
     test('all datum are selected but only the first Series is', () {
       // Select the 'closest' datum for each Series.
-      _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
-        SeriesDatum(_otherSeries, _closestDatumOtherSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(closestSeries, closestDatumClosestSeries),
+        SeriesDatum(otherSeries, closestDatumOtherSeries),
       ], [
-        _closestSeries
+        closestSeries,
       ]);
 
-      expect(_selectionModel.hasDatumSelection, isTrue);
-      expect(_selectionModel.selectedDatum, hasLength(2));
-      expect(_selectionModel.selectedDatum,
-          contains(_closestDatumClosestSeriesPair));
-      expect(_selectionModel.selectedDatum,
-          contains(_closestDatumOtherSeriesPair));
+      expect(selectionModel.hasDatumSelection, isTrue);
+      expect(selectionModel.selectedDatum, hasLength(2));
       expect(
-          _selectionModel.selectedDatum.contains(_otherDatumClosestSeriesPair),
-          isFalse);
-      expect(_selectionModel.selectedDatum.contains(_otherDatumOtherSeriesPair),
-          isFalse);
+        selectionModel.selectedDatum,
+        contains(closestDatumClosestSeriesPair),
+      );
+      expect(
+        selectionModel.selectedDatum,
+        contains(closestDatumOtherSeriesPair),
+      );
+      expect(
+        selectionModel.selectedDatum.contains(otherDatumClosestSeriesPair),
+        isFalse,
+      );
+      expect(
+        selectionModel.selectedDatum.contains(otherDatumOtherSeriesPair),
+        isFalse,
+      );
 
-      expect(_selectionModel.hasSeriesSelection, isTrue);
-      expect(_selectionModel.selectedSeries, hasLength(1));
-      expect(_selectionModel.selectedSeries, contains(_closestSeries));
-      expect(_selectionModel.selectedSeries.contains(_otherSeries), isFalse);
+      expect(selectionModel.hasSeriesSelection, isTrue);
+      expect(selectionModel.selectedSeries, hasLength(1));
+      expect(selectionModel.selectedSeries, contains(closestSeries));
+      expect(selectionModel.selectedSeries.contains(otherSeries), isFalse);
     });
 
     test('selection can change', () {
       // Select the 'closest' datum for each Series.
-      _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
-        SeriesDatum(_otherSeries, _closestDatumOtherSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(closestSeries, closestDatumClosestSeries),
+        SeriesDatum(otherSeries, closestDatumOtherSeries),
       ], [
-        _closestSeries
+        closestSeries,
       ]);
 
       // Change selection to just the other datum on the other series.
-      _selectionModel.updateSelection([
-        SeriesDatum(_otherSeries, _otherDatumOtherSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(otherSeries, otherDatumOtherSeries),
       ], [
-        _otherSeries
+        otherSeries,
       ]);
 
-      expect(_selectionModel.selectedDatum, hasLength(1));
+      expect(selectionModel.selectedDatum, hasLength(1));
       expect(
-          _selectionModel.selectedDatum, contains(_otherDatumOtherSeriesPair));
+        selectionModel.selectedDatum,
+        contains(otherDatumOtherSeriesPair),
+      );
 
-      expect(_selectionModel.selectedSeries, hasLength(1));
-      expect(_selectionModel.selectedSeries, contains(_otherSeries));
+      expect(selectionModel.selectedSeries, hasLength(1));
+      expect(selectionModel.selectedSeries, contains(otherSeries));
     });
 
     test('selection can be series only', () {
       // Select the 'closest' Series without datum to simulate legend hovering.
-      _selectionModel.updateSelection([], [_closestSeries]);
+      selectionModel.updateSelection([], [closestSeries]);
 
-      expect(_selectionModel.hasDatumSelection, isFalse);
-      expect(_selectionModel.selectedDatum, hasLength(0));
+      expect(selectionModel.hasDatumSelection, isFalse);
+      expect(selectionModel.selectedDatum, hasLength(0));
 
-      expect(_selectionModel.hasSeriesSelection, isTrue);
-      expect(_selectionModel.selectedSeries, hasLength(1));
-      expect(_selectionModel.selectedSeries, contains(_closestSeries));
+      expect(selectionModel.hasSeriesSelection, isTrue);
+      expect(selectionModel.selectedSeries, hasLength(1));
+      expect(selectionModel.selectedSeries, contains(closestSeries));
     });
 
     test('selection lock prevents change', () {
       // Prevent selection changes.
-      _selectionModel.locked = true;
+      selectionModel.locked = true;
 
       // Try to the 'closest' datum for each Series.
-      _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
-        SeriesDatum(_otherSeries, _closestDatumOtherSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(closestSeries, closestDatumClosestSeries),
+        SeriesDatum(otherSeries, closestDatumOtherSeries),
       ], [
-        _closestSeries
+        closestSeries,
       ]);
 
-      expect(_selectionModel.hasDatumSelection, isFalse);
-      expect(_selectionModel.hasSeriesSelection, isFalse);
+      expect(selectionModel.hasDatumSelection, isFalse);
+      expect(selectionModel.hasSeriesSelection, isFalse);
 
       // Allow selection changes.
-      _selectionModel.locked = false;
+      selectionModel.locked = false;
 
       // Try to the 'closest' datum for each Series.
-      _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
-        SeriesDatum(_otherSeries, _closestDatumOtherSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(closestSeries, closestDatumClosestSeries),
+        SeriesDatum(otherSeries, closestDatumOtherSeries),
       ], [
-        _closestSeries
+        closestSeries,
       ]);
 
-      expect(_selectionModel.hasDatumSelection, isTrue);
-      expect(_selectionModel.hasSeriesSelection, isTrue);
+      expect(selectionModel.hasDatumSelection, isTrue);
+      expect(selectionModel.hasSeriesSelection, isTrue);
 
       // Prevent selection changes.
-      _selectionModel.locked = true;
+      selectionModel.locked = true;
 
       // Attempt to change selection
-      _selectionModel.updateSelection([
-        SeriesDatum(_otherSeries, _otherDatumOtherSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(otherSeries, otherDatumOtherSeries),
       ], [
-        _otherSeries
+        otherSeries,
       ]);
 
       // Previous selection should still be set.
-      expect(_selectionModel.selectedDatum, hasLength(2));
-      expect(_selectionModel.selectedDatum,
-          contains(_closestDatumClosestSeriesPair));
-      expect(_selectionModel.selectedDatum,
-          contains(_closestDatumOtherSeriesPair));
+      expect(selectionModel.selectedDatum, hasLength(2));
+      expect(
+        selectionModel.selectedDatum,
+        contains(closestDatumClosestSeriesPair),
+      );
+      expect(
+        selectionModel.selectedDatum,
+        contains(closestDatumOtherSeriesPair),
+      );
 
-      expect(_selectionModel.selectedSeries, hasLength(1));
-      expect(_selectionModel.selectedSeries, contains(_closestSeries));
+      expect(selectionModel.selectedSeries, hasLength(1));
+      expect(selectionModel.selectedSeries, contains(closestSeries));
     });
   });
 
@@ -186,42 +205,40 @@ void main() {
     test('listener triggered for change', () {
       SelectionModel<String> triggeredModel;
       // Listen
-      _selectionModel
-          .addSelectionChangedListener((SelectionModel<String> model) {
+      selectionModel.addSelectionChangedListener((model) {
         triggeredModel = model;
       });
 
       // Set the selection to closest datum.
-      _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(closestSeries, closestDatumClosestSeries),
       ], [
-        _closestSeries
+        closestSeries,
       ]);
 
       // Callback should have been triggered.
-      expect(triggeredModel, equals(_selectionModel));
+      expect(triggeredModel, equals(selectionModel));
     });
 
     test('listener not triggered for no change', () {
       SelectionModel<String> triggeredModel;
       // Set the selection to closest datum.
-      _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(closestSeries, closestDatumClosestSeries),
       ], [
-        _closestSeries
+        closestSeries,
       ]);
 
       // Listen
-      _selectionModel
-          .addSelectionChangedListener((SelectionModel<String> model) {
+      selectionModel.addSelectionChangedListener((model) {
         triggeredModel = model;
       });
 
       // Try to update the model with the same value.
-      _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(closestSeries, closestDatumClosestSeries),
       ], [
-        _closestSeries
+        closestSeries,
       ]);
 
       // Callback should not have been triggered.
@@ -236,16 +253,16 @@ void main() {
       }
 
       // Listen
-      _selectionModel.addSelectionChangedListener(cb);
+      selectionModel.addSelectionChangedListener(cb);
 
       // Unlisten
-      _selectionModel.removeSelectionChangedListener(cb);
+      selectionModel.removeSelectionChangedListener(cb);
 
       // Set the selection to closest datum.
-      _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(closestSeries, closestDatumClosestSeries),
       ], [
-        _closestSeries
+        closestSeries,
       ]);
 
       // Callback should not have been triggered.
@@ -257,46 +274,44 @@ void main() {
     test('listener triggered for change', () {
       SelectionModel<String> triggeredModel;
       // Listen
-      _selectionModel
-          .addSelectionUpdatedListener((SelectionModel<String> model) {
+      selectionModel.addSelectionUpdatedListener((model) {
         triggeredModel = model;
       });
 
       // Set the selection to closest datum.
-      _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(closestSeries, closestDatumClosestSeries),
       ], [
-        _closestSeries
+        closestSeries,
       ]);
 
       // Callback should have been triggered.
-      expect(triggeredModel, equals(_selectionModel));
+      expect(triggeredModel, equals(selectionModel));
     });
 
     test('listener triggered for no change', () {
       SelectionModel<String> triggeredModel;
       // Set the selection to closest datum.
-      _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(closestSeries, closestDatumClosestSeries),
       ], [
-        _closestSeries
+        closestSeries,
       ]);
 
       // Listen
-      _selectionModel
-          .addSelectionUpdatedListener((SelectionModel<String> model) {
+      selectionModel.addSelectionUpdatedListener((model) {
         triggeredModel = model;
       });
 
       // Try to update the model with the same value.
-      _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(closestSeries, closestDatumClosestSeries),
       ], [
-        _closestSeries
+        closestSeries,
       ]);
 
       // Callback should have been triggered.
-      expect(triggeredModel, equals(_selectionModel));
+      expect(triggeredModel, equals(selectionModel));
     });
 
     test('removed listener not triggered for change', () {
@@ -307,16 +322,16 @@ void main() {
       }
 
       // Listen
-      _selectionModel.addSelectionUpdatedListener(cb);
+      selectionModel.addSelectionUpdatedListener(cb);
 
       // Unlisten
-      _selectionModel.removeSelectionUpdatedListener(cb);
+      selectionModel.removeSelectionUpdatedListener(cb);
 
       // Set the selection to closest datum.
-      _selectionModel.updateSelection([
-        SeriesDatum(_closestSeries, _closestDatumClosestSeries),
+      selectionModel.updateSelection([
+        SeriesDatum(closestSeries, closestDatumClosestSeries),
       ], [
-        _closestSeries
+        closestSeries,
       ]);
 
       // Callback should not have been triggered.
@@ -328,16 +343,15 @@ void main() {
     test('listener triggered when model is locked', () {
       SelectionModel<String> triggeredModel;
       // Listen
-      _selectionModel
-          .addSelectionLockChangedListener((SelectionModel<String> model) {
+      selectionModel.addSelectionLockChangedListener((model) {
         triggeredModel = model;
       });
 
       // Lock selection.
-      _selectionModel.locked = true;
+      selectionModel.locked = true;
 
       // Callback should have been triggered.
-      expect(triggeredModel, equals(_selectionModel));
+      expect(triggeredModel, equals(selectionModel));
     });
 
     test('removed listener not triggered for locking', () {
@@ -348,13 +362,13 @@ void main() {
       }
 
       // Listen
-      _selectionModel.addSelectionLockChangedListener(cb);
+      selectionModel.addSelectionLockChangedListener(cb);
 
       // Unlisten
-      _selectionModel.removeSelectionLockChangedListener(cb);
+      selectionModel.removeSelectionLockChangedListener(cb);
 
       // Lock selection.
-      _selectionModel.locked = true;
+      selectionModel.locked = true;
 
       // Callback should not have been triggered.
       expect(triggeredModel, isNull);
@@ -363,6 +377,6 @@ void main() {
 }
 
 class MyDatum {
-  final String id;
   MyDatum(this.id);
+  final String id;
 }

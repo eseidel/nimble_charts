@@ -13,33 +13,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:mockito/mockito.dart';
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
+    show ImmutableSeries, MutableSeries;
 import 'package:nimble_charts_common/src/chart/line/line_renderer.dart';
 import 'package:nimble_charts_common/src/chart/line/line_renderer_config.dart';
-import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
-    show MutableSeries, ImmutableSeries;
 import 'package:nimble_charts_common/src/common/color.dart';
 import 'package:nimble_charts_common/src/common/material_palette.dart'
     show MaterialPalette;
 import 'package:nimble_charts_common/src/data/series.dart' show Series;
-
-import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 /// Datum/Row for the chart.
 class MyRow {
+  MyRow(
+    this.campaignString,
+    this.campaign,
+    this.clickCount,
+    this.color,
+    this.dashPattern,
+    this.strokeWidthPx,
+  );
   final String campaignString;
   final int campaign;
   final int clickCount;
   final Color color;
   final List<int> dashPattern;
   final double strokeWidthPx;
-  MyRow(this.campaignString, this.campaign, this.clickCount, this.color,
-      this.dashPattern, this.strokeWidthPx);
 }
 
 class MockImmutableSeries<D> extends Mock implements ImmutableSeries<D> {
-  final String _id;
   MockImmutableSeries(this._id);
+  final String _id;
 
   @override
   String get id => _id;
@@ -56,91 +61,156 @@ void main() {
 
   setUp(() {
     myFakeDesktopData = [
-      MyRow('MyCampaign1', 1, 5, MaterialPalette.blue.shadeDefault, null, 2.0),
+      MyRow('MyCampaign1', 1, 5, MaterialPalette.blue.shadeDefault, null, 2),
       MyRow(
-          'MyCampaign2', 2, 25, MaterialPalette.green.shadeDefault, null, 2.0),
-      MyRow('MyCampaign3', 3, 100, MaterialPalette.red.shadeDefault, null, 2.0),
-      MyRow('MyOtherCampaign', 4, 75, MaterialPalette.red.shadeDefault, null,
-          2.0),
+        'MyCampaign2',
+        2,
+        25,
+        MaterialPalette.green.shadeDefault,
+        null,
+        2,
+      ),
+      MyRow('MyCampaign3', 3, 100, MaterialPalette.red.shadeDefault, null, 2),
+      MyRow(
+        'MyOtherCampaign',
+        4,
+        75,
+        MaterialPalette.red.shadeDefault,
+        null,
+        2,
+      ),
     ];
 
     myFakeTabletData = [
       MyRow(
-          'MyCampaign1', 1, 5, MaterialPalette.blue.shadeDefault, [2, 2], 2.0),
+        'MyCampaign1',
+        1,
+        5,
+        MaterialPalette.blue.shadeDefault,
+        [2, 2],
+        2,
+      ),
       MyRow(
-          'MyCampaign2', 2, 25, MaterialPalette.blue.shadeDefault, [3, 3], 2.0),
-      MyRow('MyCampaign3', 3, 100, MaterialPalette.blue.shadeDefault, [4, 4],
-          2.0),
-      MyRow('MyOtherCampaign', 4, 75, MaterialPalette.blue.shadeDefault, [4, 4],
-          2.0),
+        'MyCampaign2',
+        2,
+        25,
+        MaterialPalette.blue.shadeDefault,
+        [3, 3],
+        2,
+      ),
+      MyRow(
+        'MyCampaign3',
+        3,
+        100,
+        MaterialPalette.blue.shadeDefault,
+        [4, 4],
+        2,
+      ),
+      MyRow(
+        'MyOtherCampaign',
+        4,
+        75,
+        MaterialPalette.blue.shadeDefault,
+        [4, 4],
+        2,
+      ),
     ];
 
     myFakeMobileData = [
-      MyRow('MyCampaign1', 1, 5, MaterialPalette.blue.shadeDefault, null, 2.0),
-      MyRow('MyCampaign2', 2, 25, MaterialPalette.blue.shadeDefault, null, 3.0),
+      MyRow('MyCampaign1', 1, 5, MaterialPalette.blue.shadeDefault, null, 2),
+      MyRow('MyCampaign2', 2, 25, MaterialPalette.blue.shadeDefault, null, 3),
       MyRow(
-          'MyCampaign3', 3, 100, MaterialPalette.blue.shadeDefault, null, 4.0),
-      MyRow('MyOtherCampaign', 4, 75, MaterialPalette.blue.shadeDefault, null,
-          4.0),
+        'MyCampaign3',
+        3,
+        100,
+        MaterialPalette.blue.shadeDefault,
+        null,
+        4,
+      ),
+      MyRow(
+        'MyOtherCampaign',
+        4,
+        75,
+        MaterialPalette.blue.shadeDefault,
+        null,
+        4,
+      ),
     ];
 
     numericSeriesList = [
-      MutableSeries<int>(Series<MyRow, int>(
+      MutableSeries<int>(
+        Series<MyRow, int>(
           id: 'Desktop',
           colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
           domainFn: (row, _) => row.campaign,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
-          data: myFakeDesktopData)),
-      MutableSeries<int>(Series<MyRow, int>(
+          data: myFakeDesktopData,
+        ),
+      ),
+      MutableSeries<int>(
+        Series<MyRow, int>(
           id: 'Tablet',
           colorFn: (_, __) => MaterialPalette.red.shadeDefault,
           domainFn: (row, _) => row.campaign,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
           strokeWidthPxFn: (_, __) => 1.25,
-          data: myFakeTabletData)),
-      MutableSeries<int>(Series<MyRow, int>(
+          data: myFakeTabletData,
+        ),
+      ),
+      MutableSeries<int>(
+        Series<MyRow, int>(
           id: 'Mobile',
           colorFn: (_, __) => MaterialPalette.green.shadeDefault,
           domainFn: (row, _) => row.campaign,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
           strokeWidthPxFn: (_, __) => 3.0,
-          data: myFakeMobileData))
+          data: myFakeMobileData,
+        ),
+      ),
     ];
 
     ordinalSeriesList = [
-      MutableSeries<String>(Series<MyRow, String>(
+      MutableSeries<String>(
+        Series<MyRow, String>(
           id: 'Desktop',
           colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
           domainFn: (row, _) => row.campaignString,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
-          data: myFakeDesktopData)),
-      MutableSeries<String>(Series<MyRow, String>(
+          data: myFakeDesktopData,
+        ),
+      ),
+      MutableSeries<String>(
+        Series<MyRow, String>(
           id: 'Tablet',
           colorFn: (_, __) => MaterialPalette.red.shadeDefault,
           domainFn: (row, _) => row.campaignString,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
           strokeWidthPxFn: (_, __) => 1.25,
-          data: myFakeTabletData)),
-      MutableSeries<String>(Series<MyRow, String>(
+          data: myFakeTabletData,
+        ),
+      ),
+      MutableSeries<String>(
+        Series<MyRow, String>(
           id: 'Mobile',
           colorFn: (_, __) => MaterialPalette.green.shadeDefault,
           domainFn: (row, _) => row.campaignString,
           measureFn: (row, _) => row.clickCount,
           measureOffsetFn: (_, __) => 0,
           strokeWidthPxFn: (_, __) => 3.0,
-          data: myFakeMobileData))
+          data: myFakeMobileData,
+        ),
+      ),
     ];
   });
 
   group('preprocess', () {
     test('with numeric data and simple lines', () {
-      renderer =
-          LineRenderer<num>(config: LineRendererConfig(strokeWidthPx: 2.0));
+      renderer = LineRenderer<num>(config: LineRendererConfig());
 
       renderer.configureSeries(numericSeriesList);
       renderer.preprocessSeries(numericSeriesList);
@@ -204,7 +274,8 @@ void main() {
 
     test('with numeric data and stacked lines', () {
       renderer = LineRenderer<num>(
-          config: LineRendererConfig(stacked: true, strokeWidthPx: 2.0));
+        config: LineRendererConfig(stacked: true),
+      );
 
       renderer.configureSeries(numericSeriesList);
       renderer.preprocessSeries(numericSeriesList);
@@ -268,37 +339,45 @@ void main() {
 
     test('with numeric data and changes in style', () {
       numericSeriesList = [
-        MutableSeries<int>(Series<MyRow, int>(
+        MutableSeries<int>(
+          Series<MyRow, int>(
             id: 'Desktop',
-            colorFn: (MyRow row, _) => row.color,
-            dashPatternFn: (MyRow row, _) => row.dashPattern,
-            strokeWidthPxFn: (MyRow row, _) => row.strokeWidthPx,
+            colorFn: (row, _) => row.color,
+            dashPatternFn: (row, _) => row.dashPattern,
+            strokeWidthPxFn: (row, _) => row.strokeWidthPx,
             domainFn: (row, _) => row.campaign,
             measureFn: (row, _) => row.clickCount,
             measureOffsetFn: (_, __) => 0,
-            data: myFakeDesktopData)),
-        MutableSeries<int>(Series<MyRow, int>(
+            data: myFakeDesktopData,
+          ),
+        ),
+        MutableSeries<int>(
+          Series<MyRow, int>(
             id: 'Tablet',
-            colorFn: (MyRow row, _) => row.color,
-            dashPatternFn: (MyRow row, _) => row.dashPattern,
-            strokeWidthPxFn: (MyRow row, _) => row.strokeWidthPx,
+            colorFn: (row, _) => row.color,
+            dashPatternFn: (row, _) => row.dashPattern,
+            strokeWidthPxFn: (row, _) => row.strokeWidthPx,
             domainFn: (row, _) => row.campaign,
             measureFn: (row, _) => row.clickCount,
             measureOffsetFn: (_, __) => 0,
-            data: myFakeTabletData)),
-        MutableSeries<int>(Series<MyRow, int>(
+            data: myFakeTabletData,
+          ),
+        ),
+        MutableSeries<int>(
+          Series<MyRow, int>(
             id: 'Mobile',
-            colorFn: (MyRow row, _) => row.color,
-            dashPatternFn: (MyRow row, _) => row.dashPattern,
-            strokeWidthPxFn: (MyRow row, _) => row.strokeWidthPx,
+            colorFn: (row, _) => row.color,
+            dashPatternFn: (row, _) => row.dashPattern,
+            strokeWidthPxFn: (row, _) => row.strokeWidthPx,
             domainFn: (row, _) => row.campaign,
             measureFn: (row, _) => row.clickCount,
             measureOffsetFn: (_, __) => 0,
-            data: myFakeMobileData))
+            data: myFakeMobileData,
+          ),
+        ),
       ];
 
-      renderer =
-          LineRenderer<num>(config: LineRendererConfig(strokeWidthPx: 2.0));
+      renderer = LineRenderer<num>(config: LineRendererConfig());
 
       renderer.configureSeries(numericSeriesList);
       renderer.preprocessSeries(numericSeriesList);
@@ -403,27 +482,76 @@ void main() {
     });
 
     test('with numeric data and repeats in style', () {
-      var myFakeData = [
+      final myFakeData = [
         MyRow(
-            'MyCampaign1', 1, 5, MaterialPalette.blue.shadeDefault, null, 2.0),
-        MyRow('MyCampaign2', 2, 25, MaterialPalette.green.shadeDefault, null,
-            2.0),
-        MyRow('MyCampaign3', 3, 100, MaterialPalette.blue.shadeDefault, null,
-            2.0),
-        MyRow('MyCampaign4', 4, 75, MaterialPalette.green.shadeDefault, null,
-            2.0),
+          'MyCampaign1',
+          1,
+          5,
+          MaterialPalette.blue.shadeDefault,
+          null,
+          2,
+        ),
         MyRow(
-            'MyCampaign1', 5, 5, MaterialPalette.blue.shadeDefault, null, 2.0),
-        MyRow('MyCampaign2', 6, 25, MaterialPalette.green.shadeDefault, null,
-            2.0),
-        MyRow('MyCampaign3', 7, 100, MaterialPalette.blue.shadeDefault, null,
-            2.0),
-        MyRow('MyCampaign4', 8, 75, MaterialPalette.green.shadeDefault, null,
-            2.0),
+          'MyCampaign2',
+          2,
+          25,
+          MaterialPalette.green.shadeDefault,
+          null,
+          2,
+        ),
+        MyRow(
+          'MyCampaign3',
+          3,
+          100,
+          MaterialPalette.blue.shadeDefault,
+          null,
+          2,
+        ),
+        MyRow(
+          'MyCampaign4',
+          4,
+          75,
+          MaterialPalette.green.shadeDefault,
+          null,
+          2,
+        ),
+        MyRow(
+          'MyCampaign1',
+          5,
+          5,
+          MaterialPalette.blue.shadeDefault,
+          null,
+          2,
+        ),
+        MyRow(
+          'MyCampaign2',
+          6,
+          25,
+          MaterialPalette.green.shadeDefault,
+          null,
+          2,
+        ),
+        MyRow(
+          'MyCampaign3',
+          7,
+          100,
+          MaterialPalette.blue.shadeDefault,
+          null,
+          2,
+        ),
+        MyRow(
+          'MyCampaign4',
+          8,
+          75,
+          MaterialPalette.green.shadeDefault,
+          null,
+          2,
+        ),
       ];
 
       numericSeriesList = [
-        MutableSeries<int>(Series<MyRow, int>(
+        MutableSeries<int>(
+          Series<MyRow, int>(
             id: 'Desktop',
             colorFn: (row, _) => row.color,
             dashPatternFn: (row, _) => row.dashPattern,
@@ -431,11 +559,12 @@ void main() {
             domainFn: (row, _) => row.campaign,
             measureFn: (row, _) => row.clickCount,
             measureOffsetFn: (_, __) => 0,
-            data: myFakeData)),
+            data: myFakeData,
+          ),
+        ),
       ];
 
-      renderer =
-          LineRenderer<num>(config: LineRendererConfig(strokeWidthPx: 2.0));
+      renderer = LineRenderer<num>(config: LineRendererConfig());
 
       renderer.configureSeries(numericSeriesList);
       renderer.preprocessSeries(numericSeriesList);
@@ -443,9 +572,9 @@ void main() {
       expect(numericSeriesList.length, equals(1));
 
       // Validate Desktop series.
-      var series = numericSeriesList[0];
+      final series = numericSeriesList[0];
 
-      var styleSegments = series.getAttr(styleSegmentsKey);
+      final styleSegments = series.getAttr(styleSegmentsKey);
       expect(styleSegments.length, equals(8));
 
       var segment = styleSegments[0];
@@ -490,8 +619,7 @@ void main() {
     });
 
     test('with ordinal data and simple lines', () {
-      renderer =
-          LineRenderer<String>(config: LineRendererConfig(strokeWidthPx: 2.0));
+      renderer = LineRenderer<String>(config: LineRendererConfig());
 
       renderer.configureSeries(ordinalSeriesList);
       renderer.preprocessSeries(ordinalSeriesList);
@@ -540,9 +668,8 @@ void main() {
   });
 
   group('Line merging', () {
-    List<ImmutableSeries<num>> series(List<String> keys) {
-      return keys.map((key) => MockImmutableSeries<num>(key)).toList();
-    }
+    List<ImmutableSeries<num>> series(List<String> keys) =>
+        keys.map(MockImmutableSeries<num>.new).toList();
 
     test('simple beginning removal', () {
       final tester = LineRendererTester(LineRenderer<num>());

@@ -13,22 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/src/chart/common/series_renderer.dart';
 import 'package:mockito/mockito.dart';
-
 import 'package:nimble_charts_common/src/chart/common/base_chart.dart';
 import 'package:nimble_charts_common/src/chart/common/behavior/chart_behavior.dart';
 import 'package:nimble_charts_common/src/chart/common/datum_details.dart';
 import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart';
-
+import 'package:nimble_charts_common/src/chart/common/series_renderer.dart';
 import 'package:test/test.dart';
 
 class MockBehavior extends Mock implements ChartBehavior<String> {}
 
 class ParentBehavior implements ChartBehavior<String> {
-  final ChartBehavior<String> child;
-
   ParentBehavior(this.child);
+  final ChartBehavior<String> child;
 
   @override
   String get role => null;

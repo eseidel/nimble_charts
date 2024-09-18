@@ -31,30 +31,33 @@ class MockTickDrawStrategy extends Mock implements TickDrawStrategy<num> {}
 
 class MockGraphicsFactory extends Mock implements GraphicsFactory {
   @override
-  TextElement createTextElement(String _) {
-    return MockTextElement();
-  }
+  TextElement createTextElement(String _) => MockTextElement();
 }
 
 class MockTextElement extends Mock implements TextElement {}
 
 StaticTickProvider<num> _createProvider(List<num> values) =>
-    StaticTickProvider<num>(values.map((v) => TickSpec(v)).toList());
+    StaticTickProvider<num>(values.map(TickSpec.new).toList());
 
 void main() {
   test('changing first tick only', () {
-    var axis = NumericAxis(
+    final axis = NumericAxis(
       tickProvider: _createProvider([1, 10]),
     );
 
-    var drawStrategy = MockTickDrawStrategy();
-    when(drawStrategy.collides(any, any)).thenReturn(CollisionReport<num>(
-        ticks: [], ticksCollide: false, alternateTicksUsed: false));
+    final drawStrategy = MockTickDrawStrategy();
+    when(drawStrategy.collides(any, any)).thenReturn(
+      CollisionReport<num>(
+        ticks: [],
+        ticksCollide: false,
+        alternateTicksUsed: false,
+      ),
+    );
 
-    var tester = AxisTester(axis);
+    final tester = AxisTester(axis);
     axis.tickDrawStrategy = drawStrategy;
     axis.graphicsFactory = MockGraphicsFactory();
-    tester.scale.range = ScaleOutputExtent(0, 300);
+    tester.scale.range = const ScaleOutputExtent(0, 300);
 
     axis.updateTicks();
 
@@ -67,28 +70,38 @@ void main() {
   });
 
   test('updates max label width on layout change', () {
-    var axis = NumericAxis(
+    final axis = NumericAxis(
       tickProvider: _createProvider([1, 10]),
     );
 
-    var drawStrategy = MockTickDrawStrategy();
-    when(drawStrategy.collides(any, any)).thenReturn(CollisionReport<num>(
-        ticks: [], ticksCollide: false, alternateTicksUsed: false));
+    final drawStrategy = MockTickDrawStrategy();
+    when(drawStrategy.collides(any, any)).thenReturn(
+      CollisionReport<num>(
+        ticks: [],
+        ticksCollide: false,
+        alternateTicksUsed: false,
+      ),
+    );
 
     axis.tickDrawStrategy = drawStrategy;
     axis.graphicsFactory = MockGraphicsFactory();
-    var axisOrientation = AxisOrientation.left;
+    const axisOrientation = AxisOrientation.left;
     axis.axisOrientation = axisOrientation;
 
-    var maxWidth = 100;
-    var maxHeight = 500;
-    var componentBounds = Rectangle<int>(0, 0, maxWidth, maxHeight);
-    var drawBounds = Rectangle<int>(0, 0, maxWidth, maxHeight);
+    const maxWidth = 100;
+    const maxHeight = 500;
+    const componentBounds = Rectangle<int>(0, 0, maxWidth, maxHeight);
+    const drawBounds = Rectangle<int>(0, 0, maxWidth, maxHeight);
     axis.layout(componentBounds, drawBounds);
 
-    verify(drawStrategy.updateTickWidth(
-            any, maxWidth, maxHeight, axisOrientation,
-            collision: false))
-        .called(1);
+    verify(
+      drawStrategy.updateTickWidth(
+        any,
+        maxWidth,
+        maxHeight,
+        axisOrientation,
+        collision: false,
+      ),
+    ).called(1);
   });
 }

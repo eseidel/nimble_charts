@@ -13,7 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:math' show pi, Rectangle;
+import 'dart:math' show Rectangle, pi;
+
+import 'package:meta/meta.dart' show required;
+import 'package:mockito/mockito.dart';
 import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
     show ChartCanvas;
 import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
@@ -27,14 +30,11 @@ import 'package:nimble_charts_common/src/common/graphics_factory.dart'
     show GraphicsFactory;
 import 'package:nimble_charts_common/src/common/line_style.dart' show LineStyle;
 import 'package:nimble_charts_common/src/common/text_element.dart'
-    show TextDirection, TextElement, MaxWidthStrategy;
+    show MaxWidthStrategy, TextDirection, TextElement;
 import 'package:nimble_charts_common/src/common/text_measurement.dart'
     show TextMeasurement;
 import 'package:nimble_charts_common/src/common/text_style.dart' show TextStyle;
 import 'package:nimble_charts_common/src/data/series.dart' show AccessorFn;
-
-import 'package:meta/meta.dart' show required;
-import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 class MockCanvas extends Mock implements ChartCanvas {}
@@ -73,14 +73,15 @@ class FakeTextStyle implements TextStyle {
 ///
 /// Font size is returned for [verticalSliceWidth] and [baseline].
 class FakeTextElement implements TextElement {
+  FakeTextElement(this._text);
   final String _text;
 
   @override
   String get text {
     if (maxWidthStrategy == MaxWidthStrategy.ellipsize) {
       var width = measureTextWidth(_text);
-      var ellipsis = '…';
-      var ellipsisWidth = measureTextWidth(ellipsis);
+      const ellipsis = '…';
+      final ellipsisWidth = measureTextWidth(ellipsis);
       if (width <= maxWidth || width <= ellipsisWidth) {
         return _text;
       } else {
@@ -110,43 +111,36 @@ class FakeTextElement implements TextElement {
 
   double opacity;
 
-  FakeTextElement(this._text);
-
   @override
   TextMeasurement get measurement => TextMeasurement(
-      horizontalSliceWidth: _text.length.toDouble(),
-      verticalSliceWidth: textStyle.fontSize.toDouble(),
-      baseline: textStyle.fontSize.toDouble());
+        horizontalSliceWidth: _text.length.toDouble(),
+        verticalSliceWidth: textStyle.fontSize.toDouble(),
+        baseline: textStyle.fontSize.toDouble(),
+      );
 
-  double measureTextWidth(String text) {
-    return text.length.toDouble();
-  }
+  double measureTextWidth(String text) => text.length.toDouble();
 }
 
 class MockLinePaint extends Mock implements LineStyle {}
 
 class FakeTreeMapRendererElement extends TreeMapRendererElement<String> {
-  final _series = MockImmutableSeries<String>();
-  final AccessorFn<String> labelAccessor;
-  final List<String> data;
-
   FakeTreeMapRendererElement(
     this.labelAccessor,
     this.data, {
-    @required Rectangle<num> /*?*/ boundingRect,
-    @required int index,
-    @required bool isLeaf,
+    @required Rectangle<num> /*?*/ super.boundingRect,
+    @required super.index,
+    @required super.isLeaf,
   }) : super(
-          boundingRect: boundingRect,
           series: MockImmutableSeries<String>(),
           domain: '',
-          isLeaf: isLeaf,
-          index: index,
           measure: 0,
         ) {
     when(_series.labelAccessorFn).thenReturn(labelAccessor);
     when(_series.data).thenReturn(data);
   }
+  final _series = MockImmutableSeries<String>();
+  final AccessorFn<String> labelAccessor;
+  final List<String> data;
 
   @override
   ImmutableSeries<String> get series => _series;
@@ -166,7 +160,7 @@ void main() {
   setUpAll(() {
     canvas = MockCanvas();
     graphicsFactory = FakeGraphicsFactory();
-    drawBounds = Rectangle(0, 0, 100, 100);
+    drawBounds = const Rectangle(0, 0, 100, 100);
   });
 
   group('tree map', () {
@@ -181,15 +175,22 @@ void main() {
       );
       final decorator = TreeMapLabelDecorator();
 
-      decorator.decorate(renderElement, canvas, graphicsFactory,
-          drawBounds: drawBounds, animationPercent: 1.0);
+      decorator.decorate(
+        renderElement,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+      );
 
       final captured =
           verify(canvas.drawText(captureAny, captureAny, captureAny)).captured;
       expect(captured, hasLength(3));
       expect(captured[0].text, 'Region');
-      expect(captured[0].maxWidth,
-          equals(drawBounds.width - decorator.labelPadding * 2));
+      expect(
+        captured[0].maxWidth,
+        equals(drawBounds.width - decorator.labelPadding * 2),
+      );
       expect(captured[0].textDirection, equals(TextDirection.ltr));
       expect(captured[1], decorator.labelPadding);
       expect(captured[2], decorator.labelPadding);
@@ -207,15 +208,23 @@ void main() {
 
       final decorator = TreeMapLabelDecorator();
 
-      decorator.decorate(renderElement, canvas, graphicsFactory,
-          drawBounds: drawBounds, animationPercent: 1.0, rtl: true);
+      decorator.decorate(
+        renderElement,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+        rtl: true,
+      );
 
       final captured =
           verify(canvas.drawText(captureAny, captureAny, captureAny)).captured;
       expect(captured, hasLength(3));
       expect(captured[0].text, 'Region');
-      expect(captured[0].maxWidth,
-          equals(drawBounds.width - decorator.labelPadding * 2));
+      expect(
+        captured[0].maxWidth,
+        equals(drawBounds.width - decorator.labelPadding * 2),
+      );
       expect(captured[0].textDirection, equals(TextDirection.rtl));
       expect(captured[1], drawBounds.width - decorator.labelPadding);
       expect(captured[2], decorator.labelPadding);
@@ -233,22 +242,34 @@ void main() {
 
       final decorator = TreeMapLabelDecorator();
 
-      decorator.decorate(renderElement, canvas, graphicsFactory,
-          drawBounds: drawBounds,
-          animationPercent: 1.0,
-          renderVertically: true);
+      decorator.decorate(
+        renderElement,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+        renderVertically: true,
+      );
 
-      final captured = verify(canvas.drawText(
-              captureAny, captureAny, captureAny,
-              rotation: _90DegreeClockwise))
-          .captured;
+      final captured = verify(
+        canvas.drawText(
+          captureAny,
+          captureAny,
+          captureAny,
+          rotation: _90DegreeClockwise,
+        ),
+      ).captured;
       expect(captured, hasLength(3));
       expect(captured[0].text, 'Region');
-      expect(captured[0].maxWidth,
-          equals(drawBounds.height - decorator.labelPadding * 2));
+      expect(
+        captured[0].maxWidth,
+        equals(drawBounds.height - decorator.labelPadding * 2),
+      );
       expect(captured[0].textDirection, equals(TextDirection.ltr));
-      expect(captured[1],
-          drawBounds.right - decorator.labelPadding - 2 * _defaultFontSize);
+      expect(
+        captured[1],
+        drawBounds.right - decorator.labelPadding - 2 * _defaultFontSize,
+      );
       expect(captured[2], decorator.labelPadding);
     });
 
@@ -264,26 +285,37 @@ void main() {
 
       final decorator = TreeMapLabelDecorator();
 
-      decorator.decorate(renderElement, canvas, graphicsFactory,
-          drawBounds: drawBounds,
-          animationPercent: 1.0,
-          rtl: true,
-          renderVertically: true);
+      decorator.decorate(
+        renderElement,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+        rtl: true,
+        renderVertically: true,
+      );
 
-      final captured = verify(canvas.drawText(
-              captureAny, captureAny, captureAny,
-              rotation: _90DegreeClockwise))
-          .captured;
+      final captured = verify(
+        canvas.drawText(
+          captureAny,
+          captureAny,
+          captureAny,
+          rotation: _90DegreeClockwise,
+        ),
+      ).captured;
       expect(captured, hasLength(3));
       expect(captured[0].text, 'Region');
-      expect(captured[0].maxWidth,
-          equals(drawBounds.height - decorator.labelPadding * 2));
+      expect(
+        captured[0].maxWidth,
+        equals(drawBounds.height - decorator.labelPadding * 2),
+      );
       expect(captured[0].textDirection, equals(TextDirection.rtl));
       expect(
-          captured[1],
-          equals(drawBounds.right -
-              decorator.labelPadding -
-              2 * _defaultFontSize));
+        captured[1],
+        equals(
+          drawBounds.right - decorator.labelPadding - 2 * _defaultFontSize,
+        ),
+      );
       expect(captured[2], equals(drawBounds.height - decorator.labelPadding));
     });
 
@@ -300,15 +332,22 @@ void main() {
 
       final decorator = TreeMapLabelDecorator();
 
-      decorator.decorate(renderElement, canvas, graphicsFactory,
-          drawBounds: drawBounds, animationPercent: 1.0);
+      decorator.decorate(
+        renderElement,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+      );
 
       final captured =
           verify(canvas.drawText(captureAny, captureAny, captureAny)).captured;
       expect(captured, hasLength(3));
       expect(captured[0].maxWidthStrategy, equals(MaxWidthStrategy.ellipsize));
-      expect(captured[0].maxWidth,
-          equals(drawBounds.width - decorator.labelPadding * 2));
+      expect(
+        captured[0].maxWidth,
+        equals(drawBounds.width - decorator.labelPadding * 2),
+      );
     });
 
     test(
@@ -326,10 +365,14 @@ void main() {
 
       final decorator = TreeMapLabelDecorator(enableMultiline: true);
 
-      decorator.decorate(renderElement, canvas, graphicsFactory,
-          drawBounds: drawBounds,
-          animationPercent: 1.0,
-          renderMultiline: renderElement.isLeaf);
+      decorator.decorate(
+        renderElement,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+        renderMultiline: renderElement.isLeaf,
+      );
 
       final captured =
           verify(canvas.drawText(captureAny, captureAny, captureAny)).captured;
@@ -344,8 +387,10 @@ void main() {
       // Second line.
       expect(captured[3].text, 'the end of the new truncated label');
       expect(captured[4], equals(decorator.labelPadding));
-      expect(captured[5],
-          equals(decorator.labelPadding + _defaultLineHeight.toInt()));
+      expect(
+        captured[5],
+        equals(decorator.labelPadding + _defaultLineHeight.toInt()),
+      );
     });
 
     test(
@@ -364,11 +409,15 @@ void main() {
 
       final decorator = TreeMapLabelDecorator(enableMultiline: true);
 
-      decorator.decorate(renderElement, canvas, graphicsFactory,
-          drawBounds: drawBounds,
-          animationPercent: 1.0,
-          rtl: true,
-          renderMultiline: renderElement.isLeaf);
+      decorator.decorate(
+        renderElement,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+        rtl: true,
+        renderMultiline: renderElement.isLeaf,
+      );
 
       final captured =
           verify(canvas.drawText(captureAny, captureAny, captureAny)).captured;
@@ -383,8 +432,10 @@ void main() {
       // Second line.
       expect(captured[3].text, 'ated label');
       expect(captured[4], equals(drawBounds.width - decorator.labelPadding));
-      expect(captured[5],
-          equals(decorator.labelPadding + _defaultLineHeight.toInt()));
+      expect(
+        captured[5],
+        equals(decorator.labelPadding + _defaultLineHeight.toInt()),
+      );
     });
 
     test(
@@ -392,7 +443,7 @@ void main() {
         'rotation, ltr, multiline, the MaxWidthStrategy of the last '
         'line should be ellipsize', () {
       final data = ['A'];
-      final rect = Rectangle(0, 0, 50, 100);
+      const rect = Rectangle(0, 0, 50, 100);
       final renderElement = FakeTreeMapRendererElement(
         (_) => 'This Label is too long for a single line therefore it will be '
             'ellipsized with ellipsis at the end of the new truncated label '
@@ -408,37 +459,53 @@ void main() {
 
       final decorator = TreeMapLabelDecorator(enableMultiline: true);
 
-      decorator.decorate(renderElement, canvas, graphicsFactory,
-          drawBounds: drawBounds,
-          animationPercent: 1.0,
-          renderVertically: true,
-          renderMultiline: renderElement.isLeaf);
+      decorator.decorate(
+        renderElement,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+        renderVertically: true,
+        renderMultiline: renderElement.isLeaf,
+      );
 
-      final captured = verify(canvas.drawText(
-              captureAny, captureAny, captureAny,
-              rotation: _90DegreeClockwise))
-          .captured;
+      final captured = verify(
+        canvas.drawText(
+          captureAny,
+          captureAny,
+          captureAny,
+          rotation: _90DegreeClockwise,
+        ),
+      ).captured;
       expect(captured, hasLength(9));
       // First line.
-      expect(captured[1],
-          equals(rect.right - decorator.labelPadding - 2 * _defaultFontSize));
+      expect(
+        captured[1],
+        equals(rect.right - decorator.labelPadding - 2 * _defaultFontSize),
+      );
       expect(captured[2], equals(decorator.labelPadding));
       // Second line.
       expect(
-          captured[4],
-          equals(rect.right -
+        captured[4],
+        equals(
+          rect.right -
               decorator.labelPadding -
               2 * _defaultFontSize -
-              _defaultLineHeight));
+              _defaultLineHeight,
+        ),
+      );
       expect(captured[5], equals(decorator.labelPadding));
       // Last line.
       expect(captured[6].maxWidthStrategy, equals(MaxWidthStrategy.ellipsize));
       expect(
-          captured[7],
-          equals(rect.right -
+        captured[7],
+        equals(
+          rect.right -
               decorator.labelPadding -
               2 * _defaultFontSize -
-              2 * _defaultLineHeight));
+              2 * _defaultLineHeight,
+        ),
+      );
       expect(captured[8], equals(decorator.labelPadding));
     });
 
@@ -457,32 +524,44 @@ void main() {
 
       final decorator = TreeMapLabelDecorator(enableMultiline: true);
 
-      decorator.decorate(renderElement, canvas, graphicsFactory,
-          drawBounds: drawBounds,
-          animationPercent: 1.0,
-          renderVertically: true,
-          rtl: true,
-          renderMultiline: renderElement.isLeaf);
+      decorator.decorate(
+        renderElement,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+        renderVertically: true,
+        rtl: true,
+        renderMultiline: renderElement.isLeaf,
+      );
 
-      final captured = verify(canvas.drawText(
-              captureAny, captureAny, captureAny,
-              rotation: _90DegreeClockwise))
-          .captured;
+      final captured = verify(
+        canvas.drawText(
+          captureAny,
+          captureAny,
+          captureAny,
+          rotation: _90DegreeClockwise,
+        ),
+      ).captured;
       expect(captured, hasLength(6));
       // First line.
       expect(
-          captured[1],
-          equals(drawBounds.right -
-              decorator.labelPadding -
-              2 * _defaultFontSize));
+        captured[1],
+        equals(
+          drawBounds.right - decorator.labelPadding - 2 * _defaultFontSize,
+        ),
+      );
       expect(captured[2], equals(drawBounds.height - decorator.labelPadding));
       // Second line.
       expect(
-          captured[4],
-          equals(drawBounds.right -
+        captured[4],
+        equals(
+          drawBounds.right -
               decorator.labelPadding -
               2 * _defaultFontSize -
-              _defaultLineHeight));
+              _defaultLineHeight,
+        ),
+      );
       expect(captured[5], equals(drawBounds.height - decorator.labelPadding));
     });
   });
@@ -500,8 +579,13 @@ void main() {
 
       final decorator = TreeMapLabelDecorator();
 
-      decorator.decorate(renderElement, canvas, graphicsFactory,
-          drawBounds: drawBounds, animationPercent: 1.0);
+      decorator.decorate(
+        renderElement,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+      );
 
       verifyNever(canvas.drawText(any, any, any));
     });
@@ -518,8 +602,13 @@ void main() {
 
       final decorator = TreeMapLabelDecorator();
 
-      decorator.decorate(renderElement, canvas, graphicsFactory,
-          drawBounds: drawBounds, animationPercent: 1.0);
+      decorator.decorate(
+        renderElement,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+      );
 
       verifyNever(canvas.drawText(any, any, any));
     });

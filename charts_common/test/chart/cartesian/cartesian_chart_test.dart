@@ -13,16 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/date_time_axis_spec.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/ordinal_axis_spec.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/numeric_axis_spec.dart';
-import 'package:nimble_charts_common/src/chart/common/chart_context.dart';
-import 'package:nimble_charts_common/src/common/date_time_factory.dart';
-import 'package:nimble_charts_common/src/chart/time_series/time_series_chart.dart';
-import 'package:nimble_charts_common/src/common/graphics_factory.dart';
-
 import 'package:mockito/mockito.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/date_time_axis_spec.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/numeric_axis_spec.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/ordinal_axis_spec.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart';
+import 'package:nimble_charts_common/src/chart/common/chart_context.dart';
+import 'package:nimble_charts_common/src/chart/time_series/time_series_chart.dart';
+import 'package:nimble_charts_common/src/common/date_time_factory.dart';
+import 'package:nimble_charts_common/src/common/graphics_factory.dart';
 import 'package:test/test.dart';
 
 class MockContext extends Mock implements ChartContext {}
@@ -73,7 +72,7 @@ void main() {
       final domainAxis = chart.domainAxis;
       expect(domainAxis, isNotNull);
 
-      chart.domainAxisSpec = OrdinalAxisSpec();
+      chart.domainAxisSpec = const OrdinalAxisSpec();
       chart.configurationChanged();
 
       expect(domainAxis, isNot(chart.domainAxis));
@@ -85,7 +84,7 @@ void main() {
       final domainAxis = chart.domainAxis;
       expect(domainAxis, isNotNull);
 
-      chart.domainAxisSpec = NumericAxisSpec();
+      chart.domainAxisSpec = const NumericAxisSpec();
       chart.configurationChanged();
 
       expect(domainAxis, isNot(chart.domainAxis));
@@ -97,7 +96,7 @@ void main() {
       final domainAxis = chart.domainAxis;
       expect(domainAxis, isNotNull);
 
-      chart.domainAxisSpec = DateTimeAxisSpec();
+      chart.domainAxisSpec = const DateTimeAxisSpec();
       chart.configurationChanged();
 
       expect(domainAxis, isNot(chart.domainAxis));

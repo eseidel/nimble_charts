@@ -15,19 +15,19 @@
 
 import 'dart:math' show Point, Rectangle;
 
-import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart';
+import 'package:mockito/mockito.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart';
 import 'package:nimble_charts_common/src/chart/common/base_chart.dart';
 import 'package:nimble_charts_common/src/chart/common/behavior/line_point_highlighter.dart';
 import 'package:nimble_charts_common/src/chart/common/datum_details.dart';
 import 'package:nimble_charts_common/src/chart/common/processed_series.dart';
+import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart';
 import 'package:nimble_charts_common/src/chart/common/series_datum.dart';
 import 'package:nimble_charts_common/src/chart/common/series_renderer.dart';
-import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart';
 import 'package:nimble_charts_common/src/common/material_palette.dart';
 import 'package:nimble_charts_common/src/common/math.dart';
 import 'package:nimble_charts_common/src/data/series.dart';
-import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 class MockChart extends Mock implements CartesianChart {
@@ -64,9 +64,7 @@ class MockSelectionModel extends Mock implements MutableSelectionModel {
 
 class MockNumericAxis extends Mock implements NumericAxis {
   @override
-  double getLocation(num domain) {
-    return 10.0;
-  }
+  double getLocation(num domain) => 10;
 }
 
 class MockSeriesRenderer<D> extends BaseSeriesRenderer<D> {
@@ -83,91 +81,96 @@ class MockSeriesRenderer<D> extends BaseSeriesRenderer<D> {
     Point<double> chartPoint,
     bool byDomain,
     Rectangle<int> boundsOverride, {
-    selectOverlappingPoints = false,
-    selectExactEventLocation = false,
+    bool selectOverlappingPoints = false,
+    bool selectExactEventLocation = false,
   }) =>
       null;
 
   @override
   DatumDetails<D> addPositionToDetailsForSeriesDatum(
-      DatumDetails<D> details, SeriesDatum<D> seriesDatum) {
-    return DatumDetails.from(details, chartPosition: NullablePoint(0.0, 0.0));
-  }
+    DatumDetails<D> details,
+    SeriesDatum<D> seriesDatum,
+  ) =>
+      DatumDetails.from(details, chartPosition: const NullablePoint(0, 0));
 }
 
 void main() {
-  MockChart _chart;
-  MockSelectionModel _selectionModel;
-  MockSeriesRenderer _seriesRenderer;
+  MockChart chart;
+  MockSelectionModel selectionModel;
+  MockSeriesRenderer seriesRenderer;
 
-  MutableSeries<int> _series1;
-  final _s1D1 = MyRow(1, 11);
-  final _s1D2 = MyRow(2, 12);
-  final _s1D3 = MyRow(3, 13);
+  MutableSeries<int> series1;
+  final s1D1 = MyRow(1, 11);
+  final s1D2 = MyRow(2, 12);
+  final s1D3 = MyRow(3, 13);
 
-  MutableSeries<int> _series2;
-  final _s2D1 = MyRow(4, 21);
-  final _s2D2 = MyRow(5, 22);
-  final _s2D3 = MyRow(6, 23);
+  MutableSeries<int> series2;
+  final s2D1 = MyRow(4, 21);
+  final s2D2 = MyRow(5, 22);
+  final s2D3 = MyRow(6, 23);
 
-  List<DatumDetails> _mockGetSelectedDatumDetails(List<SeriesDatum> selection) {
+  List<DatumDetails> mockGetSelectedDatumDetails(List<SeriesDatum> selection) {
     final details = <DatumDetails>[];
 
-    for (SeriesDatum seriesDatum in selection) {
-      details.add(_seriesRenderer.getDetailsForSeriesDatum(seriesDatum));
+    for (final seriesDatum in selection) {
+      details.add(seriesRenderer.getDetailsForSeriesDatum(seriesDatum));
     }
 
     return details;
   }
 
-  void _setupSelection(List<SeriesDatum> selection) {
+  void setupSelection(List<SeriesDatum> selection) {
     final selected = <MyRow>[];
 
     for (var i = 0; i < selection.length; i++) {
       selected.add(selection[0].datum as MyRow);
     }
 
-    for (int i = 0; i < _series1.data.length; i++) {
-      when(_selectionModel.isDatumSelected(_series1, i))
-          .thenReturn(selected.contains(_series1.data[i]));
+    for (var i = 0; i < series1.data.length; i++) {
+      when(selectionModel.isDatumSelected(series1, i))
+          .thenReturn(selected.contains(series1.data[i]));
     }
-    for (int i = 0; i < _series2.data.length; i++) {
-      when(_selectionModel.isDatumSelected(_series2, i))
-          .thenReturn(selected.contains(_series2.data[i]));
+    for (var i = 0; i < series2.data.length; i++) {
+      when(selectionModel.isDatumSelected(series2, i))
+          .thenReturn(selected.contains(series2.data[i]));
     }
 
-    when(_selectionModel.selectedDatum).thenReturn(selection);
+    when(selectionModel.selectedDatum).thenReturn(selection);
 
-    final selectedDetails = _mockGetSelectedDatumDetails(selection);
+    final selectedDetails = mockGetSelectedDatumDetails(selection);
 
-    when(_chart.getSelectedDatumDetails(SelectionModelType.info))
+    when(chart.getSelectedDatumDetails(SelectionModelType.info))
         .thenReturn(selectedDetails);
   }
 
   setUp(() {
-    _chart = MockChart();
+    chart = MockChart();
 
-    _seriesRenderer = MockSeriesRenderer();
+    seriesRenderer = MockSeriesRenderer();
 
-    _selectionModel = MockSelectionModel();
-    when(_chart.getSelectionModel(SelectionModelType.info))
-        .thenReturn(_selectionModel);
+    selectionModel = MockSelectionModel();
+    when(chart.getSelectionModel(SelectionModelType.info))
+        .thenReturn(selectionModel);
 
-    _series1 = MutableSeries(Series<MyRow, int>(
+    series1 = MutableSeries(
+      Series<MyRow, int>(
         id: 's1',
-        data: [_s1D1, _s1D2, _s1D3],
-        domainFn: (MyRow row, _) => row.campaign,
-        measureFn: (MyRow row, _) => row.count,
-        colorFn: (_, __) => MaterialPalette.blue.shadeDefault))
-      ..measureFn = (_) => 0.0;
+        data: [s1D1, s1D2, s1D3],
+        domainFn: (row, _) => row.campaign,
+        measureFn: (row, _) => row.count,
+        colorFn: (_, __) => MaterialPalette.blue.shadeDefault,
+      ),
+    )..measureFn = (_) => 0.0;
 
-    _series2 = MutableSeries(Series<MyRow, int>(
+    series2 = MutableSeries(
+      Series<MyRow, int>(
         id: 's2',
-        data: [_s2D1, _s2D2, _s2D3],
-        domainFn: (MyRow row, _) => row.campaign,
-        measureFn: (MyRow row, _) => row.count,
-        colorFn: (_, __) => MaterialPalette.red.shadeDefault))
-      ..measureFn = (_) => 0.0;
+        data: [s2D1, s2D2, s2D3],
+        domainFn: (row, _) => row.campaign,
+        measureFn: (row, _) => row.count,
+        colorFn: (_, __) => MaterialPalette.red.shadeDefault,
+      ),
+    )..measureFn = (_) => 0.0;
   });
 
   group('LinePointHighlighter', () {
@@ -176,55 +179,55 @@ void main() {
       final behavior =
           LinePointHighlighter(selectionModelType: SelectionModelType.info);
       final tester = LinePointHighlighterTester(behavior);
-      behavior.attachTo(_chart);
-      _setupSelection([
-        SeriesDatum(_series1, _s1D2),
-        SeriesDatum(_series2, _s2D2),
+      behavior.attachTo(chart);
+      setupSelection([
+        SeriesDatum(series1, s1D2),
+        SeriesDatum(series2, s2D2),
       ]);
 
       // Mock axes for returning fake domain locations.
-      Axis domainAxis = MockNumericAxis();
-      Axis primaryMeasureAxis = MockNumericAxis();
+      final Axis domainAxis = MockNumericAxis();
+      final Axis primaryMeasureAxis = MockNumericAxis();
 
-      _series1.setAttr(domainAxisKey, domainAxis);
-      _series1.setAttr(measureAxisKey, primaryMeasureAxis);
-      _series1.measureOffsetFn = (_) => 0.0;
+      series1.setAttr(domainAxisKey, domainAxis);
+      series1.setAttr(measureAxisKey, primaryMeasureAxis);
+      series1.measureOffsetFn = (_) => 0.0;
 
-      _series2.setAttr(domainAxisKey, domainAxis);
-      _series2.setAttr(measureAxisKey, primaryMeasureAxis);
-      _series2.measureOffsetFn = (_) => 0.0;
+      series2.setAttr(domainAxisKey, domainAxis);
+      series2.setAttr(measureAxisKey, primaryMeasureAxis);
+      series2.measureOffsetFn = (_) => 0.0;
 
       // Act
-      _selectionModel.lastListener(_selectionModel);
-      verify(_chart.redraw(skipAnimation: true, skipLayout: true));
+      selectionModel.lastListener(selectionModel);
+      verify(chart.redraw(skipAnimation: true, skipLayout: true));
 
-      _chart.lastListener.onAxisConfigured();
+      chart.lastListener.onAxisConfigured();
 
       // Verify
       expect(tester.getSelectionLength(), equals(2));
 
-      expect(tester.isDatumSelected(_series1.data[0]), equals(false));
-      expect(tester.isDatumSelected(_series1.data[1]), equals(true));
-      expect(tester.isDatumSelected(_series1.data[2]), equals(false));
+      expect(tester.isDatumSelected(series1.data[0]), equals(false));
+      expect(tester.isDatumSelected(series1.data[1]), equals(true));
+      expect(tester.isDatumSelected(series1.data[2]), equals(false));
 
-      expect(tester.isDatumSelected(_series2.data[0]), equals(false));
-      expect(tester.isDatumSelected(_series2.data[1]), equals(true));
-      expect(tester.isDatumSelected(_series2.data[2]), equals(false));
+      expect(tester.isDatumSelected(series2.data[0]), equals(false));
+      expect(tester.isDatumSelected(series2.data[1]), equals(true));
+      expect(tester.isDatumSelected(series2.data[2]), equals(false));
     });
 
     test('listens to other selection models', () {
       // Setup
       final behavior =
           LinePointHighlighter(selectionModelType: SelectionModelType.action);
-      when(_chart.getSelectionModel(SelectionModelType.action))
-          .thenReturn(_selectionModel);
+      when(chart.getSelectionModel(SelectionModelType.action))
+          .thenReturn(selectionModel);
 
       // Act
-      behavior.attachTo(_chart);
+      behavior.attachTo(chart);
 
       // Verify
-      verify(_chart.getSelectionModel(SelectionModelType.action));
-      verifyNever(_chart.getSelectionModel(SelectionModelType.info));
+      verify(chart.getSelectionModel(SelectionModelType.action));
+      verifyNever(chart.getSelectionModel(SelectionModelType.info));
     });
 
     test('leaves everything alone with no selection', () {
@@ -232,48 +235,48 @@ void main() {
       final behavior =
           LinePointHighlighter(selectionModelType: SelectionModelType.info);
       final tester = LinePointHighlighterTester(behavior);
-      behavior.attachTo(_chart);
-      _setupSelection([]);
+      behavior.attachTo(chart);
+      setupSelection([]);
 
       // Act
-      _selectionModel.lastListener(_selectionModel);
-      verify(_chart.redraw(skipAnimation: true, skipLayout: true));
-      _chart.lastListener.onAxisConfigured();
+      selectionModel.lastListener(selectionModel);
+      verify(chart.redraw(skipAnimation: true, skipLayout: true));
+      chart.lastListener.onAxisConfigured();
 
       // Verify
       expect(tester.getSelectionLength(), equals(0));
 
-      expect(tester.isDatumSelected(_series1.data[0]), equals(false));
-      expect(tester.isDatumSelected(_series1.data[1]), equals(false));
-      expect(tester.isDatumSelected(_series1.data[2]), equals(false));
+      expect(tester.isDatumSelected(series1.data[0]), equals(false));
+      expect(tester.isDatumSelected(series1.data[1]), equals(false));
+      expect(tester.isDatumSelected(series1.data[2]), equals(false));
 
-      expect(tester.isDatumSelected(_series2.data[0]), equals(false));
-      expect(tester.isDatumSelected(_series2.data[1]), equals(false));
-      expect(tester.isDatumSelected(_series2.data[2]), equals(false));
+      expect(tester.isDatumSelected(series2.data[0]), equals(false));
+      expect(tester.isDatumSelected(series2.data[1]), equals(false));
+      expect(tester.isDatumSelected(series2.data[2]), equals(false));
     });
 
     test('cleans up', () {
       // Setup
       final behavior =
           LinePointHighlighter(selectionModelType: SelectionModelType.info);
-      behavior.attachTo(_chart);
-      _setupSelection([
-        SeriesDatum(_series1, _s1D2),
-        SeriesDatum(_series2, _s2D2),
+      behavior.attachTo(chart);
+      setupSelection([
+        SeriesDatum(series1, s1D2),
+        SeriesDatum(series2, s2D2),
       ]);
 
       // Act
-      behavior.removeFrom(_chart);
+      behavior.removeFrom(chart);
 
       // Verify
-      expect(_chart.lastListener, isNull);
-      expect(_selectionModel.lastListener, isNull);
+      expect(chart.lastListener, isNull);
+      expect(selectionModel.lastListener, isNull);
     });
   });
 }
 
 class MyRow {
+  MyRow(this.campaign, this.count);
   final int campaign;
   final int count;
-  MyRow(this.campaign, this.count);
 }

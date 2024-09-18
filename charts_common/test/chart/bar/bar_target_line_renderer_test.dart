@@ -14,27 +14,27 @@
 // limitations under the License.
 
 import 'dart:math' show Point, Rectangle;
+
+import 'package:mockito/mockito.dart';
 import 'package:nimble_charts_common/src/chart/bar/bar_target_line_renderer.dart';
 import 'package:nimble_charts_common/src/chart/bar/bar_target_line_renderer_config.dart';
 import 'package:nimble_charts_common/src/chart/bar/base_bar_renderer.dart';
 import 'package:nimble_charts_common/src/chart/bar/base_bar_renderer_config.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart';
 import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart';
 import 'package:nimble_charts_common/src/chart/common/chart_context.dart';
 import 'package:nimble_charts_common/src/chart/common/processed_series.dart'
     show MutableSeries;
 import 'package:nimble_charts_common/src/common/color.dart';
 import 'package:nimble_charts_common/src/data/series.dart' show Series;
-
-import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
 /// Datum/Row for the chart.
 class MyRow {
+  MyRow(this.campaign, this.clickCount);
   final String campaign;
   final int clickCount;
-  MyRow(this.campaign, this.clickCount);
 }
 
 class MockAxis<D> extends Mock implements Axis<D> {}
@@ -50,7 +50,7 @@ class MockCanvas extends Mock implements ChartCanvas {
       Color stroke,
       bool roundEndCaps,
       double strokeWidthPx,
-      List<int> dashPattern}) {
+      List<int> dashPattern,}) {
     drawLinePointsList.add(points);
   }
 }
@@ -66,8 +66,8 @@ void main() {
   /////////////////////////////////////////
   // Convenience methods for creating mocks.
   /////////////////////////////////////////
-  BaseBarRenderer _configureBaseRenderer(
-      BaseBarRenderer renderer, bool vertical) {
+  BaseBarRenderer configureBaseRenderer(
+      BaseBarRenderer renderer, bool vertical,) {
     final context = MockContext();
     when(context.chartContainerIsRtl).thenReturn(false);
     when(context.isRtl).thenReturn(false);
@@ -81,26 +81,26 @@ void main() {
 
   BarTargetLineRenderer makeRenderer({BarTargetLineRendererConfig config}) {
     final renderer = BarTargetLineRenderer(config: config);
-    _configureBaseRenderer(renderer, true);
+    configureBaseRenderer(renderer, true);
     return renderer;
   }
 
   setUp(() {
-    var myFakeDesktopData = [
+    final myFakeDesktopData = [
       MyRow('MyCampaign1', 5),
       MyRow('MyCampaign2', 25),
       MyRow('MyCampaign3', 100),
       MyRow('MyOtherCampaign', 75),
     ];
 
-    var myFakeTabletData = [
+    final myFakeTabletData = [
       MyRow('MyCampaign1', 5),
       MyRow('MyCampaign2', 25),
       MyRow('MyCampaign3', 100),
       MyRow('MyOtherCampaign', 75),
     ];
 
-    var myFakeMobileData = [
+    final myFakeMobileData = [
       MyRow('MyCampaign1', 5),
       MyRow('MyCampaign2', 25),
       MyRow('MyCampaign3', 100),
@@ -110,22 +110,22 @@ void main() {
     seriesList = [
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Desktop',
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          data: myFakeDesktopData)),
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          data: myFakeDesktopData,),),
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Tablet',
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          data: myFakeTabletData)),
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          data: myFakeTabletData,),),
       MutableSeries<String>(Series<MyRow, String>(
           id: 'Mobile',
-          domainFn: (MyRow row, _) => row.campaign,
-          measureFn: (MyRow row, _) => row.clickCount,
-          measureOffsetFn: (MyRow row, _) => 0,
-          data: myFakeMobileData))
+          domainFn: (row, _) => row.campaign,
+          measureFn: (row, _) => row.clickCount,
+          measureOffsetFn: (row, _) => 0,
+          data: myFakeMobileData,),),
     ];
   });
 
@@ -133,7 +133,7 @@ void main() {
     test('with grouped bar target lines', () {
       renderer = makeRenderer(
           config: BarTargetLineRendererConfig(
-              groupingType: BarGroupingType.grouped));
+              ,),);
 
       renderer.preprocessSeries(seriesList);
 
@@ -197,7 +197,7 @@ void main() {
     test('with stacked bar target lines', () {
       renderer = makeRenderer(
           config: BarTargetLineRendererConfig(
-              groupingType: BarGroupingType.stacked));
+              groupingType: BarGroupingType.stacked,),);
 
       renderer.preprocessSeries(seriesList);
 
@@ -270,7 +270,7 @@ void main() {
 
       renderer = makeRenderer(
           config: BarTargetLineRendererConfig(
-              groupingType: BarGroupingType.stacked));
+              groupingType: BarGroupingType.stacked,),);
 
       renderer.preprocessSeries(seriesList);
 
@@ -370,7 +370,7 @@ void main() {
   test('with stroke width target lines', () {
     renderer = makeRenderer(
         config: BarTargetLineRendererConfig(
-            groupingType: BarGroupingType.grouped, strokeWidthPx: 5.0));
+            strokeWidthPx: 5,),);
 
     renderer.preprocessSeries(seriesList);
 
@@ -431,7 +431,7 @@ void main() {
     test('with grouped bar target lines', () {
       renderer = makeRenderer(
           config: BarTargetLineRendererConfig(
-              groupingType: BarGroupingType.grouped, weightPattern: [3, 2, 1]));
+              weightPattern: [3, 2, 1],),);
 
       renderer.preprocessSeries(seriesList);
 
@@ -499,7 +499,7 @@ void main() {
     test('with stacked bar target lines - weightPattern not used', () {
       renderer = makeRenderer(
           config: BarTargetLineRendererConfig(
-              groupingType: BarGroupingType.stacked, weightPattern: [2, 1]));
+              groupingType: BarGroupingType.stacked, weightPattern: [2, 1],),);
 
       renderer.preprocessSeries(seriesList);
 
@@ -567,30 +567,30 @@ void main() {
   group('null measure', () {
     test('only include null in draw if animating from a non null measure', () {
       // Helper to create series list for this test only.
-      List<MutableSeries<String>> _createSeriesList(List<MyRow> data) {
+      List<MutableSeries<String>> createSeriesList(List<MyRow> data) {
         final domainAxis = MockAxis<dynamic>();
-        when(domainAxis.rangeBand).thenReturn(100.0);
-        when(domainAxis.getLocation('MyCampaign1')).thenReturn(20.0);
-        when(domainAxis.getLocation('MyCampaign2')).thenReturn(40.0);
-        when(domainAxis.getLocation('MyCampaign3')).thenReturn(60.0);
-        when(domainAxis.getLocation('MyOtherCampaign')).thenReturn(80.0);
+        when(domainAxis.rangeBand).thenReturn(100);
+        when(domainAxis.getLocation('MyCampaign1')).thenReturn(20);
+        when(domainAxis.getLocation('MyCampaign2')).thenReturn(40);
+        when(domainAxis.getLocation('MyCampaign3')).thenReturn(60);
+        when(domainAxis.getLocation('MyOtherCampaign')).thenReturn(80);
         final measureAxis = MockAxis<num>();
-        when(measureAxis.getLocation(0)).thenReturn(0.0);
-        when(measureAxis.getLocation(5)).thenReturn(5.0);
-        when(measureAxis.getLocation(75)).thenReturn(75.0);
-        when(measureAxis.getLocation(100)).thenReturn(100.0);
+        when(measureAxis.getLocation(0)).thenReturn(0);
+        when(measureAxis.getLocation(5)).thenReturn(5);
+        when(measureAxis.getLocation(75)).thenReturn(75);
+        when(measureAxis.getLocation(100)).thenReturn(100);
 
         final color = Color.fromHex(code: '#000000');
 
         final series = MutableSeries<String>(Series<MyRow, String>(
             id: 'Desktop',
-            domainFn: (MyRow row, _) => row.campaign,
-            measureFn: (MyRow row, _) => row.clickCount,
+            domainFn: (row, _) => row.campaign,
+            measureFn: (row, _) => row.clickCount,
             measureOffsetFn: (_, __) => 0,
             colorFn: (_, __) => color,
             fillColorFn: (_, __) => color,
             dashPatternFn: (_, __) => [1],
-            data: data))
+            data: data,),)
           ..setAttr(domainAxisKey, domainAxis)
           ..setAttr(measureAxisKey, measureAxis);
 
@@ -605,7 +605,7 @@ void main() {
         MyRow('MyCampaign3', 100),
         MyRow('MyOtherCampaign', 75),
       ];
-      final seriesListWithNull = _createSeriesList(myDataWithNull);
+      final seriesListWithNull = createSeriesList(myDataWithNull);
 
       final myDataWithMeasures = [
         MyRow('MyCampaign1', 5),
@@ -613,11 +613,11 @@ void main() {
         MyRow('MyCampaign3', 100),
         MyRow('MyOtherCampaign', 75),
       ];
-      final seriesListWithMeasures = _createSeriesList(myDataWithMeasures);
+      final seriesListWithMeasures = createSeriesList(myDataWithMeasures);
 
       renderer = makeRenderer(
           config: BarTargetLineRendererConfig(
-              groupingType: BarGroupingType.grouped));
+              ,),);
 
       // Verify that only 3 lines are drawn for an initial draw with null data.
       renderer.preprocessSeries(seriesListWithNull);
@@ -628,7 +628,7 @@ void main() {
 
       // On animation complete, verify that only 3 lines are drawn.
       canvas.drawLinePointsList.clear();
-      renderer.paint(canvas, 1.0);
+      renderer.paint(canvas, 1);
       expect(canvas.drawLinePointsList, hasLength(3));
 
       // Change series list where there are measures on all values, verify all
@@ -648,7 +648,7 @@ void main() {
 
       // On animation complete, verify that only 3 lines are drawn.
       canvas.drawLinePointsList.clear();
-      renderer.paint(canvas, 1.0);
+      renderer.paint(canvas, 1);
       expect(canvas.drawLinePointsList, hasLength(3));
     });
   });

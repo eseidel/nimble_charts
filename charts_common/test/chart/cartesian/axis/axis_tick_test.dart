@@ -13,15 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:nimble_charts_common/src/chart/cartesian/axis/axis_tick.dart';
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart';
 import 'package:nimble_charts_common/src/common/text_element.dart';
 import 'package:nimble_charts_common/src/common/text_measurement.dart';
 import 'package:nimble_charts_common/src/common/text_style.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/axis_tick.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart';
 import 'package:test/test.dart';
 
 /// Fake [TextElement] for testing.
 class FakeTextElement implements TextElement {
+  FakeTextElement(this.text);
   @override
   final String text;
   double opacity;
@@ -40,156 +41,153 @@ class FakeTextElement implements TextElement {
 
   @override
   TextDirection textDirection;
-
-  FakeTextElement(this.text);
 }
 
 /// Helper to create a tick for testing.
-Tick<String> _createTestTick(String value, double locationPx) {
-  return Tick(
+Tick<String> _createTestTick(String value, double locationPx) => Tick(
       value: value,
       textElement: FakeTextElement(value),
-      locationPx: locationPx);
-}
+      locationPx: locationPx,
+    );
 
 void _verify(Tick<String> tick, {double location, double opacity}) {
   expect(tick.locationPx, equals(location));
-  expect((tick.textElement as FakeTextElement).opacity, equals(opacity));
+  expect((tick.textElement! as FakeTextElement).opacity, equals(opacity));
 }
 
 void main() {
   // Tick first render.
   test('tick created for the first time', () {
-    final tick = AxisTicks(_createTestTick('a', 100.0));
+    final tick = AxisTicks(_createTestTick('a', 100));
 
     // Animate in the tick, there was no previous position to animated in from
     // so the tick appears in the target immediately.
-    tick.setCurrentTick(0.0);
-    _verify(tick, location: 100.0, opacity: 1.0);
+    tick.setCurrentTick(0);
+    _verify(tick, location: 100, opacity: 1);
 
     tick.setCurrentTick(0.25);
-    _verify(tick, location: 100.0, opacity: 1.0);
+    _verify(tick, location: 100, opacity: 1);
 
     tick.setCurrentTick(0.75);
-    _verify(tick, location: 100.0, opacity: 1.0);
+    _verify(tick, location: 100, opacity: 1);
 
-    tick.setCurrentTick(1.0);
-    _verify(tick, location: 100.0, opacity: 1.0);
+    tick.setCurrentTick(1);
+    _verify(tick, location: 100, opacity: 1);
   });
 
   // Tick that is animated in.
   test('tick created with a previous location', () {
-    final tick = AxisTicks(_createTestTick('a', 200.0))..animateInFrom(100.0);
+    final tick = AxisTicks(_createTestTick('a', 200))..animateInFrom(100);
 
-    tick.setCurrentTick(0.0);
-    _verify(tick, location: 100.0, opacity: 0.0);
+    tick.setCurrentTick(0);
+    _verify(tick, location: 100, opacity: 0);
 
     tick.setCurrentTick(0.25);
-    _verify(tick, location: 125.0, opacity: 0.25);
+    _verify(tick, location: 125, opacity: 0.25);
 
     tick.setCurrentTick(0.75);
-    _verify(tick, location: 175.0, opacity: 0.75);
+    _verify(tick, location: 175, opacity: 0.75);
 
-    tick.setCurrentTick(1.0);
-    _verify(tick, location: 200.0, opacity: 1.0);
+    tick.setCurrentTick(1);
+    _verify(tick, location: 200, opacity: 1);
   });
 
   // Tick that is being animated out.
   test('tick is animated in and then out', () {
-    final tick = AxisTicks(_createTestTick('a', 100.0));
+    final tick = AxisTicks(_createTestTick('a', 100));
 
     // Animate in the tick, there was no previous position to animated in from
     // so the tick appears in the target immediately.
     tick.setCurrentTick(0.25);
-    _verify(tick, location: 100.0, opacity: 1.0);
+    _verify(tick, location: 100, opacity: 1);
 
     // Change to animate the tick out.
-    tick.animateOut(0.0);
+    tick.animateOut(0);
 
     expect(tick.markedForRemoval, isTrue);
 
-    tick.setCurrentTick(0.0);
-    _verify(tick, location: 100.0, opacity: 1.0);
+    tick.setCurrentTick(0);
+    _verify(tick, location: 100, opacity: 1);
 
     tick.setCurrentTick(0.25);
-    _verify(tick, location: 75.0, opacity: 0.75);
+    _verify(tick, location: 75, opacity: 0.75);
 
     tick.setCurrentTick(0.75);
-    _verify(tick, location: 25.0, opacity: 0.25);
+    _verify(tick, location: 25, opacity: 0.25);
 
-    tick.setCurrentTick(1.0);
-    _verify(tick, location: 0.0, opacity: 0.0);
+    tick.setCurrentTick(1);
+    _verify(tick, location: 0, opacity: 0);
   });
 
   test('tick target change after reaching target', () {
-    final tick = AxisTicks(_createTestTick('a', 100.0));
+    final tick = AxisTicks(_createTestTick('a', 100));
 
     // Animate in the tick.
-    tick.setCurrentTick(1.0);
-    _verify(tick, location: 100.0, opacity: 1.0);
+    tick.setCurrentTick(1);
+    _verify(tick, location: 100, opacity: 1);
 
-    tick.setNewTarget(200.0);
+    tick.setNewTarget(200);
 
     expect(tick.markedForRemoval, isFalse);
 
-    tick.setCurrentTick(0.0);
-    _verify(tick, location: 100.0, opacity: 1.0);
+    tick.setCurrentTick(0);
+    _verify(tick, location: 100, opacity: 1);
 
     tick.setCurrentTick(0.25);
-    _verify(tick, location: 125.0, opacity: 1.0);
+    _verify(tick, location: 125, opacity: 1);
 
     tick.setCurrentTick(0.75);
-    _verify(tick, location: 175.0, opacity: 1.0);
+    _verify(tick, location: 175, opacity: 1);
 
-    tick.setCurrentTick(1.0);
-    _verify(tick, location: 200.0, opacity: 1.0);
+    tick.setCurrentTick(1);
+    _verify(tick, location: 200, opacity: 1);
   });
 
   test('tick target change before reaching initial target', () {
-    final tick = AxisTicks(_createTestTick('a', 400.0))..animateInFrom(0.0);
+    final tick = AxisTicks(_createTestTick('a', 400))..animateInFrom(0);
 
     // Animate in the tick.
     tick.setCurrentTick(0.25);
-    _verify(tick, location: 100.0, opacity: 0.25);
+    _verify(tick, location: 100, opacity: 0.25);
 
-    tick.setNewTarget(200.0);
+    tick.setNewTarget(200);
 
     expect(tick.markedForRemoval, isFalse);
 
-    tick.setCurrentTick(0.0);
-    _verify(tick, location: 100.0, opacity: 0.25);
+    tick.setCurrentTick(0);
+    _verify(tick, location: 100, opacity: 0.25);
 
     tick.setCurrentTick(0.25);
-    _verify(tick, location: 125.0, opacity: 0.4375);
+    _verify(tick, location: 125, opacity: 0.4375);
 
     tick.setCurrentTick(0.75);
-    _verify(tick, location: 175.0, opacity: 0.8125);
+    _verify(tick, location: 175, opacity: 0.8125);
 
-    tick.setCurrentTick(1.0);
-    _verify(tick, location: 200.0, opacity: 1.0);
+    tick.setCurrentTick(1);
+    _verify(tick, location: 200, opacity: 1);
   });
 
   test('tick target animate out before reaching initial target', () {
-    final tick = AxisTicks(_createTestTick('a', 400.0))..animateInFrom(0.0);
+    final tick = AxisTicks(_createTestTick('a', 400))..animateInFrom(0);
 
     // Animate in the tick.
     tick.setCurrentTick(0.25);
-    _verify(tick, location: 100.0, opacity: 0.25);
+    _verify(tick, location: 100, opacity: 0.25);
 
-    tick.animateOut(200.0);
+    tick.animateOut(200);
 
     expect(tick.markedForRemoval, isTrue);
 
-    tick.setCurrentTick(0.0);
-    _verify(tick, location: 100.0, opacity: 0.25);
+    tick.setCurrentTick(0);
+    _verify(tick, location: 100, opacity: 0.25);
 
     tick.setCurrentTick(0.25);
-    _verify(tick, location: 125.0, opacity: 0.1875);
+    _verify(tick, location: 125, opacity: 0.1875);
 
     tick.setCurrentTick(0.75);
-    _verify(tick, location: 175.0, opacity: 0.0625);
+    _verify(tick, location: 175, opacity: 0.0625);
 
-    tick.setCurrentTick(1.0);
-    _verify(tick, location: 200.0, opacity: 0.0);
+    tick.setCurrentTick(1);
+    _verify(tick, location: 200, opacity: 0);
   });
 }

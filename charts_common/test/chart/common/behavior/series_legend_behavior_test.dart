@@ -15,24 +15,23 @@
 
 import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart';
 import 'package:nimble_charts_common/src/chart/common/base_chart.dart';
-import 'package:nimble_charts_common/src/chart/common/processed_series.dart';
-import 'package:nimble_charts_common/src/chart/common/series_datum.dart';
-import 'package:nimble_charts_common/src/chart/common/series_renderer.dart';
 import 'package:nimble_charts_common/src/chart/common/behavior/legend/legend_entry_generator.dart';
 import 'package:nimble_charts_common/src/chart/common/behavior/legend/series_legend.dart';
 import 'package:nimble_charts_common/src/chart/common/datum_details.dart';
+import 'package:nimble_charts_common/src/chart/common/processed_series.dart';
 import 'package:nimble_charts_common/src/chart/common/selection_model/selection_model.dart';
+import 'package:nimble_charts_common/src/chart/common/series_datum.dart';
+import 'package:nimble_charts_common/src/chart/common/series_renderer.dart';
 import 'package:nimble_charts_common/src/chart/line/line_renderer.dart';
 import 'package:nimble_charts_common/src/common/color.dart';
 import 'package:nimble_charts_common/src/data/series.dart';
 import 'package:test/test.dart';
 
 class ConcreteChart extends BaseChart<String> {
+  ConcreteChart(this._seriesList);
   List<MutableSeries<String>> _seriesList;
 
   final SeriesRenderer<String> _seriesRenderer = LineRenderer<String>();
-
-  ConcreteChart(this._seriesList);
 
   @override
   SeriesRenderer<String> makeDefaultRenderer() => _seriesRenderer;
@@ -68,12 +67,13 @@ class ConcreteChart extends BaseChart<String> {
 }
 
 class ConcreteSeriesLegend<D> extends SeriesLegend<D> {
-  ConcreteSeriesLegend(
-      {SelectionModelType selectionModelType,
-      LegendEntryGenerator<D> legendEntryGenerator})
-      : super(
-            selectionModelType: selectionModelType,
-            legendEntryGenerator: legendEntryGenerator);
+  ConcreteSeriesLegend({
+    SelectionModelType selectionModelType,
+    LegendEntryGenerator<D> legendEntryGenerator,
+  }) : super(
+          selectionModelType: selectionModelType,
+          legendEntryGenerator: legendEntryGenerator,
+        );
 
   @override
   bool isSeriesRenderer = false;
@@ -86,16 +86,6 @@ class ConcreteSeriesLegend<D> extends SeriesLegend<D> {
   @override
   void showSeries(String seriesId) {
     super.showSeries(seriesId);
-  }
-
-  @override
-  bool isSeriesHidden(String seriesId) {
-    return super.isSeriesHidden(seriesId);
-  }
-
-  @override
-  bool isSeriesAlwaysVisible(String seriesId) {
-    return super.isSeriesAlwaysVisible(seriesId);
   }
 }
 
@@ -110,38 +100,45 @@ void main() {
   final s2D2 = MyRow('s2d2', 22);
   final s2D3 = MyRow('s2d3', 23);
 
-  final blue = Color(r: 0x21, g: 0x96, b: 0xF3);
-  final red = Color(r: 0xF4, g: 0x43, b: 0x36);
+  const blue = Color(r: 0x21, g: 0x96, b: 0xF3);
+  const red = Color(r: 0xF4, g: 0x43, b: 0x36);
 
   ConcreteChart chart;
 
   setUp(() {
-    series1 = MutableSeries(Series<MyRow, String>(
+    series1 = MutableSeries(
+      Series<MyRow, String>(
         id: 's1',
         data: [s1D1, s1D2, s1D3],
-        domainFn: (MyRow row, _) => row.campaign,
-        measureFn: (MyRow row, _) => row.count,
-        colorFn: (_, __) => blue));
+        domainFn: (row, _) => row.campaign,
+        measureFn: (row, _) => row.count,
+        colorFn: (_, __) => blue,
+      ),
+    );
 
-    series2 = MutableSeries(Series<MyRow, String>(
+    series2 = MutableSeries(
+      Series<MyRow, String>(
         id: 's2',
         data: [s2D1, s2D2, s2D3],
-        domainFn: (MyRow row, _) => row.campaign,
-        measureFn: (MyRow row, _) => row.count,
-        colorFn: (_, __) => red));
+        domainFn: (row, _) => row.campaign,
+        measureFn: (row, _) => row.count,
+        colorFn: (_, __) => red,
+      ),
+    );
   });
 
   test('Legend entries created on chart post process', () {
     final seriesList = [series1, series2];
-    final selectionType = SelectionModelType.info;
+    const selectionType = SelectionModelType.info;
     final legend = SeriesLegend<String>(selectionModelType: selectionType);
 
     chart = ConcreteChart(seriesList);
     legend.attachTo(chart);
-    chart.callOnDraw();
-    chart.callConfigureSeries();
-    chart.callOnPreProcess();
-    chart.callOnPostProcess();
+    chart
+      ..callOnDraw()
+      ..callConfigureSeries()
+      ..callOnPreProcess()
+      ..callOnPostProcess();
 
     final legendEntries = legend.legendState.legendEntries;
     expect(legendEntries, hasLength(2));
@@ -158,7 +155,7 @@ void main() {
 
   test('default hidden series are removed from list during pre process', () {
     final seriesList = [series1, series2];
-    final selectionType = SelectionModelType.info;
+    const selectionType = SelectionModelType.info;
     final legend =
         ConcreteSeriesLegend<String>(selectionModelType: selectionType);
 
@@ -179,7 +176,7 @@ void main() {
 
   test('hidden series are removed from list after chart pre process', () {
     final seriesList = [series1, series2];
-    final selectionType = SelectionModelType.info;
+    const selectionType = SelectionModelType.info;
     final legend =
         ConcreteSeriesLegend<String>(selectionModelType: selectionType);
 
@@ -200,7 +197,7 @@ void main() {
   test('hidden and re-shown series is in the list after chart pre process', () {
     final seriesList = [series1, series2];
     final seriesList2 = [series1, series2];
-    final selectionType = SelectionModelType.info;
+    const selectionType = SelectionModelType.info;
     final legend =
         ConcreteSeriesLegend<String>(selectionModelType: selectionType);
 
@@ -237,7 +234,7 @@ void main() {
 
   test('always visible series are visible even after hide called', () {
     final seriesList = [series1, series2];
-    final selectionType = SelectionModelType.info;
+    const selectionType = SelectionModelType.info;
     final legend =
         ConcreteSeriesLegend<String>(selectionModelType: selectionType);
 
@@ -260,7 +257,7 @@ void main() {
 
   test('selected series legend entry is updated', () {
     final seriesList = [series1, series2];
-    final selectionType = SelectionModelType.info;
+    const selectionType = SelectionModelType.info;
     final legend = SeriesLegend<String>(selectionModelType: selectionType);
 
     chart = ConcreteChart(seriesList);
@@ -286,7 +283,7 @@ void main() {
 
   test('hidden series removed from chart and later readded is visible', () {
     final seriesList = [series1, series2];
-    final selectionType = SelectionModelType.info;
+    const selectionType = SelectionModelType.info;
     final legend =
         ConcreteSeriesLegend<String>(selectionModelType: selectionType);
 
@@ -350,15 +347,15 @@ void main() {
 
   test('generated legend entries use provided formatters', () {
     final seriesList = [series1, series2];
-    final selectionType = SelectionModelType.info;
-    final measureFormatter =
-        (num value) => 'measure ${value?.toStringAsFixed(0)}';
-    final secondaryMeasureFormatter =
-        (num value) => 'secondary ${value?.toStringAsFixed(0)}';
+    const selectionType = SelectionModelType.info;
+    String measureFormatter(num value) => 'measure ${value.toStringAsFixed(0)}';
+    String secondaryMeasureFormatter(num value) =>
+        'secondary ${value.toStringAsFixed(0)}';
     final legend = SeriesLegend<String>(
-        selectionModelType: selectionType,
-        measureFormatter: measureFormatter,
-        secondaryMeasureFormatter: secondaryMeasureFormatter);
+      selectionModelType: selectionType,
+      measureFormatter: measureFormatter,
+      secondaryMeasureFormatter: secondaryMeasureFormatter,
+    );
 
     series2.setAttr(measureAxisIdKey, 'secondaryMeasureAxisId');
     chart = ConcreteChart(seriesList);
@@ -368,8 +365,9 @@ void main() {
     chart.callOnPreProcess();
     chart.callOnPostProcess();
     chart.getSelectionModel(selectionType).updateSelection(
-        [SeriesDatum(series1, s1D1), SeriesDatum(series2, s2D1)],
-        [series1, series2]);
+      [SeriesDatum(series1, s1D1), SeriesDatum(series2, s2D1)],
+      [series1, series2],
+    );
 
     final legendEntries = legend.legendState.legendEntries;
     expect(legendEntries, hasLength(2));
@@ -388,12 +386,13 @@ void main() {
 
   test('series legend - show measure sum when there is no selection', () {
     final seriesList = [series1, series2];
-    final selectionType = SelectionModelType.info;
-    final measureFormatter = (num value) => '${value?.toStringAsFixed(0)}';
+    const selectionType = SelectionModelType.info;
+    String measureFormatter(num value) => value.toStringAsFixed(0);
     final legend = SeriesLegend<String>(
-        selectionModelType: selectionType,
-        legendDefaultMeasure: LegendDefaultMeasure.sum,
-        measureFormatter: measureFormatter);
+      selectionModelType: selectionType,
+      legendDefaultMeasure: LegendDefaultMeasure.sum,
+      measureFormatter: measureFormatter,
+    );
 
     chart = ConcreteChart(seriesList);
     legend.attachTo(chart);
@@ -421,12 +420,13 @@ void main() {
 
   test('series legend - show measure average when there is no selection', () {
     final seriesList = [series1, series2];
-    final selectionType = SelectionModelType.info;
-    final measureFormatter = (num value) => '${value?.toStringAsFixed(0)}';
+    const selectionType = SelectionModelType.info;
+    String measureFormatter(num value) => value.toStringAsFixed(0);
     final legend = SeriesLegend<String>(
-        selectionModelType: selectionType,
-        legendDefaultMeasure: LegendDefaultMeasure.average,
-        measureFormatter: measureFormatter);
+      selectionModelType: selectionType,
+      legendDefaultMeasure: LegendDefaultMeasure.average,
+      measureFormatter: measureFormatter,
+    );
 
     chart = ConcreteChart(seriesList);
     legend.attachTo(chart);
@@ -454,12 +454,13 @@ void main() {
 
   test('series legend - show first measure when there is no selection', () {
     final seriesList = [series1, series2];
-    final selectionType = SelectionModelType.info;
-    final measureFormatter = (num value) => '${value?.toStringAsFixed(0)}';
+    const selectionType = SelectionModelType.info;
+    String measureFormatter(num value) => value.toStringAsFixed(0);
     final legend = SeriesLegend<String>(
-        selectionModelType: selectionType,
-        legendDefaultMeasure: LegendDefaultMeasure.firstValue,
-        measureFormatter: measureFormatter);
+      selectionModelType: selectionType,
+      legendDefaultMeasure: LegendDefaultMeasure.firstValue,
+      measureFormatter: measureFormatter,
+    );
 
     chart = ConcreteChart(seriesList);
     legend.attachTo(chart);
@@ -487,12 +488,13 @@ void main() {
 
   test('series legend - show last measure when there is no selection', () {
     final seriesList = [series1, series2];
-    final selectionType = SelectionModelType.info;
-    final measureFormatter = (num value) => '${value?.toStringAsFixed(0)}';
+    const selectionType = SelectionModelType.info;
+    String measureFormatter(num value) => value.toStringAsFixed(0);
     final legend = SeriesLegend<String>(
-        selectionModelType: selectionType,
-        legendDefaultMeasure: LegendDefaultMeasure.lastValue,
-        measureFormatter: measureFormatter);
+      selectionModelType: selectionType,
+      legendDefaultMeasure: LegendDefaultMeasure.lastValue,
+      measureFormatter: measureFormatter,
+    );
 
     chart = ConcreteChart(seriesList);
     legend.attachTo(chart);
@@ -520,7 +522,7 @@ void main() {
 }
 
 class MyRow {
+  MyRow(this.campaign, this.count);
   final String campaign;
   final int count;
-  MyRow(this.campaign, this.count);
 }
