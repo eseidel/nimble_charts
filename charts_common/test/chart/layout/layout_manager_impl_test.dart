@@ -20,8 +20,7 @@ import 'package:test/test.dart';
 
 void main() {
   test('default layout', () {
-    final layout = LayoutManagerImpl();
-    layout.measure(400, 300);
+    final layout = LayoutManagerImpl()..measure(400, 300);
 
     expect(layout.marginTop, equals(0));
     expect(layout.marginRight, equals(0));
@@ -37,8 +36,7 @@ void main() {
         bottomSpec: MarginSpec.fixedPixel(10),
         leftSpec: MarginSpec.fixedPixel(9),
       ),
-    );
-    layout.measure(400, 300);
+    )..measure(400, 300);
 
     expect(layout.marginTop, equals(12));
     expect(layout.marginRight, equals(11));
