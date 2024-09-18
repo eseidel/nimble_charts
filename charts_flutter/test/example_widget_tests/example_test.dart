@@ -78,7 +78,7 @@ void main() {
       'Navigates to Stacked Bar Target Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden(
         b.stackedBarTargetLineChart,
-        scroll: true,
+        scrollDelta: 200,
       ),
     );
 
@@ -86,7 +86,7 @@ void main() {
       'Navigates to Horizontal Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden(
         b.horizontalBarChart,
-        scroll: true,
+        scrollDelta: 200,
       ),
     );
 
@@ -94,7 +94,7 @@ void main() {
       'Navigates to Stacked Horizontal Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden(
         b.stackedHorizontalBarChart,
-        scroll: true,
+        scrollDelta: 200,
       ),
     );
 
@@ -102,7 +102,7 @@ void main() {
       'Navigates to Horizontal Bar Chart with Bar Labels and Renders',
       (tester) async => tester.navigateToChartAndGolden(
         b.horizontalBarLabelChart,
-        scroll: true,
+        scrollDelta: 200,
       ),
     );
   });
@@ -113,7 +113,7 @@ extension ExampleWidgetTestExtensions on WidgetTester {
   Future<void> navigateToChartAndGolden(
     String buttonText, {
     Future<void> Function()? extra,
-    bool scroll = false,
+    double? scrollDelta,
   }) async {
     final galleryApp = m.GalleryApp();
 
@@ -124,8 +124,8 @@ extension ExampleWidgetTestExtensions on WidgetTester {
       ..devicePixelRatio = 1;
 
     expect(find.byType(h.Home), findsOneWidget);
-    if (scroll) {
-      await scrollUntilVisible(find.text(buttonText), 200);
+    if (scrollDelta != null) {
+      await scrollUntilVisible(find.text(buttonText), scrollDelta);
     }
     await tap(find.text(buttonText));
     await pumpAndSettle();
