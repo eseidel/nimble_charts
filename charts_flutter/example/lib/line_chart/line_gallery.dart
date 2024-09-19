@@ -13,22 +13,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 import '../main.dart' as m;
+import 'package:example/gallery_scaffold.dart';
+import 'package:example/line_chart/animation_zoom.dart';
+import 'package:example/line_chart/area_and_line.dart';
+import 'package:example/line_chart/dash_pattern.dart';
+import 'package:example/line_chart/line_annotation.dart';
+import 'package:example/line_chart/points.dart';
+import 'package:example/line_chart/range_annotation.dart';
+import 'package:example/line_chart/range_annotation_margin.dart';
+import 'package:example/line_chart/segments.dart';
+import 'package:example/line_chart/simple.dart';
+import 'package:example/line_chart/simple_nulls.dart';
+import 'package:example/line_chart/stacked_area.dart';
+import 'package:example/line_chart/stacked_area_custom_color.dart';
+import 'package:example/line_chart/stacked_area_nulls.dart';
 import 'package:flutter/material.dart';
-import '../gallery_scaffold.dart';
-import 'animation_zoom.dart';
-import 'area_and_line.dart';
-import 'dash_pattern.dart';
-import 'line_annotation.dart';
-import 'points.dart';
-import 'range_annotation.dart';
-import 'range_annotation_margin.dart';
-import 'segments.dart';
-import 'simple.dart';
-import 'simple_nulls.dart';
-import 'stacked_area.dart';
-import 'stacked_area_custom_color.dart';
-import 'stacked_area_nulls.dart';
 
 const simpleLineChart = 'Simple Line Chart';
 const stackedAreaLineChart = 'Stacked Area Chart';

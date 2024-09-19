@@ -14,16 +14,16 @@
 // limitations under the License.
 
 import '../main.dart' as m;
+import 'package:example/gallery_scaffold.dart';
+import 'package:example/time_series_chart/confidence_interval.dart';
+import 'package:example/time_series_chart/end_points_axis.dart';
+import 'package:example/time_series_chart/line_annotation.dart';
+import 'package:example/time_series_chart/range_annotation.dart';
+import 'package:example/time_series_chart/range_annotation_margin.dart';
+import 'package:example/time_series_chart/simple.dart';
+import 'package:example/time_series_chart/symbol_annotation.dart';
+import 'package:example/time_series_chart/with_bar_renderer.dart';
 import 'package:flutter/material.dart';
-import '../gallery_scaffold.dart';
-import 'confidence_interval.dart';
-import 'end_points_axis.dart';
-import 'line_annotation.dart';
-import 'range_annotation.dart';
-import 'range_annotation_margin.dart';
-import 'simple.dart';
-import 'symbol_annotation.dart';
-import 'with_bar_renderer.dart';
 
 const timeSeriesChart = "Time Series Chart";
 const endPointsAxisTimeSeriesChart = "End Points Axis Time Series Chart";

@@ -14,40 +14,42 @@
 // limitations under the License.
 
 /// Line chart example
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class ComparisonPointsScatterPlotChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
+  const ComparisonPointsScatterPlotChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  ComparisonPointsScatterPlotChart(this.seriesList, {this.animate = false});
-
-  /// Creates a [ScatterPlotChart] with sample data and no transition.
-  factory ComparisonPointsScatterPlotChart.withSampleData() {
-    return new ComparisonPointsScatterPlotChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.ScatterPlotChart] with sample data and no transition.
+  factory ComparisonPointsScatterPlotChart.withSampleData() =>
+      ComparisonPointsScatterPlotChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory ComparisonPointsScatterPlotChart.withRandomData() {
-    return new ComparisonPointsScatterPlotChart(_createRandomData());
-  }
+  factory ComparisonPointsScatterPlotChart.withRandomData() =>
+      ComparisonPointsScatterPlotChart(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, num>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
-    final maxMeasure = 100;
+    const maxMeasure = 100;
 
     final data = [
       _makeRandomDatum(maxMeasure, random),
@@ -59,9 +61,9 @@ class ComparisonPointsScatterPlotChart extends StatelessWidget {
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        colorFn: (LinearSales sales, _) {
+        colorFn: (sales, _) {
           // Color bucket the measure column value into 3 distinct colors.
           final bucket = sales.sales / maxMeasure;
 
@@ -73,20 +75,20 @@ class ComparisonPointsScatterPlotChart extends StatelessWidget {
             return charts.MaterialPalette.green.shadeDefault;
           }
         },
-        domainFn: (LinearSales sales, _) => sales.year,
-        domainLowerBoundFn: (LinearSales sales, _) => sales.yearLower,
-        domainUpperBoundFn: (LinearSales sales, _) => sales.yearUpper,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        measureLowerBoundFn: (LinearSales sales, _) => sales.salesLower,
-        measureUpperBoundFn: (LinearSales sales, _) => sales.salesUpper,
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
+        domainFn: (sales, _) => sales.year,
+        domainLowerBoundFn: (sales, _) => sales.yearLower,
+        domainUpperBoundFn: (sales, _) => sales.yearUpper,
+        measureFn: (sales, _) => sales.sales,
+        measureLowerBoundFn: (sales, _) => sales.salesLower,
+        measureUpperBoundFn: (sales, _) => sales.salesUpper,
+        radiusPxFn: (sales, _) => sales.radius,
         data: data,
-      )
+      ),
     ];
   }
 
   static LinearSales _makeRandomDatum(int max, Random random) {
-    final makeRadius = (int value) => (random.nextInt(value) + 6).toDouble();
+    double makeRadius(int value) => (random.nextInt(value) + 6).toDouble();
 
     final year = random.nextInt(max);
     final yearLower = (year * 0.8).round();
@@ -95,40 +97,49 @@ class ComparisonPointsScatterPlotChart extends StatelessWidget {
     final salesLower = (sales * 0.8).round();
     final salesUpper = sales;
 
-    return new LinearSales(year, yearLower, yearUpper, sales, salesLower,
-        salesUpper, makeRadius(4));
+    return LinearSales(
+      year,
+      yearLower,
+      yearUpper,
+      sales,
+      salesLower,
+      salesUpper,
+      makeRadius(4),
+    );
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.ScatterPlotChart(seriesList,
+  Widget build(BuildContext context) => charts.ScatterPlotChart(
+        seriesList,
         animate: animate,
-        defaultRenderer:
-            new charts.PointRendererConfig(pointRendererDecorators: [
-          new charts.ComparisonPointsDecorator(
-              symbolRenderer: new charts.CylinderSymbolRenderer())
-        ]));
-  }
+        defaultRenderer: charts.PointRendererConfig(
+          pointRendererDecorators: [
+            charts.ComparisonPointsDecorator(
+              symbolRenderer: charts.CylinderSymbolRenderer(),
+            ),
+          ],
+        ),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final data = [
-      new LinearSales(10, 7, 10, 25, 20, 25, 5.0),
-      new LinearSales(13, 11, 13, 225, 205, 225, 5.0),
-      new LinearSales(34, 34, 24, 150, 150, 130, 5.0),
-      new LinearSales(37, 37, 57, 10, 10, 12, 6.5),
-      new LinearSales(45, 35, 45, 260, 300, 260, 8.0),
-      new LinearSales(56, 46, 56, 200, 170, 200, 7.0),
+      LinearSales(10, 7, 10, 25, 20, 25, 5),
+      LinearSales(13, 11, 13, 225, 205, 225, 5),
+      LinearSales(34, 34, 24, 150, 150, 130, 5),
+      LinearSales(37, 37, 57, 10, 10, 12, 6.5),
+      LinearSales(45, 35, 45, 260, 300, 260, 8),
+      LinearSales(56, 46, 56, 200, 170, 200, 7),
     ];
 
-    final maxMeasure = 300;
+    const maxMeasure = 300;
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
         // Providing a color function is optional.
-        colorFn: (LinearSales sales, _) {
+        colorFn: (sales, _) {
           // Bucket the measure column value into 3 distinct colors.
           final bucket = sales.sales / maxMeasure;
 
@@ -140,22 +151,31 @@ class ComparisonPointsScatterPlotChart extends StatelessWidget {
             return charts.MaterialPalette.green.shadeDefault;
           }
         },
-        domainFn: (LinearSales sales, _) => sales.year,
-        domainLowerBoundFn: (LinearSales sales, _) => sales.yearLower,
-        domainUpperBoundFn: (LinearSales sales, _) => sales.yearUpper,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        measureLowerBoundFn: (LinearSales sales, _) => sales.salesLower,
-        measureUpperBoundFn: (LinearSales sales, _) => sales.salesUpper,
+        domainFn: (sales, _) => sales.year,
+        domainLowerBoundFn: (sales, _) => sales.yearLower,
+        domainUpperBoundFn: (sales, _) => sales.yearUpper,
+        measureFn: (sales, _) => sales.sales,
+        measureLowerBoundFn: (sales, _) => sales.salesLower,
+        measureUpperBoundFn: (sales, _) => sales.salesUpper,
         // Providing a radius function is optional.
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
+        radiusPxFn: (sales, _) => sales.radius,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
+  LinearSales(
+    this.year,
+    this.yearLower,
+    this.yearUpper,
+    this.sales,
+    this.salesLower,
+    this.salesUpper,
+    this.radius,
+  );
   final int year;
   final int yearLower;
   final int yearUpper;
@@ -163,7 +183,4 @@ class LinearSales {
   final int salesLower;
   final int salesUpper;
   final double radius;
-
-  LinearSales(this.year, this.yearLower, this.yearUpper, this.sales,
-      this.salesLower, this.salesUpper, this.radius);
 }

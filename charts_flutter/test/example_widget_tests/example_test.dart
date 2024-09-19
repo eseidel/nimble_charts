@@ -1,25 +1,28 @@
-// ignore_for_file: avoid_relative_lib_imports
-
+import 'package:example/bar_chart/bar_gallery.dart';
+import 'package:example/home.dart';
+import 'package:example/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
+
 
 import '../../example/lib/bar_chart/bar_gallery.dart' as b;
 import '../../example/lib/home.dart' as h;
 import '../../example/lib/line_chart/line_gallery.dart' as l;
 import '../../example/lib/main.dart' as m;
 import '../../example/lib/time_series_chart/time_series_gallery.dart' as ts;
+
 import '../test_functions.dart';
 
 /// Widget tests for the example app.
 void main() {
   group('ExampleApp Widget Tests', () {
-    m.useRandomData = false;
+    useRandomData = false;
 
     testWidgets(
       'Main Menu',
       (tester) async {
-        final galleryApp = m.GalleryApp();
+        const galleryApp = GalleryApp();
 
         await tester.pumpWidget(galleryApp);
 
@@ -29,7 +32,7 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        await matchesGolden<m.GalleryApp>(
+        await matchesGolden<GalleryApp>(
           'example_menu',
         );
       },
@@ -38,7 +41,7 @@ void main() {
     testWidgets(
       'Navigates to Simple Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.simpleBarChartTileTitle,
+        simpleBarChartTileTitle,
         extra: () async {
           await tester.tap(find.byType(charts.BarChart));
           await tester.pumpAndSettle();
@@ -49,42 +52,42 @@ void main() {
     testWidgets(
       'Navigates to Stacked Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.stackedBarChartTileTitle,
+        stackedBarChartTileTitle,
       ),
     );
 
     testWidgets(
       'Navigates to Grouped Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.groupedBarChartTileTitle,
+        groupedBarChartTileTitle,
       ),
     );
 
     testWidgets(
       'Navigates to Grouped Stacked Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.groupedStackedBarChartTileTitle,
+        groupedStackedBarChartTileTitle,
       ),
     );
 
     testWidgets(
       'Navigates to Grouped Bar Target Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.groupedBarTargetLineChartTileTitle,
+        groupedBarTargetLineChartTileTitle,
       ),
     );
 
     testWidgets(
       'Navigates to Grouped Bar Single Target Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.groupedBarSingleTargetLineChartTileTitle,
+        groupedBarSingleTargetLineChartTileTitle,
       ),
     );
 
     testWidgets(
       'Navigates to Stacked Bar Target Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.stackedBarTargetLineChart,
+        stackedBarTargetLineChart,
         scrollDelta: 200,
       ),
     );
@@ -92,7 +95,7 @@ void main() {
     testWidgets(
       'Navigates to Horizontal Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.horizontalBarChart,
+        horizontalBarChart,
         scrollDelta: 200,
       ),
     );
@@ -100,7 +103,7 @@ void main() {
     testWidgets(
       'Navigates to Stacked Horizontal Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.stackedHorizontalBarChart,
+        stackedHorizontalBarChart,
         scrollDelta: 200,
       ),
     );
@@ -108,7 +111,7 @@ void main() {
     testWidgets(
       'Navigates to Horizontal Bar Chart with Bar Labels and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.horizontalBarLabelChart,
+        horizontalBarLabelChart,
         scrollDelta: 200,
       ),
     );
@@ -116,7 +119,7 @@ void main() {
     testWidgets(
       'Navigates to Horizontal Bar Chart with Custom Bar Labels and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.horizontalBarLabelCustomChart,
+        horizontalBarLabelCustomChart,
         scrollDelta: 300,
       ),
     );
@@ -124,7 +127,7 @@ void main() {
     testWidgets(
       'Navigates to Vertical Bar Chart with Bar Labels and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.verticalBarLabelChart,
+        verticalBarLabelChart,
         scrollDelta: 300,
       ),
     );
@@ -132,7 +135,7 @@ void main() {
     testWidgets(
       'Navigates to Spark Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.sparkBarChart,
+        sparkBarChart,
         scrollDelta: 300,
       ),
     );
@@ -140,7 +143,7 @@ void main() {
     testWidgets(
       'Navigates to Grouped Fill Color Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.groupedFillColorChart,
+        groupedFillColorChart,
         scrollDelta: 300,
       ),
     );
@@ -148,22 +151,22 @@ void main() {
     testWidgets(
       'Navigates to Stacked Fill Color Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.stackedFillColorChart,
+        stackedFillColorChart,
         scrollDelta: 300,
       ),
     );
     testWidgets(
       'Navigates to Pattern Forward Hatch Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.patternForwardHatchChart,
-        scrollDelta: 350,
+        patternForwardHatchChart,
+        scrollDelta: 300,
       ),
     );
 
     testWidgets(
       'Navigates to Horizontal Pattern Forward Hatch Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.horizontalPatternForwardHatchChart,
+        horizontalPatternForwardHatchChart,
         scrollDelta: 300,
       ),
     );
@@ -171,7 +174,7 @@ void main() {
     testWidgets(
       'Navigates to Weighted Pattern Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.weightedPatternChart,
+        weightedPatternChart,
         scrollDelta: 300,
       ),
     );
@@ -179,7 +182,7 @@ void main() {
     testWidgets(
       'Navigates to Bar Chart with custom bar radius and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        b.barChartWithCustomBarRadius,
+        barChartWithCustomBarRadius,
         scrollDelta: 300,
       ),
     );
@@ -360,8 +363,8 @@ extension ExampleWidgetTestExtensions on WidgetTester {
     Future<void> Function()? extra,
     double? scrollDelta,
   }) async {
-    //Create an pump
-    final galleryApp = m.GalleryApp();
+    //Create and pump
+    const galleryApp = GalleryApp();
     await pumpWidget(galleryApp);
 
     //Set the screen size of the widget
@@ -369,7 +372,7 @@ extension ExampleWidgetTestExtensions on WidgetTester {
       ..physicalSize = const Size(1200, 700)
       ..devicePixelRatio = 1;
 
-    expect(find.byType(h.Home), findsOneWidget);
+    expect(find.byType(Home), findsOneWidget);
 
     // Find the list tile by text
     final tileFinder = find.byWidgetPredicate(

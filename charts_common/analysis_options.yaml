@@ -19,6 +19,7 @@ analyzer:
     inference_failure_on_function_invocation: warning
 
     # Probably OK
+    unreachable_from_main: warning
     prefer_asserts_in_initializer_lists: warning
     avoid_classes_with_only_static_members: warning
     prefer_function_declarations_over_variables: warning

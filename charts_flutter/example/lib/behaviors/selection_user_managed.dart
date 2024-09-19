@@ -22,54 +22,55 @@
 /// Note that the picture in this example is not interactive, please run the
 /// gallery app to try out using the button to clear selection.
 ///
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class SelectionUserManaged extends StatefulWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
+  const SelectionUserManaged(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  SelectionUserManaged(this.seriesList, {this.animate = false});
-
-  /// Creates a [BarChart] with sample data and no transition.
-  factory SelectionUserManaged.withSampleData() {
-    return new SelectionUserManaged(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.BarChart] with sample data and no transition.
+  factory SelectionUserManaged.withSampleData() => SelectionUserManaged(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SelectionUserManaged.withRandomData() {
-    return new SelectionUserManaged(_createRandomData());
-  }
+  factory SelectionUserManaged.withRandomData() =>
+      SelectionUserManaged(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -77,41 +78,39 @@ class SelectionUserManaged extends StatefulWidget {
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final data = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-      new OrdinalSales('2016', 100),
-      new OrdinalSales('2017', 75),
+      OrdinalSales('2014', 5),
+      OrdinalSales('2015', 25),
+      OrdinalSales('2016', 100),
+      OrdinalSales('2017', 75),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 
   @override
-  SelectionUserManagedState createState() {
-    return new SelectionUserManagedState();
-  }
+  SelectionUserManagedState createState() => SelectionUserManagedState();
 }
 
 class SelectionUserManagedState extends State<SelectionUserManaged> {
-  final _myState = new charts.UserManagedState<String>();
+  final _myState = charts.UserManagedState<String>();
 
   @override
   Widget build(BuildContext context) {
-    final chart = new charts.BarChart(
+    final chart = charts.BarChart(
       widget.seriesList,
       animate: false, //widget.animate,
       selectionModels: [
-        new charts.SelectionModelConfig(
-            type: charts.SelectionModelType.info,
-            updatedListener: _infoSelectionModelUpdated)
+        charts.SelectionModelConfig(
+          updatedListener: _infoSelectionModelUpdated,
+        ),
       ],
       // Pass in the state you manage to the chart. This will be used to
       // override the internal chart state.
@@ -119,17 +118,22 @@ class SelectionUserManagedState extends State<SelectionUserManaged> {
       // The initial selection can still be optionally added by adding the
       // initial selection behavior.
       behaviors: [
-        new charts.InitialSelection(selectedDataConfig: [
-          new charts.SeriesDatumConfig<String>('Sales', '2016')
-        ])
+        charts.InitialSelection(
+          selectedDataConfig: [
+            charts.SeriesDatumConfig<String>('Sales', '2016'),
+          ],
+        ),
       ],
     );
 
-    final clearSelection = new MaterialButton(
-        onPressed: _handleClearSelection, child: new Text('Clear Selection'));
+    final clearSelection = MaterialButton(
+      onPressed: _handleClearSelection,
+      child: const Text('Clear Selection'),
+    );
 
-    return new Column(
-        children: [new SizedBox(height: 150.0, child: chart), clearSelection]);
+    return Column(
+      children: [SizedBox(height: 150, child: chart), clearSelection],
+    );
   }
 
   void _infoSelectionModelUpdated(charts.SelectionModel<String> model) {
@@ -141,7 +145,7 @@ class SelectionUserManagedState extends State<SelectionUserManaged> {
     // This also allows you to listen to the selection model update events and
     // alter the selection.
     _myState.selectionModels[charts.SelectionModelType.info] =
-        new charts.UserManagedSelectionModel(model: model);
+        charts.UserManagedSelectionModel(model: model);
   }
 
   void _handleClearSelection() {
@@ -150,15 +154,14 @@ class SelectionUserManagedState extends State<SelectionUserManaged> {
     // no selection model to clear all selection when rebuilt.
     setState(() {
       _myState.selectionModels[charts.SelectionModelType.info] =
-          new charts.UserManagedSelectionModel();
+          charts.UserManagedSelectionModel();
     });
   }
 }
 
 /// Sample ordinal data type.
 class OrdinalSales {
+  OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }

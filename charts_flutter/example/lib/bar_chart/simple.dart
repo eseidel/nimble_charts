@@ -14,91 +14,85 @@
 // limitations under the License.
 
 /// Bar chart example
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class SimpleBarChart extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
+  const SimpleBarChart(this.seriesList, {super.key, this.animate = false});
 
-  SimpleBarChart(this.seriesList, {this.animate = false});
-
-  /// Creates a [BarChart] with sample data and no transition.
-  factory SimpleBarChart.withSampleData() {
-    return new SimpleBarChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.BarChart] with sample data and no transition.
+  factory SimpleBarChart.withSampleData() => SimpleBarChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SimpleBarChart.withRandomData() {
-    return new SimpleBarChart(_createRandomData());
-  }
+  factory SimpleBarChart.withRandomData() =>
+      SimpleBarChart(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.BarChart(
-      seriesList,
-      animate: animate,
-    );
-  }
+  Widget build(BuildContext context) => charts.BarChart(
+        seriesList,
+        animate: animate,
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final data = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-      new OrdinalSales('2016', 100),
-      new OrdinalSales('2017', 75),
+      OrdinalSales('2014', 5),
+      OrdinalSales('2015', 25),
+      OrdinalSales('2016', 100),
+      OrdinalSales('2017', 75),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample ordinal data type.
 class OrdinalSales {
+  OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }

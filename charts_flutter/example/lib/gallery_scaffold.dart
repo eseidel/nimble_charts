@@ -15,52 +15,60 @@
 
 import 'package:flutter/material.dart';
 
-typedef Widget GalleryWidgetBuilder();
+typedef GalleryWidgetBuilder = Widget Function();
 
 /// Helper to build gallery.
 class GalleryScaffold extends StatefulWidget {
+  const GalleryScaffold({
+    required this.listTileIcon,
+    required this.title,
+    required this.subtitle,
+    required this.childBuilder,
+    super.key,
+  });
+
   /// The widget used for leading in a [ListTile].
   final Widget listTileIcon;
   final String title;
   final String subtitle;
   final GalleryWidgetBuilder childBuilder;
 
-  GalleryScaffold({
-    required this.listTileIcon,
-    required this.title,
-    required this.subtitle,
-    required this.childBuilder,
-  });
-
   /// Gets the gallery
-  Widget buildGalleryListTile(BuildContext context) => new ListTile(
-      leading: listTileIcon,
-      title: new Text(title),
-      subtitle: new Text(subtitle),
-      onTap: () {
-        Navigator.push(context, new MaterialPageRoute(builder: (_) => this));
-      });
+  Widget buildGalleryListTile(BuildContext context) => ListTile(
+        leading: listTileIcon,
+        title: Text(title),
+        subtitle: Text(subtitle),
+        onTap: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute<dynamic>(builder: (_) => this),
+          );
+        },
+      );
 
   @override
-  _GalleryScaffoldState createState() => new _GalleryScaffoldState();
+  GalleryScaffoldState createState() => GalleryScaffoldState();
 }
 
-class _GalleryScaffoldState extends State<GalleryScaffold> {
+class GalleryScaffoldState extends State<GalleryScaffold> {
   void _handleButtonPress() {
     setState(() {});
   }
 
   @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(title: new Text(widget.title)),
-      body: new Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: new Column(children: <Widget>[
-            new SizedBox(height: 250.0, child: widget.childBuilder()),
-          ])),
-      floatingActionButton: new FloatingActionButton(
-          onPressed: _handleButtonPress, child: new Icon(Icons.refresh)),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 250, child: widget.childBuilder()),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _handleButtonPress,
+          child: const Icon(Icons.refresh),
+        ),
+      );
 }
