@@ -13,17 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // EXCLUDE_FROM_GALLERY_DOCS_START
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'dart:math';
 
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:nimble_charts/flutter.dart';
 
 /// This is just a simple line chart with a behavior that adds slider controls.
 ///
-/// A [Slider] behavior is added manually to enable slider controls, with an
+/// A Slider behavior is added manually to enable slider controls, with an
 /// initial position at 1 along the domain axis.
 ///
 /// An onChange event handler has been configured to demonstrate updating a div
@@ -104,14 +105,15 @@ class _SliderCallbackState extends State<SliderLine> {
   // Handles callbacks when the user drags the slider.
   void _onSliderChange(
     Point<int> point,
-    domain,
+    dynamic domain,
     String roleId,
     charts.SliderListenerDragState dragState,
   ) {
     // Request a build.
     void rebuild(_) {
       setState(() {
-        _sliderDomainValue = (domain * 10).round() / 10;
+        //TODO: casting
+        _sliderDomainValue = (domain * 10).round() / 10 as num;
         _sliderDragState = dragState.toString();
         _sliderPosition = point;
       });

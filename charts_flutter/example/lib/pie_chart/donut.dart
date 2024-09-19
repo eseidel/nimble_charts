@@ -67,7 +67,7 @@ class DonutPieChart extends StatelessWidget {
         animate: animate,
         // Configure the width of the pie slices to 60px. The remaining space in
         // the chart will be left as a hole in the center.
-        defaultRenderer: charts.ArcRendererConfig(arcWidth: 60),
+        defaultRenderer: charts.ArcRendererConfig<dynamic>(arcWidth: 60),
       );
 
   /// Create one series with sample hard coded data.

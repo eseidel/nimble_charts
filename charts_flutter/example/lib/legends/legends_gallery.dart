@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:example/gallery_scaffold.dart';
 import 'package:example/legends/datum_legend_with_measures.dart';
 import 'package:example/legends/default_hidden_series_legend.dart';
@@ -33,7 +35,8 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: Icon(Icons.insert_chart),
         title: 'Series Legend Options',
         subtitle:
-            'A series legend with custom positioning and spacing for a bar chart',
+            'A series legend with custom positioning '
+            'and spacing for a bar chart',
         childBuilder: LegendOptions.withRandomData,
       ),
       const GalleryScaffold(

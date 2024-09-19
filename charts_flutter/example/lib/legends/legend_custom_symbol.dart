@@ -22,7 +22,7 @@ import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:nimble_charts/src/util/color.dart';
+import 'package:nimble_charts/flutter.dart';
 import 'package:nimble_charts_common/common.dart' as common;
 
 /// Example custom renderer that renders [IconData].
@@ -141,8 +141,8 @@ class LegendWithCustomSymbol extends StatelessWidget {
         // Add the legend behavior to the chart to turn on legends.
         // By default the legend will display above the chart.
         //
-        // To change the symbol used in the legend, set the renderer attribute of
-        // symbolRendererKey to a SymbolRenderer.
+        // To change the symbol used in the legend, set the renderer attribute 
+        // of symbolRendererKey to a SymbolRenderer.
         behaviors: [charts.SeriesLegend()],
         defaultRenderer: charts.BarRendererConfig(
           symbolRenderer: IconRenderer(Icons.cloud),

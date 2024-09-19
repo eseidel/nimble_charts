@@ -86,7 +86,7 @@ class DonutAutoLabelChart extends StatelessWidget {
         //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
         defaultRenderer: charts.ArcRendererConfig(
           arcWidth: 60,
-          arcRendererDecorators: [charts.ArcLabelDecorator()],
+          arcRendererDecorators: [charts.ArcLabelDecorator<dynamic>()],
         ),
       );
 

@@ -166,6 +166,8 @@ class ShapesScatterPlotChart extends StatelessWidget {
 
     const maxMeasure = 100;
 
+    String? getShape(int index) => data[index].shape;
+
     return [
       charts.Series<LinearSales, int>(
         id: 'Sales',
@@ -191,7 +193,7 @@ class ShapesScatterPlotChart extends StatelessWidget {
         // Accessor function that associates each datum with a symbol renderer.
         ..setAttribute(
           charts.pointSymbolRendererFnKey,
-          (index) => data[index].shape,
+          getShape,
         )
         // Default symbol renderer ID for data that have no defined shape.
         ..setAttribute(charts.pointSymbolRendererIdKey, 'rect'),
@@ -249,6 +251,8 @@ class ShapesScatterPlotChart extends StatelessWidget {
 
     const maxMeasure = 300;
 
+    String? getShape(int index) => data[index].shape;
+
     return [
       charts.Series<LinearSales, int>(
         id: 'Sales',
@@ -275,7 +279,7 @@ class ShapesScatterPlotChart extends StatelessWidget {
         // Accessor function that associates each datum with a symbol renderer.
         ..setAttribute(
           charts.pointSymbolRendererFnKey,
-          (index) => data[index].shape,
+          getShape,
         )
         // Default symbol renderer ID for data that have no defined shape.
         ..setAttribute(charts.pointSymbolRendererIdKey, 'rect'),

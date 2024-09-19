@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 /// Bar chart with example of a legend with customized position, justification,
 /// desired max rows, and padding. These options are shown as an example of how
 /// to use the customizations, they do not necessary have to be used together in

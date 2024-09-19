@@ -107,7 +107,9 @@ class DomainA11yExploreBarChart extends StatelessWidget {
   /// This example vocalizes the domain, then for each series that has that
   /// domain, it vocalizes the series display name and the measure and a
   /// description of that measure.
-  String vocalizeDomainAndMeasures(List<charts.SeriesDatum> seriesDatums) {
+  String vocalizeDomainAndMeasures(
+    List<charts.SeriesDatum<dynamic>> seriesDatums,
+  ) {
     final buffer = StringBuffer()
       ..
 

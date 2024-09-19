@@ -138,7 +138,7 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
   // Listens to the underlying selection changes, and updates the information
   // relevant to building the primitive legend like information under the
   // chart.
-  void _onSelectionChanged(charts.SelectionModel model) {
+  void _onSelectionChanged(charts.SelectionModel<dynamic> model) {
     final selectedDatum = model.selectedDatum;
 
     DateTime? time;
@@ -150,9 +150,11 @@ class _SelectionCallbackState extends State<SelectionCallbackExample> {
     // Walk the selection updating the measures map, storing off the sales and
     // series name for each selection point.
     if (selectedDatum.isNotEmpty) {
-      time = selectedDatum.first.datum.time;
+      // TODO: casting
+      time = selectedDatum.first.datum.time as DateTime?;
       for (final datumPair in selectedDatum) {
-        measures[datumPair.series.displayName!] = datumPair.datum.sales;
+        //TODO: casting
+        measures[datumPair.series.displayName!] = datumPair.datum.sales as num;
       }
     }
 

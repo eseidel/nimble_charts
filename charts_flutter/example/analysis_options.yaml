@@ -4,4 +4,9 @@ include: package:austerity/analysis_options.yaml
 analyzer:
   errors:
     comment_references: warning
+    avoid_dynamic_calls: warning
+    avoid_annotating_with_dynamic: warning
+
+    unreachable_from_main: ignore
+    public_member_api_docs: ignore
   

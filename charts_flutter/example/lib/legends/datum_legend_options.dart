@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 /// Pie chart with example of a legend with customized position, justification,
 /// desired max rows, padding, and entry text styles. These options are shown as
 /// an example of how to use the customizations, they do not necessary have to
@@ -72,7 +74,7 @@ class DatumLegendOptions extends StatelessWidget {
         // This example shows how to change the position and justification of
         // the legend, in addition to altering the max rows and padding.
         behaviors: [
-          charts.DatumLegend(
+          charts.DatumLegend<dynamic>(
             // Positions for "start" and "end" will be left and right respectively
             // for widgets with a build context that has directionality ltr.
             // For rtl, "start" and "end" will be right and left respectively.
