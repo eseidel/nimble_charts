@@ -22,8 +22,8 @@
 /// OS screen reader is enabled, the node that is being read out loud will be
 /// surrounded by a rectangle.
 ///
-/// When [DomainA11yExploreBehavior] is added to the chart, the chart will
-/// listen for the gesture that triggers "explore mode".
+/// When [charts.DomainA11yExploreBehavior] is added to the chart, the chart
+/// will listen for the gesture that triggers "explore mode".
 /// "Explore mode" creates semantic nodes for each domain value in the chart
 /// with a description (customizable, defaults to domain value) and a bounding
 /// box that surrounds the domain.
@@ -31,88 +31,93 @@
 /// These semantic node descriptions are read out loud by the OS screen reader
 /// when the user taps within the bounding box, or when the user cycles through
 /// the screen's elements (such as swiping left and right).
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class DomainA11yExploreBarChart extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
+  const DomainA11yExploreBarChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  DomainA11yExploreBarChart(this.seriesList, {this.animate = false});
-
-  /// Creates a [BarChart] with sample data and no transition.
-  factory DomainA11yExploreBarChart.withSampleData() {
-    return new DomainA11yExploreBarChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.BarChart] with sample data and no transition.
+  factory DomainA11yExploreBarChart.withSampleData() =>
+      DomainA11yExploreBarChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory DomainA11yExploreBarChart.withRandomData() {
-    return new DomainA11yExploreBarChart(_createRandomData());
-  }
+  factory DomainA11yExploreBarChart.withRandomData() =>
+      DomainA11yExploreBarChart(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final mobileData = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     final tabletData = [
       // Purposely missing data to show that only measures that are available
       // are vocalized.
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Mobile Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: mobileData,
       ),
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Tablet Sales',
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: tabletData,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   /// An example of how to generate a customized vocalization for
-  /// [DomainA11yExploreBehavior] from a list of [SeriesDatum]s.
+  /// [charts.DomainA11yExploreBehavior] from a list of [charts.SeriesDatum]s.
   ///
   /// The list of series datums is for one domain.
   ///
   /// This example vocalizes the domain, then for each series that has that
   /// domain, it vocalizes the series display name and the measure and a
   /// description of that measure.
-  String vocalizeDomainAndMeasures(List<charts.SeriesDatum> seriesDatums) {
-    final buffer = new StringBuffer();
+  String vocalizeDomainAndMeasures(
+    List<charts.SeriesDatum<dynamic>> seriesDatums,
+  ) {
+    final buffer = StringBuffer()
+      ..
 
-    // The datum's type in this case is [OrdinalSales].
-    // So we can access year and sales information here.
-    buffer.write(seriesDatums.first.datum.year);
+          // The datum's type in this case is [OrdinalSales].
+          // So we can access year and sales information here.
+          write(seriesDatums.first.datum.year);
 
-    for (charts.SeriesDatum seriesDatum in seriesDatums) {
+    for (final seriesDatum in seriesDatums) {
       final series = seriesDatum.series;
       final datum = seriesDatum.datum;
 
@@ -124,14 +129,13 @@ class DomainA11yExploreBarChart extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return new Semantics(
+  Widget build(BuildContext context) => Semantics(
         // Describe your chart
         label: 'Yearly sales bar chart',
         // Optionally provide a hint for the user to know how to trigger
         // explore mode.
         hint: 'Press and hold to enable explore',
-        child: new charts.BarChart(
+        child: charts.BarChart(
           seriesList,
           animate: animate,
           // To prevent conflict with the select nearest behavior that uses the
@@ -140,7 +144,7 @@ class DomainA11yExploreBarChart extends StatelessWidget {
           // with the application.
           defaultInteractions: !MediaQuery.of(context).accessibleNavigation,
           behaviors: [
-            new charts.DomainA11yExploreBehavior(
+            charts.DomainA11yExploreBehavior(
               // Callback for generating the message that is vocalized.
               // An example of how to use is in [vocalizeDomainAndMeasures].
               // If none is set, the default only vocalizes the domain value.
@@ -160,56 +164,55 @@ class DomainA11yExploreBarChart extends StatelessWidget {
               // minimum width of the screen reader bounding box. The bounding
               // box width is calculated based on the domain axis step size.
               // Minimum width will be used if the step size is smaller.
-              minimumWidth: 1.0,
+              minimumWidth: 1,
             ),
             // Optionally include domain highlighter as a behavior.
             // This behavior is included in this example to show that when an
             // a11y node has focus, the chart's internal selection model is
             // also updated.
-            new charts.DomainHighlighter(charts.SelectionModelType.info),
+            charts.DomainHighlighter(),
           ],
-        ));
-  }
+        ),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final mobileData = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-      new OrdinalSales('2016', 100),
-      new OrdinalSales('2017', 75),
+      OrdinalSales('2014', 5),
+      OrdinalSales('2015', 25),
+      OrdinalSales('2016', 100),
+      OrdinalSales('2017', 75),
     ];
 
     final tabletData = [
       // Purposely missing data to show that only measures that are available
       // are vocalized.
-      new OrdinalSales('2016', 25),
-      new OrdinalSales('2017', 50),
+      OrdinalSales('2016', 25),
+      OrdinalSales('2017', 50),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Mobile Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: mobileData,
       ),
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Tablet Sales',
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: tabletData,
-      )
+      ),
     ];
   }
 }
 
 /// Sample ordinal data type.
 class OrdinalSales {
+  OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }

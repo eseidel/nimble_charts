@@ -20,114 +20,113 @@
 ///
 /// In this example, the series list has numeric data from 0 to 10, but we
 /// want to show from 3 to 7.
-/// We can do this by specifying an [NumericExtents] in [NumericAxisSpec].
+/// We can do this by specifying an [charts.NumericExtents] in
+/// [charts.NumericAxisSpec].
+library;
 
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class NumericInitialViewport extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
+  const NumericInitialViewport(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  NumericInitialViewport(this.seriesList, {this.animate = false});
-
-  /// Creates a [LineChart] with sample data and no transition.
-  factory NumericInitialViewport.withSampleData() {
-    return new NumericInitialViewport(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.LineChart] with sample data and no transition.
+  factory NumericInitialViewport.withSampleData() => NumericInitialViewport(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory NumericInitialViewport.withRandomData() {
-    return new NumericInitialViewport(_createRandomData());
-  }
+  factory NumericInitialViewport.withRandomData() =>
+      NumericInitialViewport(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, num>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new LinearSales(0, random.nextInt(100)),
-      new LinearSales(1, random.nextInt(100)),
-      new LinearSales(2, random.nextInt(100)),
-      new LinearSales(3, random.nextInt(100)),
-      new LinearSales(4, random.nextInt(100)),
-      new LinearSales(5, random.nextInt(100)),
-      new LinearSales(6, random.nextInt(100)),
-      new LinearSales(7, random.nextInt(100)),
-      new LinearSales(8, random.nextInt(100)),
-      new LinearSales(9, random.nextInt(100)),
-      new LinearSales(10, random.nextInt(100)),
+      LinearSales(0, random.nextInt(100)),
+      LinearSales(1, random.nextInt(100)),
+      LinearSales(2, random.nextInt(100)),
+      LinearSales(3, random.nextInt(100)),
+      LinearSales(4, random.nextInt(100)),
+      LinearSales(5, random.nextInt(100)),
+      LinearSales(6, random.nextInt(100)),
+      LinearSales(7, random.nextInt(100)),
+      LinearSales(8, random.nextInt(100)),
+      LinearSales(9, random.nextInt(100)),
+      LinearSales(10, random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.LineChart(
-      seriesList,
-      animate: animate,
-      domainAxis: new charts.NumericAxisSpec(
+  Widget build(BuildContext context) => charts.LineChart(
+        seriesList,
+        animate: animate,
+        domainAxis: const charts.NumericAxisSpec(
           // Set the initial viewport by providing a new AxisSpec with the
           // desired viewport, in NumericExtents.
-          viewport: new charts.NumericExtents(3.0, 7.0)),
-      // Optionally add a pan or pan and zoom behavior.
-      // If pan/zoom is not added, the viewport specified remains the viewport.
-      behaviors: [new charts.PanAndZoomBehavior()],
-    );
-  }
+          viewport: charts.NumericExtents(3.0, 7.0),
+        ),
+        // Optionally add a pan or pan and zoom behavior.
+        // If pan/zoom is not added, the viewport specified remains the viewport.
+        behaviors: [charts.PanAndZoomBehavior()],
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final data = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 25),
-      new LinearSales(2, 100),
-      new LinearSales(3, 75),
-      new LinearSales(4, 55),
-      new LinearSales(5, 66),
-      new LinearSales(6, 110),
-      new LinearSales(7, 70),
-      new LinearSales(8, 20),
-      new LinearSales(9, 25),
-      new LinearSales(10, 45),
+      LinearSales(0, 5),
+      LinearSales(1, 25),
+      LinearSales(2, 100),
+      LinearSales(3, 75),
+      LinearSales(4, 55),
+      LinearSales(5, 66),
+      LinearSales(6, 110),
+      LinearSales(7, 70),
+      LinearSales(8, 20),
+      LinearSales(9, 25),
+      LinearSales(10, 45),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
+  LinearSales(this.year, this.sales);
   final int year;
   final int sales;
-
-  LinearSales(this.year, this.sales);
 }

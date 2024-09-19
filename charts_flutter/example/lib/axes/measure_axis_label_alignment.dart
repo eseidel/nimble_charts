@@ -14,6 +14,8 @@
 // limitations under the License.
 
 /// Custom Tick Label Alignment Example
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -23,43 +25,42 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// Example of using a custom primary measure replacing the renderSpec with one
 /// that aligns the text under the tick and left justifies.
 class MeasureAxisLabelAlignment extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
+  const MeasureAxisLabelAlignment(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  MeasureAxisLabelAlignment(this.seriesList, {this.animate = false});
-
-  factory MeasureAxisLabelAlignment.withSampleData() {
-    return new MeasureAxisLabelAlignment(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  factory MeasureAxisLabelAlignment.withSampleData() =>
+      MeasureAxisLabelAlignment(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory MeasureAxisLabelAlignment.withRandomData() {
-    return new MeasureAxisLabelAlignment(_createRandomData());
-  }
+  factory MeasureAxisLabelAlignment.withRandomData() =>
+      MeasureAxisLabelAlignment(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final globalSalesData = [
-      new OrdinalSales('2014', random.nextInt(100) * 100),
-      new OrdinalSales('2015', random.nextInt(100) * 100),
-      new OrdinalSales('2016', random.nextInt(100) * 100),
-      new OrdinalSales('2017', random.nextInt(100) * 100),
+      OrdinalSales('2014', random.nextInt(100) * 100),
+      OrdinalSales('2015', random.nextInt(100) * 100),
+      OrdinalSales('2016', random.nextInt(100) * 100),
+      OrdinalSales('2017', random.nextInt(100) * 100),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Global Revenue',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: globalSalesData,
       ),
     ];
@@ -67,46 +68,45 @@ class MeasureAxisLabelAlignment extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.BarChart(
-      seriesList,
-      animate: animate,
+  Widget build(BuildContext context) => charts.BarChart(
+        seriesList,
+        animate: animate,
 
-      /// Customize the primary measure axis using a small tick renderer.
-      /// Use String instead of num for ordinal domain axis
-      /// (typically bar charts).
-      primaryMeasureAxis: new charts.NumericAxisSpec(
-          renderSpec: new charts.GridlineRendererSpec(
-        // Display the measure axis labels below the gridline.
-        //
-        // 'Before' & 'after' follow the axis value direction.
-        // Vertical axes draw 'before' below & 'after' above the tick.
-        // Horizontal axes draw 'before' left & 'after' right the tick.
-        labelAnchor: charts.TickLabelAnchor.before,
+        /// Customize the primary measure axis using a small tick renderer.
+        /// Use String instead of num for ordinal domain axis
+        /// (typically bar charts).
+        primaryMeasureAxis: const charts.NumericAxisSpec(
+          renderSpec: charts.GridlineRendererSpec(
+            // Display the measure axis labels below the gridline.
+            //
+            // 'Before' & 'after' follow the axis value direction.
+            // Vertical axes draw 'before' below & 'after' above the tick.
+            // Horizontal axes draw 'before' left & 'after' right the tick.
+            labelAnchor: charts.TickLabelAnchor.before,
 
-        // Left justify the text in the axis.
-        //
-        // Note: outside means that the secondary measure axis would right
-        // justify.
-        labelJustification: charts.TickLabelJustification.outside,
-      )),
-    );
-  }
+            // Left justify the text in the axis.
+            //
+            // Note: outside means that the secondary measure axis would right
+            // justify.
+            labelJustification: charts.TickLabelJustification.outside,
+          ),
+        ),
+      );
 
   /// Create series list with single series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final globalSalesData = [
-      new OrdinalSales('2014', 5000),
-      new OrdinalSales('2015', 25000),
-      new OrdinalSales('2016', 100000),
-      new OrdinalSales('2017', 750000),
+      OrdinalSales('2014', 5000),
+      OrdinalSales('2015', 25000),
+      OrdinalSales('2016', 100000),
+      OrdinalSales('2017', 750000),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Global Revenue',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: globalSalesData,
       ),
     ];
@@ -115,8 +115,7 @@ class MeasureAxisLabelAlignment extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
+  OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }

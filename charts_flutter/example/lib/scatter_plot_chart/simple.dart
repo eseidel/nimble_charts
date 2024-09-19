@@ -14,62 +14,63 @@
 // limitations under the License.
 
 /// Scatter plot chart example
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class SimpleScatterPlotChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
+  const SimpleScatterPlotChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  SimpleScatterPlotChart(this.seriesList, {this.animate = false});
-
-  /// Creates a [ScatterPlotChart] with sample data and no transition.
-  factory SimpleScatterPlotChart.withSampleData() {
-    return new SimpleScatterPlotChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.ScatterPlotChart] with sample data and no transition.
+  factory SimpleScatterPlotChart.withSampleData() => SimpleScatterPlotChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SimpleScatterPlotChart.withRandomData() {
-    return new SimpleScatterPlotChart(_createRandomData());
-  }
+  factory SimpleScatterPlotChart.withRandomData() =>
+      SimpleScatterPlotChart(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, num>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
-    final makeRadius = (int value) => (random.nextInt(value) + 2).toDouble();
+    double makeRadius(int value) => (random.nextInt(value) + 2).toDouble();
 
     final data = [
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
+      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
+      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
+      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
+      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
+      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
+      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
+      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
+      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
+      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
+      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
+      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
+      LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6)),
     ];
 
-    final maxMeasure = 100;
+    const maxMeasure = 100;
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        colorFn: (LinearSales sales, _) {
+        colorFn: (sales, _) {
           // Color bucket the measure column value into 3 distinct colors.
           final bucket = sales.sales / maxMeasure;
 
@@ -81,44 +82,43 @@ class SimpleScatterPlotChart extends StatelessWidget {
             return charts.MaterialPalette.green.shadeDefault;
           }
         },
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        radiusPxFn: (sales, _) => sales.radius,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.ScatterPlotChart(seriesList, animate: animate);
-  }
+  Widget build(BuildContext context) =>
+      charts.ScatterPlotChart(seriesList, animate: animate);
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final data = [
-      new LinearSales(0, 5, 3.0),
-      new LinearSales(10, 25, 5.0),
-      new LinearSales(12, 75, 4.0),
-      new LinearSales(13, 225, 5.0),
-      new LinearSales(16, 50, 4.0),
-      new LinearSales(24, 75, 3.0),
-      new LinearSales(25, 100, 3.0),
-      new LinearSales(34, 150, 5.0),
-      new LinearSales(37, 10, 4.5),
-      new LinearSales(45, 300, 8.0),
-      new LinearSales(52, 15, 4.0),
-      new LinearSales(56, 200, 7.0),
+      LinearSales(0, 5, 3),
+      LinearSales(10, 25, 5),
+      LinearSales(12, 75, 4),
+      LinearSales(13, 225, 5),
+      LinearSales(16, 50, 4),
+      LinearSales(24, 75, 3),
+      LinearSales(25, 100, 3),
+      LinearSales(34, 150, 5),
+      LinearSales(37, 10, 4.5),
+      LinearSales(45, 300, 8),
+      LinearSales(52, 15, 4),
+      LinearSales(56, 200, 7),
     ];
 
-    final maxMeasure = 300;
+    const maxMeasure = 300;
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
         // Providing a color function is optional.
-        colorFn: (LinearSales sales, _) {
+        colorFn: (sales, _) {
           // Bucket the measure column value into 3 distinct colors.
           final bucket = sales.sales / maxMeasure;
 
@@ -130,21 +130,20 @@ class SimpleScatterPlotChart extends StatelessWidget {
             return charts.MaterialPalette.green.shadeDefault;
           }
         },
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         // Providing a radius function is optional.
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
+        radiusPxFn: (sales, _) => sales.radius,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
+  LinearSales(this.year, this.sales, this.radius);
   final int year;
   final int sales;
   final double radius;
-
-  LinearSales(this.year, this.sales, this.radius);
 }

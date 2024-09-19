@@ -20,116 +20,119 @@
 ///
 /// Disjoint measure axes will be used to scale the series associated with them,
 /// but they will not render any tick elements on either side of the chart.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:collection' show LinkedHashMap;
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class DisjointMeasureAxisLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
+  const DisjointMeasureAxisLineChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  DisjointMeasureAxisLineChart(this.seriesList, {this.animate = false});
-
-  /// Creates a [LineChart] with sample data and no transition.
-  factory DisjointMeasureAxisLineChart.withSampleData() {
-    return new DisjointMeasureAxisLineChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.LineChart] with sample data and no transition.
+  factory DisjointMeasureAxisLineChart.withSampleData() =>
+      DisjointMeasureAxisLineChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory DisjointMeasureAxisLineChart.withRandomData() {
-    return new DisjointMeasureAxisLineChart(_createRandomData());
-  }
+  factory DisjointMeasureAxisLineChart.withRandomData() =>
+      DisjointMeasureAxisLineChart(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearClicks, num>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     // The first three series contain similar data with different magnitudes.
     // This demonstrates the ability to graph the trends in each series relative
     // to each other, without the largest magnitude series compressing the
     // smallest.
     final myFakeDesktopData = [
-      new LinearClicks(0, clickCount: random.nextInt(100)),
-      new LinearClicks(1, clickCount: random.nextInt(100)),
-      new LinearClicks(2, clickCount: random.nextInt(100)),
-      new LinearClicks(3, clickCount: random.nextInt(100)),
+      LinearClicks(0, clickCount: random.nextInt(100)),
+      LinearClicks(1, clickCount: random.nextInt(100)),
+      LinearClicks(2, clickCount: random.nextInt(100)),
+      LinearClicks(3, clickCount: random.nextInt(100)),
     ];
 
     final myFakeTabletData = [
-      new LinearClicks(0, clickCount: random.nextInt(100) * 100),
-      new LinearClicks(1, clickCount: random.nextInt(100) * 100),
-      new LinearClicks(2, clickCount: random.nextInt(100) * 100),
-      new LinearClicks(3, clickCount: random.nextInt(100) * 100),
+      LinearClicks(0, clickCount: random.nextInt(100) * 100),
+      LinearClicks(1, clickCount: random.nextInt(100) * 100),
+      LinearClicks(2, clickCount: random.nextInt(100) * 100),
+      LinearClicks(3, clickCount: random.nextInt(100) * 100),
     ];
 
     final myFakeMobileData = [
-      new LinearClicks(0, clickCount: random.nextInt(100) * 1000),
-      new LinearClicks(1, clickCount: random.nextInt(100) * 1000),
-      new LinearClicks(2, clickCount: random.nextInt(100) * 1000),
-      new LinearClicks(3, clickCount: random.nextInt(100) * 1000),
+      LinearClicks(0, clickCount: random.nextInt(100) * 1000),
+      LinearClicks(1, clickCount: random.nextInt(100) * 1000),
+      LinearClicks(2, clickCount: random.nextInt(100) * 1000),
+      LinearClicks(3, clickCount: random.nextInt(100) * 1000),
     ];
 
     // The fourth series renders with decimal values, representing a very
     // different sort ratio-based data. If this was on the same axis as any of
     // the other series, it would be squashed near zero.
     final myFakeClickRateData = [
-      new LinearClicks(0, clickRate: .25),
-      new LinearClicks(1, clickRate: .65),
-      new LinearClicks(2, clickRate: .50),
-      new LinearClicks(3, clickRate: .30),
+      LinearClicks(0, clickRate: .25),
+      LinearClicks(1, clickRate: .65),
+      LinearClicks(2, clickRate: .50),
+      LinearClicks(3, clickRate: .30),
     ];
 
     return [
       // We render an empty series on the primary measure axis to ensure that
       // the axis itself gets rendered. This helps us draw the gridlines on the
       // chart.
-      new charts.Series<LinearClicks, int>(
-          id: 'Fake Series',
-          domainFn: (LinearClicks clickCount, _) => clickCount.year,
-          measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
-          data: []),
-      new charts.Series<LinearClicks, int>(
+      charts.Series<LinearClicks, int>(
+        id: 'Fake Series',
+        domainFn: (clickCount, _) => clickCount.year,
+        measureFn: (clickCount, _) => clickCount.clickCount,
+        data: [],
+      ),
+      charts.Series<LinearClicks, int>(
         id: 'Desktop',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearClicks clickCount, _) => clickCount.year,
-        measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
+        domainFn: (clickCount, _) => clickCount.year,
+        measureFn: (clickCount, _) => clickCount.clickCount,
         data: myFakeDesktopData,
       )
         // Set the 'Desktop' series to use a disjoint axis.
         ..setAttribute(charts.measureAxisIdKey, 'axis 1'),
-      new charts.Series<LinearClicks, int>(
+      charts.Series<LinearClicks, int>(
         id: 'Tablet',
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (LinearClicks clickCount, _) => clickCount.year,
-        measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
+        domainFn: (clickCount, _) => clickCount.year,
+        measureFn: (clickCount, _) => clickCount.clickCount,
         data: myFakeTabletData,
       )
         // Set the 'Tablet' series to use a disjoint axis.
         ..setAttribute(charts.measureAxisIdKey, 'axis 2'),
-      new charts.Series<LinearClicks, int>(
+      charts.Series<LinearClicks, int>(
         id: 'Mobile',
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-        domainFn: (LinearClicks clickCount, _) => clickCount.year,
-        measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
+        domainFn: (clickCount, _) => clickCount.year,
+        measureFn: (clickCount, _) => clickCount.clickCount,
         data: myFakeMobileData,
       )
         // Set the 'Mobile' series to use a disjoint axis.
         ..setAttribute(charts.measureAxisIdKey, 'axis 3'),
-      new charts.Series<LinearClicks, int>(
+      charts.Series<LinearClicks, int>(
         id: 'Click Rate',
         colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
-        domainFn: (LinearClicks clickCount, _) => clickCount.year,
-        measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
+        domainFn: (clickCount, _) => clickCount.year,
+        measureFn: (clickCount, _) => clickCount.clickCount,
         data: myFakeClickRateData,
       )
         // Set the 'Click Rate' series to use a disjoint axis.
@@ -139,8 +142,8 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList,
+  Widget build(BuildContext context) => charts.LineChart(
+        seriesList,
         animate: animate,
         // Configure a primary measure axis that will render gridlines across
         // the chart. This axis uses fake ticks with no labels to ensure that we
@@ -148,29 +151,30 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
         //
         // We do this because disjoint measure axes do not draw any tick
         // elements on the chart.
-        primaryMeasureAxis: new charts.NumericAxisSpec(
-            tickProviderSpec: new charts.StaticNumericTickProviderSpec(
-          // Create the ticks to be used the domain axis.
-          <charts.TickSpec<num>>[
-            new charts.TickSpec(0, label: ''),
-            new charts.TickSpec(1, label: ''),
-            new charts.TickSpec(2, label: ''),
-            new charts.TickSpec(3, label: ''),
-            new charts.TickSpec(4, label: ''),
-          ],
-        )),
+        primaryMeasureAxis: const charts.NumericAxisSpec(
+          tickProviderSpec: charts.StaticNumericTickProviderSpec(
+            // Create the ticks to be used the domain axis.
+            <charts.TickSpec<num>>[
+              charts.TickSpec(0, label: ''),
+              charts.TickSpec(1, label: ''),
+              charts.TickSpec(2, label: ''),
+              charts.TickSpec(3, label: ''),
+              charts.TickSpec(4, label: ''),
+            ],
+          ),
+        ),
         // Create one disjoint measure axis per series on the chart.
         //
         // Disjoint measure axes will be used to scale the rendered data,
         // without drawing any tick elements on either side of the chart.
         disjointMeasureAxes:
-            new LinkedHashMap<String, charts.NumericAxisSpec>.from({
-          'axis 1': new charts.NumericAxisSpec(),
-          'axis 2': new charts.NumericAxisSpec(),
-          'axis 3': new charts.NumericAxisSpec(),
-          'axis 4': new charts.NumericAxisSpec(),
-        }));
-  }
+            LinkedHashMap<String, charts.NumericAxisSpec>.from({
+          'axis 1': const charts.NumericAxisSpec(),
+          'axis 2': const charts.NumericAxisSpec(),
+          'axis 3': const charts.NumericAxisSpec(),
+          'axis 4': const charts.NumericAxisSpec(),
+        }),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearClicks, int>> _createSampleData() {
@@ -179,77 +183,78 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
     // to each other, without the largest magnitude series compressing the
     // smallest.
     final myFakeDesktopData = [
-      new LinearClicks(0, clickCount: 25),
-      new LinearClicks(1, clickCount: 125),
-      new LinearClicks(2, clickCount: 920),
-      new LinearClicks(3, clickCount: 375),
+      LinearClicks(0, clickCount: 25),
+      LinearClicks(1, clickCount: 125),
+      LinearClicks(2, clickCount: 920),
+      LinearClicks(3, clickCount: 375),
     ];
 
     final myFakeTabletData = [
-      new LinearClicks(0, clickCount: 375),
-      new LinearClicks(1, clickCount: 1850),
-      new LinearClicks(2, clickCount: 9700),
-      new LinearClicks(3, clickCount: 5000),
+      LinearClicks(0, clickCount: 375),
+      LinearClicks(1, clickCount: 1850),
+      LinearClicks(2, clickCount: 9700),
+      LinearClicks(3, clickCount: 5000),
     ];
 
     final myFakeMobileData = [
-      new LinearClicks(0, clickCount: 5000),
-      new LinearClicks(1, clickCount: 25000),
-      new LinearClicks(2, clickCount: 100000),
-      new LinearClicks(3, clickCount: 75000),
+      LinearClicks(0, clickCount: 5000),
+      LinearClicks(1, clickCount: 25000),
+      LinearClicks(2, clickCount: 100000),
+      LinearClicks(3, clickCount: 75000),
     ];
 
     // The fourth series renders with decimal values, representing a very
     // different sort ratio-based data. If this was on the same axis as any of
     // the other series, it would be squashed near zero.
     final myFakeClickRateData = [
-      new LinearClicks(0, clickRate: .25),
-      new LinearClicks(1, clickRate: .65),
-      new LinearClicks(2, clickRate: .50),
-      new LinearClicks(3, clickRate: .30),
+      LinearClicks(0, clickRate: .25),
+      LinearClicks(1, clickRate: .65),
+      LinearClicks(2, clickRate: .50),
+      LinearClicks(3, clickRate: .30),
     ];
 
     return [
       // We render an empty series on the primary measure axis to ensure that
       // the axis itself gets rendered. This helps us draw the gridlines on the
       // chart.
-      new charts.Series<LinearClicks, int>(
-          id: 'Fake Series',
-          domainFn: (LinearClicks clickCount, _) => clickCount.year,
-          measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
-          data: []),
-      new charts.Series<LinearClicks, int>(
+      charts.Series<LinearClicks, int>(
+        id: 'Fake Series',
+        domainFn: (clickCount, _) => clickCount.year,
+        measureFn: (clickCount, _) => clickCount.clickCount,
+        data: [],
+      ),
+      charts.Series<LinearClicks, int>(
         id: 'Desktop',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearClicks clickCount, _) => clickCount.year,
-        measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
+        domainFn: (clickCount, _) => clickCount.year,
+        measureFn: (clickCount, _) => clickCount.clickCount,
         data: myFakeDesktopData,
       )
         // Set the 'Desktop' series to use a disjoint axis.
         ..setAttribute(charts.measureAxisIdKey, 'axis 1'),
-      new charts.Series<LinearClicks, int>(
+      charts.Series<LinearClicks, int>(
         id: 'Tablet',
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (LinearClicks clickCount, _) => clickCount.year,
-        measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
+        domainFn: (clickCount, _) => clickCount.year,
+        measureFn: (clickCount, _) => clickCount.clickCount,
         data: myFakeTabletData,
       )
         // Set the 'Tablet' series to use a disjoint axis.
         ..setAttribute(charts.measureAxisIdKey, 'axis 2'),
-      new charts.Series<LinearClicks, int>(
+      charts.Series<LinearClicks, int>(
         id: 'Mobile',
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-        domainFn: (LinearClicks clickCount, _) => clickCount.year,
-        measureFn: (LinearClicks clickCount, _) => clickCount.clickCount,
+        domainFn: (clickCount, _) => clickCount.year,
+        measureFn: (clickCount, _) => clickCount.clickCount,
         data: myFakeMobileData,
       )
         // Set the 'Mobile' series to use a disjoint axis.
         ..setAttribute(charts.measureAxisIdKey, 'axis 3'),
-      new charts.Series<LinearClicks, int>(
+      charts.Series<LinearClicks, int>(
         id: 'Click Rate',
         colorFn: (_, __) => charts.MaterialPalette.purple.shadeDefault,
-        domainFn: (LinearClicks clickCount, _) => clickCount.year,
-        measureFn: (LinearClicks clickCount, _) => clickCount.clickRate,
+        domainFn: (clickCount, _) => clickCount.year,
+        measureFn: (clickCount, _) => clickCount.clickRate,
         data: myFakeClickRateData,
       )
         // Set the 'Click Rate' series to use a disjoint axis.
@@ -260,9 +265,8 @@ class DisjointMeasureAxisLineChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearClicks {
+  LinearClicks(this.year, {this.clickCount, this.clickRate});
   final int year;
   final int? clickCount;
   final double? clickRate;
-
-  LinearClicks(this.year, {this.clickCount, this.clickRate});
 }

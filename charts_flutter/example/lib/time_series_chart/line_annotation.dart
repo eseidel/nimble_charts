@@ -21,95 +21,102 @@
 ///
 /// Additional annotations may be added simply by adding additional
 /// [Charts.RangeAnnotationSegment] items to the list.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class TimeSeriesLineAnnotationChart extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
-  final bool animate;
+  const TimeSeriesLineAnnotationChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  TimeSeriesLineAnnotationChart(this.seriesList, {this.animate = false});
-
-  /// Creates a [TimeSeriesChart] with sample data and no transition.
-  factory TimeSeriesLineAnnotationChart.withSampleData() {
-    return new TimeSeriesLineAnnotationChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
+  factory TimeSeriesLineAnnotationChart.withSampleData() =>
+      TimeSeriesLineAnnotationChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory TimeSeriesLineAnnotationChart.withRandomData() {
-    return new TimeSeriesLineAnnotationChart(_createRandomData());
-  }
+  factory TimeSeriesLineAnnotationChart.withRandomData() =>
+      TimeSeriesLineAnnotationChart(_createRandomData());
+  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new TimeSeriesSales(new DateTime(2017, 9, 19), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2017, 9, 26), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2017, 10, 3), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2017, 10, 10), random.nextInt(100)),
+      TimeSeriesSales(DateTime(2017, 9, 19), random.nextInt(100)),
+      TimeSeriesSales(DateTime(2017, 9, 26), random.nextInt(100)),
+      TimeSeriesSales(DateTime(2017, 10, 3), random.nextInt(100)),
+      TimeSeriesSales(DateTime(2017, 10, 10), random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
-        domainFn: (TimeSeriesSales sales, _) => sales.time,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.time,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.TimeSeriesChart(seriesList, animate: animate, behaviors: [
-      new charts.RangeAnnotation([
-        new charts.LineAnnotationSegment(
-            new DateTime(2017, 10, 4), charts.RangeAnnotationAxisType.domain,
-            startLabel: 'Oct 4'),
-        new charts.LineAnnotationSegment(
-            new DateTime(2017, 10, 15), charts.RangeAnnotationAxisType.domain,
-            endLabel: 'Oct 15'),
-      ]),
-    ]);
-  }
+  Widget build(BuildContext context) => charts.TimeSeriesChart(
+        seriesList,
+        animate: animate,
+        behaviors: [
+          charts.RangeAnnotation([
+            charts.LineAnnotationSegment(
+              DateTime(2017, 10, 4),
+              charts.RangeAnnotationAxisType.domain,
+              startLabel: 'Oct 4',
+            ),
+            charts.LineAnnotationSegment(
+              DateTime(2017, 10, 15),
+              charts.RangeAnnotationAxisType.domain,
+              endLabel: 'Oct 15',
+            ),
+          ]),
+        ],
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final data = [
-      new TimeSeriesSales(new DateTime(2017, 9, 19), 5),
-      new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
-      new TimeSeriesSales(new DateTime(2017, 10, 3), 100),
-      new TimeSeriesSales(new DateTime(2017, 10, 10), 75),
+      TimeSeriesSales(DateTime(2017, 9, 19), 5),
+      TimeSeriesSales(DateTime(2017, 9, 26), 25),
+      TimeSeriesSales(DateTime(2017, 10, 3), 100),
+      TimeSeriesSales(DateTime(2017, 10, 10), 75),
     ];
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
-        domainFn: (TimeSeriesSales sales, _) => sales.time,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.time,
+        measureFn: (sales, _) => sales.sales,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample time series data type.
 class TimeSeriesSales {
+  TimeSeriesSales(this.time, this.sales);
   final DateTime time;
   final int sales;
-
-  TimeSeriesSales(this.time, this.sales);
 }

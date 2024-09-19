@@ -14,55 +14,56 @@
 // limitations under the License.
 
 /// Horizontal bar chart with bar label renderer example and hidden domain axis.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class HorizontalBarLabelChart extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
+  const HorizontalBarLabelChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  HorizontalBarLabelChart(this.seriesList, {this.animate = false});
-
-  /// Creates a [BarChart] with sample data and no transition.
-  factory HorizontalBarLabelChart.withSampleData() {
-    return new HorizontalBarLabelChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.BarChart] with sample data and no transition.
+  factory HorizontalBarLabelChart.withSampleData() => HorizontalBarLabelChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory HorizontalBarLabelChart.withRandomData() {
-    return new HorizontalBarLabelChart(_createRandomData());
-  }
+  factory HorizontalBarLabelChart.withRandomData() =>
+      HorizontalBarLabelChart(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
-          id: 'Sales',
-          domainFn: (OrdinalSales sales, _) => sales.year,
-          measureFn: (OrdinalSales sales, _) => sales.sales,
-          data: data,
-          // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (OrdinalSales sales, _) =>
-              '${sales.year}: \$${sales.sales.toString()}')
+      charts.Series<OrdinalSales, String>(
+        id: 'Sales',
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: data,
+        // Set a label accessor to control the text of the bar label.
+        labelAccessorFn: (sales, _) => '${sales.year}: \$${sales.sales}',
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -75,49 +76,46 @@ class HorizontalBarLabelChart extends StatelessWidget {
   // Text style for inside / outside can be controlled independently by setting
   // [insideLabelStyleSpec] and [outsideLabelStyleSpec].
   @override
-  Widget build(BuildContext context) {
-    return new charts.BarChart(
-      seriesList,
-      animate: animate,
-      vertical: false,
-      // Set a bar label decorator.
-      // Example configuring different styles for inside/outside:
-      //       barRendererDecorator: new charts.BarLabelDecorator(
-      //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
-      //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
-      barRendererDecorator: new charts.BarLabelDecorator<String>(),
-      // Hide domain axis.
-      domainAxis:
-          new charts.OrdinalAxisSpec(renderSpec: new charts.NoneRenderSpec()),
-    );
-  }
+  Widget build(BuildContext context) => charts.BarChart(
+        seriesList,
+        animate: animate,
+        vertical: false,
+        // Set a bar label decorator.
+        // Example configuring different styles for inside/outside:
+        //       barRendererDecorator: new charts.BarLabelDecorator(
+        //          insideLabelStyleSpec: new charts.TextStyleSpec(...),
+        //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
+        barRendererDecorator: charts.BarLabelDecorator<String>(),
+        // Hide domain axis.
+        domainAxis:
+            const charts.OrdinalAxisSpec(renderSpec: charts.NoneRenderSpec()),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final data = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-      new OrdinalSales('2016', 100),
-      new OrdinalSales('2017', 75),
+      OrdinalSales('2014', 5),
+      OrdinalSales('2015', 25),
+      OrdinalSales('2016', 100),
+      OrdinalSales('2017', 75),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
-          id: 'Sales',
-          domainFn: (OrdinalSales sales, _) => sales.year,
-          measureFn: (OrdinalSales sales, _) => sales.sales,
-          data: data,
-          // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (OrdinalSales sales, _) =>
-              '${sales.year}: \$${sales.sales.toString()}')
+      charts.Series<OrdinalSales, String>(
+        id: 'Sales',
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        data: data,
+        // Set a label accessor to control the text of the bar label.
+        labelAccessorFn: (sales, _) => '${sales.year}: \$${sales.sales}',
+      ),
     ];
   }
 }
 
 /// Sample ordinal data type.
 class OrdinalSales {
+  OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }

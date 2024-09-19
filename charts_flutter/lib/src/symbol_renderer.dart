@@ -19,7 +19,6 @@ import 'package:flutter/widgets.dart';
 import 'package:nimble_charts/flutter.dart';
 import 'package:nimble_charts/src/chart_canvas.dart' as cc;
 import 'package:nimble_charts/src/graphics_factory.dart' as gf;
-import 'package:nimble_charts/src/util/color.dart';
 import 'package:nimble_charts_common/common.dart' as common;
 
 /// Flutter widget responsible for painting a common SymbolRenderer from the

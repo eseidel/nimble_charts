@@ -13,47 +13,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:example/gallery_scaffold.dart';
+import 'package:example/scatter_plot_chart/animation_zoom.dart';
+import 'package:example/scatter_plot_chart/bucketing_axis.dart';
+import 'package:example/scatter_plot_chart/comparison_points.dart';
+import 'package:example/scatter_plot_chart/simple.dart';
 import 'package:flutter/material.dart';
-import '../gallery_scaffold.dart';
-import 'animation_zoom.dart';
-import 'bucketing_axis.dart';
-import 'comparison_points.dart';
-import 'shapes.dart';
-import 'simple.dart';
 
-List<GalleryScaffold> buildGallery() {
-  return [
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.scatter_plot),
-      title: 'Simple Scatter Plot Chart',
-      subtitle: 'With a single series',
-      childBuilder: () => new SimpleScatterPlotChart.withRandomData(),
-    ),
-    //TODO:
-    // new GalleryScaffold(
-    //   listTileIcon: new Icon(Icons.scatter_plot),
-    //   title: 'Shapes Scatter Plot Chart',
-    //   subtitle: 'With custom shapes',
-    //   childBuilder: () => new ShapesScatterPlotChart.withRandomData(),
-    // ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.scatter_plot),
-      title: 'Comparison Points Scatter Plot Chart',
-      subtitle: 'Scatter plot chart with comparison points',
-      childBuilder: () => new ComparisonPointsScatterPlotChart.withRandomData(),
-    ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.scatter_plot),
-      title: 'Pan and Zoom Scatter Plot Chart',
-      subtitle: 'Simple scatter plot chart pan and zoom behaviors enabled',
-      childBuilder: () => new ScatterPlotAnimationZoomChart.withRandomData(),
-    ),
-    new GalleryScaffold(
-      listTileIcon: new Icon(Icons.scatter_plot),
-      title: 'Bucketing Axis Scatter Plot Chart',
-      subtitle: 'Scatter plot with a measure axis that buckets values less ' +
-          'than 10% into a single region below the draw area',
-      childBuilder: () => new BucketingAxisScatterPlotChart.withRandomData(),
-    ),
-  ];
-}
+List<GalleryScaffold> buildGallery() => [
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.scatter_plot),
+        title: 'Simple Scatter Plot Chart',
+        subtitle: 'With a single series',
+        childBuilder: SimpleScatterPlotChart.withRandomData,
+      ),
+      //TODO:
+      // new GalleryScaffold(
+      //   listTileIcon: new Icon(Icons.scatter_plot),
+      //   title: 'Shapes Scatter Plot Chart',
+      //   subtitle: 'With custom shapes',
+      //   childBuilder: () => new ShapesScatterPlotChart.withRandomData(),
+      // ),
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.scatter_plot),
+        title: 'Comparison Points Scatter Plot Chart',
+        subtitle: 'Scatter plot chart with comparison points',
+        childBuilder: ComparisonPointsScatterPlotChart.withRandomData,
+      ),
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.scatter_plot),
+        title: 'Pan and Zoom Scatter Plot Chart',
+        subtitle: 'Simple scatter plot chart pan and zoom behaviors enabled',
+        childBuilder: ScatterPlotAnimationZoomChart.withRandomData,
+      ),
+      const GalleryScaffold(
+        listTileIcon: Icon(Icons.scatter_plot),
+        title: 'Bucketing Axis Scatter Plot Chart',
+        subtitle: 'Scatter plot with a measure axis that buckets values less '
+            'than 10% into a single region below the draw area',
+        childBuilder: BucketingAxisScatterPlotChart.withRandomData,
+      ),
+    ];

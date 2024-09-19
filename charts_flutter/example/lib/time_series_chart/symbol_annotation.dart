@@ -25,59 +25,77 @@
 /// shape between the domainLowerBound and domainUpperBound positions along the
 /// chart's domain axis. Point annotations are drawn on top of range
 /// annotations.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
-  final bool animate;
+  const TimeSeriesSymbolAnnotationChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  TimeSeriesSymbolAnnotationChart(this.seriesList, {this.animate = false});
-
-  /// Creates a [TimeSeriesChart] with sample data and no transition.
-  factory TimeSeriesSymbolAnnotationChart.withSampleData() {
-    return new TimeSeriesSymbolAnnotationChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
+  factory TimeSeriesSymbolAnnotationChart.withSampleData() =>
+      TimeSeriesSymbolAnnotationChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory TimeSeriesSymbolAnnotationChart.withRandomData() {
-    return new TimeSeriesSymbolAnnotationChart(_createRandomData());
-  }
+  factory TimeSeriesSymbolAnnotationChart.withRandomData() =>
+      TimeSeriesSymbolAnnotationChart(_createRandomData());
+  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final myDesktopData = [
-      new TimeSeriesSales(
-          timeCurrent: new DateTime(2017, 9, 19), sales: random.nextInt(100)),
-      new TimeSeriesSales(
-          timeCurrent: new DateTime(2017, 9, 26), sales: random.nextInt(100)),
-      new TimeSeriesSales(
-          timeCurrent: new DateTime(2017, 10, 3), sales: random.nextInt(100)),
-      new TimeSeriesSales(
-          timeCurrent: new DateTime(2017, 10, 10), sales: random.nextInt(100)),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 9, 19),
+        sales: random.nextInt(100),
+      ),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 9, 26),
+        sales: random.nextInt(100),
+      ),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 10, 3),
+        sales: random.nextInt(100),
+      ),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 10, 10),
+        sales: random.nextInt(100),
+      ),
     ];
 
     final myTabletData = [
-      new TimeSeriesSales(
-          timeCurrent: new DateTime(2017, 9, 19), sales: random.nextInt(100)),
-      new TimeSeriesSales(
-          timeCurrent: new DateTime(2017, 9, 26), sales: random.nextInt(100)),
-      new TimeSeriesSales(
-          timeCurrent: new DateTime(2017, 10, 3), sales: random.nextInt(100)),
-      new TimeSeriesSales(
-          timeCurrent: new DateTime(2017, 10, 10), sales: random.nextInt(100)),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 9, 19),
+        sales: random.nextInt(100),
+      ),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 9, 26),
+        sales: random.nextInt(100),
+      ),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 10, 3),
+        sales: random.nextInt(100),
+      ),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 10, 10),
+        sales: random.nextInt(100),
+      ),
     ];
 
     // Example of a series with two range annotations. A regular point shape
@@ -87,15 +105,15 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
     // Note that these series do not contain any measure values. They are
     // positioned automatically in rows.
     final myAnnotationDataTop = [
-      new TimeSeriesSales(
-        timeCurrent: new DateTime(2017, 9, 24),
-        timePrevious: new DateTime(2017, 9, 19),
-        timeTarget: new DateTime(2017, 9, 24),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 9, 24),
+        timePrevious: DateTime(2017, 9, 19),
+        timeTarget: DateTime(2017, 9, 24),
       ),
-      new TimeSeriesSales(
-        timeCurrent: new DateTime(2017, 9, 29),
-        timePrevious: new DateTime(2017, 9, 29),
-        timeTarget: new DateTime(2017, 10, 4),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 9, 29),
+        timePrevious: DateTime(2017, 9, 29),
+        timeTarget: DateTime(2017, 10, 4),
       ),
     ];
 
@@ -103,36 +121,36 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
     // annotations. Omitting the previous and target domain values causes that
     // datum to be drawn as a single point.
     final myAnnotationDataBottom = [
-      new TimeSeriesSales(
-        timeCurrent: new DateTime(2017, 9, 25),
-        timePrevious: new DateTime(2017, 9, 21),
-        timeTarget: new DateTime(2017, 9, 25),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 9, 25),
+        timePrevious: DateTime(2017, 9, 21),
+        timeTarget: DateTime(2017, 9, 25),
       ),
-      new TimeSeriesSales(timeCurrent: new DateTime(2017, 9, 31)),
-      new TimeSeriesSales(timeCurrent: new DateTime(2017, 10, 5)),
+      TimeSeriesSales(timeCurrent: DateTime(2017, 9, 31)),
+      TimeSeriesSales(timeCurrent: DateTime(2017, 10, 5)),
     ];
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'Desktop',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (TimeSeriesSales sales, _) => sales.timeCurrent,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.timeCurrent,
+        measureFn: (sales, _) => sales.sales,
         data: myDesktopData,
       ),
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'Tablet',
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-        domainFn: (TimeSeriesSales sales, _) => sales.timeCurrent,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.timeCurrent,
+        measureFn: (sales, _) => sales.sales,
         data: myTabletData,
       ),
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'Annotation Series 1',
         colorFn: (_, __) => charts.MaterialPalette.gray.shadeDefault,
-        domainFn: (TimeSeriesSales sales, _) => sales.timeCurrent,
-        domainLowerBoundFn: (TimeSeriesSales row, _) => row.timePrevious,
-        domainUpperBoundFn: (TimeSeriesSales row, _) => row.timeTarget,
+        domainFn: (sales, _) => sales.timeCurrent,
+        domainLowerBoundFn: (row, _) => row.timePrevious,
+        domainUpperBoundFn: (row, _) => row.timeTarget,
         // No measure values are needed for symbol annotations.
         measureFn: (_, __) => null,
         data: myAnnotationDataTop,
@@ -142,12 +160,12 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
         // Optional radius for the annotation shape. If not specified, this will
         // default to the same radius as the points.
         ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'Annotation Series 2',
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (TimeSeriesSales sales, _) => sales.timeCurrent,
-        domainLowerBoundFn: (TimeSeriesSales row, _) => row.timePrevious,
-        domainUpperBoundFn: (TimeSeriesSales row, _) => row.timeTarget,
+        domainFn: (sales, _) => sales.timeCurrent,
+        domainLowerBoundFn: (row, _) => row.timePrevious,
+        domainUpperBoundFn: (row, _) => row.timeTarget,
         // No measure values are needed for symbol annotations.
         measureFn: (_, __) => null,
         data: myAnnotationDataBottom,
@@ -162,37 +180,36 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.TimeSeriesChart(
-      seriesList,
-      animate: animate,
-      // Custom renderer configuration for the point series.
-      customSeriesRenderers: [
-        new charts.SymbolAnnotationRendererConfig(
+  Widget build(BuildContext context) => charts.TimeSeriesChart(
+        seriesList,
+        animate: animate,
+        // Custom renderer configuration for the point series.
+        customSeriesRenderers: [
+          charts.SymbolAnnotationRendererConfig(
             // ID used to link series to this renderer.
-            customRendererId: 'customSymbolAnnotation')
-      ],
-      // Optionally pass in a [DateTimeFactory] used by the chart. The factory
-      // should create the same type of [DateTime] as the data provided. If none
-      // specified, the default creates local date time.
-      dateTimeFactory: const charts.LocalDateTimeFactory(),
-    );
-  }
+            customRendererId: 'customSymbolAnnotation',
+          ),
+        ],
+        // Optionally pass in a [DateTimeFactory] used by the chart. The factory
+        // should create the same type of [DateTime] as the data provided.
+        // If none specified, the default creates local date time.
+        dateTimeFactory: const charts.LocalDateTimeFactory(),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final myDesktopData = [
-      new TimeSeriesSales(timeCurrent: new DateTime(2017, 9, 19), sales: 5),
-      new TimeSeriesSales(timeCurrent: new DateTime(2017, 9, 26), sales: 25),
-      new TimeSeriesSales(timeCurrent: new DateTime(2017, 10, 3), sales: 100),
-      new TimeSeriesSales(timeCurrent: new DateTime(2017, 10, 10), sales: 75),
+      TimeSeriesSales(timeCurrent: DateTime(2017, 9, 19), sales: 5),
+      TimeSeriesSales(timeCurrent: DateTime(2017, 9, 26), sales: 25),
+      TimeSeriesSales(timeCurrent: DateTime(2017, 10, 3), sales: 100),
+      TimeSeriesSales(timeCurrent: DateTime(2017, 10, 10), sales: 75),
     ];
 
     final myTabletData = [
-      new TimeSeriesSales(timeCurrent: new DateTime(2017, 9, 19), sales: 10),
-      new TimeSeriesSales(timeCurrent: new DateTime(2017, 9, 26), sales: 50),
-      new TimeSeriesSales(timeCurrent: new DateTime(2017, 10, 3), sales: 200),
-      new TimeSeriesSales(timeCurrent: new DateTime(2017, 10, 10), sales: 150),
+      TimeSeriesSales(timeCurrent: DateTime(2017, 9, 19), sales: 10),
+      TimeSeriesSales(timeCurrent: DateTime(2017, 9, 26), sales: 50),
+      TimeSeriesSales(timeCurrent: DateTime(2017, 10, 3), sales: 200),
+      TimeSeriesSales(timeCurrent: DateTime(2017, 10, 10), sales: 150),
     ];
 
     // Example of a series with two range annotations. A regular point shape
@@ -202,15 +219,15 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
     // Note that these series do not contain any measure values. They are
     // positioned automatically in rows.
     final myAnnotationDataTop = [
-      new TimeSeriesSales(
-        timeCurrent: new DateTime(2017, 9, 24),
-        timePrevious: new DateTime(2017, 9, 19),
-        timeTarget: new DateTime(2017, 9, 24),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 9, 24),
+        timePrevious: DateTime(2017, 9, 19),
+        timeTarget: DateTime(2017, 9, 24),
       ),
-      new TimeSeriesSales(
-        timeCurrent: new DateTime(2017, 9, 29),
-        timePrevious: new DateTime(2017, 9, 29),
-        timeTarget: new DateTime(2017, 10, 4),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 9, 29),
+        timePrevious: DateTime(2017, 9, 29),
+        timeTarget: DateTime(2017, 10, 4),
       ),
     ];
 
@@ -218,39 +235,39 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
     // annotations. Omitting the previous and target domain values causes that
     // datum to be drawn as a single point.
     final myAnnotationDataBottom = [
-      new TimeSeriesSales(
-        timeCurrent: new DateTime(2017, 9, 25),
-        timePrevious: new DateTime(2017, 9, 21),
-        timeTarget: new DateTime(2017, 9, 25),
+      TimeSeriesSales(
+        timeCurrent: DateTime(2017, 9, 25),
+        timePrevious: DateTime(2017, 9, 21),
+        timeTarget: DateTime(2017, 9, 25),
       ),
-      new TimeSeriesSales(timeCurrent: new DateTime(2017, 9, 31)),
-      new TimeSeriesSales(timeCurrent: new DateTime(2017, 10, 5)),
+      TimeSeriesSales(timeCurrent: DateTime(2017, 9, 31)),
+      TimeSeriesSales(timeCurrent: DateTime(2017, 10, 5)),
     ];
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'Desktop',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (TimeSeriesSales sales, _) => sales.timeCurrent,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.timeCurrent,
+        measureFn: (sales, _) => sales.sales,
         data: myDesktopData,
       ),
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'Tablet',
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-        domainFn: (TimeSeriesSales sales, _) => sales.timeCurrent,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.timeCurrent,
+        measureFn: (sales, _) => sales.sales,
         data: myTabletData,
       ),
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'Annotation Series 1',
         colorFn: (_, __) => charts.MaterialPalette.gray.shadeDefault,
         // A point shape will be drawn at the location of the domain.
-        domainFn: (TimeSeriesSales sales, _) => sales.timeCurrent,
+        domainFn: (sales, _) => sales.timeCurrent,
         // A range shape will be drawn between the lower and upper domain
         // bounds. The range will be drawn underneath the domain point.
-        domainLowerBoundFn: (TimeSeriesSales row, _) => row.timePrevious,
-        domainUpperBoundFn: (TimeSeriesSales row, _) => row.timeTarget,
+        domainLowerBoundFn: (row, _) => row.timePrevious,
+        domainUpperBoundFn: (row, _) => row.timeTarget,
         // No measure values are needed for symbol annotations.
         measureFn: (_, __) => null,
         data: myAnnotationDataTop,
@@ -260,15 +277,15 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
         // Optional radius for the annotation range. If not specified, this will
         // default to the same radius as the domain point.
         ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'Annotation Series 2',
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
         // A point shape will be drawn at the location of the domain.
-        domainFn: (TimeSeriesSales sales, _) => sales.timeCurrent,
+        domainFn: (sales, _) => sales.timeCurrent,
         // A range shape will be drawn between the lower and upper domain
         // bounds. The range will be drawn underneath the domain point.
-        domainLowerBoundFn: (TimeSeriesSales row, _) => row.timePrevious,
-        domainUpperBoundFn: (TimeSeriesSales row, _) => row.timeTarget,
+        domainLowerBoundFn: (row, _) => row.timePrevious,
+        domainUpperBoundFn: (row, _) => row.timeTarget,
         // No measure values are needed for symbol annotations.
         measureFn: (_, __) => null,
         data: myAnnotationDataBottom,
@@ -284,15 +301,14 @@ class TimeSeriesSymbolAnnotationChart extends StatelessWidget {
 
 /// Sample time series data type.
 class TimeSeriesSales {
-  final DateTime timeCurrent;
-  final DateTime? timePrevious;
-  final DateTime? timeTarget;
-  final int? sales;
-
   TimeSeriesSales({
     required this.timeCurrent,
     this.timePrevious,
     this.timeTarget,
     this.sales,
   });
+  final DateTime timeCurrent;
+  final DateTime? timePrevious;
+  final DateTime? timeTarget;
+  final int? sales;
 }
