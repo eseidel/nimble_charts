@@ -13,7 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+@GenerateMocks([GraphicsFactory, TextElement])
 import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/linear/linear_scale.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/range_tick_provider.dart';
@@ -26,13 +28,7 @@ import 'package:nimble_charts_common/src/common/graphics_factory.dart';
 import 'package:nimble_charts_common/src/common/text_element.dart';
 import 'package:test/test.dart';
 
-class MockChartContext extends Mock implements ChartContext {}
-
-class MockGraphicsFactory extends Mock implements GraphicsFactory {}
-
-class MockTextElement extends Mock implements TextElement {}
-
-class MockNumericTickFormatter extends Mock implements TickFormatter<num> {}
+import '../../../mox.mocks.dart';
 
 class FakeNumericTickFormatter implements TickFormatter<num> {
   int calledTimes = 0;
@@ -41,7 +37,7 @@ class FakeNumericTickFormatter implements TickFormatter<num> {
   List<String> format(
     List<num> tickValues,
     Map<num, String> cache, {
-    num stepSize,
+    num? stepSize,
   }) {
     calledTimes += 1;
 
@@ -49,14 +45,12 @@ class FakeNumericTickFormatter implements TickFormatter<num> {
   }
 }
 
-class MockDrawStrategy<D> extends Mock implements BaseTickDrawStrategy<D> {}
-
 void main() {
-  ChartContext context;
-  GraphicsFactory graphicsFactory;
-  TickFormatter<num> formatter;
-  BaseTickDrawStrategy<num> drawStrategy;
-  LinearScale scale;
+  late ChartContext context;
+  late MockGraphicsFactory graphicsFactory;
+  late TickFormatter<num> formatter;
+  late BaseTickDrawStrategy<num> drawStrategy;
+  late LinearScale scale;
 
   setUp(() {
     context = MockChartContext();
@@ -65,7 +59,8 @@ void main() {
     drawStrategy = MockDrawStrategy<num>();
     scale = LinearScale()..range = const ScaleOutputExtent(0, 300);
 
-    when(graphicsFactory.createTextElement(any)).thenReturn(MockTextElement());
+    when(() => graphicsFactory.createTextElement(any))
+        .thenReturn(MockTextElement.new);
   });
 
   group('scale is extended with range tick values', () {
@@ -94,8 +89,9 @@ void main() {
         ),
       ]);
 
-      scale.addDomain(20200601);
-      scale.addDomain(20200607);
+      scale
+        ..addDomain(20200601)
+        ..addDomain(20200607);
 
       expect(scale.dataExtent.min, equals(20200601));
       expect(scale.dataExtent.max, equals(20200607));
@@ -132,8 +128,9 @@ void main() {
         ),
       ]);
 
-      scale.addDomain(20200401);
-      scale.addDomain(20200701);
+      scale
+        ..addDomain(20200401)
+        ..addDomain(20200701);
 
       expect(scale.dataExtent.min, equals(20200401));
       expect(scale.dataExtent.max, equals(20200701));
