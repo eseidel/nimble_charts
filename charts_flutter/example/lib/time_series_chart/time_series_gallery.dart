@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import '../main.dart' as m;
 import 'package:flutter/material.dart';
 import '../gallery_scaffold.dart';
 import 'confidence_interval.dart';
@@ -24,57 +25,84 @@ import 'simple.dart';
 import 'symbol_annotation.dart';
 import 'with_bar_renderer.dart';
 
+const timeSeriesChart = "Time Series Chart";
+const endPointsAxisTimeSeriesChart = "End Points Axis Time Series Chart";
+const lineAnnotationOnTimeSeriesChart = "Line Annotation on Time Series Chart";
+const rangeAnnotationOnTimeSeriesChart =
+    "Range Annotation on Time Series Chart";
+const rangeAnnotationMarginLabelsOnTimeSeriesChart =
+    "Range Annotation Margin Labels on Time Series Chart";
+const symbolAnnotationOnTimeSeriesChart = "Symbol Annotation Time Series Chart";
+const timeSeriesChartWithBars = "Time Series Chart with Bars";
+const timeSeriesChartWithConfidenceInterval =
+    "Time Series Chart with Confidence Interval";
+
 List<GalleryScaffold> buildGallery() {
   return [
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.show_chart),
-      title: 'Time Series Chart',
+      title: timeSeriesChart,
       subtitle: 'Simple single time series chart',
-      childBuilder: () => new SimpleTimeSeriesChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? SimpleTimeSeriesChart.withRandomData()
+          : SimpleTimeSeriesChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.show_chart),
-      title: 'End Points Axis Time Series Chart',
+      title: endPointsAxisTimeSeriesChart,
       subtitle: 'Time series chart with an end points axis',
-      childBuilder: () => new EndPointsAxisTimeSeriesChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? EndPointsAxisTimeSeriesChart.withRandomData()
+          : EndPointsAxisTimeSeriesChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.show_chart),
-      title: 'Line Annotation on Time Series Chart',
+      title: lineAnnotationOnTimeSeriesChart,
       subtitle: 'Time series chart with future line annotation',
-      childBuilder: () => new TimeSeriesLineAnnotationChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? TimeSeriesLineAnnotationChart.withRandomData()
+          : TimeSeriesLineAnnotationChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.show_chart),
-      title: 'Range Annotation on Time Series Chart',
+      title: rangeAnnotationOnTimeSeriesChart,
       subtitle: 'Time series chart with future range annotation',
-      childBuilder: () => new TimeSeriesRangeAnnotationChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? TimeSeriesRangeAnnotationChart.withRandomData()
+          : TimeSeriesRangeAnnotationChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.show_chart),
-      title: 'Range Annotation Margin Labels on Time Series Chart',
+      title: rangeAnnotationMarginLabelsOnTimeSeriesChart,
       subtitle:
           'Time series chart with range annotations with labels in margins',
-      childBuilder: () =>
-          new TimeSeriesRangeAnnotationMarginChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? TimeSeriesRangeAnnotationMarginChart.withRandomData()
+          : TimeSeriesRangeAnnotationMarginChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.show_chart),
-      title: 'Symbol Annotation Time Series Chart',
+      title: symbolAnnotationOnTimeSeriesChart,
       subtitle: 'Time series chart with annotation data below the draw area',
-      childBuilder: () => new TimeSeriesSymbolAnnotationChart.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? TimeSeriesSymbolAnnotationChart.withRandomData()
+          : TimeSeriesSymbolAnnotationChart.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.show_chart),
-      title: 'Time Series Chart with Bars',
+      title: timeSeriesChartWithBars,
       subtitle: 'Time series chart using the bar renderer',
-      childBuilder: () => new TimeSeriesBar.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? TimeSeriesBar.withRandomData()
+          : TimeSeriesBar.withSampleData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.show_chart),
-      title: 'Time Series Chart with Confidence Interval',
+      title: timeSeriesChartWithConfidenceInterval,
       subtitle: 'Draws area around the confidence interval',
-      childBuilder: () => new TimeSeriesConfidenceInterval.withRandomData(),
+      childBuilder: () => m.useRandomData
+          ? TimeSeriesConfidenceInterval.withRandomData()
+          : TimeSeriesConfidenceInterval.withSampleData(),
     ),
   ];
 }

@@ -5,10 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 import '../../example/lib/bar_chart/bar_gallery.dart' as b;
-
 import '../../example/lib/home.dart' as h;
 import '../../example/lib/main.dart' as m;
-
+import '../../example/lib/time_series_chart/time_series_gallery.dart' as ts;
 import '../test_functions.dart';
 
 /// Widget tests for the example app.
@@ -180,6 +179,70 @@ void main() {
       'Navigates to Bar Chart with custom bar radius and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
         b.barChartWithCustomBarRadius,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Time Series Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
+        ts.timeSeriesChart,
+        scrollDelta: 350,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to End Points Axis Time Series Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
+        ts.endPointsAxisTimeSeriesChart,
+        scrollDelta: 350,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Line Annotation on Time Series Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
+        ts.lineAnnotationOnTimeSeriesChart,
+        scrollDelta: 360,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Range Annotation on Time Series Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
+        ts.rangeAnnotationOnTimeSeriesChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Range Annotation Margin Labels on Time Series Chart Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
+        ts.rangeAnnotationMarginLabelsOnTimeSeriesChart,
+        scrollDelta: 350,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Symbol Annotation Time Series Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
+        ts.symbolAnnotationOnTimeSeriesChart,
+        scrollDelta: 350,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Time Series Chart with Bars and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
+        ts.timeSeriesChartWithBars,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Time Series Chart with Confidence Interval and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
+        ts.timeSeriesChartWithConfidenceInterval,
         scrollDelta: 300,
       ),
     );
