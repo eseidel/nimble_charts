@@ -6,6 +6,7 @@ import 'package:nimble_charts/flutter.dart' as charts;
 
 import '../../example/lib/bar_chart/bar_gallery.dart' as b;
 import '../../example/lib/home.dart' as h;
+import '../../example/lib/line_chart/line_gallery.dart' as l;
 import '../../example/lib/main.dart' as m;
 import '../../example/lib/time_series_chart/time_series_gallery.dart' as ts;
 import '../test_functions.dart';
@@ -243,6 +244,109 @@ void main() {
       'Navigates to Time Series Chart with Confidence Interval and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
         ts.timeSeriesChartWithConfidenceInterval,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.simpleLineChart,
+        scrollDelta: 350,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Stacked Area Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.stackedAreaLineChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Stacked Area Custom Color Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.stackedAreaCustomColorLineChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Area and Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.areaAndLineChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Points Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.pointsLineChart,
+        scrollDelta: 350,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Null Data Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.simpleNullsLineChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Stacked Area with Nulls Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.stackedAreaNullsLineChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Dash Pattern Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.dashPatternLineChart,
+        scrollDelta: 300,
+      ),
+    );
+    testWidgets(
+      'Navigates to Segments Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.segmentsLineChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Line Annotation Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.lineLineAnnotationChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Range Annotation Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.lineRangeAnnotationChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Range Annotation Margin Labels Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.lineRangeAnnotationMarginChart,
+        scrollDelta: 300,
+      ),
+    );
+
+    testWidgets(
+      'Navigates to Pan and Zoom Line Chart and Renders',
+      (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
+        l.lineAnimationZoomChart,
         scrollDelta: 300,
       ),
     );
