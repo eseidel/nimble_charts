@@ -16,6 +16,7 @@
 // ignore_for_file: sort_constructors_first
 
 import 'dart:math' show Rectangle;
+import 'dart:ui' show TextStyle;
 
 import 'package:mockito/mockito.dart';
 import 'package:nimble_charts_common/src/chart/bar/bar_label_decorator.dart'
@@ -62,19 +63,19 @@ class FakeGraphicsFactory extends GraphicsFactory {
 /// Stores [TextStyle] properties for test to verify.
 class FakeTextStyle implements TextStyle {
   @override
-  Color color;
+  Color? color;
 
   @override
-  int fontSize;
+  int? fontSize;
 
   @override
-  String fontFamily;
+  String? fontFamily;
 
   @override
-  double lineHeight;
+  double? lineHeight;
 
   @override
-  String fontWeight;
+  String? fontWeight;
 }
 
 /// Fake [TextElement] which returns text length as [horizontalSliceWidth].
@@ -85,18 +86,18 @@ class FakeTextElement implements TextElement {
   final String text;
 
   @override
-  TextStyle textStyle;
+  TextStyle? textStyle;
 
   @override
-  int maxWidth;
+  int? maxWidth;
 
   @override
-  MaxWidthStrategy maxWidthStrategy;
+  MaxWidthStrategy? maxWidthStrategy;
 
   @override
   TextDirection textDirection;
 
-  double opacity;
+  double? opacity;
 
   FakeTextElement(this.text);
 
