@@ -13,9 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-@GenerateMocks([GraphicsFactory, TextElement])
+// import 'package:mockito/mockito.dart';
+
 import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/linear/linear_scale.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/range_tick_provider.dart';
@@ -24,8 +23,6 @@ import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/range_tick_sp
 import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/tick_spec.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart';
 import 'package:nimble_charts_common/src/chart/common/chart_context.dart';
-import 'package:nimble_charts_common/src/common/graphics_factory.dart';
-import 'package:nimble_charts_common/src/common/text_element.dart';
 import 'package:test/test.dart';
 
 import '../../../mox.mocks.dart';
@@ -58,9 +55,6 @@ void main() {
     formatter = MockNumericTickFormatter();
     drawStrategy = MockDrawStrategy<num>();
     scale = LinearScale()..range = const ScaleOutputExtent(0, 300);
-
-    when(() => graphicsFactory.createTextElement(any))
-        .thenReturn(MockTextElement.new);
   });
 
   group('scale is extended with range tick values', () {
