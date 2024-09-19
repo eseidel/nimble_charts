@@ -20,11 +20,11 @@ library;
 
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:nimble_charts/flutter.dart';
 
 class RTLBarChart extends StatelessWidget {
   const RTLBarChart(this.seriesList, {super.key, this.animate = false});
@@ -81,7 +81,7 @@ class RTLBarChart extends StatelessWidget {
       // Optionally, [RTLSpec] can be passed in when creating the chart to specify
       // chart display settings in RTL mode.
       Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: ui.TextDirection.rtl,
         child: charts.BarChart(
           seriesList,
           animate: animate,

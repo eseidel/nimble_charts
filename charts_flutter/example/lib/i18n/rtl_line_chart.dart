@@ -13,16 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 /// RTL Line chart example
 library;
 
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:nimble_charts/flutter.dart';
 
 class RTLLineChart extends StatelessWidget {
   const RTLLineChart(this.seriesList, {super.key, this.animate = false});
@@ -76,7 +78,7 @@ class RTLLineChart extends StatelessWidget {
       // and the secondary measure axis is on the left (when used).
       // Domain axis' first domain starts on the right and grows left.
       Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: ui.TextDirection.rtl,
         child: charts.LineChart(
           seriesList,
           animate: animate,

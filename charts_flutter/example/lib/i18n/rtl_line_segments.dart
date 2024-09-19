@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 /// Example of a RTL stacked area chart with changing styles within each line.
 ///
 /// Each series of data in this example contains different values for color,
@@ -29,11 +31,11 @@ library;
 
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:nimble_charts/flutter.dart';
 
 class RTLLineSegments extends StatelessWidget {
   const RTLLineSegments(this.seriesList, {super.key, this.animate = false});
@@ -144,7 +146,7 @@ class RTLLineSegments extends StatelessWidget {
       // and the secondary measure axis is on the left (when used).
       // Domain axis' first domain starts on the right and grows left.
       Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: ui.TextDirection.rtl,
         child: charts.LineChart(
           seriesList,
           defaultRenderer:

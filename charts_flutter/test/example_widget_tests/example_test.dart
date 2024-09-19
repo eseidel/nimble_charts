@@ -19,7 +19,7 @@ void main() {
     testWidgets(
       'Main Menu',
       (tester) async {
-        final galleryApp = m.GalleryApp();
+        const galleryApp = m.GalleryApp();
 
         await tester.pumpWidget(galleryApp);
 
@@ -197,8 +197,8 @@ extension ExampleWidgetTestExtensions on WidgetTester {
     Future<void> Function()? extra,
     double? scrollDelta,
   }) async {
-    //Create an pump
-    final galleryApp = m.GalleryApp();
+    //Create and pump
+    const galleryApp = m.GalleryApp();
     await pumpWidget(galleryApp);
 
     //Set the screen size of the widget

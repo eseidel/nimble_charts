@@ -41,7 +41,7 @@ class GalleryScaffold extends StatefulWidget {
         onTap: () async {
           await Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => this),
+            MaterialPageRoute<dynamic>(builder: (_) => this),
           );
         },
       );
