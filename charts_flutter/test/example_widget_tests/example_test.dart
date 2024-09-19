@@ -152,16 +152,12 @@ void main() {
         scrollDelta: 300,
       ),
     );
-
-    //TODO: Fix this test. For some reason, we can't find the bar chart
-    //in the widget tree. 🤷🏼‍♂️
     testWidgets(
       'Navigates to Pattern Forward Hatch Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
         b.patternForwardHatchChart,
-        scrollDelta: 300,
+        scrollDelta: 350,
       ),
-      skip: true,
     );
 
     testWidgets(
