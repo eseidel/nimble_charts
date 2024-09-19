@@ -64,7 +64,7 @@ class SimpleDatumLegend extends StatelessWidget {
   Widget build(BuildContext context) => charts.PieChart(
         seriesList,
         animate: animate,
-        // Add the series legend behavior to the chart to turn on series 
+        // Add the series legend behavior to the chart to turn on series
         // legends. By default the legend will display above the chart.
         behaviors: [charts.DatumLegend<dynamic>()],
       );

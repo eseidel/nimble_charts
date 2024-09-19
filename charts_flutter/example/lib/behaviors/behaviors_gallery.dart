@@ -53,7 +53,7 @@ List<GalleryScaffold> buildGallery() => [
       //   listTileIcon: new Icon(Icons.flag),
       //   title: 'Selection Scatter Plot Highlight',
       //   subtitle: 'Scatter plot chart with tap and drag activation',
-      //   childBuilder: () => 
+      //   childBuilder: () =>
       //new SelectionScatterPlotHighlight.withRandomData(),
       // ),
       const GalleryScaffold(

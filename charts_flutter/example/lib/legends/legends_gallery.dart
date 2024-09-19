@@ -34,8 +34,7 @@ List<GalleryScaffold> buildGallery() => [
       const GalleryScaffold(
         listTileIcon: Icon(Icons.insert_chart),
         title: 'Series Legend Options',
-        subtitle:
-            'A series legend with custom positioning '
+        subtitle: 'A series legend with custom positioning '
             'and spacing for a bar chart',
         childBuilder: LegendOptions.withRandomData,
       ),

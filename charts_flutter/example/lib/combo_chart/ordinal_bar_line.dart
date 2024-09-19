@@ -104,7 +104,7 @@ class OrdinalComboBarLineChart extends StatelessWidget {
         defaultRenderer: charts.BarRendererConfig(
           groupingType: charts.BarGroupingType.grouped,
         ),
-        // Custom renderer configuration for the line series. This will be used 
+        // Custom renderer configuration for the line series. This will be used
         // for any series that does not define a rendererIdKey.
         customSeriesRenderers: [
           charts.LineRendererConfig(

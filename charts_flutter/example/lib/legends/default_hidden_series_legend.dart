@@ -109,7 +109,7 @@ class DefaultHiddenSeriesLegend extends StatelessWidget {
         seriesList,
         animate: animate,
         barGroupingType: charts.BarGroupingType.grouped,
-        // Add the series legend behavior to the chart to turn on series 
+        // Add the series legend behavior to the chart to turn on series
         // legends. By default the legend will display above the chart.
         behaviors: [
           charts.SeriesLegend(

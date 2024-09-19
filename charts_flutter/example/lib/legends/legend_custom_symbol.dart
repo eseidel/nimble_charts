@@ -141,7 +141,7 @@ class LegendWithCustomSymbol extends StatelessWidget {
         // Add the legend behavior to the chart to turn on legends.
         // By default the legend will display above the chart.
         //
-        // To change the symbol used in the legend, set the renderer attribute 
+        // To change the symbol used in the legend, set the renderer attribute
         // of symbolRendererKey to a SymbolRenderer.
         behaviors: [charts.SeriesLegend()],
         defaultRenderer: charts.BarRendererConfig(
