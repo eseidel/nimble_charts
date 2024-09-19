@@ -14,6 +14,8 @@
 // limitations under the License.
 
 /// Bar chart example
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -23,58 +25,56 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// Example of a stacked bar chart with three series, each rendered with
 /// different fill colors.
 class StackedFillColorBarChart extends StatelessWidget {
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
+  const StackedFillColorBarChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  StackedFillColorBarChart(this.seriesList, {this.animate = false});
-
-  factory StackedFillColorBarChart.withSampleData() {
-    return new StackedFillColorBarChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  factory StackedFillColorBarChart.withSampleData() => StackedFillColorBarChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory StackedFillColorBarChart.withRandomData() {
-    return new StackedFillColorBarChart(_createRandomData());
-  }
+  factory StackedFillColorBarChart.withRandomData() =>
+      StackedFillColorBarChart(_createRandomData());
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final desktopSalesData = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     final tableSalesData = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     final mobileSalesData = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     return [
       // Blue bars with a lighter center color.
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Desktop',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: desktopSalesData,
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         fillColorFn: (_, __) =>
@@ -82,18 +82,18 @@ class StackedFillColorBarChart extends StatelessWidget {
       ),
       // Solid red bars. Fill color will default to the series color if no
       // fillColorFn is configured.
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Tablet',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: tableSalesData,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
       ),
       // Hollow green bars.
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Mobile',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: mobileSalesData,
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
         fillColorFn: (_, __) => charts.MaterialPalette.transparent,
@@ -103,45 +103,45 @@ class StackedFillColorBarChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.BarChart(
-      seriesList,
-      animate: animate,
-      // Configure a stroke width to enable borders on the bars.
-      defaultRenderer: new charts.BarRendererConfig(
-          groupingType: charts.BarGroupingType.stacked, strokeWidthPx: 2.0),
-    );
-  }
+  Widget build(BuildContext context) => charts.BarChart(
+        seriesList,
+        animate: animate,
+        // Configure a stroke width to enable borders on the bars.
+        defaultRenderer: charts.BarRendererConfig(
+          groupingType: charts.BarGroupingType.stacked,
+          strokeWidthPx: 2,
+        ),
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final desktopSalesData = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-      new OrdinalSales('2016', 100),
-      new OrdinalSales('2017', 75),
+      OrdinalSales('2014', 5),
+      OrdinalSales('2015', 25),
+      OrdinalSales('2016', 100),
+      OrdinalSales('2017', 75),
     ];
 
     final tableSalesData = [
-      new OrdinalSales('2014', 25),
-      new OrdinalSales('2015', 50),
-      new OrdinalSales('2016', 10),
-      new OrdinalSales('2017', 20),
+      OrdinalSales('2014', 25),
+      OrdinalSales('2015', 50),
+      OrdinalSales('2016', 10),
+      OrdinalSales('2017', 20),
     ];
 
     final mobileSalesData = [
-      new OrdinalSales('2014', 10),
-      new OrdinalSales('2015', 50),
-      new OrdinalSales('2016', 50),
-      new OrdinalSales('2017', 45),
+      OrdinalSales('2014', 10),
+      OrdinalSales('2015', 50),
+      OrdinalSales('2016', 50),
+      OrdinalSales('2017', 45),
     ];
 
     return [
       // Blue bars with a lighter center color.
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Desktop',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: desktopSalesData,
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         fillColorFn: (_, __) =>
@@ -149,18 +149,18 @@ class StackedFillColorBarChart extends StatelessWidget {
       ),
       // Solid red bars. Fill color will default to the series color if no
       // fillColorFn is configured.
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Tablet',
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        measureFn: (sales, _) => sales.sales,
         data: tableSalesData,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
+        domainFn: (sales, _) => sales.year,
       ),
       // Hollow green bars.
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Mobile',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: mobileSalesData,
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
         fillColorFn: (_, __) => charts.MaterialPalette.transparent,
@@ -171,8 +171,7 @@ class StackedFillColorBarChart extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
+  OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }

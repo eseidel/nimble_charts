@@ -115,7 +115,6 @@ export 'package:nimble_charts_common/common.dart'
         PointRendererDecorator,
         PointRendererElement,
         PointSymbolRenderer,
-        QuantumPalette,
         RTLSpec,
         RangeAnnotationAxisType,
         RangeAnnotationSegment,
@@ -197,3 +196,5 @@ export 'src/time_series_chart.dart';
 export 'src/user_managed_state.dart'
     show UserManagedSelectionModel, UserManagedState;
 export 'src/util/color.dart' show ColorUtil;
+export 'src/util/color.dart' show ColorExtensions;
+export 'src/util/color.dart' show UIColorExtensions;

@@ -14,6 +14,8 @@
 // limitations under the License.
 
 /// Bar chart example
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
 // EXCLUDE_FROM_GALLERY_DOCS_END
@@ -35,59 +37,58 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// Note: primary and secondary may flip left and right positioning when
 /// RTL.flipAxisLocations is set.
 class BarChartWithSecondaryAxis extends StatelessWidget {
-  static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
-  final List<charts.Series<dynamic, String>> seriesList;
-  final bool animate;
+  const BarChartWithSecondaryAxis(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  BarChartWithSecondaryAxis(this.seriesList, {this.animate = false});
-
-  factory BarChartWithSecondaryAxis.withSampleData() {
-    return new BarChartWithSecondaryAxis(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  factory BarChartWithSecondaryAxis.withSampleData() =>
+      BarChartWithSecondaryAxis(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory BarChartWithSecondaryAxis.withRandomData() {
-    return new BarChartWithSecondaryAxis(_createRandomData());
-  }
+  factory BarChartWithSecondaryAxis.withRandomData() =>
+      BarChartWithSecondaryAxis(_createRandomData());
+  static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
+  final List<charts.Series<dynamic, String>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<OrdinalSales, String>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final globalSalesData = [
-      new OrdinalSales('2014', random.nextInt(100) * 100),
-      new OrdinalSales('2015', random.nextInt(100) * 100),
-      new OrdinalSales('2016', random.nextInt(100) * 100),
-      new OrdinalSales('2017', random.nextInt(100) * 100),
+      OrdinalSales('2014', random.nextInt(100) * 100),
+      OrdinalSales('2015', random.nextInt(100) * 100),
+      OrdinalSales('2016', random.nextInt(100) * 100),
+      OrdinalSales('2017', random.nextInt(100) * 100),
     ];
 
     final losAngelesSalesData = [
-      new OrdinalSales('2014', random.nextInt(100)),
-      new OrdinalSales('2015', random.nextInt(100)),
-      new OrdinalSales('2016', random.nextInt(100)),
-      new OrdinalSales('2017', random.nextInt(100)),
+      OrdinalSales('2014', random.nextInt(100)),
+      OrdinalSales('2015', random.nextInt(100)),
+      OrdinalSales('2016', random.nextInt(100)),
+      OrdinalSales('2017', random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Global Revenue',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: globalSalesData,
       ),
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Los Angeles Revenue',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: losAngelesSalesData,
-      )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId)
+      )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
       // Set the 'Los Angeles Revenue' series to use the secondary measure axis.
       // All series that have this set will use the secondary measure axis.
       // All other series will use the primary measure axis.
@@ -96,52 +97,52 @@ class BarChartWithSecondaryAxis extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.BarChart(
-      seriesList,
-      animate: animate,
-      barGroupingType: charts.BarGroupingType.grouped,
-      // It is important when using both primary and secondary axes to choose
-      // the same number of ticks for both sides to get the gridlines to line
-      // up.
-      primaryMeasureAxis: new charts.NumericAxisSpec(
+  Widget build(BuildContext context) => charts.BarChart(
+        seriesList,
+        animate: animate,
+        barGroupingType: charts.BarGroupingType.grouped,
+        // It is important when using both primary and secondary axes to choose
+        // the same number of ticks for both sides to get the gridlines to line
+        // up.
+        primaryMeasureAxis: const charts.NumericAxisSpec(
           tickProviderSpec:
-              new charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
-      secondaryMeasureAxis: new charts.NumericAxisSpec(
+              charts.BasicNumericTickProviderSpec(desiredTickCount: 3),
+        ),
+        secondaryMeasureAxis: const charts.NumericAxisSpec(
           tickProviderSpec:
-              new charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
-    );
-  }
+              charts.BasicNumericTickProviderSpec(desiredTickCount: 3),
+        ),
+      );
 
   /// Create series list with multiple series
   static List<charts.Series<OrdinalSales, String>> _createSampleData() {
     final globalSalesData = [
-      new OrdinalSales('2014', 5000),
-      new OrdinalSales('2015', 25000),
-      new OrdinalSales('2016', 100000),
-      new OrdinalSales('2017', 750000),
+      OrdinalSales('2014', 5000),
+      OrdinalSales('2015', 25000),
+      OrdinalSales('2016', 100000),
+      OrdinalSales('2017', 750000),
     ];
 
     final losAngelesSalesData = [
-      new OrdinalSales('2014', 25),
-      new OrdinalSales('2015', 50),
-      new OrdinalSales('2016', 10),
-      new OrdinalSales('2017', 20),
+      OrdinalSales('2014', 25),
+      OrdinalSales('2015', 50),
+      OrdinalSales('2016', 10),
+      OrdinalSales('2017', 20),
     ];
 
     return [
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Global Revenue',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: globalSalesData,
       ),
-      new charts.Series<OrdinalSales, String>(
+      charts.Series<OrdinalSales, String>(
         id: 'Los Angeles Revenue',
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: losAngelesSalesData,
-      )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId)
+      )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
       // Set the 'Los Angeles Revenue' series to use the secondary measure axis.
       // All series that have this set will use the secondary measure axis.
       // All other series will use the primary measure axis.
@@ -151,8 +152,7 @@ class BarChartWithSecondaryAxis extends StatelessWidget {
 
 /// Sample ordinal data type.
 class OrdinalSales {
+  OrdinalSales(this.year, this.sales);
   final String year;
   final int sales;
-
-  OrdinalSales(this.year, this.sales);
 }

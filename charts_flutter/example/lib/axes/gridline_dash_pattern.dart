@@ -14,107 +14,106 @@
 // limitations under the License.
 
 /// Example of timeseries chart with gridlines that have a dash pattern.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class GridlineDashPattern extends StatelessWidget {
-  final List<charts.Series<dynamic, DateTime>> seriesList;
-  final bool animate;
+  const GridlineDashPattern(this.seriesList, {super.key, this.animate = false});
 
-  GridlineDashPattern(this.seriesList, {this.animate = false});
-
-  /// Creates a [TimeSeriesChart] with sample data and no transition.
-  factory GridlineDashPattern.withSampleData() {
-    return new GridlineDashPattern(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
+  factory GridlineDashPattern.withSampleData() => GridlineDashPattern(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory GridlineDashPattern.withRandomData() {
-    return new GridlineDashPattern(_createRandomData());
-  }
+  factory GridlineDashPattern.withRandomData() =>
+      GridlineDashPattern(_createRandomData());
+  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<MyRow, DateTime>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final data = [
-      new MyRow(new DateTime(2017, 9, 25), random.nextInt(100)),
-      new MyRow(new DateTime(2017, 9, 26), random.nextInt(100)),
-      new MyRow(new DateTime(2017, 9, 27), random.nextInt(100)),
-      new MyRow(new DateTime(2017, 9, 28), random.nextInt(100)),
-      new MyRow(new DateTime(2017, 9, 29), random.nextInt(100)),
-      new MyRow(new DateTime(2017, 9, 30), random.nextInt(100)),
-      new MyRow(new DateTime(2017, 10, 01), random.nextInt(100)),
-      new MyRow(new DateTime(2017, 10, 02), random.nextInt(100)),
-      new MyRow(new DateTime(2017, 10, 03), random.nextInt(100)),
-      new MyRow(new DateTime(2017, 10, 04), random.nextInt(100)),
-      new MyRow(new DateTime(2017, 10, 05), random.nextInt(100)),
+      MyRow(DateTime(2017, 9, 25), random.nextInt(100)),
+      MyRow(DateTime(2017, 9, 26), random.nextInt(100)),
+      MyRow(DateTime(2017, 9, 27), random.nextInt(100)),
+      MyRow(DateTime(2017, 9, 28), random.nextInt(100)),
+      MyRow(DateTime(2017, 9, 29), random.nextInt(100)),
+      MyRow(DateTime(2017, 9, 30), random.nextInt(100)),
+      MyRow(DateTime(2017, 10), random.nextInt(100)),
+      MyRow(DateTime(2017, 10, 02), random.nextInt(100)),
+      MyRow(DateTime(2017, 10, 03), random.nextInt(100)),
+      MyRow(DateTime(2017, 10, 04), random.nextInt(100)),
+      MyRow(DateTime(2017, 10, 05), random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<MyRow, DateTime>(
+      charts.Series<MyRow, DateTime>(
         id: 'Cost',
-        domainFn: (MyRow row, _) => row.timeStamp,
-        measureFn: (MyRow row, _) => row.cost,
+        domainFn: (row, _) => row.timeStamp,
+        measureFn: (row, _) => row.cost,
         data: data,
-      )
+      ),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.TimeSeriesChart(seriesList,
+  Widget build(BuildContext context) => charts.TimeSeriesChart(
+        seriesList,
         animate: animate,
 
         /// Customize the gridlines to use a dash pattern.
-        primaryMeasureAxis: new charts.NumericAxisSpec(
-            renderSpec: charts.GridlineRendererSpec(
-                lineStyle: charts.LineStyleSpec(
-          dashPattern: [4, 4],
-        ))));
-  }
+        primaryMeasureAxis: const charts.NumericAxisSpec(
+          renderSpec: charts.GridlineRendererSpec(
+            lineStyle: charts.LineStyleSpec(
+              dashPattern: [4, 4],
+            ),
+          ),
+        ),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<MyRow, DateTime>> _createSampleData() {
     final data = [
-      new MyRow(new DateTime(2017, 9, 25), 6),
-      new MyRow(new DateTime(2017, 9, 26), 8),
-      new MyRow(new DateTime(2017, 9, 27), 6),
-      new MyRow(new DateTime(2017, 9, 28), 9),
-      new MyRow(new DateTime(2017, 9, 29), 11),
-      new MyRow(new DateTime(2017, 9, 30), 15),
-      new MyRow(new DateTime(2017, 10, 01), 25),
-      new MyRow(new DateTime(2017, 10, 02), 33),
-      new MyRow(new DateTime(2017, 10, 03), 27),
-      new MyRow(new DateTime(2017, 10, 04), 31),
-      new MyRow(new DateTime(2017, 10, 05), 23),
+      MyRow(DateTime(2017, 9, 25), 6),
+      MyRow(DateTime(2017, 9, 26), 8),
+      MyRow(DateTime(2017, 9, 27), 6),
+      MyRow(DateTime(2017, 9, 28), 9),
+      MyRow(DateTime(2017, 9, 29), 11),
+      MyRow(DateTime(2017, 9, 30), 15),
+      MyRow(DateTime(2017, 10), 25),
+      MyRow(DateTime(2017, 10, 02), 33),
+      MyRow(DateTime(2017, 10, 03), 27),
+      MyRow(DateTime(2017, 10, 04), 31),
+      MyRow(DateTime(2017, 10, 05), 23),
     ];
 
     return [
-      new charts.Series<MyRow, DateTime>(
+      charts.Series<MyRow, DateTime>(
         id: 'Cost',
-        domainFn: (MyRow row, _) => row.timeStamp,
-        measureFn: (MyRow row, _) => row.cost,
+        domainFn: (row, _) => row.timeStamp,
+        measureFn: (row, _) => row.cost,
         data: data,
-      )
+      ),
     ];
   }
 }
 
 /// Sample time series data type.
 class MyRow {
+  MyRow(this.timeStamp, this.cost);
   final DateTime timeStamp;
   final int cost;
-  MyRow(this.timeStamp, this.cost);
 }

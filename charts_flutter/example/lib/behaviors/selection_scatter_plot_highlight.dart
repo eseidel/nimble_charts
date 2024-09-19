@@ -31,77 +31,153 @@
 /// defined. Configuring a separate fillColor will cause the center of the shape
 /// to be filled in, with white in these examples. The border of the shape will
 /// be color with the color of the data.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class SelectionScatterPlotHighlight extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
+  const SelectionScatterPlotHighlight(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  SelectionScatterPlotHighlight(this.seriesList, {this.animate = false});
-
-  /// Creates a [ScatterPlotChart] with sample data and no transition.
-  factory SelectionScatterPlotHighlight.withSampleData() {
-    return new SelectionScatterPlotHighlight(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.ScatterPlotChart] with sample data and no transition.
+  factory SelectionScatterPlotHighlight.withSampleData() =>
+      SelectionScatterPlotHighlight(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory SelectionScatterPlotHighlight.withRandomData() {
-    return new SelectionScatterPlotHighlight(_createRandomData());
-  }
+  factory SelectionScatterPlotHighlight.withRandomData() =>
+      SelectionScatterPlotHighlight(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, num>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
-    final makeRadius = (int value) => (random.nextInt(value) + 2).toDouble();
+    double makeRadius(int value) => (random.nextInt(value) + 2).toDouble();
 
     final data = [
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          'circle', null, null),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        'circle',
+        null,
+        null,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
       // Render a hollow circle, filled in with white.
-      new LinearSales(random.nextInt(100), random.nextInt(100),
-          makeRadius(4) + 4, 'circle', charts.MaterialPalette.white, 2.0),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          'circle', null, null),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(4) + 4,
+        'circle',
+        charts.MaterialPalette.white,
+        2,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        'circle',
+        null,
+        null,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
       // Render a hollow circle, filled in with white.
-      new LinearSales(random.nextInt(100), random.nextInt(100),
-          makeRadius(4) + 4, 'circle', charts.MaterialPalette.white, 2.0),
-      new LinearSales(random.nextInt(100), random.nextInt(100), makeRadius(6),
-          null, null, null),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(4) + 4,
+        'circle',
+        charts.MaterialPalette.white,
+        2,
+      ),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(6),
+        null,
+        null,
+        null,
+      ),
       // Render a hollow square, filled in with white.
-      new LinearSales(random.nextInt(100), random.nextInt(100),
-          makeRadius(4) + 4, null, charts.MaterialPalette.white, 2.0),
+      LinearSales(
+        random.nextInt(100),
+        random.nextInt(100),
+        makeRadius(4) + 4,
+        null,
+        charts.MaterialPalette.white,
+        2,
+      ),
     ];
 
-    final maxMeasure = 100;
+    const maxMeasure = 100;
+
+    String? getShape(int index) => data[index].shape;
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
-        colorFn: (LinearSales sales, _) {
+        colorFn: (sales, _) {
           // Color bucket the measure column value into 3 distinct colors.
           final bucket = sales.sales / maxMeasure;
 
@@ -113,25 +189,27 @@ class SelectionScatterPlotHighlight extends StatelessWidget {
             return charts.MaterialPalette.green.shadeDefault;
           }
         },
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
-        fillColorFn: (LinearSales row, _) => row.fillColor,
-        strokeWidthPxFn: (LinearSales row, _) => row.strokeWidth,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        radiusPxFn: (sales, _) => sales.radius,
+        fillColorFn: (row, _) => row.fillColor,
+        strokeWidthPxFn: (row, _) => row.strokeWidth,
         data: data,
       )
         // Accessor function that associates each datum with a symbol renderer.
         ..setAttribute(
-            charts.pointSymbolRendererFnKey, (int index) => data[index].shape)
+          charts.pointSymbolRendererFnKey,
+          getShape,
+        )
         // Default symbol renderer ID for data that have no defined shape.
-        ..setAttribute(charts.pointSymbolRendererIdKey, 'rect')
+        ..setAttribute(charts.pointSymbolRendererIdKey, 'rect'),
     ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.ScatterPlotChart(seriesList,
+  Widget build(BuildContext context) => charts.ScatterPlotChart(
+        seriesList,
         animate: animate,
         behaviors: [
           // Optional - Configures a [LinePointHighlighter] behavior with
@@ -143,57 +221,74 @@ class SelectionScatterPlotHighlight extends StatelessWidget {
           // in an empty list. An empty list is necessary because passing in a
           // null value will be treated the same as not passing in a value at
           // all.
-          new charts.LinePointHighlighter(
-              showHorizontalFollowLine:
-                  charts.LinePointHighlighterFollowLineType.nearest,
-              showVerticalFollowLine:
-                  charts.LinePointHighlighterFollowLineType.nearest),
+          charts.LinePointHighlighter(
+            showHorizontalFollowLine:
+                charts.LinePointHighlighterFollowLineType.nearest,
+            showVerticalFollowLine:
+                charts.LinePointHighlighterFollowLineType.nearest,
+          ),
           // Optional - By default, select nearest is configured to trigger
           // with tap so that a user can have pan/zoom behavior and line point
           // highlighter. Changing the trigger to tap and drag allows the
           // highlighter to follow the dragging gesture but it is not
           // recommended to be used when pan/zoom behavior is enabled.
-          new charts.SelectNearest(
-              eventTrigger: charts.SelectionTrigger.tapAndDrag),
+          charts.SelectNearest(
+            eventTrigger: charts.SelectionTrigger.tapAndDrag,
+          ),
         ],
         // Configure the point renderer to have a map of custom symbol
         // renderers.
-        defaultRenderer:
-            new charts.PointRendererConfig<num>(customSymbolRenderers: {
-          'circle': new charts.CircleSymbolRenderer(),
-          'rect': new charts.RectSymbolRenderer(),
-        }));
-  }
+        defaultRenderer: charts.PointRendererConfig<num>(
+          customSymbolRenderers: {
+            'circle': charts.CircleSymbolRenderer(),
+            'rect': charts.RectSymbolRenderer(),
+          },
+        ),
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final data = [
-      new LinearSales(0, 5, 3.0, 'circle', null, null),
-      new LinearSales(10, 25, 5.0, null, null, null),
-      new LinearSales(12, 75, 4.0, null, null, null),
+      LinearSales(0, 5, 3, 'circle', null, null),
+      LinearSales(10, 25, 5, null, null, null),
+      LinearSales(12, 75, 4, null, null, null),
       // Render a hollow circle, filled in with white.
-      new LinearSales(
-          13, 225, 5.0, 'circle', charts.MaterialPalette.white, 2.0),
-      new LinearSales(16, 50, 4.0, null, null, null),
-      new LinearSales(24, 75, 3.0, null, null, null),
-      new LinearSales(25, 100, 3.0, 'circle', null, null),
-      new LinearSales(34, 150, 5.0, null, null, null),
-      new LinearSales(37, 10, 4.5, null, null, null),
+      LinearSales(
+        13,
+        225,
+        5,
+        'circle',
+        charts.MaterialPalette.white,
+        2,
+      ),
+      LinearSales(16, 50, 4, null, null, null),
+      LinearSales(24, 75, 3, null, null, null),
+      LinearSales(25, 100, 3, 'circle', null, null),
+      LinearSales(34, 150, 5, null, null, null),
+      LinearSales(37, 10, 4.5, null, null, null),
       // Render a hollow circle, filled in with white.
-      new LinearSales(
-          45, 300, 8.0, 'circle', charts.MaterialPalette.white, 2.0),
-      new LinearSales(52, 15, 4.0, null, null, null),
+      LinearSales(
+        45,
+        300,
+        8,
+        'circle',
+        charts.MaterialPalette.white,
+        2,
+      ),
+      LinearSales(52, 15, 4, null, null, null),
       // Render a hollow square, filled in with white.
-      new LinearSales(56, 200, 7.0, null, charts.MaterialPalette.white, 2.0),
+      LinearSales(56, 200, 7, null, charts.MaterialPalette.white, 2),
     ];
 
-    final maxMeasure = 300;
+    const maxMeasure = 300;
+
+    String? getShape(int index) => data[index].shape;
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Sales',
         // Providing a color function is optional.
-        colorFn: (LinearSales sales, _) {
+        colorFn: (sales, _) {
           // Bucket the measure column value into 3 distinct colors.
           final bucket = sales.sales / maxMeasure;
 
@@ -205,31 +300,38 @@ class SelectionScatterPlotHighlight extends StatelessWidget {
             return charts.MaterialPalette.green.shadeDefault;
           }
         },
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        radiusPxFn: (LinearSales sales, _) => sales.radius,
-        fillColorFn: (LinearSales row, _) => row.fillColor,
-        strokeWidthPxFn: (LinearSales row, _) => row.strokeWidth,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
+        radiusPxFn: (sales, _) => sales.radius,
+        fillColorFn: (row, _) => row.fillColor,
+        strokeWidthPxFn: (row, _) => row.strokeWidth,
         data: data,
       )
         // Accessor function that associates each datum with a symbol renderer.
         ..setAttribute(
-            charts.pointSymbolRendererFnKey, (int index) => data[index].shape)
+          charts.pointSymbolRendererFnKey,
+          getShape,
+        )
         // Default symbol renderer ID for data that have no defined shape.
-        ..setAttribute(charts.pointSymbolRendererIdKey, 'rect')
+        ..setAttribute(charts.pointSymbolRendererIdKey, 'rect'),
     ];
   }
 }
 
 /// Sample linear data type.
 class LinearSales {
+  LinearSales(
+    this.year,
+    this.sales,
+    this.radius,
+    this.shape,
+    this.fillColor,
+    this.strokeWidth,
+  );
   final int year;
   final int sales;
   final double radius;
   final String? shape;
   final charts.Color? fillColor;
   final double? strokeWidth;
-
-  LinearSales(this.year, this.sales, this.radius, this.shape, this.fillColor,
-      this.strokeWidth);
 }

@@ -27,89 +27,91 @@
 /// This will also result in an isolated point being rendered for the domain
 /// value 3 in the Mobile series, because that series also contains a null at
 /// domain 4.
+library;
+
 // EXCLUDE_FROM_GALLERY_DOCS_START
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 // EXCLUDE_FROM_GALLERY_DOCS_END
 import 'package:nimble_charts/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class StackedAreaNullsLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, num>> seriesList;
-  final bool animate;
+  const StackedAreaNullsLineChart(
+    this.seriesList, {
+    super.key,
+    this.animate = false,
+  });
 
-  StackedAreaNullsLineChart(this.seriesList, {this.animate = false});
-
-  /// Creates a [LineChart] with sample data and no transition.
-  factory StackedAreaNullsLineChart.withSampleData() {
-    return new StackedAreaNullsLineChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
+  /// Creates a [charts.LineChart] with sample data and no transition.
+  factory StackedAreaNullsLineChart.withSampleData() =>
+      StackedAreaNullsLineChart(
+        _createSampleData(),
+      );
 
   // EXCLUDE_FROM_GALLERY_DOCS_START
   // This section is excluded from being copied to the gallery.
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
-  factory StackedAreaNullsLineChart.withRandomData() {
-    return new StackedAreaNullsLineChart(_createRandomData());
-  }
+  factory StackedAreaNullsLineChart.withRandomData() =>
+      StackedAreaNullsLineChart(_createRandomData());
+  final List<charts.Series<dynamic, num>> seriesList;
+  final bool animate;
 
   /// Create random data.
   static List<charts.Series<LinearSales, num>> _createRandomData() {
-    final random = new Random();
+    final random = Random();
 
     final myFakeDesktopData = [
-      new LinearSales(0, random.nextInt(100)),
-      new LinearSales(1, random.nextInt(100)),
-      new LinearSales(2, null),
-      new LinearSales(3, random.nextInt(100)),
-      new LinearSales(4, random.nextInt(100)),
-      new LinearSales(5, random.nextInt(100)),
-      new LinearSales(6, random.nextInt(100)),
+      LinearSales(0, random.nextInt(100)),
+      LinearSales(1, random.nextInt(100)),
+      LinearSales(2, null),
+      LinearSales(3, random.nextInt(100)),
+      LinearSales(4, random.nextInt(100)),
+      LinearSales(5, random.nextInt(100)),
+      LinearSales(6, random.nextInt(100)),
     ];
 
-    var myFakeTabletData = [
-      new LinearSales(0, random.nextInt(100)),
-      new LinearSales(1, random.nextInt(100)),
-      new LinearSales(2, random.nextInt(100)),
-      new LinearSales(3, random.nextInt(100)),
-      new LinearSales(4, random.nextInt(100)),
-      new LinearSales(5, random.nextInt(100)),
-      new LinearSales(6, random.nextInt(100)),
+    final myFakeTabletData = [
+      LinearSales(0, random.nextInt(100)),
+      LinearSales(1, random.nextInt(100)),
+      LinearSales(2, random.nextInt(100)),
+      LinearSales(3, random.nextInt(100)),
+      LinearSales(4, random.nextInt(100)),
+      LinearSales(5, random.nextInt(100)),
+      LinearSales(6, random.nextInt(100)),
     ];
 
-    var myFakeMobileData = [
-      new LinearSales(0, random.nextInt(100)),
-      new LinearSales(1, random.nextInt(100)),
-      new LinearSales(2, random.nextInt(100)),
-      new LinearSales(3, random.nextInt(100)),
-      new LinearSales(4, null),
-      new LinearSales(5, random.nextInt(100)),
-      new LinearSales(6, random.nextInt(100)),
+    final myFakeMobileData = [
+      LinearSales(0, random.nextInt(100)),
+      LinearSales(1, random.nextInt(100)),
+      LinearSales(2, random.nextInt(100)),
+      LinearSales(3, random.nextInt(100)),
+      LinearSales(4, null),
+      LinearSales(5, random.nextInt(100)),
+      LinearSales(6, random.nextInt(100)),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Desktop',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: myFakeDesktopData,
       ),
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Tablet',
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: myFakeTabletData,
       ),
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Mobile',
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: myFakeMobileData,
       ),
     ];
@@ -117,65 +119,65 @@ class StackedAreaNullsLineChart extends StatelessWidget {
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
   @override
-  Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList,
+  Widget build(BuildContext context) => charts.LineChart(
+        seriesList,
         defaultRenderer:
-            new charts.LineRendererConfig(includeArea: true, stacked: true),
-        animate: animate);
-  }
+            charts.LineRendererConfig(includeArea: true, stacked: true),
+        animate: animate,
+      );
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, int>> _createSampleData() {
     final myFakeDesktopData = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 15),
-      new LinearSales(2, null),
-      new LinearSales(3, 75),
-      new LinearSales(4, 100),
-      new LinearSales(5, 90),
-      new LinearSales(6, 75),
+      LinearSales(0, 5),
+      LinearSales(1, 15),
+      LinearSales(2, null),
+      LinearSales(3, 75),
+      LinearSales(4, 100),
+      LinearSales(5, 90),
+      LinearSales(6, 75),
     ];
 
     final myFakeTabletData = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 15),
-      new LinearSales(2, 25),
-      new LinearSales(3, 75),
-      new LinearSales(4, 100),
-      new LinearSales(5, 90),
-      new LinearSales(6, 75),
+      LinearSales(0, 5),
+      LinearSales(1, 15),
+      LinearSales(2, 25),
+      LinearSales(3, 75),
+      LinearSales(4, 100),
+      LinearSales(5, 90),
+      LinearSales(6, 75),
     ];
 
     final myFakeMobileData = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 15),
-      new LinearSales(2, 25),
-      new LinearSales(3, 75),
-      new LinearSales(4, null),
-      new LinearSales(5, 90),
-      new LinearSales(6, 75),
+      LinearSales(0, 5),
+      LinearSales(1, 15),
+      LinearSales(2, 25),
+      LinearSales(3, 75),
+      LinearSales(4, null),
+      LinearSales(5, 90),
+      LinearSales(6, 75),
     ];
 
     return [
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Desktop',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: myFakeDesktopData,
       ),
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Tablet',
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: myFakeTabletData,
       ),
-      new charts.Series<LinearSales, int>(
+      charts.Series<LinearSales, int>(
         id: 'Mobile',
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
+        domainFn: (sales, _) => sales.year,
+        measureFn: (sales, _) => sales.sales,
         data: myFakeMobileData,
       ),
     ];
@@ -184,8 +186,7 @@ class StackedAreaNullsLineChart extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
+  LinearSales(this.year, this.sales);
   final int year;
   final int? sales;
-
-  LinearSales(this.year, this.sales);
 }
