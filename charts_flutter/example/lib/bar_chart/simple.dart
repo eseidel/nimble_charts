@@ -24,7 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SimpleBarChart extends StatelessWidget {
-  const SimpleBarChart(this.seriesList, {super.key, this.animate = false});
+  const SimpleBarChart(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory SimpleBarChart.withSampleData() => SimpleBarChart(

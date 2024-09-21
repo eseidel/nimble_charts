@@ -31,7 +31,7 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// Note: primary and secondary may flip left and right positioning when
 /// RTL.flipAxisLocations is set.
 class FlippedVerticalAxis extends StatelessWidget {
-  const FlippedVerticalAxis(this.seriesList, {super.key, this.animate = false});
+  const FlippedVerticalAxis(this.seriesList, {super.key, this.animate = true});
 
   factory FlippedVerticalAxis.withSampleData() => FlippedVerticalAxis(
         _createSampleData(),

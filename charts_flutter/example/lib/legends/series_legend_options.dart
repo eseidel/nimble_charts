@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class LegendOptions extends StatelessWidget {
-  const LegendOptions(this.seriesList, {super.key, this.animate = false});
+  const LegendOptions(this.seriesList, {super.key, this.animate = true});
 
   factory LegendOptions.withSampleData() => LegendOptions(
         _createSampleData(),

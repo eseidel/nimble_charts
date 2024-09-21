@@ -32,7 +32,7 @@ class BucketingAxisScatterPlotChart extends StatelessWidget {
   const BucketingAxisScatterPlotChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a [charts.ScatterPlotChart] with sample data and no transition.

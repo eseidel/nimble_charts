@@ -28,7 +28,7 @@ class NumericComboLineBarChart extends StatelessWidget {
   const NumericComboLineBarChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a [charts.LineChart] with sample data and no transition.

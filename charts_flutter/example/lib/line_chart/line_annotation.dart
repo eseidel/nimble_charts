@@ -27,7 +27,7 @@ class LineLineAnnotationChart extends StatelessWidget {
   const LineLineAnnotationChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a [charts.LineChart] with sample data and line annotations.

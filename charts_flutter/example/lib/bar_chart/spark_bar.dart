@@ -24,7 +24,7 @@ import 'package:nimble_charts/flutter.dart' as charts;
 
 /// Example of a Spark Bar by hiding both axis, reducing the chart margins.
 class SparkBar extends StatelessWidget {
-  const SparkBar(this.seriesList, {super.key, this.animate = false});
+  const SparkBar(this.seriesList, {super.key, this.animate = true});
 
   factory SparkBar.withSampleData() => SparkBar(
         _createSampleData(),

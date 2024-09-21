@@ -27,7 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class RTLBarChart extends StatelessWidget {
-  const RTLBarChart(this.seriesList, {super.key, this.animate = false});
+  const RTLBarChart(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.BarChart] with sample data and no transition.
   factory RTLBarChart.withSampleData() => RTLBarChart(

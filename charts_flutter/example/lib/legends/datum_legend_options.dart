@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class DatumLegendOptions extends StatelessWidget {
-  const DatumLegendOptions(this.seriesList, {super.key, this.animate = false});
+  const DatumLegendOptions(this.seriesList, {super.key, this.animate = true});
 
   factory DatumLegendOptions.withSampleData() => DatumLegendOptions(
         _createSampleData(),

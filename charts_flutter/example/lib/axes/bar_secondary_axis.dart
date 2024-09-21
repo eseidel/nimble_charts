@@ -40,7 +40,7 @@ class BarChartWithSecondaryAxis extends StatelessWidget {
   const BarChartWithSecondaryAxis(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   factory BarChartWithSecondaryAxis.withSampleData() =>
@@ -53,7 +53,10 @@ class BarChartWithSecondaryAxis extends StatelessWidget {
   // It is used for creating random series data to demonstrate animation in
   // the example app only.
   factory BarChartWithSecondaryAxis.withRandomData() =>
-      BarChartWithSecondaryAxis(_createRandomData());
+      BarChartWithSecondaryAxis(
+        _createRandomData(),
+        animate: true,
+      );
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
   final List<charts.Series<dynamic, String>> seriesList;
   final bool animate;

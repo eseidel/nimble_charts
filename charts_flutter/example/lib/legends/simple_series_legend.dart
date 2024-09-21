@@ -23,7 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SimpleSeriesLegend extends StatelessWidget {
-  const SimpleSeriesLegend(this.seriesList, {super.key, this.animate = false});
+  const SimpleSeriesLegend(this.seriesList, {super.key, this.animate = true});
 
   factory SimpleSeriesLegend.withSampleData() => SimpleSeriesLegend(
         _createSampleData(),

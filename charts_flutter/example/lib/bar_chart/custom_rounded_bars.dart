@@ -24,7 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class CustomRoundedBars extends StatelessWidget {
-  const CustomRoundedBars(this.seriesList, {super.key, this.animate = false});
+  const CustomRoundedBars(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.BarChart] with custom rounded bars.
   factory CustomRoundedBars.withSampleData() => CustomRoundedBars(

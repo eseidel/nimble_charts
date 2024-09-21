@@ -23,7 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class StackedBarChart extends StatelessWidget {
-  const StackedBarChart(this.seriesList, {super.key, this.animate = false});
+  const StackedBarChart(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a stacked [charts.BarChart] with sample data and no transition.
   factory StackedBarChart.withSampleData() => StackedBarChart(

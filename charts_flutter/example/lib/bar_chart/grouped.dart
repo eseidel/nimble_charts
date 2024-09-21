@@ -23,7 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class GroupedBarChart extends StatelessWidget {
-  const GroupedBarChart(this.seriesList, {super.key, this.animate = false});
+  const GroupedBarChart(this.seriesList, {super.key, this.animate = true});
 
   factory GroupedBarChart.withSampleData() => GroupedBarChart(
         _createSampleData(),

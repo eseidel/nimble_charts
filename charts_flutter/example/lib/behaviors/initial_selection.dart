@@ -33,7 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class InitialSelection extends StatelessWidget {
-  const InitialSelection(this.seriesList, {super.key, this.animate = false});
+  const InitialSelection(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.BarChart] with initial selection behavior.
   factory InitialSelection.withSampleData() => InitialSelection(

@@ -35,7 +35,7 @@ class DatumLegendWithMeasures extends StatelessWidget {
   const DatumLegendWithMeasures(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   factory DatumLegendWithMeasures.withSampleData() => DatumLegendWithMeasures(
