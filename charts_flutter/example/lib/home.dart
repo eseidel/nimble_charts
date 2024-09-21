@@ -27,6 +27,7 @@ import 'package:example/i18n/i18n_gallery.dart' as i18n show buildGallery;
 import 'package:example/legends/legends_gallery.dart' as legends
     show buildGallery;
 import 'package:example/line_chart/line_gallery.dart' as line show buildGallery;
+import 'package:example/picker/tag_selection_screen.dart';
 import 'package:example/pie_chart/pie_gallery.dart' as pie show buildGallery;
 import 'package:example/scatter_plot_chart/scatter_plot_gallery.dart'
     as scatter_plot show buildGallery;
@@ -56,38 +57,11 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final galleries = <Widget>[
-      ...a11yGalleries.map((gallery) => gallery.buildGalleryListTile(context)),
-      // Add example bar charts.
-      ...barGalleries.map((gallery) => gallery.buildGalleryListTile(context)),
-      // Add example time series charts.
-      ...timeSeriesGalleries
-          .map((gallery) => gallery.buildGalleryListTile(context)),
-      // Add example line charts.
-      ...lineGalleries.map((gallery) => gallery.buildGalleryListTile(context)),
-      // Add example scatter plot charts.
-      ...scatterPlotGalleries
-          .map((gallery) => gallery.buildGalleryListTile(context)),
-      // Add example pie charts.
-      ...comboGalleries.map((gallery) => gallery.buildGalleryListTile(context)),
-      // Add example pie charts.
-      ...pieGalleries.map((gallery) => gallery.buildGalleryListTile(context)),
-      // Add example custom axis.
-      ...axesGalleries.map((gallery) => gallery.buildGalleryListTile(context)),
-      ...behaviorsGalleries
-          .map((gallery) => gallery.buildGalleryListTile(context)),
-      // Add legends examples
-      ...legendsGalleries
-          .map((gallery) => gallery.buildGalleryListTile(context)),
-      // Add examples for i18n.
-      ...i18nGalleries.map((gallery) => gallery.buildGalleryListTile(context)),
-    ];
-
     _setupPerformance();
 
     return Scaffold(
       appBar: AppBar(title: Text(defaultConfig.appName)),
-      body: ListView(padding: kMaterialListPadding, children: galleries),
+      body: const TagSelectionScreen(),
     );
   }
 
