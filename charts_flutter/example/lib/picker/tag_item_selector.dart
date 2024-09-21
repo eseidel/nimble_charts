@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 typedef TagDefinition = ({
   String name,
+  String display,
   IconData icon,
   String blurb,
 });
@@ -50,7 +51,14 @@ class _TagItemSelectorState<T extends TaggedItem>
               children: widget.allTags
                   .map(
                     (tag) => FilterChip(
-                      label: Text(tag.name),
+                      label: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(tag.icon),
+                          const SizedBox(width: 8),
+                          Text(tag.display),
+                        ],
+                      ),
                       selected: widget.selectedTags.value.contains(tag),
                       onSelected: (_) => _toggleTag(tag),
                     ),

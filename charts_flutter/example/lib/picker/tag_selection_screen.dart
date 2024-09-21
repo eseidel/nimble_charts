@@ -6,22 +6,26 @@ import 'package:flutter/material.dart';
 
 const tagDefinitions = <String, TagDefinition>{
   'Bar': (
-    name: 'Bar',
+    name: 'bar',
+    display: 'Bar',
     icon: Icons.bar_chart,
     blurb: 'Displays categorical data using rectangular bars.',
   ),
   'Line': (
-    name: 'Line',
+    name: 'line',
+    display: 'Line',
     icon: Icons.show_chart,
     blurb: 'Shows trends over time with continuous data points.',
   ),
   'Sales': (
-    name: 'Sales',
+    name: 'sales',
+    display: 'Sales',
     icon: Icons.attach_money,
     blurb: 'Represents sales performance and metrics.',
   ),
   'Performance': (
-    name: 'Performance',
+    name: 'performance',
+    display: 'Performance',
     icon: Icons.speed,
     blurb: 'Tracks key performance indicators and benchmarks.',
   ),
@@ -82,7 +86,7 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
                     child: item.build(context, item),
                   ),
                   const SizedBox(height: 8),
-                  Text(item.tags.map((t)=>t.name).join(', ')),
+                  Text(item.tags.map((t) => t.display).join(', ')),
                 ],
               ),
             ),
