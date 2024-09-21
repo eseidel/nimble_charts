@@ -24,11 +24,7 @@ bool useRandomData = true;
 /// Manages the application's theme state.
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
 
-/// Toggles the application's theme between light and dark modes.
-void toggleTheme() {
-  themeNotifier.value =
-      themeNotifier.value == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-}
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

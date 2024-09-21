@@ -31,7 +31,10 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
                       : Icons.light_mode,
                 ),
               ),
-              onPressed: toggleTheme,
+              onPressed: () => themeNotifier.value =
+                  themeNotifier.value == ThemeMode.light
+                      ? ThemeMode.dark
+                      : ThemeMode.light,
             ),
           ],
         ),
