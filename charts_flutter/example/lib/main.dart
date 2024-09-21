@@ -16,12 +16,13 @@
 import 'dart:developer';
 import 'package:example/gallery_app.dart';
 import 'package:flutter/material.dart';
+
 import 'package:nimble_charts/flutter.dart' as charts;
 
 bool useRandomData = true;
 
 /// Manages the application's theme state.
-final themeNotifier = ValueNotifier<ThemeMode>(ThemeMode.light);
+final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
 
 /// Toggles the application's theme between light and dark modes.
 void toggleTheme() {
@@ -29,12 +30,15 @@ void toggleTheme() {
       themeNotifier.value == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
 }
 
-void main() => runApp(
-      ValueListenableBuilder<ThemeMode>(
-        valueListenable: themeNotifier,
-        builder: (_, themeMode, __) => GalleryApp(themeMode: themeMode),
-      ),
-    );
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier,
+      builder: (_, themeMode, __) => const GalleryApp(),
+    ),
+  );
+}
 
 /// TODO: Use this somewhere
 // ignore: unused_element
