@@ -82,8 +82,7 @@ void main() {
       final TypedAccessorFn<MyNode, String> getDomain =
           (node, _) => node.domainId;
 
-      // ignore: omit_local_variable_types
-      dynamic getMeasure(node, _) => node.measure;
+      num getMeasure(MyNode node, _) => node.measure;
       final domainFn = actOnNodeData<MyNode, MyLink, String>(getDomain)!;
       final measureFn = actOnNodeData<MyNode, MyLink, num>(getMeasure)!;
 
@@ -113,9 +112,9 @@ void main() {
 
     test('returns data for non-null functions', () {
       // ignore: omit_local_variable_types
-      dynamic getDomain(link, _) => link.domainId;
+      String getDomain(MyLink link, _) => link.domainId;
       // ignore: omit_local_variable_types
-      dynamic getMeasure(link, _) => link.measure;
+      num getMeasure(MyLink link, _) => link.measure;
       final domainFn = actOnLinkData<MyNode, MyLink, String>(getDomain)!;
       final measureFn = actOnLinkData<MyNode, MyLink, num>(getMeasure)!;
       final firstLink = graph_structure.Link<MyNode, MyLink>(

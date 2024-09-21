@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:nimble_charts_common/src/chart/cartesian/axis/time/date_time_extents.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/time/day_time_stepper.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/time/hour_time_stepper.dart';

@@ -15,7 +15,6 @@
 
 import 'dart:math';
 
-import 'package:meta/meta.dart' show required;
 import 'package:mockito/mockito.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/collision_report.dart';
@@ -109,11 +108,11 @@ class CelsiusToFahrenheitConverter implements UnitConverter<num, num> {
 }
 
 void main() {
-  FakeGraphicsFactory graphicsFactory;
-  MockNumericScale scale;
-  NumericTickProvider tickProvider;
-  TickFormatter<num> formatter;
-  ChartContext context;
+  late FakeGraphicsFactory graphicsFactory;
+  late MockNumericScale scale;
+  late NumericTickProvider tickProvider;
+  late TickFormatter<num> formatter;
+  late ChartContext context;
 
   setUp(() {
     graphicsFactory = FakeGraphicsFactory();
