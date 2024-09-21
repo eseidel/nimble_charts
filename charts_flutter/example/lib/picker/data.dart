@@ -96,14 +96,14 @@ const tagDefinitions = <String, TagDefinition>{
 List<ChartSampleDefinition> chartSampleDefinitions = [
   // Bar Charts
   ChartSampleDefinition(
-    tags: [tagDefinitions['bar']!],
+    tags: [tagDefinitions['bar']!, tagDefinitions['simple']!],
     icon: Icons.bar_chart,
     build: (context, item) => SimpleBarChart.withRandomData(),
     title: simpleBarChartTileTitle,
     subtitle: simpleBarChartTileSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['bar']!],
+    tags: [tagDefinitions['bar']!, tagDefinitions['stacked']!],
     icon: Icons.bar_chart,
     build: (context, item) => StackedBarChart.withRandomData(),
     title: stackedBarChartTileTitle,
@@ -113,6 +113,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     tags: [
       tagDefinitions['bar']!,
       tagDefinitions['grouped']!,
+      tagDefinitions['simple']!,
     ],
     icon: Icons.bar_chart,
     build: (context, item) => GroupedBarChart.withRandomData(),
@@ -120,28 +121,32 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     subtitle: groupedBarChartTileSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['bar']!],
+    tags: [
+      tagDefinitions['bar']!,
+      tagDefinitions['grouped']!,
+      tagDefinitions['stacked']!,
+    ],
     icon: Icons.bar_chart,
     build: (context, item) => GroupedStackedBarChart.withRandomData(),
     title: groupedStackedBarChartTileTitle,
     subtitle: groupedStackedBarChartTileSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['bar']!],
+    tags: [tagDefinitions['bar']!, tagDefinitions['grouped']!],
     icon: Icons.bar_chart,
     build: (context, item) => GroupedBarTargetLineChart.withRandomData(),
     title: groupedBarTargetLineChartTileTitle,
     subtitle: groupedBarTargetLineChartTileSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['bar']!],
+    tags: [tagDefinitions['bar']!, tagDefinitions['grouped']!],
     icon: Icons.bar_chart,
     build: (context, item) => GroupedBarSingleTargetLineChart.withRandomData(),
     title: groupedBarSingleTargetLineChartTileTitle,
     subtitle: groupedBarSingleTargetLineChartTileSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['bar']!],
+    tags: [tagDefinitions['bar']!, tagDefinitions['stacked']!],
     icon: Icons.bar_chart,
     build: (context, item) => StackedBarTargetLineChart.withRandomData(),
     title: stackedBarTargetLineChartTitle,
@@ -155,7 +160,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     subtitle: horizontalBarChartSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['bar']!],
+    tags: [tagDefinitions['bar']!, tagDefinitions['stacked']!],
     icon: Icons.bar_chart,
     build: (context, item) => StackedHorizontalBarChart.withRandomData(),
     title: stackedHorizontalBarChartTitle,
@@ -183,21 +188,21 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     subtitle: verticalBarLabelChartSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['bar']!],
+    tags: [tagDefinitions['bar']!, tagDefinitions['spark']!],
     icon: Icons.bar_chart,
     build: (context, item) => SparkBar.withRandomData(),
     title: sparkBarChartTitle,
     subtitle: sparkBarChartSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['bar']!],
+    tags: [tagDefinitions['bar']!, tagDefinitions['grouped']!],
     icon: Icons.bar_chart,
     build: (context, item) => GroupedFillColorBarChart.withRandomData(),
     title: groupedFillColorChartTitle,
     subtitle: groupedFillColorChartSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['bar']!],
+    tags: [tagDefinitions['bar']!, tagDefinitions['stacked']!],
     icon: Icons.bar_chart,
     build: (context, item) => StackedFillColorBarChart.withRandomData(),
     title: stackedFillColorChartTitle,
@@ -219,7 +224,11 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     subtitle: horizontalPatternForwardHatchChartSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['bar']!],
+    tags: [
+      tagDefinitions['bar']!,
+      tagDefinitions['grouped']!,
+      tagDefinitions['stacked']!,
+    ],
     icon: Icons.bar_chart,
     build: (context, item) =>
         GroupedStackedWeightPatternBarChart.withRandomData(),
@@ -236,28 +245,36 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
 
   // Line Charts
   ChartSampleDefinition(
-    tags: [tagDefinitions['line']!],
+    tags: [tagDefinitions['line']!, tagDefinitions['simple']!],
     icon: Icons.show_chart,
     build: (context, item) => SimpleLineChart.withRandomData(),
     title: simpleLineChartTitle,
     subtitle: simpleLineChartSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['line']!],
+    tags: [
+      tagDefinitions['line']!,
+      tagDefinitions['stacked']!,
+      tagDefinitions['time']!,
+    ],
     icon: Icons.show_chart,
     build: (context, item) => StackedAreaLineChart.withRandomData(),
     title: stackedAreaLineChartTitle,
     subtitle: stackedAreaLineChartSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['line']!],
+    tags: [
+      tagDefinitions['line']!,
+      tagDefinitions['stacked']!,
+      tagDefinitions['time']!,
+    ],
     icon: Icons.show_chart,
     build: (context, item) => StackedAreaCustomColorLineChart.withRandomData(),
     title: stackedAreaCustomColorLineChartTitle,
     subtitle: stackedAreaCustomColorLineChartSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['line']!],
+    tags: [tagDefinitions['line']!, tagDefinitions['combo']!],
     icon: Icons.show_chart,
     build: (context, item) => AreaAndLineChart.withRandomData(),
     title: areaAndLineChartTitle,
@@ -271,14 +288,18 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     subtitle: pointsLineChartSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['line']!],
+    tags: [tagDefinitions['line']!, tagDefinitions['simple']!],
     icon: Icons.show_chart,
     build: (context, item) => SimpleNullsLineChart.withRandomData(),
     title: simpleNullsLineChartTitle,
     subtitle: simpleNullsLineChartSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['line']!],
+    tags: [
+      tagDefinitions['line']!,
+      tagDefinitions['stacked']!,
+      tagDefinitions['time']!,
+    ],
     icon: Icons.show_chart,
     build: (context, item) => StackedAreaNullsLineChart.withRandomData(),
     title: stackedAreaNullsLineChartTitle,
