@@ -18,31 +18,37 @@ const tagDefinitions = <String, TagDefinition>{
     icon: Icons.show_chart,
     blurb: 'Shows trends over time with continuous data points.',
   ),
-  'sales': (
-    name: 'sales',
-    display: 'Sales',
-    icon: Icons.attach_money,
-    blurb: 'Represents sales performance and metrics.',
+  'scatter': (
+    name: 'scatter',
+    display: 'Scatter',
+    icon: Icons.scatter_plot,
+    blurb: 'Displays relationships between two variables.',
   ),
-  'performance': (
-    name: 'performance',
-    display: 'Performance',
-    icon: Icons.speed,
-    blurb: 'Tracks key performance indicators and benchmarks.',
+  'time': (
+    name: 'time',
+    display: 'Time Series',
+    icon: Icons.access_time,
+    blurb: 'Visualizes data points over time.',
+  ),
+  'combo': (
+    name: 'combo',
+    display: 'Combo',
+    icon: Icons.multiline_chart,
+    blurb: 'Combines multiple chart types in a single visualization.',
   ),
 };
 
 List<ChartSampleDefinition> chartSampleDefinitions = [
   ChartSampleDefinition(
     tags: [tagDefinitions['bar']!],
-    icon: Icons.cake,
+    icon: Icons.bar_chart,
     build: (context, item) => GroupedStackedBarChart.withRandomData(),
     title: groupedStackedBarChartTileTitle,
     subtitle: groupedStackedBarChartTileSubtitle,
   ),
   ChartSampleDefinition(
     tags: [tagDefinitions['bar']!],
-    icon: Icons.beach_access,
+    icon: Icons.bar_chart,
     build: (context, item) => GroupedBarTargetLineChart.withRandomData(),
     title: groupedBarTargetLineChartTileTitle,
     subtitle: groupedBarTargetLineChartTileSubtitle,
