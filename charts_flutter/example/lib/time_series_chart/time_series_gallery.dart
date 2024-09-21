@@ -25,80 +25,100 @@ import 'package:example/time_series_chart/symbol_annotation.dart';
 import 'package:example/time_series_chart/with_bar_renderer.dart';
 import 'package:flutter/material.dart';
 
-const timeSeriesChart = 'Time Series Chart';
-const endPointsAxisTimeSeriesChart = 'End Points Axis Time Series Chart';
-const lineAnnotationOnTimeSeriesChart = 'Line Annotation on Time Series Chart';
-const rangeAnnotationOnTimeSeriesChart =
+// Chart titles
+const simpleTimeSeriesChartTitle = 'Simple Time Series Chart';
+const endPointsAxisTimeSeriesChartTitle = 'End Points Axis Time Series Chart';
+const lineAnnotationTimeSeriesChartTitle =
+    'Line Annotation on Time Series Chart';
+const rangeAnnotationTimeSeriesChartTitle =
     'Range Annotation on Time Series Chart';
-const rangeAnnotationMarginLabelsOnTimeSeriesChart =
+const rangeAnnotationMarginLabelsTimeSeriesChartTitle =
     'Range Annotation Margin Labels on Time Series Chart';
-const symbolAnnotationOnTimeSeriesChart = 'Symbol Annotation Time Series Chart';
-const timeSeriesChartWithBars = 'Time Series Chart with Bars';
-const timeSeriesChartWithConfidenceInterval =
+const symbolAnnotationTimeSeriesChartTitle =
+    'Symbol Annotation Time Series Chart';
+const timeSeriesChartWithBarsTitle = 'Time Series Chart with Bars';
+const confidenceIntervalTimeSeriesChartTitle =
     'Time Series Chart with Confidence Interval';
+
+// Chart subtitles
+const simpleTimeSeriesChartSubtitle =
+    'Time series with a single series and default line point highlighter';
+const endPointsAxisTimeSeriesChartSubtitle =
+    'Time series with first and last points highlighted';
+const lineAnnotationTimeSeriesChartSubtitle =
+    'Time series chart with future line annotation';
+const rangeAnnotationTimeSeriesChartSubtitle =
+    'Time series chart with future range annotation';
+const rangeAnnotationMarginLabelsTimeSeriesChartSubtitle =
+    'Time series chart with range annotations with labels in margins';
+const symbolAnnotationTimeSeriesChartSubtitle =
+    'Time series with annotations and custom symbols';
+const timeSeriesChartWithBarsSubtitle =
+    'Time series chart using the bar renderer';
+const confidenceIntervalTimeSeriesChartSubtitle =
+    'Time series with confidence interval measures';
 
 List<GalleryScaffold> buildGallery() => [
       GalleryScaffold(
         listTileIcon: const Icon(Icons.show_chart),
-        title: timeSeriesChart,
-        subtitle: 'Simple single time series chart',
+        title: simpleTimeSeriesChartTitle,
+        subtitle: simpleTimeSeriesChartSubtitle,
         childBuilder: () => useRandomData
             ? SimpleTimeSeriesChart.withRandomData()
             : SimpleTimeSeriesChart.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.show_chart),
-        title: endPointsAxisTimeSeriesChart,
-        subtitle: 'Time series chart with an end points axis',
+        title: endPointsAxisTimeSeriesChartTitle,
+        subtitle: endPointsAxisTimeSeriesChartSubtitle,
         childBuilder: () => useRandomData
             ? EndPointsAxisTimeSeriesChart.withRandomData()
             : EndPointsAxisTimeSeriesChart.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.show_chart),
-        title: lineAnnotationOnTimeSeriesChart,
-        subtitle: 'Time series chart with future line annotation',
+        title: lineAnnotationTimeSeriesChartTitle,
+        subtitle: lineAnnotationTimeSeriesChartSubtitle,
         childBuilder: () => useRandomData
             ? TimeSeriesLineAnnotationChart.withRandomData()
             : TimeSeriesLineAnnotationChart.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.show_chart),
-        title: rangeAnnotationOnTimeSeriesChart,
-        subtitle: 'Time series chart with future range annotation',
+        title: rangeAnnotationTimeSeriesChartTitle,
+        subtitle: rangeAnnotationTimeSeriesChartSubtitle,
         childBuilder: () => useRandomData
             ? TimeSeriesRangeAnnotationChart.withRandomData()
             : TimeSeriesRangeAnnotationChart.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.show_chart),
-        title: rangeAnnotationMarginLabelsOnTimeSeriesChart,
-        subtitle:
-            'Time series chart with range annotations with labels in margins',
+        title: rangeAnnotationMarginLabelsTimeSeriesChartTitle,
+        subtitle: rangeAnnotationMarginLabelsTimeSeriesChartSubtitle,
         childBuilder: () => useRandomData
             ? TimeSeriesRangeAnnotationMarginChart.withRandomData()
             : TimeSeriesRangeAnnotationMarginChart.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.show_chart),
-        title: symbolAnnotationOnTimeSeriesChart,
-        subtitle: 'Time series chart with annotation data below the draw area',
+        title: symbolAnnotationTimeSeriesChartTitle,
+        subtitle: symbolAnnotationTimeSeriesChartSubtitle,
         childBuilder: () => useRandomData
             ? TimeSeriesSymbolAnnotationChart.withRandomData()
             : TimeSeriesSymbolAnnotationChart.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.show_chart),
-        title: timeSeriesChartWithBars,
-        subtitle: 'Time series chart using the bar renderer',
+        title: timeSeriesChartWithBarsTitle,
+        subtitle: timeSeriesChartWithBarsSubtitle,
         childBuilder: () => useRandomData
             ? TimeSeriesBar.withRandomData()
             : TimeSeriesBar.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.show_chart),
-        title: timeSeriesChartWithConfidenceInterval,
-        subtitle: 'Draws area around the confidence interval',
+        title: confidenceIntervalTimeSeriesChartTitle,
+        subtitle: confidenceIntervalTimeSeriesChartSubtitle,
         childBuilder: () => useRandomData
             ? TimeSeriesConfidenceInterval.withRandomData()
             : TimeSeriesConfidenceInterval.withSampleData(),

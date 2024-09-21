@@ -39,6 +39,15 @@ import 'package:example/scatter_plot_chart/bucketing_axis.dart';
 import 'package:example/scatter_plot_chart/comparison_points.dart';
 import 'package:example/scatter_plot_chart/scatter_plot_gallery.dart';
 import 'package:example/scatter_plot_chart/simple.dart';
+import 'package:example/time_series_chart/confidence_interval.dart';
+import 'package:example/time_series_chart/end_points_axis.dart';
+import 'package:example/time_series_chart/line_annotation.dart';
+import 'package:example/time_series_chart/range_annotation.dart';
+import 'package:example/time_series_chart/range_annotation_margin.dart';
+import 'package:example/time_series_chart/simple.dart';
+import 'package:example/time_series_chart/symbol_annotation.dart';
+import 'package:example/time_series_chart/time_series_gallery.dart';
+import 'package:example/time_series_chart/with_bar_renderer.dart';
 import 'package:flutter/material.dart';
 
 const tagDefinitions = <String, TagDefinition>{
@@ -539,5 +548,96 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     build: (context, item) => BucketingAxisScatterPlotChart.withRandomData(),
     title: bucketingAxisScatterPlotChartTitle,
     subtitle: bucketingAxisScatterPlotChartSubtitle,
+  ),
+
+  // Time Series Charts
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['simple']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => SimpleTimeSeriesChart.withRandomData(),
+    title: simpleTimeSeriesChartTitle,
+    subtitle: simpleTimeSeriesChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['custom']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => EndPointsAxisTimeSeriesChart.withRandomData(),
+    title: endPointsAxisTimeSeriesChartTitle,
+    subtitle: endPointsAxisTimeSeriesChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['annotation']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => TimeSeriesLineAnnotationChart.withRandomData(),
+    title: lineAnnotationTimeSeriesChartTitle,
+    subtitle: lineAnnotationTimeSeriesChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['annotation']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => TimeSeriesRangeAnnotationChart.withRandomData(),
+    title: rangeAnnotationTimeSeriesChartTitle,
+    subtitle: rangeAnnotationTimeSeriesChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['annotation']!,
+      tagDefinitions['custom']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) =>
+        TimeSeriesRangeAnnotationMarginChart.withRandomData(),
+    title: rangeAnnotationMarginLabelsTimeSeriesChartTitle,
+    subtitle: rangeAnnotationMarginLabelsTimeSeriesChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['annotation']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => TimeSeriesSymbolAnnotationChart.withRandomData(),
+    title: symbolAnnotationTimeSeriesChartTitle,
+    subtitle: symbolAnnotationTimeSeriesChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['bar']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => TimeSeriesBar.withRandomData(),
+    title: timeSeriesChartWithBarsTitle,
+    subtitle: timeSeriesChartWithBarsSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['custom']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => TimeSeriesConfidenceInterval.withRandomData(),
+    title: confidenceIntervalTimeSeriesChartTitle,
+    subtitle: confidenceIntervalTimeSeriesChartSubtitle,
   ),
 ];
