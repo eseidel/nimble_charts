@@ -1,58 +1,6 @@
-import 'package:example/bar_chart/grouped_stacked.dart';
-import 'package:example/bar_chart/grouped_target_line.dart';
+import 'package:example/picker/data.dart';
 import 'package:example/picker/tag_item_selector.dart';
-import 'package:example/picker/tagged_item.dart';
 import 'package:flutter/material.dart';
-
-const tagDefinitions = <String, TagDefinition>{
-  'Bar': (
-    name: 'bar',
-    display: 'Bar',
-    icon: Icons.bar_chart,
-    blurb: 'Displays categorical data using rectangular bars.',
-  ),
-  'Line': (
-    name: 'line',
-    display: 'Line',
-    icon: Icons.show_chart,
-    blurb: 'Shows trends over time with continuous data points.',
-  ),
-  'Sales': (
-    name: 'sales',
-    display: 'Sales',
-    icon: Icons.attach_money,
-    blurb: 'Represents sales performance and metrics.',
-  ),
-  'Performance': (
-    name: 'performance',
-    display: 'Performance',
-    icon: Icons.speed,
-    blurb: 'Tracks key performance indicators and benchmarks.',
-  ),
-};
-
-class ChartExample implements TaggedItem {
-  ChartExample({required this.build, required this.icon, required this.tags});
-
-  @override
-  final List<TagDefinition> tags;
-  final IconData icon;
-
-  final Widget Function(BuildContext context, ChartExample item) build;
-}
-
-List<ChartExample> dummyItems = [
-  ChartExample(
-    tags: [tagDefinitions['Bar']!],
-    icon: Icons.cake,
-    build: (context, item) => GroupedStackedBarChart.withRandomData(),
-  ),
-  ChartExample(
-    tags: [tagDefinitions['Bar']!],
-    icon: Icons.beach_access,
-    build: (context, item) => GroupedBarTargetLineChart.withRandomData(),
-  ),
-];
 
 class TagSelectionScreen extends StatefulWidget {
   const TagSelectionScreen({super.key});
@@ -91,7 +39,7 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
               ),
             ),
           ),
-          items: (tags) => dummyItems
+          items: (tags) => chartSampleDefinitions
               .where(
                 (item) => item.tags.any(
                   (tag) => tags.contains(tag),

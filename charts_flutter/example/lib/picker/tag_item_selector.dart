@@ -2,6 +2,7 @@ import 'package:example/picker/animated_item_grid.dart';
 import 'package:example/picker/tagged_item.dart';
 import 'package:flutter/material.dart';
 
+/// A tag definition.
 typedef TagDefinition = ({
   String name,
   String display,
