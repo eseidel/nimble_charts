@@ -55,7 +55,6 @@ class BarChartWithSecondaryAxis extends StatelessWidget {
   factory BarChartWithSecondaryAxis.withRandomData() =>
       BarChartWithSecondaryAxis(
         _createRandomData(),
-        animate: true,
       );
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
   final List<charts.Series<dynamic, String>> seriesList;
