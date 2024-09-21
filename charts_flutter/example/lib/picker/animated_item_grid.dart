@@ -1,4 +1,5 @@
 import 'package:example/picker/tag_item_selector.dart';
+import 'package:example/picker/virtualized_wrap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -60,9 +61,9 @@ class _AnimatedItemGridState<T> extends State<AnimatedItemGrid<T>>
   @override
   Widget build(BuildContext context) => AnimationLimiter(
         key: ValueKey(widget.items.length),
-        child: Wrap(
-          runAlignment: WrapAlignment.center,
-          alignment: WrapAlignment.center,
+        child: VirtualizedWrap(
+          // runAlignment: WrapAlignment.center,
+          // alignment: WrapAlignment.center,
           spacing: 8,
           runSpacing: 8,
           children: AnimationConfiguration.toStaggeredList(
