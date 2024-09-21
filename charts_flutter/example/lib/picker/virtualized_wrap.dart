@@ -97,7 +97,9 @@ class _VirtualizedWrapState extends State<VirtualizedWrap> {
             controller: _scrollController,
             child: SizedBox(
               height: _itemPositions.isNotEmpty
-                  ? _itemPositions.last.offset.dy + widget.itemSize.height + widget.runSpacing
+                  ? _itemPositions.last.offset.dy +
+                      widget.itemSize.height +
+                      widget.runSpacing
                   : 0,
               child: Stack(
                 children: visibleItems

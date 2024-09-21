@@ -62,8 +62,7 @@ class _AnimatedItemGridState<T> extends State<AnimatedItemGrid<T>>
   Widget build(BuildContext context) => AnimationLimiter(
         key: ValueKey(widget.items.length),
         child: VirtualizedWrap(
-          // runAlignment: WrapAlignment.center,
-          // alignment: WrapAlignment.center,
+          itemSize: const Size(350, 250),
           spacing: 8,
           runSpacing: 8,
           children: AnimationConfiguration.toStaggeredList(
