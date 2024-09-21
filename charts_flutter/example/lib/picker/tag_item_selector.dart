@@ -53,17 +53,20 @@ class _TagItemSelectorState<T extends TaggedItem>
               runSpacing: 8,
               children: widget.allTags
                   .map(
-                    (tag) => FilterChip(
-                      label: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(tag.icon),
-                          const SizedBox(width: 8),
-                          Text(tag.display),
-                        ],
+                    (tag) => Tooltip(
+                      message: tag.blurb,
+                      child: FilterChip(
+                        label: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(tag.icon),
+                            const SizedBox(width: 8),
+                            Text(tag.display),
+                          ],
+                        ),
+                        selected: widget.selectedTags.value.contains(tag),
+                        onSelected: (_) => _toggleTag(tag),
                       ),
-                      selected: widget.selectedTags.value.contains(tag),
-                      onSelected: (_) => _toggleTag(tag),
                     ),
                   )
                   .toList(),

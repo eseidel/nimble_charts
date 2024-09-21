@@ -22,17 +22,45 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
             height: 250,
             child: Card(
               key: ValueKey(item.hashCode),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ConstrainedBox(
-                    constraints:
-                        const BoxConstraints(maxWidth: 300, maxHeight: 200),
-                    child: item.build(context, item),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(item.tags.map((t) => t.display).join(', ')),
-                ],
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 8),
+                    Expanded(
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            maxWidth: 300,
+                            maxHeight: 150,
+                          ),
+                          child: item.build(context, item),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Tooltip(
+                      message: item.subtitle,
+                      child: Text(
+                        item.subtitle,
+                        style: Theme.of(context).textTheme.titleSmall,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
