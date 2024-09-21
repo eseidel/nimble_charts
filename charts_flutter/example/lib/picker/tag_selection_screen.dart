@@ -4,13 +4,34 @@ import 'package:example/picker/tag_item_selector.dart';
 import 'package:example/picker/tagged_item.dart';
 import 'package:flutter/material.dart';
 
-const tagDefinitions = ['Bar', 'Line', 'Sales', 'Performance'];
+const tagDefinitions = <String, TagDefinition>{
+  'Bar': (
+    name: 'Bar',
+    icon: Icons.bar_chart,
+    blurb: 'Displays categorical data using rectangular bars.',
+  ),
+  'Line': (
+    name: 'Line',
+    icon: Icons.show_chart,
+    blurb: 'Shows trends over time with continuous data points.',
+  ),
+  'Sales': (
+    name: 'Sales',
+    icon: Icons.attach_money,
+    blurb: 'Represents sales performance and metrics.',
+  ),
+  'Performance': (
+    name: 'Performance',
+    icon: Icons.speed,
+    blurb: 'Tracks key performance indicators and benchmarks.',
+  ),
+};
 
 class ChartExample implements TaggedItem {
   ChartExample({required this.build, required this.icon, required this.tags});
 
   @override
-  final List<String> tags;
+  final List<TagDefinition> tags;
   final IconData icon;
 
   final Widget Function(BuildContext context, ChartExample item) build;
@@ -18,12 +39,12 @@ class ChartExample implements TaggedItem {
 
 List<ChartExample> dummyItems = [
   ChartExample(
-    tags: const ['Bar'],
+    tags: [tagDefinitions['Bar']!],
     icon: Icons.cake,
     build: (context, item) => GroupedStackedBarChart.withRandomData(),
   ),
   ChartExample(
-    tags: const ['Bar'],
+    tags: [tagDefinitions['Bar']!],
     icon: Icons.beach_access,
     build: (context, item) => GroupedBarTargetLineChart.withRandomData(),
   ),
@@ -37,8 +58,8 @@ class TagSelectionScreen extends StatefulWidget {
 }
 
 class _TagSelectionScreenState extends State<TagSelectionScreen> {
-  final ValueNotifier<List<String>> selectedTags =
-      ValueNotifier<List<String>>([tagDefinitions.first]);
+  final ValueNotifier<List<TagDefinition>> selectedTags =
+      ValueNotifier<List<TagDefinition>>([tagDefinitions.values.first]);
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -61,7 +82,7 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
                     child: item.build(context, item),
                   ),
                   const SizedBox(height: 8),
-                  Text(item.tags.join(', ')),
+                  Text(item.tags.map((t)=>t.name).join(', ')),
                 ],
               ),
             ),
@@ -73,7 +94,7 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
                 ),
               )
               .toList(),
-          allTags: tagDefinitions,
+          allTags: tagDefinitions.values.toList(),
         ),
       );
 }

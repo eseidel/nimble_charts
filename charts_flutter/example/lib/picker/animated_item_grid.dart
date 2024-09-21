@@ -1,3 +1,4 @@
+import 'package:example/picker/tag_item_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -11,7 +12,7 @@ class AnimatedItemGrid<T> extends StatefulWidget {
 
   final List<T> items;
   //ignore: unreachable_from_main
-  final ValueNotifier<List<String>> selectedTags;
+  final ValueNotifier<List<TagDefinition>> selectedTags;
   final Widget Function(BuildContext context, T item) builder;
 
   @override

@@ -2,6 +2,12 @@ import 'package:example/picker/animated_item_grid.dart';
 import 'package:example/picker/tagged_item.dart';
 import 'package:flutter/material.dart';
 
+typedef TagDefinition = ({
+  String name,
+  IconData icon,
+  String blurb,
+});
+
 class TagItemSelector<T extends TaggedItem> extends StatefulWidget {
   const TagItemSelector({
     required this.selectedTags,
@@ -11,9 +17,9 @@ class TagItemSelector<T extends TaggedItem> extends StatefulWidget {
     super.key,
   });
 
-  final List<String> allTags;
-  final ValueNotifier<List<String>> selectedTags;
-  final List<T> Function(List<String> selectedTags) items;
+  final List<TagDefinition> allTags;
+  final ValueNotifier<List<TagDefinition>> selectedTags;
+  final List<T> Function(List<TagDefinition> selectedTags) items;
   final Widget Function(BuildContext context, T item) builder;
 
   @override
@@ -22,7 +28,7 @@ class TagItemSelector<T extends TaggedItem> extends StatefulWidget {
 
 class _TagItemSelectorState<T extends TaggedItem>
     extends State<TagItemSelector<T>> {
-  void _toggleTag(String tag) {
+  void _toggleTag(TagDefinition tag) {
     setState(() {
       if (widget.selectedTags.value.contains(tag)) {
         widget.selectedTags.value.remove(tag);
@@ -44,7 +50,7 @@ class _TagItemSelectorState<T extends TaggedItem>
               children: widget.allTags
                   .map(
                     (tag) => FilterChip(
-                      label: Text(tag),
+                      label: Text(tag.name),
                       selected: widget.selectedTags.value.contains(tag),
                       onSelected: (_) => _toggleTag(tag),
                     ),

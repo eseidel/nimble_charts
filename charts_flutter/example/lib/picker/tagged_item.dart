@@ -1,4 +1,6 @@
 
+import 'package:example/picker/tag_item_selector.dart';
+
 abstract class TaggedItem {
-  List<String> get tags;
+  List<TagDefinition> get tags;
 }
