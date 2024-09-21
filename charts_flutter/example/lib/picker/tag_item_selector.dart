@@ -47,6 +47,8 @@ class _TagItemSelectorState<T extends TaggedItem>
           Padding(
             padding: const EdgeInsets.all(8),
             child: Wrap(
+              runAlignment: WrapAlignment.center,
+              alignment: WrapAlignment.center,
               spacing: 8,
               runSpacing: 8,
               children: widget.allTags

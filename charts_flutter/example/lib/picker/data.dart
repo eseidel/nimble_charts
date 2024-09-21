@@ -34,6 +34,11 @@ import 'package:example/line_chart/stacked_area_custom_color.dart';
 import 'package:example/line_chart/stacked_area_nulls.dart';
 import 'package:example/picker/model.dart';
 import 'package:example/picker/tag_item_selector.dart';
+import 'package:example/scatter_plot_chart/animation_zoom.dart';
+import 'package:example/scatter_plot_chart/bucketing_axis.dart';
+import 'package:example/scatter_plot_chart/comparison_points.dart';
+import 'package:example/scatter_plot_chart/scatter_plot_gallery.dart';
+import 'package:example/scatter_plot_chart/simple.dart';
 import 'package:flutter/material.dart';
 
 const tagDefinitions = <String, TagDefinition>{
@@ -492,5 +497,47 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     build: (context, item) => LineAnimationZoomChart.withRandomData(),
     title: lineAnimationZoomChartTitle,
     subtitle: lineAnimationZoomChartSubtitle,
+  ),
+
+  // Scatter Plot Charts
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['scatter']!,
+      tagDefinitions['simple']!,
+    ],
+    icon: Icons.scatter_plot,
+    build: (context, item) => SimpleScatterPlotChart.withRandomData(),
+    title: simpleScatterPlotChartTitle,
+    subtitle: simpleScatterPlotChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['scatter']!,
+      tagDefinitions['custom']!,
+    ],
+    icon: Icons.scatter_plot,
+    build: (context, item) => ComparisonPointsScatterPlotChart.withRandomData(),
+    title: comparisonPointsScatterPlotChartTitle,
+    subtitle: comparisonPointsScatterPlotChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['scatter']!,
+      tagDefinitions['animated']!,
+    ],
+    icon: Icons.scatter_plot,
+    build: (context, item) => ScatterPlotAnimationZoomChart.withRandomData(),
+    title: panAndZoomScatterPlotChartTitle,
+    subtitle: panAndZoomScatterPlotChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['scatter']!,
+      tagDefinitions['custom']!,
+    ],
+    icon: Icons.scatter_plot,
+    build: (context, item) => BucketingAxisScatterPlotChart.withRandomData(),
+    title: bucketingAxisScatterPlotChartTitle,
+    subtitle: bucketingAxisScatterPlotChartSubtitle,
   ),
 ];
