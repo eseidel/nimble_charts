@@ -68,11 +68,11 @@ class FakeDrawStrategy extends BaseTickDrawStrategy<num> {
   void draw(
     ChartCanvas canvas,
     Tick<num> tick, {
-    @required AxisOrientation orientation,
-    @required Rectangle<int> axisBounds,
-    @required Rectangle<int> drawAreaBounds,
-    @required bool isFirst,
-    @required bool isLast,
+    required AxisOrientation orientation,
+    required Rectangle<int> axisBounds,
+    required Rectangle<int> drawAreaBounds,
+    required bool isFirst,
+    required bool isLast,
     bool collision = false,
   }) {}
 }

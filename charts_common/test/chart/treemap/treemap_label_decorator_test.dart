@@ -127,9 +127,9 @@ class FakeTreeMapRendererElement extends TreeMapRendererElement<String> {
   FakeTreeMapRendererElement(
     this.labelAccessor,
     this.data, {
-    @required Rectangle<num> /*?*/ super.boundingRect,
-    @required super.index,
-    @required super.isLeaf,
+    required Rectangle<num> /*?*/ super.boundingRect,
+    required super.index,
+    required super.isLeaf,
   }) : super(
           series: MockImmutableSeries<String>(),
           domain: '',

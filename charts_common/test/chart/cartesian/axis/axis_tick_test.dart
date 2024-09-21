@@ -23,24 +23,27 @@ import 'package:test/test.dart';
 /// Fake [TextElement] for testing.
 class FakeTextElement implements TextElement {
   FakeTextElement(this.text);
+
   @override
   final String text;
-  double opacity;
 
   @override
-  TextMeasurement measurement;
+  late double? opacity;
 
   @override
-  TextStyle textStyle;
+  late TextMeasurement measurement;
 
   @override
-  int maxWidth;
+  TextStyle? textStyle;
 
   @override
-  MaxWidthStrategy maxWidthStrategy;
+  int? maxWidth;
 
   @override
-  TextDirection textDirection;
+  MaxWidthStrategy? maxWidthStrategy;
+
+  @override
+  late TextDirection textDirection;
 }
 
 /// Helper to create a tick for testing.
@@ -50,7 +53,11 @@ Tick<String> _createTestTick(String value, double locationPx) => Tick(
       locationPx: locationPx,
     );
 
-void _verify(Tick<String> tick, {double location, double opacity}) {
+void _verify(
+  Tick<String> tick, {
+  double? location,
+  double? opacity,
+}) {
   expect(tick.locationPx, equals(location));
   expect((tick.textElement! as FakeTextElement).opacity, equals(opacity));
 }
@@ -58,11 +65,12 @@ void _verify(Tick<String> tick, {double location, double opacity}) {
 void main() {
   // Tick first render.
   test('tick created for the first time', () {
-    final tick = AxisTicks(_createTestTick('a', 100));
+    final tick = AxisTicks(_createTestTick('a', 100))
+      ..
 
-    // Animate in the tick, there was no previous position to animated in from
-    // so the tick appears in the target immediately.
-    tick.setCurrentTick(0);
+          // Animate in the tick, there was no previous position to animated in
+          // from so the tick appears in the target immediately.
+          setCurrentTick(0);
     _verify(tick, location: 100, opacity: 1);
 
     tick.setCurrentTick(0.25);
@@ -77,9 +85,9 @@ void main() {
 
   // Tick that is animated in.
   test('tick created with a previous location', () {
-    final tick = AxisTicks(_createTestTick('a', 200))..animateInFrom(100);
-
-    tick.setCurrentTick(0);
+    final tick = AxisTicks(_createTestTick('a', 200))
+      ..animateInFrom(100)
+      ..setCurrentTick(0);
     _verify(tick, location: 100, opacity: 0);
 
     tick.setCurrentTick(0.25);
@@ -94,11 +102,12 @@ void main() {
 
   // Tick that is being animated out.
   test('tick is animated in and then out', () {
-    final tick = AxisTicks(_createTestTick('a', 100));
+    final tick = AxisTicks(_createTestTick('a', 100))
+      ..
 
-    // Animate in the tick, there was no previous position to animated in from
-    // so the tick appears in the target immediately.
-    tick.setCurrentTick(0.25);
+          // Animate in the tick, there was no previous position to animated in
+          // from so the tick appears in the target immediately.
+          setCurrentTick(0.25);
     _verify(tick, location: 100, opacity: 1);
 
     // Change to animate the tick out.
@@ -120,10 +129,11 @@ void main() {
   });
 
   test('tick target change after reaching target', () {
-    final tick = AxisTicks(_createTestTick('a', 100));
+    final tick = AxisTicks(_createTestTick('a', 100))
+      ..
 
-    // Animate in the tick.
-    tick.setCurrentTick(1);
+          // Animate in the tick.
+          setCurrentTick(1);
     _verify(tick, location: 100, opacity: 1);
 
     tick.setNewTarget(200);
@@ -144,10 +154,12 @@ void main() {
   });
 
   test('tick target change before reaching initial target', () {
-    final tick = AxisTicks(_createTestTick('a', 400))..animateInFrom(0);
+    final tick = AxisTicks(_createTestTick('a', 400))
+      ..animateInFrom(0)
+      ..
 
-    // Animate in the tick.
-    tick.setCurrentTick(0.25);
+          // Animate in the tick.
+          setCurrentTick(0.25);
     _verify(tick, location: 100, opacity: 0.25);
 
     tick.setNewTarget(200);
@@ -168,10 +180,12 @@ void main() {
   });
 
   test('tick target animate out before reaching initial target', () {
-    final tick = AxisTicks(_createTestTick('a', 400))..animateInFrom(0);
+    final tick = AxisTicks(_createTestTick('a', 400))
+      ..animateInFrom(0)
+      ..
 
-    // Animate in the tick.
-    tick.setCurrentTick(0.25);
+          // Animate in the tick.
+          setCurrentTick(0.25);
     _verify(tick, location: 100, opacity: 0.25);
 
     tick.animateOut(200);
