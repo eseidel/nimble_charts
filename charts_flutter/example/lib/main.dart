@@ -20,7 +20,21 @@ import 'package:nimble_charts/flutter.dart' as charts;
 
 bool useRandomData = true;
 
-void main() => runApp(const GalleryApp());
+/// Manages the application's theme state.
+final themeNotifier = ValueNotifier<ThemeMode>(ThemeMode.light);
+
+/// Toggles the application's theme between light and dark modes.
+void toggleTheme() {
+  themeNotifier.value =
+      themeNotifier.value == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+}
+
+void main() => runApp(
+      ValueListenableBuilder<ThemeMode>(
+        valueListenable: themeNotifier,
+        builder: (_, themeMode, __) => GalleryApp(themeMode: themeMode),
+      ),
+    );
 
 /// TODO: Use this somewhere
 // ignore: unused_element

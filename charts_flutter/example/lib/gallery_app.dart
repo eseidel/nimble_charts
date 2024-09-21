@@ -13,28 +13,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:example/app_config.dart';
 import 'package:example/picker/tag_selection_screen.dart';
 import 'package:flutter/material.dart';
 
-/// The main gallery app widget.
-class GalleryApp extends StatefulWidget {
-  const GalleryApp({super.key});
+/// The root widget of the application.
+class GalleryApp extends StatelessWidget {
+  /// Creates a [GalleryApp].
+  const GalleryApp({required this.themeMode, super.key});
 
-  @override
-  GalleryAppState createState() => GalleryAppState();
-}
+  /// The current theme mode of the application.
+  final ThemeMode themeMode;
 
-/// The main gallery app state.
-class GalleryAppState extends State<GalleryApp> {
   @override
   Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: defaultConfig.appName,
-        theme: defaultConfig.theme,
-        home: Scaffold(
-          appBar: AppBar(title: Text(defaultConfig.appName)),
-          body: const TagSelectionScreen(),
-        ),
+        title: 'nimble_charts Gallery',
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        themeMode: themeMode,
+        home: const TagSelectionScreen(),
       );
 }

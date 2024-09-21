@@ -1,10 +1,13 @@
+import 'package:example/main.dart';
 import 'package:example/picker/data.dart';
 import 'package:example/picker/full_screen_sample.dart';
 import 'package:example/picker/model.dart';
 import 'package:example/picker/tag_item_selector.dart';
 import 'package:flutter/material.dart';
 
+/// A screen that allows users to select tags and view corresponding charts.
 class TagSelectionScreen extends StatefulWidget {
+  /// Creates a [TagSelectionScreen].
   const TagSelectionScreen({super.key});
 
   @override
@@ -17,6 +20,22 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: const Text('nimble_charts Gallery'),
+          actions: [
+            IconButton(
+              icon: ValueListenableBuilder<ThemeMode>(
+                valueListenable: themeNotifier,
+                builder: (_, themeMode, __) => Icon(
+                  themeMode == ThemeMode.light
+                      ? Icons.dark_mode
+                      : Icons.light_mode,
+                ),
+              ),
+              onPressed: toggleTheme,
+            ),
+          ],
+        ),
         body: TagItemSelector(
           selectedTags: selectedTags,
           builder: (context, item) => SizedBox(
@@ -85,6 +104,7 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
         ),
       );
 
+  /// Generates the tooltip content for a given chart sample.
   String _tooltipContent(ChartSampleDefinition item) => '''
 ${item.title}
 
