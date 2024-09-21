@@ -22,6 +22,7 @@ class _VirtualizedWrapState extends State<VirtualizedWrap> {
   late List<_ItemPosition> _itemPositions;
   Size? _lastSize;
   double _scrollOffset = 0;
+  late double _totalWidth;
 
   @override
   void initState() {
@@ -45,17 +46,24 @@ class _VirtualizedWrapState extends State<VirtualizedWrap> {
 
     final size = MediaQuery.of(context).size;
     _itemPositions = [];
-    var x = 0.0;
-    var y = 0.0;
+    _totalWidth = size.width;
+
+    final itemsPerRow =
+        (_totalWidth / (widget.itemSize.width + widget.spacing)).floor();
+    final availableWidth = _totalWidth - (itemsPerRow * widget.itemSize.width);
+    final horizontalPadding = availableWidth / (itemsPerRow + 1);
+
+    var x = horizontalPadding;
+    var y = widget.runSpacing;
 
     for (var i = 0; i < widget.children.length; i++) {
-      if (x + widget.itemSize.width > size.width) {
-        x = 0.0;
+      if (i > 0 && i % itemsPerRow == 0) {
+        x = horizontalPadding;
         y += widget.itemSize.height + widget.runSpacing;
       }
 
       _itemPositions.add(_ItemPosition(i, Offset(x, y)));
-      x += widget.itemSize.width + widget.spacing;
+      x += widget.itemSize.width + horizontalPadding;
     }
     setState(() {});
   }
@@ -96,6 +104,7 @@ class _VirtualizedWrapState extends State<VirtualizedWrap> {
           return SingleChildScrollView(
             controller: _scrollController,
             child: SizedBox(
+              width: _totalWidth,
               height: _itemPositions.isNotEmpty
                   ? _itemPositions.last.offset.dy +
                       widget.itemSize.height +
