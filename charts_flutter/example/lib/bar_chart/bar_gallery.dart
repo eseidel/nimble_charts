@@ -60,6 +60,12 @@ const horizontalPatternForwardHatchChart =
 const weightedPatternChart = 'Weight Pattern Bar Chart';
 const barChartWithCustomBarRadius = 'Bar Chart with custom bar radius';
 
+const groupedStackedBarChartTileSubtitle =
+    'Grouped and stacked bar chart with multiple series';
+
+const groupedBarTargetLineChartTileSubtitle =
+    'Grouped bar target line chart with multiple series';
+
 List<GalleryScaffold> buildGallery() => [
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
@@ -88,7 +94,7 @@ List<GalleryScaffold> buildGallery() => [
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
         title: groupedStackedBarChartTileTitle,
-        subtitle: 'Grouped and stacked bar chart with multiple series',
+        subtitle: groupedStackedBarChartTileSubtitle,
         childBuilder: () => m.useRandomData
             ? GroupedStackedBarChart.withRandomData()
             : GroupedStackedBarChart.withSampleData(),
@@ -96,7 +102,7 @@ List<GalleryScaffold> buildGallery() => [
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
         title: groupedBarTargetLineChartTileTitle,
-        subtitle: 'Grouped bar target line chart with multiple series',
+        subtitle: groupedBarTargetLineChartTileSubtitle,
         childBuilder: () => m.useRandomData
             ? GroupedBarTargetLineChart.withRandomData()
             : GroupedBarTargetLineChart.withSampleData(),
