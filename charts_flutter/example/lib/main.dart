@@ -13,33 +13,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:example/app_config.dart';
-import 'package:example/home.dart';
+import 'dart:developer';
+import 'package:example/gallery_app.dart';
 import 'package:flutter/material.dart';
+import 'package:nimble_charts/flutter.dart' as charts;
 
 bool useRandomData = true;
 
-/// The main gallery app widget.
-class GalleryApp extends StatefulWidget {
-  const GalleryApp({super.key});
+void main() => runApp(const GalleryApp());
 
-  @override
-  GalleryAppState createState() => GalleryAppState();
-}
-
-/// The main gallery app state.
-///
-/// Controls performance overlay, and instantiates a [Home] widget.
-class GalleryAppState extends State<GalleryApp> {
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: defaultConfig.appName,
-        theme: defaultConfig.theme,
-        home: Home(),
-      );
-}
-
-void main() {
-  runApp(const GalleryApp());
+/// TODO: Use this somewhere
+// ignore: unused_element
+void _setupPerformance() {
+  // Change [printPerformance] to true and set the app to release mode to
+  // print performance numbers to console. By default, Flutter builds in debug
+  // mode and this mode is slow. To build in release mode, specify the flag
+  // blaze-run flag "--define flutter_build_mode=release".
+  // The build target must also be an actual device and not the emulator.
+  charts.Performance.time = Timeline.startSync;
+  charts.Performance.timeEnd = (_) => Timeline.finishSync();
 }

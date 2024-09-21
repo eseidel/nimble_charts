@@ -1,5 +1,5 @@
 import 'package:example/bar_chart/bar_gallery.dart';
-import 'package:example/home.dart';
+import 'package:example/gallery_app.dart';
 import 'package:example/line_chart/line_gallery.dart' as l;
 import 'package:example/main.dart';
 import 'package:example/time_series_chart/time_series_gallery.dart' as ts;
@@ -372,7 +372,7 @@ extension ExampleWidgetTestExtensions on WidgetTester {
       ..physicalSize = const Size(1200, 700)
       ..devicePixelRatio = 1;
 
-    expect(find.byType(Home), findsOneWidget);
+    expect(find.byType(GalleryApp), findsOneWidget);
 
     // Find the list tile by text
     final tileFinder = find.byWidgetPredicate(
