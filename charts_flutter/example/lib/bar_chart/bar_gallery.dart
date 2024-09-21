@@ -38,39 +38,80 @@ import 'package:example/main.dart' as m;
 import 'package:flutter/material.dart';
 
 const simpleBarChartTileTitle = 'Simple Bar Chart';
-const stackedBarChartTileTitle = 'Stacked Bar Chart';
-const groupedBarChartTileTitle = 'Grouped Bar Chart';
-const groupedStackedBarChartTileTitle = 'Grouped Stacked Bar Chart';
-const groupedBarTargetLineChartTileTitle = 'Grouped Bar Target Line Chart';
-const groupedBarSingleTargetLineChartTileTitle =
-    'Grouped Bar Single Target Line Chart';
-const stackedBarTargetLineChart = 'Stacked Bar Target Line Chart';
-const horizontalBarChart = 'Horizontal Bar Chart';
-const stackedHorizontalBarChart = 'Stacked Horizontal Bar Chart';
-const horizontalBarLabelChart = 'Horizontal Bar Chart with Bar Labels';
-const horizontalBarLabelCustomChart =
-    'Horizontal Bar Chart with Custom Bar Labels';
-const verticalBarLabelChart = 'Vertical Bar Chart with Bar Labels';
-const sparkBarChart = 'Spark Bar Chart';
-const groupedFillColorChart = 'Grouped Fill Color Bar Chart';
-const stackedFillColorChart = 'Stacked Fill Color Bar Chart';
-const patternForwardHatchChart = 'Pattern Forward Hatch Bar Chart';
-const horizontalPatternForwardHatchChart =
-    'Horizontal Pattern Forward Hatch Bar Chart';
-const weightedPatternChart = 'Weight Pattern Bar Chart';
-const barChartWithCustomBarRadius = 'Bar Chart with custom bar radius';
+const simpleBarChartTileSubtitle = 'Simple bar chart with a single series';
 
+const stackedBarChartTileTitle = 'Stacked Bar Chart';
+const stackedBarChartTileSubtitle = 'Stacked bar chart with multiple series';
+
+const groupedBarChartTileTitle = 'Grouped Bar Chart';
+const groupedBarChartTileSubtitle = 'Grouped bar chart with multiple series';
+
+const groupedStackedBarChartTileTitle = 'Grouped Stacked Bar Chart';
 const groupedStackedBarChartTileSubtitle =
     'Grouped and stacked bar chart with multiple series';
 
+const groupedBarTargetLineChartTileTitle = 'Grouped Bar Target Line Chart';
 const groupedBarTargetLineChartTileSubtitle =
     'Grouped bar target line chart with multiple series';
+
+const groupedBarSingleTargetLineChartTileTitle =
+    'Grouped Bar Single Target Line Chart';
+const groupedBarSingleTargetLineChartTileSubtitle =
+    'Grouped bar target line chart with multiple series and a single target';
+
+const stackedBarTargetLineChartTitle = 'Stacked Bar Target Line Chart';
+const stackedBarTargetLineChartSubtitle =
+    'Stacked bar target line chart with multiple series';
+
+const horizontalBarChartTitle = 'Horizontal Bar Chart';
+const horizontalBarChartSubtitle = 'Horizontal bar chart with a single series';
+
+const stackedHorizontalBarChartTitle = 'Stacked Horizontal Bar Chart';
+const stackedHorizontalBarChartSubtitle =
+    'Stacked horizontal bar chart with multiple series';
+
+const horizontalBarLabelChartTitle = 'Horizontal Bar Chart with Bar Labels';
+const horizontalBarLabelChartSubtitle =
+    'Horizontal bar chart with a single series and bar labels';
+
+const horizontalBarLabelCustomChartTitle =
+    'Horizontal Bar Chart with Custom Bar Labels';
+const horizontalBarLabelCustomChartSubtitle =
+    'Bar labels with customized styling';
+
+const verticalBarLabelChartTitle = 'Vertical Bar Chart with Bar Labels';
+const verticalBarLabelChartSubtitle =
+    'Vertical bar chart with a single series and bar labels';
+
+const sparkBarChartTitle = 'Spark Bar Chart';
+const sparkBarChartSubtitle = 'Spark Bar Chart';
+
+const groupedFillColorChartTitle = 'Grouped Fill Color Bar Chart';
+const groupedFillColorChartSubtitle = 'Grouped bar chart with fill colors';
+
+const stackedFillColorChartTitle = 'Stacked Fill Color Bar Chart';
+const stackedFillColorChartSubtitle = 'Stacked bar chart with fill colors';
+
+const patternForwardHatchChartTitle = 'Pattern Forward Hatch Bar Chart';
+const patternForwardHatchChartSubtitle = 'Pattern Forward Hatch Bar Chart';
+
+const horizontalPatternForwardHatchChartTitle =
+    'Horizontal Pattern Forward Hatch Bar Chart';
+const horizontalPatternForwardHatchChartSubtitle =
+    'Horizontal Pattern Forward Hatch Bar Chart';
+
+const weightedPatternChartTitle = 'Weight Pattern Bar Chart';
+const weightedPatternChartSubtitle =
+    'Grouped and stacked bar chart with a weight pattern';
+
+const barChartWithCustomBarRadiusTitle = 'Bar Chart with custom bar radius';
+const barChartWithCustomBarRadiusSubtitle = 'Custom rounded bar corners';
 
 List<GalleryScaffold> buildGallery() => [
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
         title: simpleBarChartTileTitle,
-        subtitle: 'Simple bar chart with a single series',
+        subtitle: simpleBarChartTileSubtitle,
         childBuilder: () => m.useRandomData
             ? SimpleBarChart.withRandomData()
             : SimpleBarChart.withSampleData(),
@@ -78,7 +119,7 @@ List<GalleryScaffold> buildGallery() => [
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
         title: stackedBarChartTileTitle,
-        subtitle: 'Stacked bar chart with multiple series',
+        subtitle: stackedBarChartTileSubtitle,
         childBuilder: () => m.useRandomData
             ? StackedBarChart.withRandomData()
             : StackedBarChart.withSampleData(),
@@ -86,7 +127,7 @@ List<GalleryScaffold> buildGallery() => [
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
         title: groupedBarChartTileTitle,
-        subtitle: 'Grouped bar chart with multiple series',
+        subtitle: groupedBarChartTileSubtitle,
         childBuilder: () => m.useRandomData
             ? GroupedBarChart.withRandomData()
             : GroupedBarChart.withSampleData(),
@@ -110,16 +151,15 @@ List<GalleryScaffold> buildGallery() => [
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
         title: groupedBarSingleTargetLineChartTileTitle,
-        subtitle: 'Grouped bar target line chart '
-            'with multiple series and a single target',
+        subtitle: groupedBarSingleTargetLineChartTileSubtitle,
         childBuilder: () => m.useRandomData
             ? GroupedBarSingleTargetLineChart.withRandomData()
             : GroupedBarSingleTargetLineChart.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: stackedBarTargetLineChart,
-        subtitle: 'Stacked bar target line chart with multiple series',
+        title: stackedBarTargetLineChartTitle,
+        subtitle: stackedBarTargetLineChartSubtitle,
         childBuilder: () => m.useRandomData
             ? StackedBarTargetLineChart.withRandomData()
             : StackedBarTargetLineChart.withSampleData(),
@@ -129,8 +169,8 @@ List<GalleryScaffold> buildGallery() => [
           angle: 1.5708,
           child: const Icon(Icons.insert_chart),
         ),
-        title: horizontalBarChart,
-        subtitle: 'Horizontal bar chart with a single series',
+        title: horizontalBarChartTitle,
+        subtitle: horizontalBarChartSubtitle,
         childBuilder: () => m.useRandomData
             ? HorizontalBarChart.withRandomData()
             : HorizontalBarChart.withSampleData(),
@@ -140,8 +180,8 @@ List<GalleryScaffold> buildGallery() => [
           angle: 1.5708,
           child: const Icon(Icons.insert_chart),
         ),
-        title: stackedHorizontalBarChart,
-        subtitle: 'Stacked horizontal bar chart with multiple series',
+        title: stackedHorizontalBarChartTitle,
+        subtitle: stackedHorizontalBarChartSubtitle,
         childBuilder: () => m.useRandomData
             ? StackedHorizontalBarChart.withRandomData()
             : StackedHorizontalBarChart.withSampleData(),
@@ -151,8 +191,8 @@ List<GalleryScaffold> buildGallery() => [
           angle: 1.5708,
           child: const Icon(Icons.insert_chart),
         ),
-        title: horizontalBarLabelChart,
-        subtitle: 'Horizontal bar chart with a single series and bar labels',
+        title: horizontalBarLabelChartTitle,
+        subtitle: horizontalBarLabelChartSubtitle,
         childBuilder: () => m.useRandomData
             ? HorizontalBarLabelChart.withRandomData()
             : HorizontalBarLabelChart.withSampleData(),
@@ -162,8 +202,8 @@ List<GalleryScaffold> buildGallery() => [
           angle: 1.5708,
           child: const Icon(Icons.insert_chart),
         ),
-        title: horizontalBarLabelCustomChart,
-        subtitle: 'Bar labels with customized styling',
+        title: horizontalBarLabelCustomChartTitle,
+        subtitle: horizontalBarLabelCustomChartSubtitle,
         childBuilder: () => m.useRandomData
             ? HorizontalBarLabelCustomChart.withRandomData()
             : HorizontalBarLabelCustomChart.createWithSampleData(),
@@ -173,40 +213,40 @@ List<GalleryScaffold> buildGallery() => [
           angle: 1.5708,
           child: const Icon(Icons.insert_chart),
         ),
-        title: verticalBarLabelChart,
-        subtitle: 'Vertical bar chart with a single series and bar labels',
+        title: verticalBarLabelChartTitle,
+        subtitle: verticalBarLabelChartSubtitle,
         childBuilder: () => m.useRandomData
             ? VerticalBarLabelChart.withRandomData()
             : VerticalBarLabelChart.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: sparkBarChart,
-        subtitle: 'Spark Bar Chart',
+        title: sparkBarChartTitle,
+        subtitle: sparkBarChartSubtitle,
         childBuilder: () => m.useRandomData
             ? SparkBar.withRandomData()
             : SparkBar.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: groupedFillColorChart,
-        subtitle: 'Grouped bar chart with fill colors',
+        title: groupedFillColorChartTitle,
+        subtitle: groupedFillColorChartSubtitle,
         childBuilder: () => m.useRandomData
             ? GroupedFillColorBarChart.withRandomData()
             : GroupedFillColorBarChart.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: stackedFillColorChart,
-        subtitle: 'Stacked bar chart with fill colors',
+        title: stackedFillColorChartTitle,
+        subtitle: stackedFillColorChartSubtitle,
         childBuilder: () => m.useRandomData
             ? StackedFillColorBarChart.withRandomData()
             : StackedFillColorBarChart.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: patternForwardHatchChart,
-        subtitle: 'Pattern Forward Hatch Bar Chart',
+        title: patternForwardHatchChartTitle,
+        subtitle: patternForwardHatchChartSubtitle,
         childBuilder: () => m.useRandomData
             ? PatternForwardHatchBarChart.withRandomData()
             : PatternForwardHatchBarChart.withSampleData(),
@@ -216,24 +256,24 @@ List<GalleryScaffold> buildGallery() => [
           angle: 1.5708,
           child: const Icon(Icons.insert_chart),
         ),
-        title: horizontalPatternForwardHatchChart,
-        subtitle: 'Horizontal Pattern Forward Hatch Bar Chart',
+        title: horizontalPatternForwardHatchChartTitle,
+        subtitle: horizontalPatternForwardHatchChartSubtitle,
         childBuilder: () => m.useRandomData
             ? HorizontalPatternForwardHatchBarChart.withRandomData()
             : HorizontalPatternForwardHatchBarChart.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: weightedPatternChart,
-        subtitle: 'Grouped and stacked bar chart with a weight pattern',
+        title: weightedPatternChartTitle,
+        subtitle: weightedPatternChartSubtitle,
         childBuilder: () => m.useRandomData
             ? GroupedStackedWeightPatternBarChart.withRandomData()
             : GroupedStackedWeightPatternBarChart.withSampleData(),
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: barChartWithCustomBarRadius,
-        subtitle: 'Custom rounded bar corners',
+        title: barChartWithCustomBarRadiusTitle,
+        subtitle: barChartWithCustomBarRadiusSubtitle,
         childBuilder: () => m.useRandomData
             ? CustomRoundedBars.withRandomData()
             : CustomRoundedBars.withSampleData(),
