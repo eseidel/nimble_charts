@@ -67,6 +67,30 @@ const tagDefinitions = <String, TagDefinition>{
     icon: Icons.multiline_chart,
     blurb: 'Combines multiple chart types in a single visualization.',
   ),
+  'grouped': (
+    name: 'grouped',
+    display: 'Grouped',
+    icon: Icons.group,
+    blurb: 'Grouped data visualization.',
+  ),
+  'spark': (
+    name: 'spark',
+    display: 'Spark',
+    icon: Icons.star,
+    blurb: 'Spark data visualization.',
+  ),
+  'stacked': (
+    name: 'stacked',
+    display: 'Stacked',
+    icon: Icons.stacked_bar_chart,
+    blurb: 'Stacked data visualization.',
+  ),
+  'simple': (
+    name: 'simple',
+    display: 'Simple',
+    icon: Icons.thumb_up,
+    blurb: 'Simple data visualization.',
+  ),
 };
 
 List<ChartSampleDefinition> chartSampleDefinitions = [
@@ -86,7 +110,10 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     subtitle: stackedBarChartTileSubtitle,
   ),
   ChartSampleDefinition(
-    tags: [tagDefinitions['bar']!],
+    tags: [
+      tagDefinitions['bar']!,
+      tagDefinitions['grouped']!,
+    ],
     icon: Icons.bar_chart,
     build: (context, item) => GroupedBarChart.withRandomData(),
     title: groupedBarChartTileTitle,
