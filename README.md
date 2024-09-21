@@ -64,7 +64,7 @@ There are a heap of widget tests. Each of the widget tests create golden files. 
 flutter test --update-goldens
 ```
 
-Please don't commit goldens in PRs. I will merge your branch to a temporary branch and then run the `generate_goldens.yaml` action to generate the goldens. If there
+Please don't commit goldens in PRs. We will merge your branch to a temporary branch and then run the `generate_goldens.yaml` action to generate the goldens. If there
 are changes in the goldens, they will show up in the PR.
 
 ## What Has Changed?
