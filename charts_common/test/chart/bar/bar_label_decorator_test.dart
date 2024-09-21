@@ -113,7 +113,7 @@ class MockLinePaint extends Mock implements LineStyle {}
 class FakeBarRendererElement implements ImmutableBarRendererElement<String> {
   final _series = MockImmutableSeries<String>();
   final AccessorFn<String> labelAccessor;
-  final AccessorFn<num> measureFn;
+  final AccessorFn<num>? measureFn;
   final List<String> data;
 
   @override
@@ -123,7 +123,7 @@ class FakeBarRendererElement implements ImmutableBarRendererElement<String> {
   final Rectangle<int> bounds;
 
   @override
-  int index;
+  late int index;
 
   FakeBarRendererElement(
     this.datum,

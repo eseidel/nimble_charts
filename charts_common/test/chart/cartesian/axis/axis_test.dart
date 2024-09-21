@@ -18,7 +18,6 @@ import 'dart:math';
 import 'package:mockito/mockito.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/collision_report.dart';
-import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/tick_spec.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/static_tick_provider.dart';
@@ -26,14 +25,12 @@ import 'package:nimble_charts_common/src/common/graphics_factory.dart';
 import 'package:nimble_charts_common/src/common/text_element.dart';
 import 'package:test/test.dart';
 
-class MockTickDrawStrategy extends Mock implements TickDrawStrategy<num> {}
+import '../../../mox.mocks.dart';
 
 class MockGraphicsFactory extends Mock implements GraphicsFactory {
   @override
   TextElement createTextElement(String _) => MockTextElement();
 }
-
-class MockTextElement extends Mock implements TextElement {}
 
 StaticTickProvider<num> _createProvider(List<num> values) =>
     StaticTickProvider<num>(values.map(TickSpec.new).toList());
@@ -54,14 +51,15 @@ void main() {
     );
 
     final tester = AxisTester(axis);
-    axis.tickDrawStrategy = drawStrategy;
-    axis.graphicsFactory = MockGraphicsFactory();
-    tester.scale.range = const ScaleOutputExtent(0, 300);
+    axis
+      ..tickDrawStrategy = drawStrategy
+      ..graphicsFactory = MockGraphicsFactory();
+    tester.scale!.range = const ScaleOutputExtent(0, 300);
 
-    axis.updateTicks();
-
-    axis.tickProvider = _createProvider([5, 10]);
-    axis.updateTicks();
+    axis
+      ..updateTicks()
+      ..tickProvider = _createProvider([5, 10])
+      ..updateTicks();
 
     // The old value should still be there as it gets animated out, but the
     // values should be sorted by their position.
@@ -82,8 +80,9 @@ void main() {
       ),
     );
 
-    axis.tickDrawStrategy = drawStrategy;
-    axis.graphicsFactory = MockGraphicsFactory();
+    axis
+      ..tickDrawStrategy = drawStrategy
+      ..graphicsFactory = MockGraphicsFactory();
     const axisOrientation = AxisOrientation.left;
     axis.axisOrientation = axisOrientation;
 
@@ -99,7 +98,6 @@ void main() {
         maxWidth,
         maxHeight,
         axisOrientation,
-        collision: false,
       ),
     ).called(1);
   });
