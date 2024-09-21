@@ -15,9 +15,6 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Tag Selection'),
-        ),
         body: TagItemSelector(
           selectedTags: selectedTags,
           builder: (context, item) => SizedBox(
