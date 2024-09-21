@@ -13,6 +13,8 @@ import 'package:nimble_charts_common/src/chart/cartesian/axis/collision_report.d
     as _i9;
 import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart'
     as _i14;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
+    as _i20;
 import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
     as _i15;
 import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart'
@@ -889,6 +891,212 @@ class MockDrawStrategy<D> extends _i1.Mock
             #isLast: isLast,
             #collision: collision,
           },
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [TickDrawStrategy].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTickDrawStrategy extends _i1.Mock
+    implements _i20.TickDrawStrategy<num> {
+  @override
+  void decorateTicks(List<_i16.Tick<num>>? ticks) => super.noSuchMethod(
+        Invocation.method(
+          #decorateTicks,
+          [ticks],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i9.CollisionReport<num> collides(
+    List<_i16.Tick<num>>? ticks,
+    _i17.AxisOrientation? orientation,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #collides,
+          [
+            ticks,
+            orientation,
+          ],
+        ),
+        returnValue: _FakeCollisionReport_7<num>(
+          this,
+          Invocation.method(
+            #collides,
+            [
+              ticks,
+              orientation,
+            ],
+          ),
+        ),
+        returnValueForMissingStub: _FakeCollisionReport_7<num>(
+          this,
+          Invocation.method(
+            #collides,
+            [
+              ticks,
+              orientation,
+            ],
+          ),
+        ),
+      ) as _i9.CollisionReport<num>);
+
+  @override
+  _i10.ViewMeasuredSizes measureVerticallyDrawnTicks(
+    List<_i16.Tick<num>>? ticks,
+    int? maxWidth,
+    int? maxHeight, {
+    bool? collision = false,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #measureVerticallyDrawnTicks,
+          [
+            ticks,
+            maxWidth,
+            maxHeight,
+          ],
+          {#collision: collision},
+        ),
+        returnValue: _FakeViewMeasuredSizes_8(
+          this,
+          Invocation.method(
+            #measureVerticallyDrawnTicks,
+            [
+              ticks,
+              maxWidth,
+              maxHeight,
+            ],
+            {#collision: collision},
+          ),
+        ),
+        returnValueForMissingStub: _FakeViewMeasuredSizes_8(
+          this,
+          Invocation.method(
+            #measureVerticallyDrawnTicks,
+            [
+              ticks,
+              maxWidth,
+              maxHeight,
+            ],
+            {#collision: collision},
+          ),
+        ),
+      ) as _i10.ViewMeasuredSizes);
+
+  @override
+  _i10.ViewMeasuredSizes measureHorizontallyDrawnTicks(
+    List<_i16.Tick<num>>? ticks,
+    int? maxWidth,
+    int? maxHeight, {
+    bool? collision = false,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #measureHorizontallyDrawnTicks,
+          [
+            ticks,
+            maxWidth,
+            maxHeight,
+          ],
+          {#collision: collision},
+        ),
+        returnValue: _FakeViewMeasuredSizes_8(
+          this,
+          Invocation.method(
+            #measureHorizontallyDrawnTicks,
+            [
+              ticks,
+              maxWidth,
+              maxHeight,
+            ],
+            {#collision: collision},
+          ),
+        ),
+        returnValueForMissingStub: _FakeViewMeasuredSizes_8(
+          this,
+          Invocation.method(
+            #measureHorizontallyDrawnTicks,
+            [
+              ticks,
+              maxWidth,
+              maxHeight,
+            ],
+            {#collision: collision},
+          ),
+        ),
+      ) as _i10.ViewMeasuredSizes);
+
+  @override
+  void updateTickWidth(
+    List<_i16.Tick<num>>? ticks,
+    int? maxWidth,
+    int? maxHeight,
+    _i17.AxisOrientation? orientation, {
+    bool? collision = false,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #updateTickWidth,
+          [
+            ticks,
+            maxWidth,
+            maxHeight,
+            orientation,
+          ],
+          {#collision: collision},
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void draw(
+    _i18.ChartCanvas? canvas,
+    _i16.Tick<num>? tick, {
+    required _i17.AxisOrientation? orientation,
+    required _i19.Rectangle<int>? axisBounds,
+    required _i19.Rectangle<int>? drawAreaBounds,
+    required bool? isFirst,
+    required bool? isLast,
+    bool? collision = false,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #draw,
+          [
+            canvas,
+            tick,
+          ],
+          {
+            #orientation: orientation,
+            #axisBounds: axisBounds,
+            #drawAreaBounds: drawAreaBounds,
+            #isFirst: isFirst,
+            #isLast: isLast,
+            #collision: collision,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void drawAxisLine(
+    _i18.ChartCanvas? canvas,
+    _i17.AxisOrientation? orientation,
+    _i19.Rectangle<int>? axisBounds,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #drawAxisLine,
+          [
+            canvas,
+            orientation,
+            axisBounds,
+          ],
         ),
         returnValueForMissingStub: null,
       );
