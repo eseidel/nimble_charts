@@ -49,5 +49,5 @@ class SimpleDateTimeFactory implements DateTimeFactory {
       );
 
   @override
-  DateFormat createDateFormat(String pattern) => DateFormat(pattern);
+  DateFormat createDateFormat(String? pattern) => DateFormat(pattern);
 }

@@ -25,8 +25,10 @@ typedef IsTransitionFunction = bool Function(
 );
 
 class FakeTimeTickFormatter implements TimeTickFormatter {
-  FakeTimeTickFormatter(this.id, {IsTransitionFunction isTransitionFunction})
-      : isTransitionFunction = isTransitionFunction ?? transitionAlwaysFalse;
+  FakeTimeTickFormatter(
+    this.id, {
+    IsTransitionFunction? isTransitionFunction,
+  }) : isTransitionFunction = isTransitionFunction ?? transitionAlwaysFalse;
   static const firstTick = '-firstTick-';
   static const simpleTick = '-simpleTick-';
   static const transitionTick = '-transitionTick-';
@@ -53,9 +55,9 @@ class FakeTimeTickFormatter implements TimeTickFormatter {
 }
 
 void main() {
-  TimeTickFormatter timeFormatter1;
-  TimeTickFormatter timeFormatter2;
-  TimeTickFormatter timeFormatter3;
+  late TimeTickFormatter timeFormatter1;
+  late TimeTickFormatter timeFormatter2;
+  late TimeTickFormatter timeFormatter3;
 
   setUp(() {
     timeFormatter1 = FakeTimeTickFormatter('fake1');
@@ -227,10 +229,6 @@ void main() {
     });
 
     test('throws argument error if formatters is null or empty', () {
-      expect(
-        () => DateTimeTickFormatter.withFormatters(null),
-        throwsArgumentError,
-      );
       expect(
         () => DateTimeTickFormatter.withFormatters({}),
         throwsArgumentError,

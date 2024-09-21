@@ -22,9 +22,9 @@ void main() {
   final testDate1 = DateTime.utc(1984, 11, 11);
   final testDate2 = DateTime.utc(1984, 11, 12);
 
-  SimpleTimeTickFormatter simpleTimeFormatter;
-  SimpleTimeTickFormatter simpleTimeFormatterWithDateFormat;
-  DateFormat dateFormat;
+  late SimpleTimeTickFormatter simpleTimeFormatter;
+  late SimpleTimeTickFormatter simpleTimeFormatterWithDateFormat;
+  late DateFormat dateFormat;
 
   String testFormatter(DateTime dateTime) => tickLabel;
 

@@ -27,10 +27,10 @@ void main() {
   final testDate2 = DateTime.utc(1984, 11, 12);
   final testDate3 = DateTime.utc(1984, 11, 13);
 
-  BasicDateTimeTickFormatterSpec dateTimeTickSpec;
-  BasicDateTimeTickFormatterSpec dateTimeTickSpecWithDateFormat;
-  DateFormat dateFormat;
-  MockContext mockContext;
+  late BasicDateTimeTickFormatterSpec dateTimeTickSpec;
+  late BasicDateTimeTickFormatterSpec dateTimeTickSpecWithDateFormat;
+  late DateFormat dateFormat;
+  late MockContext mockContext;
 
   String testFormatter(DateTime dateTime) => tickLabel;
 
@@ -51,7 +51,7 @@ void main() {
       final ticks = [testDate1, testDate2, testDate3];
       final expectedLabels = [tickLabel, tickLabel, tickLabel];
       final actualLabels =
-          dateTimeTickFormatter.format(ticks, null, stepSize: 10);
+          dateTimeTickFormatter.format(ticks, {}, stepSize: 10);
 
       expect(actualLabels, equals(expectedLabels));
     });
@@ -67,7 +67,7 @@ void main() {
         'Nov 13, 1984',
       ];
       final actualLabels =
-          dateTimeTickFormatter.format(ticks, null, stepSize: 10);
+          dateTimeTickFormatter.format(ticks, {}, stepSize: 10);
 
       expect(actualLabels, equals(expectedLabels));
     });
