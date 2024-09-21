@@ -63,7 +63,7 @@ void main() {
       );
       final threeHoursMs = const Duration(hours: 3).inMilliseconds;
       final closestStepSize = stepper.getClosestStepSize(
-          const Duration(hours: 3, minutes: 28).inMilliseconds);
+          const Duration(hours: 3, minutes: 28).inMilliseconds,);
 
       expect(closestStepSize, equals(threeHoursMs));
     });

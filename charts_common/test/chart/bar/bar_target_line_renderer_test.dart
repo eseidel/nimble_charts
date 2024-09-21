@@ -133,9 +133,9 @@ void main() {
     test('with grouped bar target lines', () {
       renderer = makeRenderer(
           config: BarTargetLineRendererConfig(
-              ,),);
+              ,),)
 
-      renderer.preprocessSeries(seriesList);
+      ..preprocessSeries(seriesList);
 
       expect(seriesList.length, equals(3));
 

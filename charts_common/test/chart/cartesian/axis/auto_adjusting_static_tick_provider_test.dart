@@ -23,17 +23,9 @@ import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/tick_spec.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart';
 import 'package:nimble_charts_common/src/chart/common/chart_context.dart';
-import 'package:nimble_charts_common/src/common/graphics_factory.dart';
-import 'package:nimble_charts_common/src/common/text_element.dart';
 import 'package:test/test.dart';
 
-class MockChartContext extends Mock implements ChartContext {}
-
-class MockGraphicsFactory extends Mock implements GraphicsFactory {}
-
-class MockTextElement extends Mock implements TextElement {}
-
-class MockNumericTickFormatter extends Mock implements TickFormatter<num> {}
+import '../../../mox.mocks.dart';
 
 class FakeNumericTickFormatter implements TickFormatter<num> {
   int calledTimes = 0;
@@ -42,7 +34,7 @@ class FakeNumericTickFormatter implements TickFormatter<num> {
   List<String> format(
     List<num> tickValues,
     Map<num, String> cache, {
-    num stepSize,
+    num? stepSize,
   }) {
     calledTimes += 1;
 
@@ -50,14 +42,12 @@ class FakeNumericTickFormatter implements TickFormatter<num> {
   }
 }
 
-class MockDrawStrategy<D> extends Mock implements BaseTickDrawStrategy<D> {}
-
 void main() {
-  ChartContext context;
-  GraphicsFactory graphicsFactory;
-  TickFormatter<num> formatter;
-  BaseTickDrawStrategy<num> drawStrategy;
-  LinearScale scale;
+  late ChartContext context;
+  late MockGraphicsFactory graphicsFactory;
+  late TickFormatter<num> formatter;
+  late BaseTickDrawStrategy<num> drawStrategy;
+  late LinearScale scale;
 
   setUp(() {
     context = MockChartContext();

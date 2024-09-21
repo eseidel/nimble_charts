@@ -15,7 +15,6 @@
 
 // ignore_for_file: sort_constructors_first
 
-import 'package:meta/meta.dart' show required;
 import 'package:mockito/mockito.dart';
 import 'package:nimble_charts_common/src/chart/bar/bar_renderer.dart';
 import 'package:nimble_charts_common/src/chart/bar/bar_renderer_config.dart';
@@ -53,17 +52,14 @@ class FakeBarRenderer<D> extends BarRenderer<D> {
   List<List<BarRendererElement<D>>> elementsPainted = [];
 
   factory FakeBarRenderer({
-    BarRendererConfig config,
-    String rendererId,
-  }) {
-    config ??= BarRendererConfig();
-    rendererId ??= 'bar';
-    return FakeBarRenderer._internal(config: config, rendererId: rendererId);
-  }
+    required BarRendererConfig config,
+    required String rendererId,
+  }) =>
+      FakeBarRenderer._internal(config: config, rendererId: rendererId);
 
   FakeBarRenderer._internal({
-    @required BarRendererConfig super.config,
-    @required super.rendererId,
+    required super.config,
+    required super.rendererId,
   }) : super.internal();
 
   @override
@@ -79,8 +75,8 @@ class FakeBarRenderer<D> extends BarRenderer<D> {
 
 void main() {
   BarRenderer renderer;
-  List<MutableSeries<String>> seriesList;
-  List<MutableSeries<String>> groupedStackedSeriesList;
+  late List<MutableSeries<String>> seriesList;
+  late List<MutableSeries<String>> groupedStackedSeriesList;
 
   /////////////////////////////////////////
   // Convenience methods for creating mocks.
@@ -276,13 +272,13 @@ void main() {
       expect(series.getAttr(stackKeyKey), equals('__defaultKey__'));
 
       var elementsList = series.getAttr(barElementsKey);
-      expect(elementsList.length, equals(4));
+      expect(elementsList!.length, equals(4));
 
       var element = elementsList[0];
       expect(element.barStackIndex, equals(0));
       expect(element.measureOffset, equals(0));
       expect(element.measureOffsetPlusMeasure, equals(null));
-      expect(series.measureOffsetFn(0), equals(0));
+      expect(series.measureOffsetFn!(0), equals(0));
 
       // Validate Tablet series.
       series = seriesList[1];

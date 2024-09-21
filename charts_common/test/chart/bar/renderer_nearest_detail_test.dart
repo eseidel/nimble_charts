@@ -86,7 +86,10 @@ void main() {
     return renderer;
   }
 
-  BaseBarRenderer makeBarRenderer({bool vertical, BarGroupingType groupType}) {
+  BaseBarRenderer makeBarRenderer({
+    bool? vertical,
+    BarGroupingType? groupType,
+  }) {
     final renderer =
         BarRenderer(config: BarRendererConfig(groupingType: groupType));
     configureBaseRenderer(renderer, vertical);
@@ -94,8 +97,8 @@ void main() {
   }
 
   BaseBarRenderer makeBarTargetRenderer({
-    bool vertical,
-    BarGroupingType groupType,
+    bool? vertical,
+    BarGroupingType? groupType,
   }) {
     final renderer = BarTargetLineRenderer(
       config: BarTargetLineRendererConfig(groupingType: groupType),
@@ -105,8 +108,8 @@ void main() {
   }
 
   MutableSeries makeSeries({
-    String id,
-    String seriesCategory,
+    required String id,
+    String? seriesCategory,
     bool vertical = true,
   }) {
     final data = <MyRow>[
@@ -122,9 +125,9 @@ void main() {
         measureFn: (row, _) => row.clickCount,
         seriesCategory: seriesCategory,
       ),
-    );
+    ).measureOffsetFn = (_) => 0.0;
 
-    series.measureOffsetFn = (_) => 0.0;
+    // ignore: cascade_invocations
     series.colorFn = (_) => Color.fromHex(code: '#000000');
 
     // Mock the Domain axis results.
@@ -215,7 +218,7 @@ void main() {
     return series;
   }
 
-  bool selectNearestByDomain;
+  late bool selectNearestByDomain;
 
   setUp(() {
     selectNearestByDomain = true;
@@ -319,10 +322,11 @@ void main() {
         makeSeries(id: 'foo')..overlaySeries = true,
         makeSeries(id: 'bar')..overlaySeries = true,
       ];
-      renderer.configureSeries(seriesList);
-      renderer.preprocessSeries(seriesList);
-      renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1);
+      renderer
+        ..configureSeries(seriesList)
+        ..preprocessSeries(seriesList)
+        ..update(seriesList, false)
+        ..paint(MockCanvas(), 1);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -345,10 +349,11 @@ void main() {
       final renderer =
           makeBarRenderer(vertical: true, groupType: BarGroupingType.stacked);
       final seriesList = <MutableSeries>[makeSeries(id: 'foo')];
-      renderer.configureSeries(seriesList);
-      renderer.preprocessSeries(seriesList);
-      renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1);
+      renderer
+        ..configureSeries(seriesList)
+        ..preprocessSeries(seriesList)
+        ..update(seriesList, false)
+        ..paint(MockCanvas(), 1);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -375,10 +380,11 @@ void main() {
         makeSeries(id: 'foo'),
         makeSeries(id: 'bar'),
       ];
-      renderer.configureSeries(seriesList);
-      renderer.preprocessSeries(seriesList);
-      renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1);
+      renderer
+        ..configureSeries(seriesList)
+        ..preprocessSeries(seriesList)
+        ..update(seriesList, false)
+        ..paint(MockCanvas(), 1);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -392,7 +398,7 @@ void main() {
 
       final closest = details[0];
       expect(closest.domain, equals('camp0'));
-      expect(closest.series.id, equals('foo'));
+      expect(closest.series!.id, equals('foo'));
       expect(closest.datum, equals(seriesList[0].data[0]));
       expect(closest.domainDistance, equals(0));
       expect(closest.measureDistance, equals(0));
@@ -413,10 +419,11 @@ void main() {
         makeSeries(id: 'foo'),
         makeSeries(id: 'bar'),
       ];
-      renderer.configureSeries(seriesList);
-      renderer.preprocessSeries(seriesList);
-      renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1);
+      renderer
+        ..configureSeries(seriesList)
+        ..preprocessSeries(seriesList)
+        ..update(seriesList, false)
+        ..paint(MockCanvas(), 1);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -481,21 +488,21 @@ void main() {
 
       final other1 = details[1];
       expect(other1.domain, equals('camp0'));
-      expect(other1.series.id, equals('foo0'));
+      expect(other1.series!.id, equals('foo0'));
       expect(other1.datum, equals(seriesList[0].data[0]));
       expect(other1.domainDistance, equals(0));
       expect(other1.measureDistance, equals(5));
 
       final other2 = details[2];
       expect(other2.domain, equals('camp0'));
-      expect(other2.series.id, equals('bar1'));
+      expect(other2.series!.id, equals('bar1'));
       expect(other2.datum, equals(seriesList[3].data[0]));
       expect(other2.domainDistance, equals(31)); // 2 + 49 - 20
       expect(other2.measureDistance, equals(0));
 
       final other3 = details[3];
       expect(other3.domain, equals('camp0'));
-      expect(other3.series.id, equals('foo1'));
+      expect(other3.series!.id, equals('foo1'));
       expect(other3.datum, equals(seriesList[2].data[0]));
       expect(other3.domainDistance, equals(31)); // 2 + 49 - 20
       expect(other3.measureDistance, equals(5));
@@ -506,10 +513,11 @@ void main() {
       final renderer =
           makeBarRenderer(vertical: true, groupType: BarGroupingType.stacked);
       final seriesList = <MutableSeries>[makeSeries(id: 'foo')];
-      renderer.configureSeries(seriesList);
-      renderer.preprocessSeries(seriesList);
-      renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1);
+      renderer
+        ..configureSeries(seriesList)
+        ..preprocessSeries(seriesList)
+        ..update(seriesList, false)
+        ..paint(MockCanvas(), 1);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -536,10 +544,11 @@ void main() {
         makeSeries(id: 'foo'),
         makeSeries(id: 'bar'),
       ];
-      renderer.configureSeries(seriesList);
-      renderer.preprocessSeries(seriesList);
-      renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1);
+      renderer
+        ..configureSeries(seriesList)
+        ..preprocessSeries(seriesList)
+        ..update(seriesList, false)
+        ..paint(MockCanvas(), 1);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -763,10 +772,11 @@ void main() {
       final seriesList = <MutableSeries>[
         makeSeries(id: 'foo', vertical: false),
       ];
-      renderer.configureSeries(seriesList);
-      renderer.preprocessSeries(seriesList);
-      renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1);
+      renderer
+        ..configureSeries(seriesList)
+        ..preprocessSeries(seriesList)
+        ..update(seriesList, false)
+        ..paint(MockCanvas(), 1);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -835,10 +845,11 @@ void main() {
         groupType: BarGroupingType.stacked,
       );
       final seriesList = <MutableSeries>[makeSeries(id: 'foo')];
-      renderer.configureSeries(seriesList);
-      renderer.preprocessSeries(seriesList);
-      renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1);
+      renderer
+        ..configureSeries(seriesList)
+        ..preprocessSeries(seriesList)
+        ..update(seriesList, false)
+        ..paint(MockCanvas(), 1);
 
       // Act
       final details = renderer.getNearestDatumDetailPerSeries(
@@ -884,7 +895,7 @@ void main() {
 
       final closest = details[0];
       expect(closest.domain, equals('camp0'));
-      expect(closest.series.id, equals('foo'));
+      expect(closest.series!.id, equals('foo'));
       expect(closest.datum, equals(seriesList[0].data[0]));
       expect(closest.domainDistance, equals(0));
       expect(closest.measureDistance, equals(5));
@@ -1491,10 +1502,11 @@ void main() {
         makeDateTimeSeries(id: 'foo')
           ..data.add(MyDateTimeRow(dateOutsideViewport, 20)),
       ];
-      renderer.configureSeries(seriesList);
-      renderer.preprocessSeries(seriesList);
-      renderer.update(seriesList, false);
-      renderer.paint(MockCanvas(), 1);
+      renderer
+        ..configureSeries(seriesList)
+        ..preprocessSeries(seriesList)
+        ..update(seriesList, false)
+        ..paint(MockCanvas(), 1);
 
       // Act
       // Note: point is in the axis, over a bar outside of the viewport.

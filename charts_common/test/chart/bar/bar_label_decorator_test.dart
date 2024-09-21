@@ -16,7 +16,6 @@
 // ignore_for_file: sort_constructors_first
 
 import 'dart:math' show Rectangle;
-import 'dart:ui' show TextStyle;
 
 import 'package:mockito/mockito.dart';
 import 'package:nimble_charts_common/src/chart/bar/bar_label_decorator.dart'
