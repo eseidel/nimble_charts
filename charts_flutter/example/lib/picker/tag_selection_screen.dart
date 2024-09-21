@@ -17,53 +17,71 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
   Widget build(BuildContext context) => Scaffold(
         body: TagItemSelector(
           selectedTags: selectedTags,
-          builder: (context, item) => SizedBox(
-            width: 350,
-            height: 250,
-            child: Card(
-              key: ValueKey(item.hashCode),
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.title,
-                      style: Theme.of(context).textTheme.titleMedium,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+          builder: (context, item) {
+            final tooltipContent = '''
+${item.title}
+
+${item.subtitle}
+
+Tags: ${item.tags.map((t) => t.display).join(', ')}
+''';
+
+            return SizedBox(
+              width: 350,
+              height: 250,
+              child: Tooltip(
+                message: tooltipContent,
+                child: InkWell(
+                  onTap: () async => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => item.build(context, item),
                     ),
-                    const SizedBox(height: 8),
-                    Expanded(
-                      child: Center(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            maxWidth: 300,
-                            maxHeight: 150,
+                  ),
+                  child: Card(
+                    key: ValueKey(item.hashCode),
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.title,
+                            style: Theme.of(context).textTheme.titleMedium,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          child: item.build(context, item),
-                        ),
+                          const SizedBox(height: 8),
+                          Expanded(
+                            child: Center(
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  maxWidth: 300,
+                                  maxHeight: 150,
+                                ),
+                                child: item.build(context, item),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            item.subtitle,
+                            style: Theme.of(context).textTheme.titleSmall,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Tooltip(
-                      message: item.subtitle,
-                      child: Text(
-                        item.subtitle,
-                        style: Theme.of(context).textTheme.titleSmall,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
           items: (tags) => chartSampleDefinitions
               .where(
                 (item) => item.tags.any(
