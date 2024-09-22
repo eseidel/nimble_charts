@@ -83,28 +83,28 @@ const verticalBarLabelChartTitle = 'Vertical Bar Chart with Bar Labels';
 const verticalBarLabelChartSubtitle =
     'Vertical bar chart with a single series and bar labels';
 
-const sparkBarChartTitle = 'Spark Bar Chart';
+const sparkBarChart = 'Spark Bar Chart';
 const sparkBarChartSubtitle = 'Spark Bar Chart';
 
-const groupedFillColorChartTitle = 'Grouped Fill Color Bar Chart';
+const groupedFillColorChart = 'Grouped Fill Color Bar Chart';
 const groupedFillColorChartSubtitle = 'Grouped bar chart with fill colors';
 
-const stackedFillColorChartTitle = 'Stacked Fill Color Bar Chart';
+const stackedFillColorChart = 'Stacked Fill Color Bar Chart';
 const stackedFillColorChartSubtitle = 'Stacked bar chart with fill colors';
 
-const patternForwardHatchChartTitle = 'Pattern Forward Hatch Bar Chart';
+const patternForwardHatchChart = 'Pattern Forward Hatch Bar Chart';
 const patternForwardHatchChartSubtitle = 'Pattern Forward Hatch Bar Chart';
 
-const horizontalPatternForwardHatchChartTitle =
+const horizontalPatternForwardHatchChart =
     'Horizontal Pattern Forward Hatch Bar Chart';
 const horizontalPatternForwardHatchChartSubtitle =
     'Horizontal Pattern Forward Hatch Bar Chart';
 
-const weightedPatternChartTitle = 'Weight Pattern Bar Chart';
+const weightedPatternChart = 'Weight Pattern Bar Chart';
 const weightedPatternChartSubtitle =
     'Grouped and stacked bar chart with a weight pattern';
 
-const barChartWithCustomBarRadiusTitle = 'Bar Chart with custom bar radius';
+const barChartWithCustomBarRadius = 'Bar Chart with custom bar radius';
 const barChartWithCustomBarRadiusSubtitle = 'Custom rounded bar corners';
 
 List<GalleryScaffold> buildGallery() => [
@@ -221,7 +221,7 @@ List<GalleryScaffold> buildGallery() => [
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: sparkBarChartTitle,
+        title: sparkBarChart,
         subtitle: sparkBarChartSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? SparkBar.withRandomData()
@@ -229,7 +229,7 @@ List<GalleryScaffold> buildGallery() => [
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: groupedFillColorChartTitle,
+        title: groupedFillColorChart,
         subtitle: groupedFillColorChartSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? GroupedFillColorBarChart.withRandomData()
@@ -237,7 +237,7 @@ List<GalleryScaffold> buildGallery() => [
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: stackedFillColorChartTitle,
+        title: stackedFillColorChart,
         subtitle: stackedFillColorChartSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? StackedFillColorBarChart.withRandomData()
@@ -245,7 +245,7 @@ List<GalleryScaffold> buildGallery() => [
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: patternForwardHatchChartTitle,
+        title: patternForwardHatchChart,
         subtitle: patternForwardHatchChartSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? PatternForwardHatchBarChart.withRandomData()
@@ -256,7 +256,7 @@ List<GalleryScaffold> buildGallery() => [
           angle: 1.5708,
           child: const Icon(Icons.insert_chart),
         ),
-        title: horizontalPatternForwardHatchChartTitle,
+        title: horizontalPatternForwardHatchChart,
         subtitle: horizontalPatternForwardHatchChartSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? HorizontalPatternForwardHatchBarChart.withRandomData()
@@ -264,7 +264,7 @@ List<GalleryScaffold> buildGallery() => [
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: weightedPatternChartTitle,
+        title: weightedPatternChart,
         subtitle: weightedPatternChartSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? GroupedStackedWeightPatternBarChart.withRandomData()
@@ -272,7 +272,7 @@ List<GalleryScaffold> buildGallery() => [
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: barChartWithCustomBarRadiusTitle,
+        title: barChartWithCustomBarRadius,
         subtitle: barChartWithCustomBarRadiusSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? CustomRoundedBars.withRandomData()

@@ -294,7 +294,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => SparkBar.withRandomData(),
-    title: sparkBarChartTitle,
+    title: sparkBarChart,
     subtitle: sparkBarChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -305,7 +305,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => GroupedFillColorBarChart.withRandomData(),
-    title: groupedFillColorChartTitle,
+    title: groupedFillColorChart,
     subtitle: groupedFillColorChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -316,7 +316,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => StackedFillColorBarChart.withRandomData(),
-    title: stackedFillColorChartTitle,
+    title: stackedFillColorChart,
     subtitle: stackedFillColorChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -327,7 +327,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => PatternForwardHatchBarChart.withRandomData(),
-    title: patternForwardHatchChartTitle,
+    title: patternForwardHatchChart,
     subtitle: patternForwardHatchChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -339,7 +339,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     icon: Icons.bar_chart,
     build: (context, item) =>
         HorizontalPatternForwardHatchBarChart.withRandomData(),
-    title: horizontalPatternForwardHatchChartTitle,
+    title: horizontalPatternForwardHatchChart,
     subtitle: horizontalPatternForwardHatchChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -353,7 +353,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     icon: Icons.bar_chart,
     build: (context, item) =>
         GroupedStackedWeightPatternBarChart.withRandomData(),
-    title: weightedPatternChartTitle,
+    title: weightedPatternChart,
     subtitle: weightedPatternChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -364,7 +364,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => CustomRoundedBars.withRandomData(),
-    title: barChartWithCustomBarRadiusTitle,
+    title: barChartWithCustomBarRadius,
     subtitle: barChartWithCustomBarRadiusSubtitle,
   ),
 

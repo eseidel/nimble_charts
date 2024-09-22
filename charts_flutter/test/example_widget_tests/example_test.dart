@@ -137,7 +137,7 @@ void main() {
     testWidgets(
       'Navigates to Spark Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        sparkBarChartTitle,
+        sparkBarChart,
         scrollDelta: 300,
       ),
     );
@@ -145,7 +145,7 @@ void main() {
     testWidgets(
       'Navigates to Grouped Fill Color Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        groupedFillColorChartTitle,
+        groupedFillColorChart,
         scrollDelta: 300,
       ),
     );
@@ -153,7 +153,7 @@ void main() {
     testWidgets(
       'Navigates to Stacked Fill Color Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        stackedFillColorChartTitle,
+        stackedFillColorChart,
         scrollDelta: 300,
       ),
     );
@@ -161,7 +161,7 @@ void main() {
     testWidgets(
       'Navigates to Pattern Forward Hatch Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        patternForwardHatchChartTitle,
+        patternForwardHatchChart,
         scrollDelta: 300,
       ),
       skip: true,
@@ -170,7 +170,7 @@ void main() {
     testWidgets(
       'Navigates to Horizontal Pattern Forward Hatch Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        horizontalPatternForwardHatchChartTitle,
+        horizontalPatternForwardHatchChart,
         scrollDelta: 300,
       ),
     );
@@ -178,7 +178,7 @@ void main() {
     testWidgets(
       'Navigates to Weighted Pattern Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        weightedPatternChartTitle,
+        weightedPatternChart,
         scrollDelta: 300,
       ),
     );
@@ -186,7 +186,7 @@ void main() {
     testWidgets(
       'Navigates to Bar Chart with custom bar radius and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        barChartWithCustomBarRadiusTitle,
+        barChartWithCustomBarRadius,
         scrollDelta: 300,
       ),
     );
