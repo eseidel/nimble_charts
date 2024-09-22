@@ -3,28 +3,31 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:math' as _i19;
+import 'dart:math' as _i18;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i12;
+import 'package:nimble_charts_common/common.dart' as _i13;
 import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart'
-    as _i17;
+    as _i16;
 import 'package:nimble_charts_common/src/chart/cartesian/axis/collision_report.dart'
     as _i9;
 import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/base_tick_draw_strategy.dart'
-    as _i14;
+    as _i19;
 import 'package:nimble_charts_common/src/chart/cartesian/axis/draw_strategy/tick_draw_strategy.dart'
     as _i20;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/scale.dart'
+    as _i21;
 import 'package:nimble_charts_common/src/chart/cartesian/axis/spec/axis_spec.dart'
-    as _i15;
+    as _i14;
 import 'package:nimble_charts_common/src/chart/cartesian/axis/tick.dart'
-    as _i16;
-import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_formatter.dart'
-    as _i13;
+    as _i15;
+import 'package:nimble_charts_common/src/chart/cartesian/axis/tick_provider.dart'
+    as _i22;
 import 'package:nimble_charts_common/src/chart/common/behavior/a11y/a11y_node.dart'
     as _i11;
 import 'package:nimble_charts_common/src/chart/common/chart_canvas.dart'
-    as _i18;
+    as _i17;
 import 'package:nimble_charts_common/src/chart/common/chart_context.dart'
     as _i7;
 import 'package:nimble_charts_common/src/chart/layout/layout_view.dart' as _i10;
@@ -135,6 +138,17 @@ class _FakeCollisionReport_7<D1> extends _i1.SmartFake
 class _FakeViewMeasuredSizes_8 extends _i1.SmartFake
     implements _i10.ViewMeasuredSizes {
   _FakeViewMeasuredSizes_8(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeLayoutViewConfig_9 extends _i1.SmartFake
+    implements _i10.LayoutViewConfig {
+  _FakeLayoutViewConfig_9(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -424,7 +438,7 @@ class MockNumericTickFormatter extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockDrawStrategy<D> extends _i1.Mock
-    implements _i14.BaseTickDrawStrategy<D> {
+    implements _i13.BaseTickDrawStrategy<D> {
   @override
   _i7.ChartContext get chartContext => (super.noSuchMethod(
         Invocation.getter(#chartContext),
@@ -496,15 +510,15 @@ class MockDrawStrategy<D> extends _i1.Mock
       );
 
   @override
-  _i15.TickLabelJustification get tickLabelJustification => (super.noSuchMethod(
+  _i14.TickLabelJustification get tickLabelJustification => (super.noSuchMethod(
         Invocation.getter(#tickLabelJustification),
-        returnValue: _i15.TickLabelJustification.inside,
-        returnValueForMissingStub: _i15.TickLabelJustification.inside,
-      ) as _i15.TickLabelJustification);
+        returnValue: _i14.TickLabelJustification.inside,
+        returnValueForMissingStub: _i14.TickLabelJustification.inside,
+      ) as _i14.TickLabelJustification);
 
   @override
   set tickLabelJustification(
-          _i15.TickLabelJustification? _tickLabelJustification) =>
+          _i14.TickLabelJustification? _tickLabelJustification) =>
       super.noSuchMethod(
         Invocation.setter(
           #tickLabelJustification,
@@ -564,19 +578,19 @@ class MockDrawStrategy<D> extends _i1.Mock
       ) as int);
 
   @override
-  _i15.TickLabelAnchor tickLabelAnchor({required bool? collision}) =>
+  _i14.TickLabelAnchor tickLabelAnchor({required bool? collision}) =>
       (super.noSuchMethod(
         Invocation.method(
           #tickLabelAnchor,
           [],
           {#collision: collision},
         ),
-        returnValue: _i15.TickLabelAnchor.before,
-        returnValueForMissingStub: _i15.TickLabelAnchor.before,
-      ) as _i15.TickLabelAnchor);
+        returnValue: _i14.TickLabelAnchor.before,
+        returnValueForMissingStub: _i14.TickLabelAnchor.before,
+      ) as _i14.TickLabelAnchor);
 
   @override
-  void decorateTicks(List<_i16.Tick<D>>? ticks) => super.noSuchMethod(
+  void decorateTicks(List<_i15.Tick<D>>? ticks) => super.noSuchMethod(
         Invocation.method(
           #decorateTicks,
           [ticks],
@@ -586,10 +600,10 @@ class MockDrawStrategy<D> extends _i1.Mock
 
   @override
   void updateTickWidth(
-    List<_i16.Tick<D>>? ticks,
+    List<_i15.Tick<D>>? ticks,
     int? maxWidth,
     int? maxHeight,
-    _i17.AxisOrientation? orientation, {
+    _i16.AxisOrientation? orientation, {
     bool? collision = false,
   }) =>
       super.noSuchMethod(
@@ -608,8 +622,8 @@ class MockDrawStrategy<D> extends _i1.Mock
 
   @override
   _i9.CollisionReport<D> collides(
-    List<_i16.Tick<D>>? ticks,
-    _i17.AxisOrientation? orientation,
+    List<_i15.Tick<D>>? ticks,
+    _i16.AxisOrientation? orientation,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -643,7 +657,7 @@ class MockDrawStrategy<D> extends _i1.Mock
 
   @override
   _i10.ViewMeasuredSizes measureVerticallyDrawnTicks(
-    List<_i16.Tick<D>>? ticks,
+    List<_i15.Tick<D>>? ticks,
     int? maxWidth,
     int? maxHeight, {
     bool? collision = false,
@@ -686,7 +700,7 @@ class MockDrawStrategy<D> extends _i1.Mock
 
   @override
   _i10.ViewMeasuredSizes measureHorizontallyDrawnTicks(
-    List<_i16.Tick<D>>? ticks,
+    List<_i15.Tick<D>>? ticks,
     int? maxWidth,
     int? maxHeight, {
     bool? collision = false,
@@ -729,9 +743,9 @@ class MockDrawStrategy<D> extends _i1.Mock
 
   @override
   void drawAxisLine(
-    _i18.ChartCanvas? canvas,
-    _i17.AxisOrientation? orientation,
-    _i19.Rectangle<int>? axisBounds,
+    _i17.ChartCanvas? canvas,
+    _i16.AxisOrientation? orientation,
+    _i18.Rectangle<int>? axisBounds,
   ) =>
       super.noSuchMethod(
         Invocation.method(
@@ -747,11 +761,11 @@ class MockDrawStrategy<D> extends _i1.Mock
 
   @override
   void drawLabel(
-    _i18.ChartCanvas? canvas,
-    _i16.Tick<D>? tick, {
-    required _i17.AxisOrientation? orientation,
-    required _i19.Rectangle<int>? axisBounds,
-    required _i19.Rectangle<int>? drawAreaBounds,
+    _i17.ChartCanvas? canvas,
+    _i15.Tick<D>? tick, {
+    required _i16.AxisOrientation? orientation,
+    required _i18.Rectangle<int>? axisBounds,
+    required _i18.Rectangle<int>? drawAreaBounds,
     required bool? isFirst,
     required bool? isLast,
     bool? collision = false,
@@ -776,8 +790,8 @@ class MockDrawStrategy<D> extends _i1.Mock
       );
 
   @override
-  _i14.PixelVerticalDirection normalizeVerticalAnchor(
-    _i15.TickLabelAnchor? anchor,
+  _i19.PixelVerticalDirection normalizeVerticalAnchor(
+    _i14.TickLabelAnchor? anchor,
     bool? isFirst,
     bool? isLast,
   ) =>
@@ -790,9 +804,9 @@ class MockDrawStrategy<D> extends _i1.Mock
             isLast,
           ],
         ),
-        returnValue: _i14.PixelVerticalDirection.over,
-        returnValueForMissingStub: _i14.PixelVerticalDirection.over,
-      ) as _i14.PixelVerticalDirection);
+        returnValue: _i19.PixelVerticalDirection.over,
+        returnValueForMissingStub: _i19.PixelVerticalDirection.over,
+      ) as _i19.PixelVerticalDirection);
 
   @override
   double calculateWidthForRotatedLabel(
@@ -867,11 +881,11 @@ class MockDrawStrategy<D> extends _i1.Mock
 
   @override
   void draw(
-    _i18.ChartCanvas? canvas,
-    _i16.Tick<D>? tick, {
-    required _i17.AxisOrientation? orientation,
-    required _i19.Rectangle<int>? axisBounds,
-    required _i19.Rectangle<int>? drawAreaBounds,
+    _i17.ChartCanvas? canvas,
+    _i15.Tick<D>? tick, {
+    required _i16.AxisOrientation? orientation,
+    required _i18.Rectangle<int>? axisBounds,
+    required _i18.Rectangle<int>? drawAreaBounds,
     required bool? isFirst,
     required bool? isLast,
     bool? collision = false,
@@ -902,7 +916,7 @@ class MockDrawStrategy<D> extends _i1.Mock
 class MockTickDrawStrategy extends _i1.Mock
     implements _i20.TickDrawStrategy<num> {
   @override
-  void decorateTicks(List<_i16.Tick<num>>? ticks) => super.noSuchMethod(
+  void decorateTicks(List<_i15.Tick<num>>? ticks) => super.noSuchMethod(
         Invocation.method(
           #decorateTicks,
           [ticks],
@@ -912,8 +926,8 @@ class MockTickDrawStrategy extends _i1.Mock
 
   @override
   _i9.CollisionReport<num> collides(
-    List<_i16.Tick<num>>? ticks,
-    _i17.AxisOrientation? orientation,
+    List<_i15.Tick<num>>? ticks,
+    _i16.AxisOrientation? orientation,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -947,7 +961,7 @@ class MockTickDrawStrategy extends _i1.Mock
 
   @override
   _i10.ViewMeasuredSizes measureVerticallyDrawnTicks(
-    List<_i16.Tick<num>>? ticks,
+    List<_i15.Tick<num>>? ticks,
     int? maxWidth,
     int? maxHeight, {
     bool? collision = false,
@@ -990,7 +1004,7 @@ class MockTickDrawStrategy extends _i1.Mock
 
   @override
   _i10.ViewMeasuredSizes measureHorizontallyDrawnTicks(
-    List<_i16.Tick<num>>? ticks,
+    List<_i15.Tick<num>>? ticks,
     int? maxWidth,
     int? maxHeight, {
     bool? collision = false,
@@ -1033,10 +1047,10 @@ class MockTickDrawStrategy extends _i1.Mock
 
   @override
   void updateTickWidth(
-    List<_i16.Tick<num>>? ticks,
+    List<_i15.Tick<num>>? ticks,
     int? maxWidth,
     int? maxHeight,
-    _i17.AxisOrientation? orientation, {
+    _i16.AxisOrientation? orientation, {
     bool? collision = false,
   }) =>
       super.noSuchMethod(
@@ -1055,11 +1069,11 @@ class MockTickDrawStrategy extends _i1.Mock
 
   @override
   void draw(
-    _i18.ChartCanvas? canvas,
-    _i16.Tick<num>? tick, {
-    required _i17.AxisOrientation? orientation,
-    required _i19.Rectangle<int>? axisBounds,
-    required _i19.Rectangle<int>? drawAreaBounds,
+    _i17.ChartCanvas? canvas,
+    _i15.Tick<num>? tick, {
+    required _i16.AxisOrientation? orientation,
+    required _i18.Rectangle<int>? axisBounds,
+    required _i18.Rectangle<int>? drawAreaBounds,
     required bool? isFirst,
     required bool? isLast,
     bool? collision = false,
@@ -1085,9 +1099,9 @@ class MockTickDrawStrategy extends _i1.Mock
 
   @override
   void drawAxisLine(
-    _i18.ChartCanvas? canvas,
-    _i17.AxisOrientation? orientation,
-    _i19.Rectangle<int>? axisBounds,
+    _i17.ChartCanvas? canvas,
+    _i16.AxisOrientation? orientation,
+    _i18.Rectangle<int>? axisBounds,
   ) =>
       super.noSuchMethod(
         Invocation.method(
@@ -1096,6 +1110,420 @@ class MockTickDrawStrategy extends _i1.Mock
             canvas,
             orientation,
             axisBounds,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [Axis].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAxis extends _i1.Mock implements _i16.Axis<String> {
+  @override
+  set scale(_i21.MutableScale<String>? _scale) => super.noSuchMethod(
+        Invocation.setter(
+          #scale,
+          _scale,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set tickProvider(_i22.TickProvider<String>? _tickProvider) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #tickProvider,
+          _tickProvider,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set tickDrawStrategy(_i20.TickDrawStrategy<String>? _tickDrawStrategy) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #tickDrawStrategy,
+          _tickDrawStrategy,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set axisOrientation(_i16.AxisOrientation? _axisOrientation) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #axisOrientation,
+          _axisOrientation,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set context(_i7.ChartContext? _context) => super.noSuchMethod(
+        Invocation.setter(
+          #context,
+          _context,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get reverseOutputRange => (super.noSuchMethod(
+        Invocation.getter(#reverseOutputRange),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set reverseOutputRange(bool? _reverseOutputRange) => super.noSuchMethod(
+        Invocation.setter(
+          #reverseOutputRange,
+          _reverseOutputRange,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get autoViewport => (super.noSuchMethod(
+        Invocation.getter(#autoViewport),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set autoViewport(bool? _autoViewport) => super.noSuchMethod(
+        Invocation.setter(
+          #autoViewport,
+          _autoViewport,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set forceDrawAxisLine(bool? _forceDrawAxisLine) => super.noSuchMethod(
+        Invocation.setter(
+          #forceDrawAxisLine,
+          _forceDrawAxisLine,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get lockAxis => (super.noSuchMethod(
+        Invocation.getter(#lockAxis),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set lockAxis(bool? _lockAxis) => super.noSuchMethod(
+        Invocation.setter(
+          #lockAxis,
+          _lockAxis,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  int get layoutPaintOrder => (super.noSuchMethod(
+        Invocation.getter(#layoutPaintOrder),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  set layoutPaintOrder(int? _layoutPaintOrder) => super.noSuchMethod(
+        Invocation.setter(
+          #layoutPaintOrder,
+          _layoutPaintOrder,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get hasTickCollision => (super.noSuchMethod(
+        Invocation.getter(#hasTickCollision),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set hasTickCollision(bool? _hasTickCollision) => super.noSuchMethod(
+        Invocation.setter(
+          #hasTickCollision,
+          _hasTickCollision,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set graphicsFactory(_i8.GraphicsFactory? _graphicsFactory) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #graphicsFactory,
+          _graphicsFactory,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set tickFormatter(_i13.TickFormatter<String>? formatter) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #tickFormatter,
+          formatter,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  double get rangeBand => (super.noSuchMethod(
+        Invocation.getter(#rangeBand),
+        returnValue: 0.0,
+        returnValueForMissingStub: 0.0,
+      ) as double);
+
+  @override
+  double get stepSize => (super.noSuchMethod(
+        Invocation.getter(#stepSize),
+        returnValue: 0.0,
+        returnValueForMissingStub: 0.0,
+      ) as double);
+
+  @override
+  bool get hasValidBarChartRangeBandConfig => (super.noSuchMethod(
+        Invocation.getter(#hasValidBarChartRangeBandConfig),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  double get viewportScalingFactor => (super.noSuchMethod(
+        Invocation.getter(#viewportScalingFactor),
+        returnValue: 0.0,
+        returnValueForMissingStub: 0.0,
+      ) as double);
+
+  @override
+  double get viewportTranslatePx => (super.noSuchMethod(
+        Invocation.getter(#viewportTranslatePx),
+        returnValue: 0.0,
+        returnValueForMissingStub: 0.0,
+      ) as double);
+
+  @override
+  _i10.LayoutViewConfig get layoutConfig => (super.noSuchMethod(
+        Invocation.getter(#layoutConfig),
+        returnValue: _FakeLayoutViewConfig_9(
+          this,
+          Invocation.getter(#layoutConfig),
+        ),
+        returnValueForMissingStub: _FakeLayoutViewConfig_9(
+          this,
+          Invocation.getter(#layoutConfig),
+        ),
+      ) as _i10.LayoutViewConfig);
+
+  @override
+  bool get isVertical => (super.noSuchMethod(
+        Invocation.getter(#isVertical),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  bool get isSeriesRenderer => (super.noSuchMethod(
+        Invocation.getter(#isSeriesRenderer),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  bool get drawAxisLine => (super.noSuchMethod(
+        Invocation.getter(#drawAxisLine),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  void setRangeBandConfig(_i21.RangeBandConfig? rangeBandConfig) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #setRangeBandConfig,
+          [rangeBandConfig],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addDomainValue(String? domain) => super.noSuchMethod(
+        Invocation.method(
+          #addDomainValue,
+          [domain],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void resetDefaultConfiguration() => super.noSuchMethod(
+        Invocation.method(
+          #resetDefaultConfiguration,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void resetDomains() => super.noSuchMethod(
+        Invocation.method(
+          #resetDomains,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  String getDomain(double? location) => (super.noSuchMethod(
+        Invocation.method(
+          #getDomain,
+          [location],
+        ),
+        returnValue: _i12.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getDomain,
+            [location],
+          ),
+        ),
+        returnValueForMissingStub: _i12.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getDomain,
+            [location],
+          ),
+        ),
+      ) as String);
+
+  @override
+  int compareDomainValueToViewport(String? domain) => (super.noSuchMethod(
+        Invocation.method(
+          #compareDomainValueToViewport,
+          [domain],
+        ),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  void setOutputRange(
+    int? start,
+    int? end,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #setOutputRange,
+          [
+            start,
+            end,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void updateTicks() => super.noSuchMethod(
+        Invocation.method(
+          #updateTicks,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void setViewportSettings(
+    double? viewportScale,
+    double? viewportTranslatePx, {
+    int? drawAreaWidth,
+    int? drawAreaHeight,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #setViewportSettings,
+          [
+            viewportScale,
+            viewportTranslatePx,
+          ],
+          {
+            #drawAreaWidth: drawAreaWidth,
+            #drawAreaHeight: drawAreaHeight,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i10.ViewMeasuredSizes measure(
+    int? maxWidth,
+    int? maxHeight,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #measure,
+          [
+            maxWidth,
+            maxHeight,
+          ],
+        ),
+        returnValue: _FakeViewMeasuredSizes_8(
+          this,
+          Invocation.method(
+            #measure,
+            [
+              maxWidth,
+              maxHeight,
+            ],
+          ),
+        ),
+        returnValueForMissingStub: _FakeViewMeasuredSizes_8(
+          this,
+          Invocation.method(
+            #measure,
+            [
+              maxWidth,
+              maxHeight,
+            ],
+          ),
+        ),
+      ) as _i10.ViewMeasuredSizes);
+
+  @override
+  void layout(
+    _i18.Rectangle<int>? componentBounds,
+    _i18.Rectangle<int>? drawAreaBounds,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #layout,
+          [
+            componentBounds,
+            drawAreaBounds,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void paint(
+    _i17.ChartCanvas? canvas,
+    double? animationPercent,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #paint,
+          [
+            canvas,
+            animationPercent,
           ],
         ),
         returnValueForMissingStub: null,

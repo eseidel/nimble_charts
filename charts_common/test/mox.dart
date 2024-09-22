@@ -10,5 +10,6 @@ import 'package:nimble_charts_common/common.dart';
   MockSpec<TickFormatter<num>>(as: #MockNumericTickFormatter),
   MockSpec<BaseTickDrawStrategy>(as: #MockDrawStrategy),
   MockSpec<TickDrawStrategy<num>>(as: #MockTickDrawStrategy),
+  MockSpec<Axis<String>>(),
 ])
 void main() {}
