@@ -34,7 +34,7 @@ import 'package:example/bar_chart/stacked_target_line.dart';
 import 'package:example/bar_chart/vertical_bar_label.dart';
 import 'package:example/gallery_scaffold.dart';
 
-import 'package:example/main.dart' as m;
+import 'package:example/main.dart';
 import 'package:flutter/material.dart';
 
 const simpleBarChartTileTitle = 'Simple Bar Chart';
@@ -112,7 +112,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: simpleBarChartTileTitle,
         subtitle: simpleBarChartTileSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? SimpleBarChart.withRandomData()
             : SimpleBarChart.withSampleData(),
       ),
@@ -120,7 +120,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: stackedBarChartTileTitle,
         subtitle: stackedBarChartTileSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? StackedBarChart.withRandomData()
             : StackedBarChart.withSampleData(),
       ),
@@ -128,7 +128,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: groupedBarChartTileTitle,
         subtitle: groupedBarChartTileSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? GroupedBarChart.withRandomData()
             : GroupedBarChart.withSampleData(),
       ),
@@ -136,7 +136,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: groupedStackedBarChartTileTitle,
         subtitle: groupedStackedBarChartTileSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? GroupedStackedBarChart.withRandomData()
             : GroupedStackedBarChart.withSampleData(),
       ),
@@ -144,7 +144,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: groupedBarTargetLineChartTileTitle,
         subtitle: groupedBarTargetLineChartTileSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? GroupedBarTargetLineChart.withRandomData()
             : GroupedBarTargetLineChart.withSampleData(),
       ),
@@ -152,7 +152,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: groupedBarSingleTargetLineChartTileTitle,
         subtitle: groupedBarSingleTargetLineChartTileSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? GroupedBarSingleTargetLineChart.withRandomData()
             : GroupedBarSingleTargetLineChart.withSampleData(),
       ),
@@ -160,7 +160,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: stackedBarTargetLineChartTitle,
         subtitle: stackedBarTargetLineChartSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? StackedBarTargetLineChart.withRandomData()
             : StackedBarTargetLineChart.withSampleData(),
       ),
@@ -171,7 +171,7 @@ List<GalleryScaffold> buildGallery() => [
         ),
         title: horizontalBarChartTitle,
         subtitle: horizontalBarChartSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? HorizontalBarChart.withRandomData()
             : HorizontalBarChart.withSampleData(),
       ),
@@ -182,7 +182,7 @@ List<GalleryScaffold> buildGallery() => [
         ),
         title: stackedHorizontalBarChartTitle,
         subtitle: stackedHorizontalBarChartSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? StackedHorizontalBarChart.withRandomData()
             : StackedHorizontalBarChart.withSampleData(),
       ),
@@ -193,7 +193,7 @@ List<GalleryScaffold> buildGallery() => [
         ),
         title: horizontalBarLabelChartTitle,
         subtitle: horizontalBarLabelChartSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? HorizontalBarLabelChart.withRandomData()
             : HorizontalBarLabelChart.withSampleData(),
       ),
@@ -204,7 +204,7 @@ List<GalleryScaffold> buildGallery() => [
         ),
         title: horizontalBarLabelCustomChartTitle,
         subtitle: horizontalBarLabelCustomChartSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? HorizontalBarLabelCustomChart.withRandomData()
             : HorizontalBarLabelCustomChart.createWithSampleData(),
       ),
@@ -215,7 +215,7 @@ List<GalleryScaffold> buildGallery() => [
         ),
         title: verticalBarLabelChartTitle,
         subtitle: verticalBarLabelChartSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? VerticalBarLabelChart.withRandomData()
             : VerticalBarLabelChart.withSampleData(),
       ),
@@ -223,7 +223,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: sparkBarChartTitle,
         subtitle: sparkBarChartSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? SparkBar.withRandomData()
             : SparkBar.withSampleData(),
       ),
@@ -231,7 +231,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: groupedFillColorChartTitle,
         subtitle: groupedFillColorChartSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? GroupedFillColorBarChart.withRandomData()
             : GroupedFillColorBarChart.withSampleData(),
       ),
@@ -239,7 +239,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: stackedFillColorChartTitle,
         subtitle: stackedFillColorChartSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? StackedFillColorBarChart.withRandomData()
             : StackedFillColorBarChart.withSampleData(),
       ),
@@ -247,7 +247,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: patternForwardHatchChartTitle,
         subtitle: patternForwardHatchChartSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? PatternForwardHatchBarChart.withRandomData()
             : PatternForwardHatchBarChart.withSampleData(),
       ),
@@ -258,7 +258,7 @@ List<GalleryScaffold> buildGallery() => [
         ),
         title: horizontalPatternForwardHatchChartTitle,
         subtitle: horizontalPatternForwardHatchChartSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? HorizontalPatternForwardHatchBarChart.withRandomData()
             : HorizontalPatternForwardHatchBarChart.withSampleData(),
       ),
@@ -266,7 +266,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: weightedPatternChartTitle,
         subtitle: weightedPatternChartSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? GroupedStackedWeightPatternBarChart.withRandomData()
             : GroupedStackedWeightPatternBarChart.withSampleData(),
       ),
@@ -274,7 +274,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.insert_chart),
         title: barChartWithCustomBarRadiusTitle,
         subtitle: barChartWithCustomBarRadiusSubtitle,
-        childBuilder: () => m.useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? CustomRoundedBars.withRandomData()
             : CustomRoundedBars.withSampleData(),
       ),

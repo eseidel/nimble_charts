@@ -19,18 +19,29 @@ import 'package:flutter/material.dart';
 
 import 'package:nimble_charts/flutter.dart' as charts;
 
-bool useRandomData = true;
+typedef AppState = ({ThemeMode themeMode, bool isOriginal, bool useRandomData});
 
-/// Manages the application's theme state.
-final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
+extension AppStateExtension on AppState {
+  AppState withThemeMode(ThemeMode themeMode) => (
+        themeMode: themeMode,
+        isOriginal: isOriginal,
+        useRandomData: useRandomData,
+      );
+}
 
-
+final ValueNotifier<AppState> appState = ValueNotifier(
+  (
+    themeMode: ThemeMode.system,
+    isOriginal: false,
+    useRandomData: true,
+  ),
+);
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    ValueListenableBuilder<ThemeMode>(
-      valueListenable: themeNotifier,
+    ValueListenableBuilder(
+      valueListenable: appState,
       builder: (_, themeMode, __) => const GalleryApp(),
     ),
   );

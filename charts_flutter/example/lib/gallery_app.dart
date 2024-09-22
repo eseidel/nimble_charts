@@ -21,14 +21,14 @@ class GalleryApp extends StatelessWidget {
   const GalleryApp({super.key});
 
   @override
-  Widget build(BuildContext context) => ValueListenableBuilder<ThemeMode?>(
-        valueListenable: themeNotifier,
-        builder: (_, currentMode, __) => MaterialApp(
+  Widget build(BuildContext context) => ValueListenableBuilder(
+        valueListenable: appState,
+        builder: (_, currentState, __) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'nimble_charts Gallery',
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          themeMode: currentMode,
+          themeMode: appState.value.themeMode,
           home: const TagSelectionScreen(),
         ),
       );

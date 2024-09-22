@@ -63,7 +63,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: simpleTimeSeriesChartTitle,
         subtitle: simpleTimeSeriesChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? SimpleTimeSeriesChart.withRandomData()
             : SimpleTimeSeriesChart.withSampleData(),
       ),
@@ -71,7 +71,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: endPointsAxisTimeSeriesChartTitle,
         subtitle: endPointsAxisTimeSeriesChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? EndPointsAxisTimeSeriesChart.withRandomData()
             : EndPointsAxisTimeSeriesChart.withSampleData(),
       ),
@@ -79,7 +79,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: lineAnnotationTimeSeriesChartTitle,
         subtitle: lineAnnotationTimeSeriesChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? TimeSeriesLineAnnotationChart.withRandomData()
             : TimeSeriesLineAnnotationChart.withSampleData(),
       ),
@@ -87,7 +87,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: rangeAnnotationTimeSeriesChartTitle,
         subtitle: rangeAnnotationTimeSeriesChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? TimeSeriesRangeAnnotationChart.withRandomData()
             : TimeSeriesRangeAnnotationChart.withSampleData(),
       ),
@@ -95,7 +95,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: rangeAnnotationMarginLabelsTimeSeriesChartTitle,
         subtitle: rangeAnnotationMarginLabelsTimeSeriesChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? TimeSeriesRangeAnnotationMarginChart.withRandomData()
             : TimeSeriesRangeAnnotationMarginChart.withSampleData(),
       ),
@@ -103,7 +103,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: symbolAnnotationTimeSeriesChartTitle,
         subtitle: symbolAnnotationTimeSeriesChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? TimeSeriesSymbolAnnotationChart.withRandomData()
             : TimeSeriesSymbolAnnotationChart.withSampleData(),
       ),
@@ -111,7 +111,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: timeSeriesChartWithBarsTitle,
         subtitle: timeSeriesChartWithBarsSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? TimeSeriesBar.withRandomData()
             : TimeSeriesBar.withSampleData(),
       ),
@@ -119,7 +119,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: confidenceIntervalTimeSeriesChartTitle,
         subtitle: confidenceIntervalTimeSeriesChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? TimeSeriesConfidenceInterval.withRandomData()
             : TimeSeriesConfidenceInterval.withSampleData(),
       ),

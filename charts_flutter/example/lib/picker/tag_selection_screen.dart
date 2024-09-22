@@ -23,18 +23,19 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
           title: const Text('nimble_charts Gallery'),
           actions: [
             IconButton(
-              icon: ValueListenableBuilder<ThemeMode>(
-                valueListenable: themeNotifier,
-                builder: (_, themeMode, __) => Icon(
-                  themeMode == ThemeMode.light
+              icon: ValueListenableBuilder(
+                valueListenable: appState,
+                builder: (_, appState, __) => Icon(
+                  appState.themeMode == ThemeMode.light
                       ? Icons.dark_mode
                       : Icons.light_mode,
                 ),
               ),
-              onPressed: () => themeNotifier.value =
-                  themeNotifier.value == ThemeMode.light
-                      ? ThemeMode.dark
-                      : ThemeMode.light,
+              onPressed: () => appState.value = appState.value.withThemeMode(
+                appState.value.themeMode == ThemeMode.light
+                    ? ThemeMode.dark
+                    : ThemeMode.light,
+              ),
             ),
           ],
         ),
