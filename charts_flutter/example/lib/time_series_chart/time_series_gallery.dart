@@ -42,9 +42,9 @@ const confidenceIntervalTimeSeriesChartTitle =
 
 // Chart subtitles
 const simpleTimeSeriesChartSubtitle =
-    'Time series with a single series and default line point highlighter';
+    'Simple single time series chart';
 const endPointsAxisTimeSeriesChartSubtitle =
-    'Time series with first and last points highlighted';
+    'Time series chart with an end points axis';
 const lineAnnotationTimeSeriesChartSubtitle =
     'Time series chart with future line annotation';
 const rangeAnnotationTimeSeriesChartSubtitle =
@@ -52,11 +52,11 @@ const rangeAnnotationTimeSeriesChartSubtitle =
 const rangeAnnotationMarginLabelsTimeSeriesChartSubtitle =
     'Time series chart with range annotations with labels in margins';
 const symbolAnnotationTimeSeriesChartSubtitle =
-    'Time series with annotations and custom symbols';
+    'Time series chart with annotation data below the draw area';
 const timeSeriesChartWithBarsSubtitle =
     'Time series chart using the bar renderer';
 const confidenceIntervalTimeSeriesChartSubtitle =
-    'Time series with confidence interval measures';
+    'Draws area around the confidence interval';
 
 List<GalleryScaffold> buildGallery() => [
       GalleryScaffold(
