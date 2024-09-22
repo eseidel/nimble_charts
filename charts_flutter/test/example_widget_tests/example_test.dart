@@ -1,8 +1,9 @@
 import 'package:example/bar_chart/bar_gallery.dart';
-import 'package:example/home.dart';
-import 'package:example/line_chart/line_gallery.dart' as l;
+import 'package:example/gallery_app.dart';
+import 'package:example/line_chart/line_gallery.dart';
 import 'package:example/main.dart';
-import 'package:example/time_series_chart/time_series_gallery.dart' as ts;
+import 'package:example/original.dart';
+import 'package:example/time_series_chart/time_series_gallery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
@@ -12,7 +13,10 @@ import '../test_functions.dart';
 /// Widget tests for the example app.
 void main() {
   group('ExampleApp Widget Tests', () {
-    useRandomData = false;
+    appState.value = appState.value.copyWith(
+      isOriginal: true,
+      useRandomData: false,
+    );
 
     testWidgets(
       'Main Menu',
@@ -26,6 +30,9 @@ void main() {
           ..devicePixelRatio = 1;
 
         await tester.pumpAndSettle();
+
+        final listView = tester.widget<ListView>(find.byType(ListView));
+        expect(listView.semanticChildCount, equals(91));
 
         await matchesGolden<GalleryApp>(
           'example_menu',
@@ -151,8 +158,6 @@ void main() {
       ),
     );
 
-    //TODO: Fix this test. For some reason, we can't find the bar chart
-    //in the widget tree. 🤷🏼‍♂️
     testWidgets(
       'Navigates to Pattern Forward Hatch Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
@@ -189,7 +194,7 @@ void main() {
     testWidgets(
       'Navigates to Time Series Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
-        ts.timeSeriesChart,
+        simpleTimeSeriesChartTitle,
         scrollDelta: 350,
       ),
     );
@@ -197,7 +202,7 @@ void main() {
     testWidgets(
       'Navigates to End Points Axis Time Series Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
-        ts.endPointsAxisTimeSeriesChart,
+        endPointsAxisTimeSeriesChartTitle,
         scrollDelta: 350,
       ),
     );
@@ -205,7 +210,7 @@ void main() {
     testWidgets(
       'Navigates to Line Annotation on Time Series Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
-        ts.lineAnnotationOnTimeSeriesChart,
+        lineAnnotationTimeSeriesChartTitle,
         scrollDelta: 360,
       ),
     );
@@ -213,16 +218,16 @@ void main() {
     testWidgets(
       'Navigates to Range Annotation on Time Series Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
-        ts.rangeAnnotationOnTimeSeriesChart,
+        rangeAnnotationTimeSeriesChartTitle,
         scrollDelta: 300,
       ),
     );
 
     testWidgets(
-      'Navigates to Range Annotation Margin '
-      'Labels on Time Series Chart Renders',
+      'Navigates to Range Annotation Margin Labels '
+      'on Time Series Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
-        ts.rangeAnnotationMarginLabelsOnTimeSeriesChart,
+        rangeAnnotationMarginLabelsTimeSeriesChartTitle,
         scrollDelta: 350,
       ),
     );
@@ -230,7 +235,7 @@ void main() {
     testWidgets(
       'Navigates to Symbol Annotation Time Series Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
-        ts.symbolAnnotationOnTimeSeriesChart,
+        symbolAnnotationTimeSeriesChartTitle,
         scrollDelta: 350,
       ),
     );
@@ -238,7 +243,7 @@ void main() {
     testWidgets(
       'Navigates to Time Series Chart with Bars and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
-        ts.timeSeriesChartWithBars,
+        timeSeriesChartWithBarsTitle,
         scrollDelta: 300,
       ),
     );
@@ -246,7 +251,7 @@ void main() {
     testWidgets(
       'Navigates to Time Series Chart with Confidence Interval and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.TimeSeriesChart>(
-        ts.timeSeriesChartWithConfidenceInterval,
+        confidenceIntervalTimeSeriesChartTitle,
         scrollDelta: 300,
       ),
     );
@@ -254,7 +259,7 @@ void main() {
     testWidgets(
       'Navigates to Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.simpleLineChart,
+        simpleLineChartTitle,
         scrollDelta: 350,
       ),
     );
@@ -262,7 +267,7 @@ void main() {
     testWidgets(
       'Navigates to Stacked Area Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.stackedAreaLineChart,
+        stackedAreaLineChartTitle,
         scrollDelta: 300,
       ),
     );
@@ -270,7 +275,7 @@ void main() {
     testWidgets(
       'Navigates to Stacked Area Custom Color Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.stackedAreaCustomColorLineChart,
+        stackedAreaCustomColorLineChartTitle,
         scrollDelta: 300,
       ),
     );
@@ -278,7 +283,7 @@ void main() {
     testWidgets(
       'Navigates to Area and Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.areaAndLineChart,
+        areaAndLineChartTitle,
         scrollDelta: 300,
       ),
     );
@@ -286,7 +291,7 @@ void main() {
     testWidgets(
       'Navigates to Points Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.pointsLineChart,
+        pointsLineChartTitle,
         scrollDelta: 350,
       ),
     );
@@ -294,7 +299,7 @@ void main() {
     testWidgets(
       'Navigates to Null Data Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.simpleNullsLineChart,
+        simpleNullsLineChartTitle,
         scrollDelta: 300,
       ),
     );
@@ -302,7 +307,7 @@ void main() {
     testWidgets(
       'Navigates to Stacked Area with Nulls Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.stackedAreaNullsLineChart,
+        stackedAreaNullsLineChartTitle,
         scrollDelta: 300,
       ),
     );
@@ -310,14 +315,14 @@ void main() {
     testWidgets(
       'Navigates to Dash Pattern Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.dashPatternLineChart,
+        dashPatternLineChartTitle,
         scrollDelta: 300,
       ),
     );
     testWidgets(
       'Navigates to Segments Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.segmentsLineChart,
+        segmentsLineChartTitle,
         scrollDelta: 300,
       ),
     );
@@ -325,7 +330,7 @@ void main() {
     testWidgets(
       'Navigates to Line Annotation Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.lineLineAnnotationChart,
+        lineLineAnnotationChartTitle,
         scrollDelta: 300,
       ),
     );
@@ -333,7 +338,7 @@ void main() {
     testWidgets(
       'Navigates to Range Annotation Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.lineRangeAnnotationChart,
+        lineRangeAnnotationChartTitle,
         scrollDelta: 300,
       ),
     );
@@ -341,7 +346,7 @@ void main() {
     testWidgets(
       'Navigates to Range Annotation Margin Labels Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.lineRangeAnnotationMarginChart,
+        lineRangeAnnotationMarginChartTitle,
         scrollDelta: 300,
       ),
     );
@@ -349,7 +354,7 @@ void main() {
     testWidgets(
       'Navigates to Pan and Zoom Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.LineChart>(
-        l.lineAnimationZoomChart,
+        lineAnimationZoomChartTitle,
         scrollDelta: 300,
       ),
     );
@@ -372,7 +377,7 @@ extension ExampleWidgetTestExtensions on WidgetTester {
       ..physicalSize = const Size(1200, 700)
       ..devicePixelRatio = 1;
 
-    expect(find.byType(Home), findsOneWidget);
+    expect(find.byType(Original), findsOneWidget);
 
     // Find the list tile by text
     final tileFinder = find.byWidgetPredicate(

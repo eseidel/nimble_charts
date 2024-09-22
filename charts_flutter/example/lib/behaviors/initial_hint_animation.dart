@@ -55,7 +55,7 @@ class InitialHintAnimation extends StatelessWidget {
   const InitialHintAnimation(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a [charts.BarChart] with sample data and no transition.

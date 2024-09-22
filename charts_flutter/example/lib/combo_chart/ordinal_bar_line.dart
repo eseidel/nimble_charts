@@ -27,7 +27,7 @@ class OrdinalComboBarLineChart extends StatelessWidget {
   const OrdinalComboBarLineChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   factory OrdinalComboBarLineChart.withSampleData() => OrdinalComboBarLineChart(

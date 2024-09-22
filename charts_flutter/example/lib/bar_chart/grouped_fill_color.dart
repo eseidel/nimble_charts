@@ -28,7 +28,7 @@ class GroupedFillColorBarChart extends StatelessWidget {
   const GroupedFillColorBarChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   factory GroupedFillColorBarChart.withSampleData() => GroupedFillColorBarChart(

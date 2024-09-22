@@ -56,7 +56,7 @@ class LegendWithCustomSymbol extends StatelessWidget {
   const LegendWithCustomSymbol(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   factory LegendWithCustomSymbol.withSampleData() => LegendWithCustomSymbol(

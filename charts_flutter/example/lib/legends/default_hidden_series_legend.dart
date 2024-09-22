@@ -26,7 +26,7 @@ class DefaultHiddenSeriesLegend extends StatelessWidget {
   const DefaultHiddenSeriesLegend(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   factory DefaultHiddenSeriesLegend.withSampleData() =>

@@ -40,7 +40,7 @@ class HorizontalBarChartWithSecondaryAxis extends StatelessWidget {
   const HorizontalBarChartWithSecondaryAxis(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   factory HorizontalBarChartWithSecondaryAxis.withSampleData() =>

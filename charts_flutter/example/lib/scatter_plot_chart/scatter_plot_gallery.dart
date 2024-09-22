@@ -20,37 +20,46 @@ import 'package:example/scatter_plot_chart/comparison_points.dart';
 import 'package:example/scatter_plot_chart/simple.dart';
 import 'package:flutter/material.dart';
 
+const simpleScatterPlotChartTitle = 'Simple Scatter Plot Chart';
+const simpleScatterPlotChartSubtitle = 'With a single series';
+
+const comparisonPointsScatterPlotChartTitle =
+    'Comparison Points Scatter Plot Chart';
+const comparisonPointsScatterPlotChartSubtitle =
+    'Scatter plot chart with comparison points';
+
+const panAndZoomScatterPlotChartTitle = 'Pan and Zoom Scatter Plot Chart';
+const panAndZoomScatterPlotChartSubtitle =
+    'Simple scatter plot chart pan and zoom behaviors enabled';
+
+const bucketingAxisScatterPlotChartTitle = 'Bucketing Axis Scatter Plot Chart';
+const bucketingAxisScatterPlotChartSubtitle =
+    'Scatter plot with a measure axis that buckets values less '
+    'than 10% into a single region below the draw area';
+
 List<GalleryScaffold> buildGallery() => [
       const GalleryScaffold(
         listTileIcon: Icon(Icons.scatter_plot),
-        title: 'Simple Scatter Plot Chart',
-        subtitle: 'With a single series',
+        title: simpleScatterPlotChartTitle,
+        subtitle: simpleScatterPlotChartSubtitle,
         childBuilder: SimpleScatterPlotChart.withRandomData,
       ),
-      //TODO:
-      // new GalleryScaffold(
-      //   listTileIcon: new Icon(Icons.scatter_plot),
-      //   title: 'Shapes Scatter Plot Chart',
-      //   subtitle: 'With custom shapes',
-      //   childBuilder: () => new ShapesScatterPlotChart.withRandomData(),
-      // ),
       const GalleryScaffold(
         listTileIcon: Icon(Icons.scatter_plot),
-        title: 'Comparison Points Scatter Plot Chart',
-        subtitle: 'Scatter plot chart with comparison points',
+        title: comparisonPointsScatterPlotChartTitle,
+        subtitle: comparisonPointsScatterPlotChartSubtitle,
         childBuilder: ComparisonPointsScatterPlotChart.withRandomData,
       ),
       const GalleryScaffold(
         listTileIcon: Icon(Icons.scatter_plot),
-        title: 'Pan and Zoom Scatter Plot Chart',
-        subtitle: 'Simple scatter plot chart pan and zoom behaviors enabled',
+        title: panAndZoomScatterPlotChartTitle,
+        subtitle: panAndZoomScatterPlotChartSubtitle,
         childBuilder: ScatterPlotAnimationZoomChart.withRandomData,
       ),
       const GalleryScaffold(
         listTileIcon: Icon(Icons.scatter_plot),
-        title: 'Bucketing Axis Scatter Plot Chart',
-        subtitle: 'Scatter plot with a measure axis that buckets values less '
-            'than 10% into a single region below the draw area',
+        title: bucketingAxisScatterPlotChartTitle,
+        subtitle: bucketingAxisScatterPlotChartSubtitle,
         childBuilder: BucketingAxisScatterPlotChart.withRandomData,
       ),
     ];

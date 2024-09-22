@@ -31,7 +31,7 @@ class CustomFontSizeAndColor extends StatelessWidget {
   const CustomFontSizeAndColor(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   factory CustomFontSizeAndColor.withSampleData() => CustomFontSizeAndColor(

@@ -28,7 +28,7 @@ class MeasureAxisLabelAlignment extends StatelessWidget {
   const MeasureAxisLabelAlignment(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   factory MeasureAxisLabelAlignment.withSampleData() =>

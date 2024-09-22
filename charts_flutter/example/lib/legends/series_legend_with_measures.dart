@@ -33,7 +33,7 @@ import 'package:nimble_charts/flutter.dart' as charts;
 ///
 /// Also shows the option to provide a custom measure formatter.
 class LegendWithMeasures extends StatelessWidget {
-  const LegendWithMeasures(this.seriesList, {super.key, this.animate = false});
+  const LegendWithMeasures(this.seriesList, {super.key, this.animate = true});
 
   factory LegendWithMeasures.withSampleData() => LegendWithMeasures(
         _createSampleData(),

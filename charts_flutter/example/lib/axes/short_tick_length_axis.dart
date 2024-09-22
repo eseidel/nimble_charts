@@ -29,7 +29,7 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// There are many axis styling options in the SmallTickRenderer allowing you
 /// to customize the font, tick lengths, and offsets.
 class ShortTickLengthAxis extends StatelessWidget {
-  const ShortTickLengthAxis(this.seriesList, {super.key, this.animate = false});
+  const ShortTickLengthAxis(this.seriesList, {super.key, this.animate = true});
 
   factory ShortTickLengthAxis.withSampleData() => ShortTickLengthAxis(
         _createSampleData(),

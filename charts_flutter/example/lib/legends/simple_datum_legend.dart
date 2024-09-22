@@ -23,7 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SimpleDatumLegend extends StatelessWidget {
-  const SimpleDatumLegend(this.seriesList, {super.key, this.animate = false});
+  const SimpleDatumLegend(this.seriesList, {super.key, this.animate = true});
 
   factory SimpleDatumLegend.withSampleData() => SimpleDatumLegend(
         _createSampleData(),

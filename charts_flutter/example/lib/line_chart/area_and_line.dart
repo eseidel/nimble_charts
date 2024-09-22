@@ -24,7 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class AreaAndLineChart extends StatelessWidget {
-  const AreaAndLineChart(this.seriesList, {super.key, this.animate = false});
+  const AreaAndLineChart(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory AreaAndLineChart.withSampleData() => AreaAndLineChart(

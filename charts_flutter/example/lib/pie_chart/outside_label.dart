@@ -27,7 +27,7 @@ class PieOutsideLabelChart extends StatelessWidget {
   const PieOutsideLabelChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a [charts.PieChart] with sample data and no transition.

@@ -24,7 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class PointsLineChart extends StatelessWidget {
-  const PointsLineChart(this.seriesList, {super.key, this.animate = false});
+  const PointsLineChart(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory PointsLineChart.withSampleData() => PointsLineChart(

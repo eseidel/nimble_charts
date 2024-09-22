@@ -26,7 +26,7 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// A series of [charts.ChartTitle] behaviors are used to render titles, one per
 /// margin.
 class ChartTitleLine extends StatelessWidget {
-  const ChartTitleLine(this.seriesList, {super.key, this.animate = false});
+  const ChartTitleLine(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory ChartTitleLine.withSampleData() => ChartTitleLine(

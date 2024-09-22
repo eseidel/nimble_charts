@@ -27,7 +27,7 @@ class HorizontalBarLabelCustomChart extends StatelessWidget {
   const HorizontalBarLabelCustomChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   // EXCLUDE_FROM_GALLERY_DOCS_START

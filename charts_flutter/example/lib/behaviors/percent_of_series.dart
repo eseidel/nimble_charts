@@ -27,7 +27,7 @@ class PercentOfSeriesBarChart extends StatelessWidget {
   const PercentOfSeriesBarChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a stacked [charts.BarChart] with sample data and no transition.
