@@ -27,7 +27,18 @@ class GalleryApp extends StatelessWidget {
         builder: (_, currentState, __) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'nimble_charts Gallery',
-          theme: ThemeData.light(),
+          theme: currentState.isOriginal
+              ? ThemeData.light()
+              : ThemeData(
+                  colorScheme: currentState.themeMode == ThemeMode.dark
+                      ? ColorScheme.fromSeed(
+                          seedColor: const Color.fromRGBO(0, 147, 173, 1),
+                          brightness: Brightness.dark,
+                        )
+                      : ColorScheme.fromSeed(
+                          seedColor: const Color.fromRGBO(0, 147, 173, 1),
+                        ),
+                ),
           darkTheme: ThemeData.dark(),
           themeMode: currentState.themeMode,
           home:
