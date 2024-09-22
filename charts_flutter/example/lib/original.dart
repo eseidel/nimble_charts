@@ -84,7 +84,7 @@ class Original extends StatelessWidget {
     _setupPerformance();
 
     return Scaffold(
-      appBar: AppBar(title: Text(defaultConfig.appName)),
+      appBar: AppBar(title: const Text('Charts Gallery')),
       body: ListView(padding: kMaterialListPadding, children: galleries),
     );
   }
