@@ -41,8 +41,7 @@ const confidenceIntervalTimeSeriesChartTitle =
     'Time Series Chart with Confidence Interval';
 
 // Chart subtitles
-const simpleTimeSeriesChartSubtitle =
-    'Simple single time series chart';
+const simpleTimeSeriesChartSubtitle = 'Simple single time series chart';
 const endPointsAxisTimeSeriesChartSubtitle =
     'Time series chart with an end points axis';
 const lineAnnotationTimeSeriesChartSubtitle =
