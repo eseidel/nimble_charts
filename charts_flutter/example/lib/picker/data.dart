@@ -227,7 +227,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => StackedBarTargetLineChart.withRandomData(),
-    title: stackedBarTargetLineChartTitle,
+    title: stackedBarTargetLineChart,
     subtitle: stackedBarTargetLineChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -238,7 +238,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => HorizontalBarChart.withRandomData(),
-    title: horizontalBarChartTitle,
+    title: horizontalBarChart,
     subtitle: horizontalBarChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -249,7 +249,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => StackedHorizontalBarChart.withRandomData(),
-    title: stackedHorizontalBarChartTitle,
+    title: stackedHorizontalBarChart,
     subtitle: stackedHorizontalBarChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -260,7 +260,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => HorizontalBarLabelChart.withRandomData(),
-    title: horizontalBarLabelChartTitle,
+    title: horizontalBarLabelChart,
     subtitle: horizontalBarLabelChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -272,7 +272,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => HorizontalBarLabelCustomChart.withRandomData(),
-    title: horizontalBarLabelCustomChartTitle,
+    title: horizontalBarLabelCustomChart,
     subtitle: horizontalBarLabelCustomChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -283,7 +283,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => VerticalBarLabelChart.withRandomData(),
-    title: verticalBarLabelChartTitle,
+    title: verticalBarLabelChart,
     subtitle: verticalBarLabelChartSubtitle,
   ),
   ChartSampleDefinition(

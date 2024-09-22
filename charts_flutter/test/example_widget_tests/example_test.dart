@@ -89,7 +89,7 @@ void main() {
     testWidgets(
       'Navigates to Stacked Bar Target Line Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        stackedBarTargetLineChartTitle,
+        stackedBarTargetLineChart,
         scrollDelta: 200,
       ),
     );
@@ -97,7 +97,7 @@ void main() {
     testWidgets(
       'Navigates to Horizontal Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        horizontalBarChartTitle,
+        horizontalBarChart,
         scrollDelta: 200,
       ),
     );
@@ -105,7 +105,7 @@ void main() {
     testWidgets(
       'Navigates to Stacked Horizontal Bar Chart and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        stackedHorizontalBarChartTitle,
+        stackedHorizontalBarChart,
         scrollDelta: 200,
       ),
     );
@@ -113,7 +113,7 @@ void main() {
     testWidgets(
       'Navigates to Horizontal Bar Chart with Bar Labels and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        horizontalBarLabelChartTitle,
+        horizontalBarLabelChart,
         scrollDelta: 200,
       ),
     );
@@ -121,7 +121,7 @@ void main() {
     testWidgets(
       'Navigates to Horizontal Bar Chart with Custom Bar Labels and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        horizontalBarLabelCustomChartTitle,
+        horizontalBarLabelCustomChart,
         scrollDelta: 300,
       ),
     );
@@ -129,7 +129,7 @@ void main() {
     testWidgets(
       'Navigates to Vertical Bar Chart with Bar Labels and Renders',
       (tester) async => tester.navigateToChartAndGolden<charts.BarChart>(
-        verticalBarLabelChartTitle,
+        verticalBarLabelChart,
         scrollDelta: 300,
       ),
     );

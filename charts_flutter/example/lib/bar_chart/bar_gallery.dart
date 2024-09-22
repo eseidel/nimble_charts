@@ -59,27 +59,27 @@ const groupedBarSingleTargetLineChartTileTitle =
 const groupedBarSingleTargetLineChartTileSubtitle =
     'Grouped bar target line chart with multiple series and a single target';
 
-const stackedBarTargetLineChartTitle = 'Stacked Bar Target Line Chart';
+const stackedBarTargetLineChart = 'Stacked Bar Target Line Chart';
 const stackedBarTargetLineChartSubtitle =
     'Stacked bar target line chart with multiple series';
 
-const horizontalBarChartTitle = 'Horizontal Bar Chart';
+const horizontalBarChart = 'Horizontal Bar Chart';
 const horizontalBarChartSubtitle = 'Horizontal bar chart with a single series';
 
-const stackedHorizontalBarChartTitle = 'Stacked Horizontal Bar Chart';
+const stackedHorizontalBarChart = 'Stacked Horizontal Bar Chart';
 const stackedHorizontalBarChartSubtitle =
     'Stacked horizontal bar chart with multiple series';
 
-const horizontalBarLabelChartTitle = 'Horizontal Bar Chart with Bar Labels';
+const horizontalBarLabelChart = 'Horizontal Bar Chart with Bar Labels';
 const horizontalBarLabelChartSubtitle =
     'Horizontal bar chart with a single series and bar labels';
 
-const horizontalBarLabelCustomChartTitle =
+const horizontalBarLabelCustomChart =
     'Horizontal Bar Chart with Custom Bar Labels';
 const horizontalBarLabelCustomChartSubtitle =
     'Bar labels with customized styling';
 
-const verticalBarLabelChartTitle = 'Vertical Bar Chart with Bar Labels';
+const verticalBarLabelChart = 'Vertical Bar Chart with Bar Labels';
 const verticalBarLabelChartSubtitle =
     'Vertical bar chart with a single series and bar labels';
 
@@ -158,7 +158,7 @@ List<GalleryScaffold> buildGallery() => [
       ),
       GalleryScaffold(
         listTileIcon: const Icon(Icons.insert_chart),
-        title: stackedBarTargetLineChartTitle,
+        title: stackedBarTargetLineChart,
         subtitle: stackedBarTargetLineChartSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? StackedBarTargetLineChart.withRandomData()
@@ -169,7 +169,7 @@ List<GalleryScaffold> buildGallery() => [
           angle: 1.5708,
           child: const Icon(Icons.insert_chart),
         ),
-        title: horizontalBarChartTitle,
+        title: horizontalBarChart,
         subtitle: horizontalBarChartSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? HorizontalBarChart.withRandomData()
@@ -180,7 +180,7 @@ List<GalleryScaffold> buildGallery() => [
           angle: 1.5708,
           child: const Icon(Icons.insert_chart),
         ),
-        title: stackedHorizontalBarChartTitle,
+        title: stackedHorizontalBarChart,
         subtitle: stackedHorizontalBarChartSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? StackedHorizontalBarChart.withRandomData()
@@ -191,7 +191,7 @@ List<GalleryScaffold> buildGallery() => [
           angle: 1.5708,
           child: const Icon(Icons.insert_chart),
         ),
-        title: horizontalBarLabelChartTitle,
+        title: horizontalBarLabelChart,
         subtitle: horizontalBarLabelChartSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? HorizontalBarLabelChart.withRandomData()
@@ -202,7 +202,7 @@ List<GalleryScaffold> buildGallery() => [
           angle: 1.5708,
           child: const Icon(Icons.insert_chart),
         ),
-        title: horizontalBarLabelCustomChartTitle,
+        title: horizontalBarLabelCustomChart,
         subtitle: horizontalBarLabelCustomChartSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? HorizontalBarLabelCustomChart.withRandomData()
@@ -213,7 +213,7 @@ List<GalleryScaffold> buildGallery() => [
           angle: 1.5708,
           child: const Icon(Icons.insert_chart),
         ),
-        title: verticalBarLabelChartTitle,
+        title: verticalBarLabelChart,
         subtitle: verticalBarLabelChartSubtitle,
         childBuilder: () => appState.value.useRandomData
             ? VerticalBarLabelChart.withRandomData()
