@@ -13,7 +13,10 @@ import '../test_functions.dart';
 /// Widget tests for the example app.
 void main() {
   group('ExampleApp Widget Tests', () {
-    appState.value = appState.value.copyWith(isOriginal: true);
+    appState.value = appState.value.copyWith(
+      isOriginal: true,
+      useRandomData: false,
+    );
 
     testWidgets(
       'Main Menu',
