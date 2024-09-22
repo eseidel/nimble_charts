@@ -49,20 +49,21 @@ void main() {
 
   setUp(() {
     chart = FakeCartesianChart()
-    ..drawAreaBounds = const Rectangle(50, 20, 150, 80);
+      ..drawAreaBounds = const Rectangle(50, 20, 150, 80);
 
     behavior = DomainA11yExploreBehavior<String>(
-        vocalizationCallback: domainVocalization,)
-    ..attachTo(chart);
+      vocalizationCallback: domainVocalization,
+    )..attachTo(chart);
 
     domainAxis = MockAxis();
-    series1 = MutableSeries(Series<MyRow, String>(
-      id: 's1',
-      data: [s1D1, s1D2, s1D3],
-      domainFn: (row, _) => row.campaign,
-      measureFn: (row, _) => row.count,
-    ),)
-      ..setAttr(domainAxisKey, domainAxis);
+    series1 = MutableSeries(
+      Series<MyRow, String>(
+        id: 's1',
+        data: [s1D1, s1D2, s1D3],
+        domainFn: (row, _) => row.campaign,
+        measureFn: (row, _) => row.count,
+      ),
+    )..setAttr(domainAxisKey, domainAxis);
   });
 
   test('creates nodes for vertically drawn charts', () {
@@ -70,9 +71,10 @@ void main() {
     final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(false);
     when(context.isRtl).thenReturn(false);
-    chart..context = context
-    // Drawn vertically
-    ..vertical = true;
+    chart
+      ..context = context
+      // Drawn vertically
+      ..vertical = true;
     // Set step size of 50, which should be the width of the bounding box
     when(domainAxis.stepSize).thenReturn(50);
     when(domainAxis.getLocation('s1d1')).thenReturn(75);
@@ -97,9 +99,10 @@ void main() {
     final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(true);
     when(context.isRtl).thenReturn(true);
-    chart..context = context
-    // Drawn vertically
-    ..vertical = true;
+    chart
+      ..context = context
+      // Drawn vertically
+      ..vertical = true;
     // Set step size of 50, which should be the width of the bounding box
     when(domainAxis.stepSize).thenReturn(50);
     when(domainAxis.getLocation('s1d1')).thenReturn(175);
@@ -124,9 +127,10 @@ void main() {
     final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(false);
     when(context.isRtl).thenReturn(false);
-    chart..context = context
-    // Drawn horizontally
-    ..vertical = false;
+    chart
+      ..context = context
+      // Drawn horizontally
+      ..vertical = false;
     // Set step size of 20, which should be the height of the bounding box
     when(domainAxis.stepSize).thenReturn(20);
     when(domainAxis.getLocation('s1d1')).thenReturn(30);
@@ -151,9 +155,10 @@ void main() {
     final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(true);
     when(context.isRtl).thenReturn(true);
-    chart..context = context
-    // Drawn horizontally
-    ..vertical = false;
+    chart
+      ..context = context
+      // Drawn horizontally
+      ..vertical = false;
     // Set step size of 20, which should be the height of the bounding box
     when(domainAxis.stepSize).thenReturn(20);
     when(domainAxis.getLocation('s1d1')).thenReturn(30);
@@ -178,22 +183,24 @@ void main() {
     final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(false);
     when(context.isRtl).thenReturn(false);
-    chart..context = context
-    // Drawn vertically
-    ..vertical = true;
+    chart
+      ..context = context
+      // Drawn vertically
+      ..vertical = true;
     // Set step size of 50, which should be the width of the bounding box
     when(domainAxis.stepSize).thenReturn(50);
     when(domainAxis.getLocation('s1d1')).thenReturn(75);
     when(domainAxis.getLocation('s1d2')).thenReturn(125);
     when(domainAxis.getLocation('s1d3')).thenReturn(175);
     // Create a series with a missing domain
-    final seriesWithMissingDomain = MutableSeries(Series<MyRow, String>(
-      id: 'm1',
-      data: [s1D1, s1D3],
-      domainFn: (row, _) => row.campaign,
-      measureFn: (row, _) => row.count,
-    ),)
-      ..setAttr(domainAxisKey, domainAxis);
+    final seriesWithMissingDomain = MutableSeries(
+      Series<MyRow, String>(
+        id: 'm1',
+        data: [s1D1, s1D3],
+        domainFn: (row, _) => row.campaign,
+        measureFn: (row, _) => row.count,
+      ),
+    )..setAttr(domainAxisKey, domainAxis);
 
     // Call fire on post process for the behavior to get the series list.
     chart.callFireOnPostprocess([seriesWithMissingDomain, series1]);
@@ -220,9 +227,10 @@ void main() {
     final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(false);
     when(context.isRtl).thenReturn(false);
-    chart..context = context
-    // Drawn vertically
-    ..vertical = true;
+    chart
+      ..context = context
+      // Drawn vertically
+      ..vertical = true;
     // Return a step size of 20, which is less than the minimum width.
     // Expect the results to use the minimum width of 50 instead.
     when(domainAxis.stepSize).thenReturn(20);
