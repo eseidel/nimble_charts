@@ -1,6 +1,7 @@
 import 'package:example/main.dart';
 import 'package:example/picker/data.dart';
 import 'package:example/picker/full_screen_sample.dart';
+import 'package:example/picker/iterable_extensions.dart';
 import 'package:example/picker/tag_item_selector.dart';
 import 'package:flutter/material.dart';
 
@@ -103,7 +104,7 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
                   (tag) => tags.contains(tag),
                 ),
               )
-              .toList(),
+              .orderBy((a, b) => a.title.compareTo(b.title)),
           allTags: tagDefinitions.values.toList(),
         ),
       );
