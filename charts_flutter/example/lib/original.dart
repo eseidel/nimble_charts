@@ -16,7 +16,6 @@
 import 'dart:developer';
 
 import 'package:example/a11y/a11y_gallery.dart' as a11y show buildGallery;
-import 'package:example/app_config.dart';
 import 'package:example/axes/axes_gallery.dart' as axes show buildGallery;
 import 'package:example/bar_chart/bar_gallery.dart' as bar show buildGallery;
 import 'package:example/behaviors/behaviors_gallery.dart' as behaviors
