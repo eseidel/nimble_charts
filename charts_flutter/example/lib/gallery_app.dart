@@ -13,28 +13,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:example/app_config.dart';
+import 'package:example/main.dart';
+import 'package:example/original.dart';
 import 'package:example/picker/tag_selection_screen.dart';
 import 'package:flutter/material.dart';
 
-/// The main gallery app widget.
-class GalleryApp extends StatefulWidget {
+class GalleryApp extends StatelessWidget {
   const GalleryApp({super.key});
 
   @override
-  GalleryAppState createState() => GalleryAppState();
-}
-
-/// The main gallery app state.
-class GalleryAppState extends State<GalleryApp> {
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: defaultConfig.appName,
-        theme: defaultConfig.theme,
-        home: Scaffold(
-          appBar: AppBar(title: Text(defaultConfig.appName)),
-          body: const TagSelectionScreen(),
+  Widget build(BuildContext context) => ValueListenableBuilder(
+        valueListenable: appState,
+        builder: (_, currentState, __) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: currentState.isOriginal
+              ? 'Charts Gallery'
+              : 'nimble_charts Gallery',
+          theme: currentState.isOriginal
+              ? null
+              : ThemeData(
+                  colorScheme: currentState.themeMode == ThemeMode.dark
+                      ? ColorScheme.fromSeed(
+                          seedColor: const Color.fromRGBO(0, 147, 173, 1),
+                          brightness: Brightness.dark,
+                        )
+                      : ColorScheme.fromSeed(
+                          seedColor: const Color.fromRGBO(0, 147, 173, 1),
+                        ),
+                ),
+          darkTheme: ThemeData.dark(),
+          themeMode: currentState.themeMode,
+          home:
+              currentState.isOriginal ? Original() : const TagSelectionScreen(),
         ),
       );
 }

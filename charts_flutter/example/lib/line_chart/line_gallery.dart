@@ -83,7 +83,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: simpleLineChartTitle,
         subtitle: simpleLineChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? SimpleLineChart.withRandomData()
             : SimpleLineChart.withSampleData(),
       ),
@@ -91,7 +91,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: stackedAreaLineChartTitle,
         subtitle: stackedAreaLineChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? StackedAreaLineChart.withRandomData()
             : StackedAreaLineChart.withSampleData(),
       ),
@@ -99,7 +99,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: stackedAreaCustomColorLineChartTitle,
         subtitle: stackedAreaCustomColorLineChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? StackedAreaCustomColorLineChart.withRandomData()
             : StackedAreaCustomColorLineChart.withSampleData(),
       ),
@@ -107,7 +107,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: areaAndLineChartTitle,
         subtitle: areaAndLineChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? AreaAndLineChart.withRandomData()
             : AreaAndLineChart.withSampleData(),
       ),
@@ -115,7 +115,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: pointsLineChartTitle,
         subtitle: pointsLineChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? PointsLineChart.withRandomData()
             : PointsLineChart.withSampleData(),
       ),
@@ -123,7 +123,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: simpleNullsLineChartTitle,
         subtitle: simpleNullsLineChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? SimpleNullsLineChart.withRandomData()
             : SimpleNullsLineChart.withSampleData(),
       ),
@@ -131,7 +131,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: stackedAreaNullsLineChartTitle,
         subtitle: stackedAreaNullsLineChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? StackedAreaNullsLineChart.withRandomData()
             : StackedAreaNullsLineChart.withSampleData(),
       ),
@@ -139,7 +139,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: dashPatternLineChartTitle,
         subtitle: dashPatternLineChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? DashPatternLineChart.withRandomData()
             : DashPatternLineChart.withSampleData(),
       ),
@@ -147,7 +147,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: segmentsLineChartTitle,
         subtitle: segmentsLineChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? SegmentsLineChart.withRandomData()
             : SegmentsLineChart.withSampleData(),
       ),
@@ -155,7 +155,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: lineLineAnnotationChartTitle,
         subtitle: lineLineAnnotationChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? LineLineAnnotationChart.withRandomData()
             : LineLineAnnotationChart.withSampleData(),
       ),
@@ -163,7 +163,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: lineRangeAnnotationChartTitle,
         subtitle: lineRangeAnnotationChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? LineRangeAnnotationChart.withRandomData()
             : LineRangeAnnotationChart.withSampleData(),
       ),
@@ -171,7 +171,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: lineRangeAnnotationMarginChartTitle,
         subtitle: lineRangeAnnotationMarginChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? LineRangeAnnotationMarginChart.withRandomData()
             : LineRangeAnnotationMarginChart.withSampleData(),
       ),
@@ -179,7 +179,7 @@ List<GalleryScaffold> buildGallery() => [
         listTileIcon: const Icon(Icons.show_chart),
         title: lineAnimationZoomChartTitle,
         subtitle: lineAnimationZoomChartSubtitle,
-        childBuilder: () => useRandomData
+        childBuilder: () => appState.value.useRandomData
             ? LineAnimationZoomChart.withRandomData()
             : LineAnimationZoomChart.withSampleData(),
       ),

@@ -16,11 +16,47 @@
 import 'dart:developer';
 import 'package:example/gallery_app.dart';
 import 'package:flutter/material.dart';
+
 import 'package:nimble_charts/flutter.dart' as charts;
 
-bool useRandomData = true;
+typedef AppState = ({ThemeMode themeMode, bool isOriginal, bool useRandomData});
 
-void main() => runApp(const GalleryApp());
+extension AppStateExtension on AppState {
+  AppState withThemeMode(ThemeMode themeMode) => (
+        themeMode: themeMode,
+        isOriginal: isOriginal,
+        useRandomData: useRandomData,
+      );
+
+  AppState copyWith({
+    ThemeMode? themeMode,
+    bool? isOriginal,
+    bool? useRandomData,
+  }) =>
+      (
+        themeMode: themeMode ?? this.themeMode,
+        isOriginal: isOriginal ?? this.isOriginal,
+        useRandomData: useRandomData ?? this.useRandomData,
+      );
+}
+
+final ValueNotifier<AppState> appState = ValueNotifier(
+  (
+    themeMode: ThemeMode.system,
+    isOriginal: false,
+    useRandomData: true,
+  ),
+);
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    ValueListenableBuilder(
+      valueListenable: appState,
+      builder: (_, themeMode, __) => const GalleryApp(),
+    ),
+  );
+}
 
 /// TODO: Use this somewhere
 // ignore: unused_element

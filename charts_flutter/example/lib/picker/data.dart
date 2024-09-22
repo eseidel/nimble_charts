@@ -34,6 +34,20 @@ import 'package:example/line_chart/stacked_area_custom_color.dart';
 import 'package:example/line_chart/stacked_area_nulls.dart';
 import 'package:example/picker/model.dart';
 import 'package:example/picker/tag_item_selector.dart';
+import 'package:example/scatter_plot_chart/animation_zoom.dart';
+import 'package:example/scatter_plot_chart/bucketing_axis.dart';
+import 'package:example/scatter_plot_chart/comparison_points.dart';
+import 'package:example/scatter_plot_chart/scatter_plot_gallery.dart';
+import 'package:example/scatter_plot_chart/simple.dart';
+import 'package:example/time_series_chart/confidence_interval.dart';
+import 'package:example/time_series_chart/end_points_axis.dart';
+import 'package:example/time_series_chart/line_annotation.dart';
+import 'package:example/time_series_chart/range_annotation.dart';
+import 'package:example/time_series_chart/range_annotation_margin.dart';
+import 'package:example/time_series_chart/simple.dart';
+import 'package:example/time_series_chart/symbol_annotation.dart';
+import 'package:example/time_series_chart/time_series_gallery.dart';
+import 'package:example/time_series_chart/with_bar_renderer.dart';
 import 'package:flutter/material.dart';
 
 const tagDefinitions = <String, TagDefinition>{
@@ -213,7 +227,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => StackedBarTargetLineChart.withRandomData(),
-    title: stackedBarTargetLineChartTitle,
+    title: stackedBarTargetLineChart,
     subtitle: stackedBarTargetLineChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -224,7 +238,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => HorizontalBarChart.withRandomData(),
-    title: horizontalBarChartTitle,
+    title: horizontalBarChart,
     subtitle: horizontalBarChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -235,7 +249,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => StackedHorizontalBarChart.withRandomData(),
-    title: stackedHorizontalBarChartTitle,
+    title: stackedHorizontalBarChart,
     subtitle: stackedHorizontalBarChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -246,7 +260,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => HorizontalBarLabelChart.withRandomData(),
-    title: horizontalBarLabelChartTitle,
+    title: horizontalBarLabelChart,
     subtitle: horizontalBarLabelChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -258,7 +272,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => HorizontalBarLabelCustomChart.withRandomData(),
-    title: horizontalBarLabelCustomChartTitle,
+    title: horizontalBarLabelCustomChart,
     subtitle: horizontalBarLabelCustomChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -269,7 +283,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => VerticalBarLabelChart.withRandomData(),
-    title: verticalBarLabelChartTitle,
+    title: verticalBarLabelChart,
     subtitle: verticalBarLabelChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -280,7 +294,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => SparkBar.withRandomData(),
-    title: sparkBarChartTitle,
+    title: sparkBarChart,
     subtitle: sparkBarChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -291,7 +305,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => GroupedFillColorBarChart.withRandomData(),
-    title: groupedFillColorChartTitle,
+    title: groupedFillColorChart,
     subtitle: groupedFillColorChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -302,7 +316,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => StackedFillColorBarChart.withRandomData(),
-    title: stackedFillColorChartTitle,
+    title: stackedFillColorChart,
     subtitle: stackedFillColorChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -313,7 +327,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => PatternForwardHatchBarChart.withRandomData(),
-    title: patternForwardHatchChartTitle,
+    title: patternForwardHatchChart,
     subtitle: patternForwardHatchChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -325,7 +339,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     icon: Icons.bar_chart,
     build: (context, item) =>
         HorizontalPatternForwardHatchBarChart.withRandomData(),
-    title: horizontalPatternForwardHatchChartTitle,
+    title: horizontalPatternForwardHatchChart,
     subtitle: horizontalPatternForwardHatchChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -339,7 +353,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     icon: Icons.bar_chart,
     build: (context, item) =>
         GroupedStackedWeightPatternBarChart.withRandomData(),
-    title: weightedPatternChartTitle,
+    title: weightedPatternChart,
     subtitle: weightedPatternChartSubtitle,
   ),
   ChartSampleDefinition(
@@ -350,7 +364,7 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     ],
     icon: Icons.bar_chart,
     build: (context, item) => CustomRoundedBars.withRandomData(),
-    title: barChartWithCustomBarRadiusTitle,
+    title: barChartWithCustomBarRadius,
     subtitle: barChartWithCustomBarRadiusSubtitle,
   ),
 
@@ -492,5 +506,138 @@ List<ChartSampleDefinition> chartSampleDefinitions = [
     build: (context, item) => LineAnimationZoomChart.withRandomData(),
     title: lineAnimationZoomChartTitle,
     subtitle: lineAnimationZoomChartSubtitle,
+  ),
+
+  // Scatter Plot Charts
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['scatter']!,
+      tagDefinitions['simple']!,
+    ],
+    icon: Icons.scatter_plot,
+    build: (context, item) => SimpleScatterPlotChart.withRandomData(),
+    title: simpleScatterPlotChartTitle,
+    subtitle: simpleScatterPlotChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['scatter']!,
+      tagDefinitions['custom']!,
+    ],
+    icon: Icons.scatter_plot,
+    build: (context, item) => ComparisonPointsScatterPlotChart.withRandomData(),
+    title: comparisonPointsScatterPlotChartTitle,
+    subtitle: comparisonPointsScatterPlotChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['scatter']!,
+      tagDefinitions['animated']!,
+    ],
+    icon: Icons.scatter_plot,
+    build: (context, item) => ScatterPlotAnimationZoomChart.withRandomData(),
+    title: panAndZoomScatterPlotChartTitle,
+    subtitle: panAndZoomScatterPlotChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['scatter']!,
+      tagDefinitions['custom']!,
+    ],
+    icon: Icons.scatter_plot,
+    build: (context, item) => BucketingAxisScatterPlotChart.withRandomData(),
+    title: bucketingAxisScatterPlotChartTitle,
+    subtitle: bucketingAxisScatterPlotChartSubtitle,
+  ),
+
+  // Time Series Charts
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['simple']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => SimpleTimeSeriesChart.withRandomData(),
+    title: simpleTimeSeriesChartTitle,
+    subtitle: simpleTimeSeriesChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['custom']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => EndPointsAxisTimeSeriesChart.withRandomData(),
+    title: endPointsAxisTimeSeriesChartTitle,
+    subtitle: endPointsAxisTimeSeriesChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['annotation']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => TimeSeriesLineAnnotationChart.withRandomData(),
+    title: lineAnnotationTimeSeriesChartTitle,
+    subtitle: lineAnnotationTimeSeriesChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['annotation']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => TimeSeriesRangeAnnotationChart.withRandomData(),
+    title: rangeAnnotationTimeSeriesChartTitle,
+    subtitle: rangeAnnotationTimeSeriesChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['annotation']!,
+      tagDefinitions['custom']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) =>
+        TimeSeriesRangeAnnotationMarginChart.withRandomData(),
+    title: rangeAnnotationMarginLabelsTimeSeriesChartTitle,
+    subtitle: rangeAnnotationMarginLabelsTimeSeriesChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['annotation']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => TimeSeriesSymbolAnnotationChart.withRandomData(),
+    title: symbolAnnotationTimeSeriesChartTitle,
+    subtitle: symbolAnnotationTimeSeriesChartSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['bar']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => TimeSeriesBar.withRandomData(),
+    title: timeSeriesChartWithBarsTitle,
+    subtitle: timeSeriesChartWithBarsSubtitle,
+  ),
+  ChartSampleDefinition(
+    tags: [
+      tagDefinitions['time']!,
+      tagDefinitions['line']!,
+      tagDefinitions['custom']!,
+    ],
+    icon: Icons.timeline,
+    build: (context, item) => TimeSeriesConfidenceInterval.withRandomData(),
+    title: confidenceIntervalTimeSeriesChartTitle,
+    subtitle: confidenceIntervalTimeSeriesChartSubtitle,
   ),
 ];

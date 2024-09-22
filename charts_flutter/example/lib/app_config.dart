@@ -29,7 +29,7 @@ class AppConfig {
 
 /// The default configuration of the app.
 AppConfig get defaultConfig => AppConfig(
-      appName: 'Charts Gallery',
+      appName: 'nimble_charts Gallery',
       appLink: '',
       theme: ThemeData(
         brightness: Brightness.light,
