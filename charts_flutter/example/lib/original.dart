@@ -16,7 +16,6 @@
 import 'dart:developer';
 
 import 'package:example/a11y/a11y_gallery.dart' as a11y show buildGallery;
-import 'package:example/app_config.dart';
 import 'package:example/axes/axes_gallery.dart' as axes show buildGallery;
 import 'package:example/bar_chart/bar_gallery.dart' as bar show buildGallery;
 import 'package:example/behaviors/behaviors_gallery.dart' as behaviors
@@ -35,11 +34,9 @@ import 'package:example/time_series_chart/time_series_gallery.dart'
 import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
-/// Main entry point of the gallery app.
-///
-/// This renders a list of all available demos.
-class Home extends StatelessWidget {
-  Home({
+/// This was the original gallery app.
+class Original extends StatelessWidget {
+  Original({
     super.key,
   });
   final a11yGalleries = a11y.buildGallery();
@@ -86,7 +83,7 @@ class Home extends StatelessWidget {
     _setupPerformance();
 
     return Scaffold(
-      appBar: AppBar(title: Text(defaultConfig.appName)),
+      appBar: AppBar(title: const Text('Charts Gallery')),
       body: ListView(padding: kMaterialListPadding, children: galleries),
     );
   }

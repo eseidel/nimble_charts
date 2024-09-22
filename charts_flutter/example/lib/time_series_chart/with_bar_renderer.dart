@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class TimeSeriesBar extends StatelessWidget {
-  const TimeSeriesBar(this.seriesList, {super.key, this.animate = false});
+  const TimeSeriesBar(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
   factory TimeSeriesBar.withSampleData() => TimeSeriesBar(

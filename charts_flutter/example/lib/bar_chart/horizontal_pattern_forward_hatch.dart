@@ -30,7 +30,7 @@ class HorizontalPatternForwardHatchBarChart extends StatelessWidget {
   const HorizontalPatternForwardHatchBarChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   factory HorizontalPatternForwardHatchBarChart.withSampleData() =>

@@ -24,7 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class GridlineDashPattern extends StatelessWidget {
-  const GridlineDashPattern(this.seriesList, {super.key, this.animate = false});
+  const GridlineDashPattern(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.
   factory GridlineDashPattern.withSampleData() => GridlineDashPattern(

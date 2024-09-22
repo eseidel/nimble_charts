@@ -32,7 +32,7 @@ class IntegerOnlyMeasureAxis extends StatelessWidget {
   const IntegerOnlyMeasureAxis(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.

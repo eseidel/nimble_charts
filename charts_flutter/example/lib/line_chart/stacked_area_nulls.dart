@@ -40,7 +40,7 @@ class StackedAreaNullsLineChart extends StatelessWidget {
   const StackedAreaNullsLineChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a [charts.LineChart] with sample data and no transition.

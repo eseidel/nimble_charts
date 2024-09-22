@@ -35,7 +35,7 @@ import 'package:nimble_charts/flutter.dart' as charts;
 /// [charts.Slider.moveSliderToDomain] can be called to programmatically position the
 /// slider. This is useful for synchronizing the slider with external elements.
 class SliderLine extends StatefulWidget {
-  const SliderLine(this.seriesList, {super.key, this.animate = false});
+  const SliderLine(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory SliderLine.withSampleData() => SliderLine(

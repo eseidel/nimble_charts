@@ -19,8 +19,9 @@ import 'package:nimble_charts_common/src/common/proxy_gesture_listener.dart';
 import 'package:test/test.dart';
 
 void main() {
-  ProxyGestureListener proxy;
-  Point<double> point;
+  late ProxyGestureListener proxy;
+  late Point<double> point;
+
   setUp(() {
     proxy = ProxyGestureListener();
     point = const Point<double>(10, 12);
@@ -30,11 +31,12 @@ void main() {
     test('notified for simple case', () {
       // Setup
       final tapListener = MockListener(consumeEvent: true);
-      proxy.add(GestureListener(onTap: tapListener.callback));
+      proxy
+        ..add(GestureListener(onTap: tapListener.callback))
 
-      // Act
-      proxy.onTapTest(point);
-      proxy.onTap(point);
+        // Act
+        ..onTapTest(point)
+        ..onTap(point);
 
       // Verify
       tapListener.verify(arg1: point);
@@ -43,30 +45,32 @@ void main() {
     test('notifies listener for second event', () {
       // Setup
       final tapListener1 = MockListener();
-      proxy.add(
-        GestureListener(
-          onTap: tapListener1.callback,
-        ),
-      );
+      proxy
+        ..add(
+          GestureListener(
+            onTap: tapListener1.callback,
+          ),
+        )
 
-      // Act
-      proxy.onTapTest(point);
-      proxy.onTap(point);
+        // Act
+        ..onTapTest(point)
+        ..onTap(point);
 
       // Verify
       tapListener1.verify(arg1: point);
 
       // Setup Another
       final tapListener2 = MockListener();
-      proxy.add(
-        GestureListener(
-          onTap: tapListener2.callback,
-        ),
-      );
+      proxy
+        ..add(
+          GestureListener(
+            onTap: tapListener2.callback,
+          ),
+        )
 
-      // Act
-      proxy.onTapTest(point);
-      proxy.onTap(point);
+        // Act
+        ..onTapTest(point)
+        ..onTap(point);
 
       // Verify
       tapListener1.verify(callCount: 2, arg1: point);
@@ -88,16 +92,17 @@ void main() {
       final nonclaimingTapDownListener = MockListener();
       final nonclaimingTapListener = MockListener();
 
-      proxy.add(
-        GestureListener(
-          onTapTest: nonclaimingTapDownListener.callback,
-          onTap: nonclaimingTapListener.callback,
-        ),
-      );
+      proxy
+        ..add(
+          GestureListener(
+            onTapTest: nonclaimingTapDownListener.callback,
+            onTap: nonclaimingTapListener.callback,
+          ),
+        )
 
-      // Act
-      proxy.onTapTest(point);
-      proxy.onTap(point);
+        // Act
+        ..onTapTest(point)
+        ..onTap(point);
 
       // Verify
       claimingTapDownListener.verify(arg1: point);
@@ -121,16 +126,17 @@ void main() {
       final claimingTapDownListener = MockListener(consumeEvent: true);
       final claimingTapListener = MockListener(consumeEvent: true);
 
-      proxy.add(
-        GestureListener(
-          onTapTest: claimingTapDownListener.callback,
-          onTap: claimingTapListener.callback,
-        ),
-      );
+      proxy
+        ..add(
+          GestureListener(
+            onTapTest: claimingTapDownListener.callback,
+            onTap: claimingTapListener.callback,
+          ),
+        )
 
-      // Act
-      proxy.onTapTest(point);
-      proxy.onTap(point);
+        // Act
+        ..onTapTest(point)
+        ..onTap(point);
 
       // Verify
       nonclaimingTapDownListener.verify(arg1: point);
@@ -159,18 +165,19 @@ void main() {
       final longPress = MockListener(consumeEvent: true);
       final pressCancel = MockListener(consumeEvent: true);
 
-      proxy.add(
-        GestureListener(
-          onTapTest: pressTapDown.callback,
-          onLongPress: longPress.callback,
-          onTapCancel: pressCancel.callback,
-        ),
-      );
+      proxy
+        ..add(
+          GestureListener(
+            onTapTest: pressTapDown.callback,
+            onLongPress: longPress.callback,
+            onTapCancel: pressCancel.callback,
+          ),
+        )
 
-      // Act
-      proxy.onTapTest(point);
-      proxy.onLongPress(point);
-      proxy.onTap(point);
+        // Act
+        ..onTapTest(point)
+        ..onLongPress(point)
+        ..onTap(point);
 
       // Verify
       tapDown.verify(arg1: point);
@@ -204,23 +211,24 @@ void main() {
       final dragEnd = MockListener(consumeEvent: true);
       final dragCancel = MockListener(consumeEvent: true);
 
-      proxy.add(
-        GestureListener(
-          onTapTest: dragTapDown.callback,
-          onDragStart: dragStart.callback,
-          onDragUpdate: dragUpdate.callback,
-          onDragEnd: dragEnd.callback,
-          onTapCancel: dragCancel.callback,
-        ),
-      );
+      proxy
+        ..add(
+          GestureListener(
+            onTapTest: dragTapDown.callback,
+            onDragStart: dragStart.callback,
+            onDragUpdate: dragUpdate.callback,
+            onDragEnd: dragEnd.callback,
+            onTapCancel: dragCancel.callback,
+          ),
+        )
 
-      // Act
-      proxy.onTapTest(point);
-      proxy.onDragStart(point);
-      proxy.onDragUpdate(point, 1);
-      proxy.onDragUpdate(point, 1);
-      proxy.onDragEnd(point, 2, 3);
-      proxy.onTap(point);
+        // Act
+        ..onTapTest(point)
+        ..onDragStart(point)
+        ..onDragUpdate(point, 1)
+        ..onDragUpdate(point, 1)
+        ..onDragEnd(point, 2, 3)
+        ..onTap(point);
 
       // Verify
       tapDown.verify(arg1: point);
@@ -238,14 +246,14 @@ void main() {
 
 class MockListener {
   MockListener({this.consumeEvent = false});
-  Object _arg1;
-  Object _arg2;
-  Object _arg3;
+  Object? _arg1;
+  Object? _arg2;
+  Object? _arg3;
   int _callCount = 0;
 
   final bool consumeEvent;
 
-  bool callback([Object arg1, Object arg2, Object arg3]) {
+  bool callback([Object? arg1, Object? arg2, Object? arg3]) {
     _arg1 = arg1;
     _arg2 = arg2;
     _arg3 = arg3;
@@ -255,7 +263,7 @@ class MockListener {
     return consumeEvent;
   }
 
-  void verify({int callCount = 1, Object arg1, Object arg2, Object arg3}) {
+  void verify({int callCount = 1, Object? arg1, Object? arg2, Object? arg3}) {
     if (callCount != any) {
       expect(_callCount, equals(callCount));
     }

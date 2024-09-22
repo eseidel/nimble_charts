@@ -30,7 +30,7 @@ class GroupedStackedWeightPatternBarChart extends StatelessWidget {
   const GroupedStackedWeightPatternBarChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   factory GroupedStackedWeightPatternBarChart.withSampleData() =>

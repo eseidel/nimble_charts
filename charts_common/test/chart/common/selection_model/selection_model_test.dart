@@ -20,19 +20,19 @@ import 'package:nimble_charts_common/src/data/series.dart';
 import 'package:test/test.dart';
 
 void main() {
-  MutableSelectionModel<String> selectionModel;
+  late MutableSelectionModel<String> selectionModel;
 
-  ImmutableSeries<String> closestSeries;
-  MyDatum closestDatumClosestSeries;
-  SeriesDatum<String> closestDatumClosestSeriesPair;
-  MyDatum otherDatumClosestSeries;
-  SeriesDatum<String> otherDatumClosestSeriesPair;
+  late ImmutableSeries<String> closestSeries;
+  late MyDatum closestDatumClosestSeries;
+  late SeriesDatum<String> closestDatumClosestSeriesPair;
+  late MyDatum otherDatumClosestSeries;
+  late SeriesDatum<String> otherDatumClosestSeriesPair;
 
-  ImmutableSeries<String> otherSeries;
-  MyDatum closestDatumOtherSeries;
-  SeriesDatum<String> closestDatumOtherSeriesPair;
-  MyDatum otherDatumOtherSeries;
-  SeriesDatum<String> otherDatumOtherSeriesPair;
+  late ImmutableSeries<String> otherSeries;
+  late MyDatum closestDatumOtherSeries;
+  late SeriesDatum<String> closestDatumOtherSeriesPair;
+  late MyDatum otherDatumOtherSeries;
+  late SeriesDatum<String> otherDatumOtherSeriesPair;
 
   setUp(() {
     selectionModel = MutableSelectionModel<String>();
@@ -110,19 +110,20 @@ void main() {
 
     test('selection can change', () {
       // Select the 'closest' datum for each Series.
-      selectionModel.updateSelection([
-        SeriesDatum(closestSeries, closestDatumClosestSeries),
-        SeriesDatum(otherSeries, closestDatumOtherSeries),
-      ], [
-        closestSeries,
-      ]);
+      selectionModel
+        ..updateSelection([
+          SeriesDatum(closestSeries, closestDatumClosestSeries),
+          SeriesDatum(otherSeries, closestDatumOtherSeries),
+        ], [
+          closestSeries,
+        ])
 
-      // Change selection to just the other datum on the other series.
-      selectionModel.updateSelection([
-        SeriesDatum(otherSeries, otherDatumOtherSeries),
-      ], [
-        otherSeries,
-      ]);
+        // Change selection to just the other datum on the other series.
+        ..updateSelection([
+          SeriesDatum(otherSeries, otherDatumOtherSeries),
+        ], [
+          otherSeries,
+        ]);
 
       expect(selectionModel.selectedDatum, hasLength(1));
       expect(
@@ -148,42 +149,45 @@ void main() {
 
     test('selection lock prevents change', () {
       // Prevent selection changes.
-      selectionModel.locked = true;
+      selectionModel
+        ..locked = true
 
-      // Try to the 'closest' datum for each Series.
-      selectionModel.updateSelection([
-        SeriesDatum(closestSeries, closestDatumClosestSeries),
-        SeriesDatum(otherSeries, closestDatumOtherSeries),
-      ], [
-        closestSeries,
-      ]);
+        // Try to the 'closest' datum for each Series.
+        ..updateSelection([
+          SeriesDatum(closestSeries, closestDatumClosestSeries),
+          SeriesDatum(otherSeries, closestDatumOtherSeries),
+        ], [
+          closestSeries,
+        ]);
 
       expect(selectionModel.hasDatumSelection, isFalse);
       expect(selectionModel.hasSeriesSelection, isFalse);
 
       // Allow selection changes.
-      selectionModel.locked = false;
+      selectionModel
+        ..locked = false
 
-      // Try to the 'closest' datum for each Series.
-      selectionModel.updateSelection([
-        SeriesDatum(closestSeries, closestDatumClosestSeries),
-        SeriesDatum(otherSeries, closestDatumOtherSeries),
-      ], [
-        closestSeries,
-      ]);
+        // Try to the 'closest' datum for each Series.
+        ..updateSelection([
+          SeriesDatum(closestSeries, closestDatumClosestSeries),
+          SeriesDatum(otherSeries, closestDatumOtherSeries),
+        ], [
+          closestSeries,
+        ]);
 
       expect(selectionModel.hasDatumSelection, isTrue);
       expect(selectionModel.hasSeriesSelection, isTrue);
 
       // Prevent selection changes.
-      selectionModel.locked = true;
+      selectionModel
+        ..locked = true
 
-      // Attempt to change selection
-      selectionModel.updateSelection([
-        SeriesDatum(otherSeries, otherDatumOtherSeries),
-      ], [
-        otherSeries,
-      ]);
+        // Attempt to change selection
+        ..updateSelection([
+          SeriesDatum(otherSeries, otherDatumOtherSeries),
+        ], [
+          otherSeries,
+        ]);
 
       // Previous selection should still be set.
       expect(selectionModel.selectedDatum, hasLength(2));
@@ -203,67 +207,70 @@ void main() {
 
   group('SelectionModel changed listeners', () {
     test('listener triggered for change', () {
-      SelectionModel<String> triggeredModel;
+      late SelectionModel<String> triggeredModel;
       // Listen
-      selectionModel.addSelectionChangedListener((model) {
-        triggeredModel = model;
-      });
+      selectionModel
+        ..addSelectionChangedListener((model) {
+          triggeredModel = model;
+        })
 
-      // Set the selection to closest datum.
-      selectionModel.updateSelection([
-        SeriesDatum(closestSeries, closestDatumClosestSeries),
-      ], [
-        closestSeries,
-      ]);
+        // Set the selection to closest datum.
+        ..updateSelection([
+          SeriesDatum(closestSeries, closestDatumClosestSeries),
+        ], [
+          closestSeries,
+        ]);
 
       // Callback should have been triggered.
       expect(triggeredModel, equals(selectionModel));
     });
 
     test('listener not triggered for no change', () {
-      SelectionModel<String> triggeredModel;
+      SelectionModel<String>? triggeredModel;
       // Set the selection to closest datum.
-      selectionModel.updateSelection([
-        SeriesDatum(closestSeries, closestDatumClosestSeries),
-      ], [
-        closestSeries,
-      ]);
+      selectionModel
+        ..updateSelection([
+          SeriesDatum(closestSeries, closestDatumClosestSeries),
+        ], [
+          closestSeries,
+        ])
 
-      // Listen
-      selectionModel.addSelectionChangedListener((model) {
-        triggeredModel = model;
-      });
+        // Listen
+        ..addSelectionChangedListener((model) {
+          triggeredModel = model;
+        })
 
-      // Try to update the model with the same value.
-      selectionModel.updateSelection([
-        SeriesDatum(closestSeries, closestDatumClosestSeries),
-      ], [
-        closestSeries,
-      ]);
+        // Try to update the model with the same value.
+        ..updateSelection([
+          SeriesDatum(closestSeries, closestDatumClosestSeries),
+        ], [
+          closestSeries,
+        ]);
 
       // Callback should not have been triggered.
       expect(triggeredModel, isNull);
     });
 
     test('removed listener not triggered for change', () {
-      SelectionModel<String> triggeredModel;
+      SelectionModel<String>? triggeredModel;
 
       void cb(SelectionModel<String> model) {
         triggeredModel = model;
       }
 
       // Listen
-      selectionModel.addSelectionChangedListener(cb);
+      selectionModel
+        ..addSelectionChangedListener(cb)
 
-      // Unlisten
-      selectionModel.removeSelectionChangedListener(cb);
+        // Unlisten
+        ..removeSelectionChangedListener(cb)
 
-      // Set the selection to closest datum.
-      selectionModel.updateSelection([
-        SeriesDatum(closestSeries, closestDatumClosestSeries),
-      ], [
-        closestSeries,
-      ]);
+        // Set the selection to closest datum.
+        ..updateSelection([
+          SeriesDatum(closestSeries, closestDatumClosestSeries),
+        ], [
+          closestSeries,
+        ]);
 
       // Callback should not have been triggered.
       expect(triggeredModel, isNull);
@@ -272,67 +279,70 @@ void main() {
 
   group('SelectionModel updated listeners', () {
     test('listener triggered for change', () {
-      SelectionModel<String> triggeredModel;
+      late SelectionModel<String> triggeredModel;
       // Listen
-      selectionModel.addSelectionUpdatedListener((model) {
-        triggeredModel = model;
-      });
+      selectionModel
+        ..addSelectionUpdatedListener((model) {
+          triggeredModel = model;
+        })
 
-      // Set the selection to closest datum.
-      selectionModel.updateSelection([
-        SeriesDatum(closestSeries, closestDatumClosestSeries),
-      ], [
-        closestSeries,
-      ]);
+        // Set the selection to closest datum.
+        ..updateSelection([
+          SeriesDatum(closestSeries, closestDatumClosestSeries),
+        ], [
+          closestSeries,
+        ]);
 
       // Callback should have been triggered.
       expect(triggeredModel, equals(selectionModel));
     });
 
     test('listener triggered for no change', () {
-      SelectionModel<String> triggeredModel;
+      late SelectionModel<String> triggeredModel;
       // Set the selection to closest datum.
-      selectionModel.updateSelection([
-        SeriesDatum(closestSeries, closestDatumClosestSeries),
-      ], [
-        closestSeries,
-      ]);
+      selectionModel
+        ..updateSelection([
+          SeriesDatum(closestSeries, closestDatumClosestSeries),
+        ], [
+          closestSeries,
+        ])
 
-      // Listen
-      selectionModel.addSelectionUpdatedListener((model) {
-        triggeredModel = model;
-      });
+        // Listen
+        ..addSelectionUpdatedListener((model) {
+          triggeredModel = model;
+        })
 
-      // Try to update the model with the same value.
-      selectionModel.updateSelection([
-        SeriesDatum(closestSeries, closestDatumClosestSeries),
-      ], [
-        closestSeries,
-      ]);
+        // Try to update the model with the same value.
+        ..updateSelection([
+          SeriesDatum(closestSeries, closestDatumClosestSeries),
+        ], [
+          closestSeries,
+        ]);
 
       // Callback should have been triggered.
       expect(triggeredModel, equals(selectionModel));
     });
 
     test('removed listener not triggered for change', () {
-      SelectionModel<String> triggeredModel;
+      SelectionModel<String>? triggeredModel;
 
       void cb(SelectionModel<String> model) {
         triggeredModel = model;
       }
 
       // Listen
-      selectionModel.addSelectionUpdatedListener(cb);
+      selectionModel
+        ..addSelectionUpdatedListener(cb)
 
-      // Unlisten
-      selectionModel.removeSelectionUpdatedListener(cb);
+        // Unlisten
+        ..removeSelectionUpdatedListener(cb)
 
-      // Set the selection to closest datum.
-      selectionModel.updateSelection([
-        SeriesDatum(closestSeries, closestDatumClosestSeries),
-      ], [
-        closestSeries,
-      ]);
+        // Set the selection to closest datum.
+        ..updateSelection([
+          SeriesDatum(closestSeries, closestDatumClosestSeries),
+        ], [
+          closestSeries,
+        ]);
 
       // Callback should not have been triggered.
       expect(triggeredModel, isNull);
@@ -341,34 +351,36 @@ void main() {
 
   group('SelectionModel locked listeners', () {
     test('listener triggered when model is locked', () {
-      SelectionModel<String> triggeredModel;
+      late SelectionModel<String> triggeredModel;
       // Listen
-      selectionModel.addSelectionLockChangedListener((model) {
-        triggeredModel = model;
-      });
+      selectionModel
+        ..addSelectionLockChangedListener((model) {
+          triggeredModel = model;
+        })
 
-      // Lock selection.
-      selectionModel.locked = true;
+        // Lock selection.
+        ..locked = true;
 
       // Callback should have been triggered.
       expect(triggeredModel, equals(selectionModel));
     });
 
     test('removed listener not triggered for locking', () {
-      SelectionModel<String> triggeredModel;
+      SelectionModel<String>? triggeredModel;
 
       void cb(SelectionModel<String> model) {
         triggeredModel = model;
       }
 
       // Listen
-      selectionModel.addSelectionLockChangedListener(cb);
+      selectionModel
+        ..addSelectionLockChangedListener(cb)
 
-      // Unlisten
-      selectionModel.removeSelectionLockChangedListener(cb);
+        // Unlisten
+        ..removeSelectionLockChangedListener(cb)
 
-      // Lock selection.
-      selectionModel.locked = true;
+        // Lock selection.
+        ..locked = true;
 
       // Callback should not have been triggered.
       expect(triggeredModel, isNull);

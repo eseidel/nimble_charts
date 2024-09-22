@@ -19,18 +19,15 @@ import 'package:mockito/mockito.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/axis/axis.dart';
 import 'package:nimble_charts_common/src/chart/cartesian/cartesian_chart.dart';
 import 'package:nimble_charts_common/src/chart/common/behavior/a11y/domain_a11y_explore_behavior.dart';
-import 'package:nimble_charts_common/src/chart/common/chart_context.dart';
 import 'package:nimble_charts_common/src/chart/common/processed_series.dart';
 import 'package:nimble_charts_common/src/data/series.dart';
 import 'package:test/test.dart';
 
-class MockContext extends Mock implements ChartContext {}
-
-class MockAxis extends Mock implements Axis<String> {}
+import '../../../../mox.mocks.dart';
 
 class FakeCartesianChart extends CartesianChart<String> {
   @override
-  Rectangle<int> drawAreaBounds;
+  late Rectangle<int> drawAreaBounds;
 
   void callFireOnPostprocess(List<MutableSeries<String>> seriesList) {
     fireOnPostprocess(seriesList);
@@ -41,11 +38,11 @@ class FakeCartesianChart extends CartesianChart<String> {
 }
 
 void main() {
-  FakeCartesianChart chart;
-  DomainA11yExploreBehavior<String> behavior;
-  MockAxis domainAxis;
+  late FakeCartesianChart chart;
+  late DomainA11yExploreBehavior<String> behavior;
+  late MockAxis domainAxis;
 
-  MutableSeries<String> series1;
+  late MutableSeries<String> series1;
   final s1D1 = MyRow('s1d1', 11, 'a11yd1');
   final s1D2 = MyRow('s1d2', 12, 'a11yd2');
   final s1D3 = MyRow('s1d3', 13, 'a11yd3');
@@ -56,8 +53,7 @@ void main() {
 
     behavior = DomainA11yExploreBehavior<String>(
       vocalizationCallback: domainVocalization,
-    );
-    behavior.attachTo(chart);
+    )..attachTo(chart);
 
     domainAxis = MockAxis();
     series1 = MutableSeries(
@@ -72,12 +68,13 @@ void main() {
 
   test('creates nodes for vertically drawn charts', () {
     // A LTR chart
-    final context = MockContext();
+    final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(false);
     when(context.isRtl).thenReturn(false);
-    chart.context = context;
-    // Drawn vertically
-    chart.vertical = true;
+    chart
+      ..context = context
+      // Drawn vertically
+      ..vertical = true;
     // Set step size of 50, which should be the width of the bounding box
     when(domainAxis.stepSize).thenReturn(50);
     when(domainAxis.getLocation('s1d1')).thenReturn(75);
@@ -99,12 +96,13 @@ void main() {
 
   test('creates nodes for vertically drawn RTL charts', () {
     // A RTL chart
-    final context = MockContext();
+    final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(true);
     when(context.isRtl).thenReturn(true);
-    chart.context = context;
-    // Drawn vertically
-    chart.vertical = true;
+    chart
+      ..context = context
+      // Drawn vertically
+      ..vertical = true;
     // Set step size of 50, which should be the width of the bounding box
     when(domainAxis.stepSize).thenReturn(50);
     when(domainAxis.getLocation('s1d1')).thenReturn(175);
@@ -126,12 +124,13 @@ void main() {
 
   test('creates nodes for horizontally drawn charts', () {
     // A LTR chart
-    final context = MockContext();
+    final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(false);
     when(context.isRtl).thenReturn(false);
-    chart.context = context;
-    // Drawn horizontally
-    chart.vertical = false;
+    chart
+      ..context = context
+      // Drawn horizontally
+      ..vertical = false;
     // Set step size of 20, which should be the height of the bounding box
     when(domainAxis.stepSize).thenReturn(20);
     when(domainAxis.getLocation('s1d1')).thenReturn(30);
@@ -153,12 +152,13 @@ void main() {
 
   test('creates nodes for horizontally drawn RTL charts', () {
     // A LTR chart
-    final context = MockContext();
+    final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(true);
     when(context.isRtl).thenReturn(true);
-    chart.context = context;
-    // Drawn horizontally
-    chart.vertical = false;
+    chart
+      ..context = context
+      // Drawn horizontally
+      ..vertical = false;
     // Set step size of 20, which should be the height of the bounding box
     when(domainAxis.stepSize).thenReturn(20);
     when(domainAxis.getLocation('s1d1')).thenReturn(30);
@@ -180,12 +180,13 @@ void main() {
 
   test('nodes ordered correctly with a series missing a domain', () {
     // A LTR chart
-    final context = MockContext();
+    final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(false);
     when(context.isRtl).thenReturn(false);
-    chart.context = context;
-    // Drawn vertically
-    chart.vertical = true;
+    chart
+      ..context = context
+      // Drawn vertically
+      ..vertical = true;
     // Set step size of 50, which should be the width of the bounding box
     when(domainAxis.stepSize).thenReturn(50);
     when(domainAxis.getLocation('s1d1')).thenReturn(75);
@@ -219,15 +220,17 @@ void main() {
     // A behavior with minimum width of 50
     final behaviorWithMinWidth =
         DomainA11yExploreBehavior<String>(minimumWidth: 50);
+    // ignore: cascade_invocations
     behaviorWithMinWidth.attachTo(chart);
 
     // A LTR chart
-    final context = MockContext();
+    final context = MockChartContext();
     when(context.chartContainerIsRtl).thenReturn(false);
     when(context.isRtl).thenReturn(false);
-    chart.context = context;
-    // Drawn vertically
-    chart.vertical = true;
+    chart
+      ..context = context
+      // Drawn vertically
+      ..vertical = true;
     // Return a step size of 20, which is less than the minimum width.
     // Expect the results to use the minimum width of 50 instead.
     when(domainAxis.stepSize).thenReturn(20);

@@ -27,7 +27,7 @@ class StackedAreaLineChart extends StatelessWidget {
   const StackedAreaLineChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a [charts.LineChart] with sample data and no transition.

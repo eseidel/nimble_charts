@@ -41,7 +41,7 @@ class StaticallyProvidedTicks extends StatelessWidget {
   const StaticallyProvidedTicks(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   factory StaticallyProvidedTicks.withSampleData() => StaticallyProvidedTicks(

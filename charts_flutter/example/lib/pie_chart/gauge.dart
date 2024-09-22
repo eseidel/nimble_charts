@@ -25,7 +25,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class GaugeChart extends StatelessWidget {
-  const GaugeChart(this.seriesList, {super.key, this.animate = false});
+  const GaugeChart(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.PieChart] with sample data and no transition.
   factory GaugeChart.withSampleData() => GaugeChart(

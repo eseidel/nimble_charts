@@ -24,7 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class DonutPieChart extends StatelessWidget {
-  const DonutPieChart(this.seriesList, {super.key, this.animate = false});
+  const DonutPieChart(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.PieChart] with sample data and no transition.
   factory DonutPieChart.withSampleData() => DonutPieChart(

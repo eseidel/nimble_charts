@@ -35,7 +35,7 @@ class OrdinalInitialViewport extends StatelessWidget {
   const OrdinalInitialViewport(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a [charts.BarChart] with sample data and no transition.

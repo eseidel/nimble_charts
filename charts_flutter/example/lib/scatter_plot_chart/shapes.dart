@@ -39,7 +39,7 @@ class ShapesScatterPlotChart extends StatelessWidget {
   const ShapesScatterPlotChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a [charts.ScatterPlotChart] with sample data and no transition.

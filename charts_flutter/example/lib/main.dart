@@ -13,33 +13,59 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:example/app_config.dart';
-import 'package:example/home.dart';
+import 'dart:developer';
+import 'package:example/gallery_app.dart';
 import 'package:flutter/material.dart';
 
-bool useRandomData = true;
+import 'package:nimble_charts/flutter.dart' as charts;
 
-/// The main gallery app widget.
-class GalleryApp extends StatefulWidget {
-  const GalleryApp({super.key});
+typedef AppState = ({ThemeMode themeMode, bool isOriginal, bool useRandomData});
 
-  @override
-  GalleryAppState createState() => GalleryAppState();
-}
+extension AppStateExtension on AppState {
+  AppState withThemeMode(ThemeMode themeMode) => (
+        themeMode: themeMode,
+        isOriginal: isOriginal,
+        useRandomData: useRandomData,
+      );
 
-/// The main gallery app state.
-///
-/// Controls performance overlay, and instantiates a [Home] widget.
-class GalleryAppState extends State<GalleryApp> {
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: defaultConfig.appName,
-        theme: defaultConfig.theme,
-        home: Home(),
+  AppState copyWith({
+    ThemeMode? themeMode,
+    bool? isOriginal,
+    bool? useRandomData,
+  }) =>
+      (
+        themeMode: themeMode ?? this.themeMode,
+        isOriginal: isOriginal ?? this.isOriginal,
+        useRandomData: useRandomData ?? this.useRandomData,
       );
 }
 
+final ValueNotifier<AppState> appState = ValueNotifier(
+  (
+    themeMode: ThemeMode.system,
+    isOriginal: false,
+    useRandomData: true,
+  ),
+);
+
 void main() {
-  runApp(const GalleryApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    ValueListenableBuilder(
+      valueListenable: appState,
+      builder: (_, themeMode, __) => const GalleryApp(),
+    ),
+  );
+}
+
+/// TODO: Use this somewhere
+// ignore: unused_element
+void _setupPerformance() {
+  // Change [printPerformance] to true and set the app to release mode to
+  // print performance numbers to console. By default, Flutter builds in debug
+  // mode and this mode is slow. To build in release mode, specify the flag
+  // blaze-run flag "--define flutter_build_mode=release".
+  // The build target must also be an actual device and not the emulator.
+  charts.Performance.time = Timeline.startSync;
+  charts.Performance.timeEnd = (_) => Timeline.finishSync();
 }

@@ -35,7 +35,7 @@ import 'package:flutter/material.dart';
 import 'package:nimble_charts/flutter.dart' as charts;
 
 class SegmentsLineChart extends StatelessWidget {
-  const SegmentsLineChart(this.seriesList, {super.key, this.animate = false});
+  const SegmentsLineChart(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [charts.LineChart] with sample data and no transition.
   factory SegmentsLineChart.withSampleData() => SegmentsLineChart(

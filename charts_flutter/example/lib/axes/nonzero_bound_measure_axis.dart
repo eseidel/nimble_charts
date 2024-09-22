@@ -28,7 +28,7 @@ class NonzeroBoundMeasureAxis extends StatelessWidget {
   const NonzeroBoundMeasureAxis(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.

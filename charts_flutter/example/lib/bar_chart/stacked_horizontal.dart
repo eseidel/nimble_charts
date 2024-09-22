@@ -26,7 +26,7 @@ class StackedHorizontalBarChart extends StatelessWidget {
   const StackedHorizontalBarChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a stacked [charts.BarChart] with sample data and no transition.

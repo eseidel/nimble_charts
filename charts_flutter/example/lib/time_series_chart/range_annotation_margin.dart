@@ -28,7 +28,7 @@ class TimeSeriesRangeAnnotationMarginChart extends StatelessWidget {
   const TimeSeriesRangeAnnotationMarginChart(
     this.seriesList, {
     super.key,
-    this.animate = false,
+    this.animate = true,
   });
 
   /// Creates a [charts.TimeSeriesChart] with sample data and no transition.

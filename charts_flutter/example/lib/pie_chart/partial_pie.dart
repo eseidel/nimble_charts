@@ -26,7 +26,7 @@ import 'package:nimble_charts/flutter.dart' as charts;
 
 /// Creates a partial pie chart where the data does not cover a full revolution.
 class PartialPieChart extends StatelessWidget {
-  const PartialPieChart(this.seriesList, {super.key, this.animate = false});
+  const PartialPieChart(this.seriesList, {super.key, this.animate = true});
 
   /// Creates a [PartialPieChart] with sample data and no transition.
   factory PartialPieChart.withSampleData() =>
