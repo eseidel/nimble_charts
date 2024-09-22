@@ -19,13 +19,28 @@ import 'package:flutter/material.dart';
 
 import 'package:nimble_charts/flutter.dart' as charts;
 
-typedef AppState = ({ThemeMode themeMode, bool isOriginal, bool useRandomData});
+typedef AppState = ({
+  ThemeMode themeMode,
+  bool isOriginal,
+  bool useRandomData
+});
 
 extension AppStateExtension on AppState {
   AppState withThemeMode(ThemeMode themeMode) => (
         themeMode: themeMode,
         isOriginal: isOriginal,
         useRandomData: useRandomData,
+      );
+
+  AppState copyWith({
+    ThemeMode? themeMode,
+    bool? isOriginal,
+    bool? useRandomData,
+  }) =>
+      (
+        themeMode: themeMode ?? this.themeMode,
+        isOriginal: isOriginal ?? this.isOriginal,
+        useRandomData: useRandomData ?? this.useRandomData,
       );
 }
 

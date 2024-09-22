@@ -23,6 +23,10 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
           title: const Text('nimble_charts Gallery'),
           actions: [
             IconButton(
+              icon: const Icon(Icons.history),
+              onPressed: () async => _showOriginalSampleDialog(context),
+            ),
+            IconButton(
               icon: ValueListenableBuilder(
                 valueListenable: appState,
                 builder: (_, appState, __) => Icon(
@@ -101,6 +105,35 @@ class _TagSelectionScreenState extends State<TagSelectionScreen> {
               )
               .toList(),
           allTags: tagDefinitions.values.toList(),
+        ),
+      );
+
+  Future<bool?> _showOriginalSampleDialog(BuildContext context) async =>
+      showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Switch to Original Sample'),
+          content: const Text(
+            'This switches to the original charts_flutter sample. '
+            'There is no button to come back. Continue?',
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                appState.value = appState.value.copyWith(
+                  isOriginal: true,
+                  themeMode: ThemeMode.light,
+                );
+
+                Navigator.of(context).pop(true);
+              },
+              child: const Text('OK'),
+            ),
+          ],
         ),
       );
 }

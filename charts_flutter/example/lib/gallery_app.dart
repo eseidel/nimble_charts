@@ -14,6 +14,7 @@
 // limitations under the License.
 
 import 'package:example/main.dart';
+import 'package:example/original.dart';
 import 'package:example/picker/tag_selection_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -28,8 +29,9 @@ class GalleryApp extends StatelessWidget {
           title: 'nimble_charts Gallery',
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          themeMode: appState.value.themeMode,
-          home: const TagSelectionScreen(),
+          themeMode: currentState.themeMode,
+          home:
+              currentState.isOriginal ? Original() : const TagSelectionScreen(),
         ),
       );
 }
