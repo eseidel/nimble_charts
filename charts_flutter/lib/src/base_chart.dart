@@ -64,6 +64,8 @@ abstract class BaseChart<D> extends StatefulWidget {
 
   /// Animation transitions.
   final bool animate;
+
+  /// The duration of the animation when data changes.
   final Duration animationDuration;
 
   /// Used to configure the margin sizes around the drawArea that the axis and
@@ -99,9 +101,19 @@ abstract class BaseChart<D> extends StatefulWidget {
   BaseChartState<D> createState() => BaseChartState<D>();
 
   /// Creates and returns a [common.BaseChart].
+  ///
+  /// Subclasses should override this method to create and configure the
+  /// appropriate [common.BaseChart] instance.
   common.BaseChart<D> createCommonChart(BaseChartState<D> chartState);
 
-  /// Updates the [common.BaseChart].
+  /// Updates the [common.BaseChart] based on changes in the widget properties.
+  ///
+  /// This method is called when the chart widget is updated, allowing the chart
+  /// to be reconfigured based on the new widget properties.
+  ///
+  /// [chart] The [common.BaseChart] instance to update.
+  /// [oldWidget] The previous [BaseChart] widget, if any.
+  /// [chartState] The current [BaseChartState] instance.
   void updateCommonChart(
     common.BaseChart<D> chart,
     BaseChart<D>? oldWidget,
@@ -190,6 +202,11 @@ abstract class BaseChart<D> extends StatefulWidget {
   }
 
   /// Create the list of default interaction behaviors.
+  ///
+  /// Subclasses can override this method to customize the default interactions
+  /// that are added to the chart.
+  ///
+  /// [behaviors] The list of [ChartBehavior] to add the default interactions to.
   void addDefaultInteractions(List<ChartBehavior> behaviors) {
     // Update selection model
     behaviors.add(
