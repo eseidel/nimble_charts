@@ -1,5 +1,7 @@
 # nimble_charts: charts_flutter Resurrected
 
+![Charts Sample](https://github.com/Nimblesite/nimble_charts/blob/main/charts.gif)
+
 This project is a resurrection of the discontinued [Google Charts Flutter library](https://github.com/google/charts). It aims to provide a maintained and updated version of the popular charting package for Flutter developers.
 
 nimble_charts is a fork of the original [charts_flutter](https://pub.dev/packages/charts_flutter) library. It has been renamed, and [Nimblesite](https://www.nimblesite.co/) now maintains it. While the package name has changed, we continue to honor the original Apache 2.0 license and attribute the original work to the original Google team.
@@ -18,6 +20,7 @@ This is the original example app, running in a browser with WASM.
 - Customizable appearance and behavior
 - Flutter-native implementation
 - Supports both mobile and web platforms
+- Improved documentation and examples
 
 ## 🛠️ Installation
 
