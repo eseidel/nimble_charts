@@ -67,37 +67,37 @@ class FakeTimeSeries extends TimeSeriesChart {
 void main() {
   group('Axis reset with new axis spec', () {
     test('for ordinal chart', () {
-      final chart = FakeOrdinalChart();
-      chart.configurationChanged();
+      final chart = FakeOrdinalChart()..configurationChanged();
       final domainAxis = chart.domainAxis;
       expect(domainAxis, isNotNull);
 
-      chart.domainAxisSpec = const OrdinalAxisSpec();
-      chart.configurationChanged();
+      chart
+        ..domainAxisSpec = const OrdinalAxisSpec()
+        ..configurationChanged();
 
       expect(domainAxis, isNot(chart.domainAxis));
     });
 
     test('for numeric chart', () {
-      final chart = FakeNumericChart();
-      chart.configurationChanged();
+      final chart = FakeNumericChart()..configurationChanged();
       final domainAxis = chart.domainAxis;
       expect(domainAxis, isNotNull);
 
-      chart.domainAxisSpec = const NumericAxisSpec();
-      chart.configurationChanged();
+      chart
+        ..domainAxisSpec = const NumericAxisSpec()
+        ..configurationChanged();
 
       expect(domainAxis, isNot(chart.domainAxis));
     });
 
     test('for time series chart', () {
-      final chart = FakeTimeSeries();
-      chart.configurationChanged();
+      final chart = FakeTimeSeries()..configurationChanged();
       final domainAxis = chart.domainAxis;
       expect(domainAxis, isNotNull);
 
-      chart.domainAxisSpec = const DateTimeAxisSpec();
-      chart.configurationChanged();
+      chart
+        ..domainAxisSpec = const DateTimeAxisSpec()
+        ..configurationChanged();
 
       expect(domainAxis, isNot(chart.domainAxis));
     });
