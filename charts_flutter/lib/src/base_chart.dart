@@ -206,7 +206,8 @@ abstract class BaseChart<D> extends StatefulWidget {
   /// Subclasses can override this method to customize the default interactions
   /// that are added to the chart.
   ///
-  /// [behaviors] The list of [ChartBehavior] to add the default interactions to.
+  /// [behaviors] The list of [ChartBehavior] to add the default interactions 
+  /// to.
   void addDefaultInteractions(List<ChartBehavior> behaviors) {
     // Update selection model
     behaviors.add(
