@@ -106,7 +106,6 @@ class FakeTextElement implements TextElement {
       );
 }
 
-
 class FakeBarRendererElement implements ImmutableBarRendererElement<String> {
   final _series = MockImmutableSeries<String>();
   final AccessorFn<String>? labelAccessor;
@@ -138,7 +137,6 @@ class FakeBarRendererElement implements ImmutableBarRendererElement<String> {
   @override
   ImmutableSeries<String> get series => _series;
 }
-
 
 void main() {
   late MockCanvas canvas;
@@ -258,6 +256,8 @@ void main() {
     });
 
     test('LabelPosition.inside always paints inside the bar', () {
+      //This code looks like it does nothing, but the weird mutable
+      //heirarchy means that it's necessary.
       final barElements = [
         // 'LabelABC' would not fit inside the bar in auto setting because it
         // has a width of 8.
@@ -381,48 +381,47 @@ void main() {
     });
 
     test('Inside and outside label styles are applied', () {
-      // final data = ['A', 'B'];
-      // final barElements = [
-      //   // 'LabelA' and 'LabelB' both have lengths of 6.
-      //   // 'LabelB' would not fit inside the bar in auto setting because it has
-      //   // width of 4.
-      //   FakeBarRendererElement(
-      //     'A',
-      //     const Rectangle(10, 80, 10, 20),
-      //     (_) => 'LabelA',
-      //     data,
-      //   ),
-      //   FakeBarRendererElement(
-      //     'B',
-      //     const Rectangle(25, 80, 4, 20),
-      //     (_) => 'LabelB',
-      //     data,
-      //   ),
-      // ];
+      final data = ['A', 'B'];
+      final barElements = [
+        // 'LabelA' and 'LabelB' both have lengths of 6.
+        // 'LabelB' would not fit inside the bar in auto setting because it has
+        // width of 4.
+        FakeBarRendererElement(
+          'A',
+          const Rectangle(10, 80, 10, 20),
+          (_) => 'LabelA',
+          data,
+        ),
+        FakeBarRendererElement(
+          'B',
+          const Rectangle(25, 80, 4, 20),
+          (_) => 'LabelB',
+          data,
+        ),
+      ];
       const insideColor = Color.black;
       const outsideColor = Color.white;
 
-      //Was there a point to this?
-      // BarLabelDecorator<String>(
-      //   labelPadding: 0,
-      //   insideLabelStyleSpec: const TextStyleSpec(
-      //     fontSize: 10,
-      //     fontFamily: 'insideFont',
-      //     color: insideColor,
-      //   ),
-      //   outsideLabelStyleSpec: const TextStyleSpec(
-      //     fontSize: 8,
-      //     fontFamily: 'outsideFont',
-      //     color: outsideColor,
-      //   ),
-      // ).decorate(
-      //     barElements,
-      //     canvas,
-      //     graphicsFactory,
-      //     drawBounds: drawBounds,
-      //     animationPercent: 1,
-      //     renderingVertically: true,
-      //   );
+      BarLabelDecorator<String>(
+        labelPadding: 0,
+        insideLabelStyleSpec: const TextStyleSpec(
+          fontSize: 10,
+          fontFamily: 'insideFont',
+          color: insideColor,
+        ),
+        outsideLabelStyleSpec: const TextStyleSpec(
+          fontSize: 8,
+          fontFamily: 'outsideFont',
+          color: outsideColor,
+        ),
+      ).decorate(
+        barElements,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+        renderingVertically: true,
+      );
 
       final captured =
           verify(canvas.drawText(captureAny, captureAny, captureAny)).captured;
@@ -854,46 +853,50 @@ void main() {
     });
 
     test('Inside and outside label styles are applied', () {
-      // final data = ['A', 'B'];
-      // final barElements = [
-      //   // 'LabelA' and 'LabelB' both have lengths of 6.
-      //   // 'LabelB' would not fit inside the bar in auto setting because it has
-      //   // width of 5.
-      //   FakeBarRendererElement(
-      //     'A',
-      //     const Rectangle(0, 20, 50, 20),
-      //     (_) => 'LabelA',
-      //     data,
-      //   ),
-      //   FakeBarRendererElement(
-      //     'B',
-      //     const Rectangle(0, 70, 5, 20),
-      //     (_) => 'LabelB',
-      //     data,
-      //   ),
-      // ];
+      final data = ['A', 'B'];
+
+      //This code looks like it does nothing, but the weird mutable
+      //heirarchy means that it's necessary.
+      // ignore: unused_local_variable
+      final barElements = [
+        // 'LabelA' and 'LabelB' both have lengths of 6.
+        // 'LabelB' would not fit inside the bar in auto setting because it has
+        // width of 5.
+        FakeBarRendererElement(
+          'A',
+          const Rectangle(0, 20, 50, 20),
+          (_) => 'LabelA',
+          data,
+        ),
+        FakeBarRendererElement(
+          'B',
+          const Rectangle(0, 70, 5, 20),
+          (_) => 'LabelB',
+          data,
+        ),
+      ];
       const insideColor = Color.black;
       const outsideColor = Color.white;
-      // final decorator = BarLabelDecorator<String>(
-      //   labelPadding: 0,
-      //   insideLabelStyleSpec: const TextStyleSpec(
-      //     fontSize: 10,
-      //     fontFamily: 'insideFont',
-      //     color: insideColor,
-      //   ),
-      //   outsideLabelStyleSpec: const TextStyleSpec(
-      //     fontSize: 8,
-      //     fontFamily: 'outsideFont',
-      //     color: outsideColor,
-      //   ),
-      // )..decorate(
-      //     barElements,
-      //     canvas,
-      //     graphicsFactory,
-      //     drawBounds: drawBounds,
-      //     animationPercent: 1,
-      //     renderingVertically: false,
-      //   );
+      BarLabelDecorator<String>(
+        labelPadding: 0,
+        insideLabelStyleSpec: const TextStyleSpec(
+          fontSize: 10,
+          fontFamily: 'insideFont',
+          color: insideColor,
+        ),
+        outsideLabelStyleSpec: const TextStyleSpec(
+          fontSize: 8,
+          fontFamily: 'outsideFont',
+          color: outsideColor,
+        ),
+      ).decorate(
+        barElements,
+        canvas,
+        graphicsFactory,
+        drawBounds: drawBounds,
+        animationPercent: 1,
+        renderingVertically: false,
+      );
 
       final captured =
           verify(canvas.drawText(captureAny, captureAny, captureAny)).captured;
