@@ -36,6 +36,10 @@ import 'package:nimble_charts_common/common.dart' as common
         Series,
         SeriesRendererConfig;
 
+/// Base class for all charts.
+///
+/// This class provides the foundation for building various types of charts
+/// with different configurations and behaviors.
 @immutable
 abstract class BaseChart<D> extends StatefulWidget {
   const BaseChart(
@@ -72,8 +76,10 @@ abstract class BaseChart<D> extends StatefulWidget {
   /// Include the default interactions or not.
   final bool defaultInteractions;
 
+  /// List of chart behaviors to apply to the chart.
   final List<ChartBehavior<D>>? behaviors;
 
+  /// List of selection models to add to the chart.
   final List<SelectionModelConfig<D>>? selectionModels;
 
   // List of custom series renderers used to draw series data on the chart.
@@ -269,6 +275,7 @@ abstract class BaseChart<D> extends StatefulWidget {
   }
 }
 
+/// Configuration for the chart layout.
 @immutable
 class LayoutConfig {
   const LayoutConfig({
@@ -277,11 +284,20 @@ class LayoutConfig {
     required this.rightMarginSpec,
     required this.bottomMarginSpec,
   });
+
+  /// Margin specification for the left side of the chart.
   final common.MarginSpec leftMarginSpec;
+
+  /// Margin specification for the top side of the chart.
   final common.MarginSpec topMarginSpec;
+
+  /// Margin specification for the right side of the chart.
   final common.MarginSpec rightMarginSpec;
+
+  /// Margin specification for the bottom side of the chart.
   final common.MarginSpec bottomMarginSpec;
 
+  /// Converts the layout configuration to the common [common.LayoutConfig].
   common.LayoutConfig get commonLayoutConfig => common.LayoutConfig(
         leftSpec: leftMarginSpec,
         topSpec: topMarginSpec,
