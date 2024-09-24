@@ -17,7 +17,7 @@ Type safety and rigourous tests ensure that this package is reliable and maintai
 
 This fork provides the most solid foundation for future development, and we will continue to maintain this library.
 
-Please compare the pubspec.yaml file,analysis_options.yaml file and the test folder with other forks of this library. The difference is clear. This fork only works with Dart 3 and above, which has far better type safety and null safety. 
+Please compare the `pubspec.yaml` file, `analysis_options.yaml` file and the test folder with other forks of this library. The difference is clear. This fork only works with Dart 3 and above, which has far better type safety and null safety. 
 
 ## 📊 Features
 
@@ -80,9 +80,7 @@ void main() => runApp(
 For more examples and detailed documentation, please refer to the example app and documentation.
 
 ## ⚖️ License
-This project continues the original Google Charts library under the Apache 2.0 license. We honor the original licenses and attributions. See the [LICENSE](LICENSE) and [AUTHORS](AUTHORS) files for details.
-
-We are grateful to the Google team for their valuable work on this library.
+This project continues the original Google Charts library under the Apache 2.0 license. We honor the original licenses and attributions. See the [LICENSE](LICENSE) and [AUTHORS](AUTHORS) files for details. We are grateful to the Google team for their valuable work on this library.
 
 ## Running the Tests
 
