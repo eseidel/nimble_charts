@@ -2,9 +2,8 @@
 
 ![Charts Sample](https://github.com/Nimblesite/nimble_charts/blob/main/charts.gif)
 
-This project is a resurrection of the discontinued [Google Charts Flutter library](https://github.com/google/charts). It aims to provide a maintained and updated version of the popular charting package for Flutter developers.
-
-nimble_charts is a fork of the original [charts_flutter](https://pub.dev/packages/charts_flutter) library. It has been renamed, and [Nimblesite](https://www.nimblesite.co/) now maintains it. While the package name has changed, we continue to honor the original Apache 2.0 license and attribute the original work to the original Google team.
+This project is a resurrection of the discontinued [charts_flutter](https://pub.dev/packages/charts_flutter). It aims to provide a robust and flexible charting package for Flutter developers.
+[Nimblesite](https://www.nimblesite.co/) now maintains this library. While the package name has changed, we continue to honor the original Apache 2.0 license and attribute the original work to the original Google team.
 
 [![build_and_test](https://github.com/Nimblesite/nimble_charts/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/Nimblesite/nimble_charts/actions/workflows/build_and_test.yml)
 
@@ -20,55 +19,77 @@ This is the original example app, running in a browser with WASM.
 - Customizable appearance and behavior
 - Flutter-native implementation
 - Supports both mobile and web platforms
-- Improved documentation and examples
+- Improved documentation and extensive samples
 
 ## 🛠️ Installation
 
 Add the following to your `pubspec.yaml`:
 
-nimble_charts: ^0.1.0-beta
+nimble_charts: ^0.3.0-beta
 
 ## 📝 Usage
 
-Here's a quick example of how to create a simple line chart:
+This is a full app with a basic line chart.
 
 ```dart
-import 'package:nimble_charts/flutter.dart' as charts;
+import 'package:flutter/material.dart';
+import 'package:nimble_charts/flutter.dart';
 
-// ... in your widget build method:
-charts.LineChart(
- [
- charts.Series<LinearSales, int>(
- id: 'Sales',
- colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
- domainFn: (LinearSales sales, _) => sales.year,
- measureFn: (LinearSales sales, _) => sales.sales,
- data: [
-        LinearSales(0, 5),
-        LinearSales(1, 25),
-        LinearSales(2, 100),
-        LinearSales(3, 75),
- ],
- )
- ],
-)
+typedef LinearSales = ({int year, int sales});
+
+void main() => runApp(
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.all(24),
+            child: ColoredBox(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: LineChart(
+                  [
+                    Series<LinearSales, int>(
+                      id: 'Sales',
+                      colorFn: (_, __) => MaterialPalette.purple.shadeDefault,
+                      domainFn: (sales, _) => sales.year,
+                      measureFn: (sales, _) => sales.sales,
+                      data: [
+                        (year: 0, sales: 5),
+                        (year: 1, sales: 25),
+                        (year: 2, sales: 100),
+                        (year: 3, sales: 75),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
 ```
 
-For more examples and detailed documentation, please refer to the package documentation.
+For more examples and detailed documentation, please refer to the example app and documentation.
 
 ## ⚖️ License
 This project is a continuation of the original Google Charts library and maintains the same Apache 2.0 license. We are committed to honoring the original licenses and attributions. For full license details, please see the LICENSE file.
 
+This project would not be possible without the original work done by the Google Charts team. We express our gratitude for their efforts in creating such a valuable library for the Flutter community.
+
+All chart packages are licensed under the Apache 2 license, see the
+[LICENSE](LICENSE) and [AUTHORS](AUTHORS) files for details.
+
 ## Running the Tests
 
-There are a heap of widget tests. Each of the widget tests create golden files. These golden files are generated with GitHub actions on Linux so they will always be slightly different to your local machine. If you want to run the tests locally, you can run the following command:
+There are many widget tests for the example app. Each of the widget tests create golden files. These golden files are generated with GitHub actions on Linux so they will always be slightly different to your local machine. If you want to run the tests locally, you need to run the following command:
 
 ```bash
 flutter test --update-goldens
 ```
 
-Please don't commit goldens in PRs. We will merge your branch to a temporary branch and then run the `generate_goldens.yaml` action to generate the goldens. If there
-are changes in the goldens, they will show up in the PR.
+Please don't commit goldens in PRs. We will merge your branch to a temporary branch and then run the `generate_goldens.yaml` action to generate the goldens. If there are changes in the goldens, they will show up in the PR.
 
 ## What Has Changed?
 
@@ -82,9 +103,3 @@ The Fork occurred at 0.12.0 of the original charts_flutter
 
 ## 🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📣 Acknowledgements
-This project would not be possible without the original work done by the Google Charts team. We express our gratitude for their efforts in creating such a valuable library for the Flutter community.
-
-All chart packages are licensed under the Apache 2 license, see the
-[LICENSE](LICENSE) and [AUTHORS](AUTHORS) files for details.

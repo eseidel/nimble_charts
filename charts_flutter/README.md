@@ -1,5 +1,7 @@
 # nimble_charts: charts_flutter Resurrected
 
+![Charts Sample](https://github.com/Nimblesite/nimble_charts/blob/main/charts.gif)
+
 This project is a resurrection of the discontinued [Google Charts Flutter library](https://github.com/google/charts). It aims to provide a maintained and updated version of the popular charting package for Flutter developers.
 
 nimble_charts is a fork of the original [charts_flutter](https://pub.dev/packages/charts_flutter) library. It has been renamed, and [Nimblesite](https://www.nimblesite.co/) now maintains it. While the package name has changed, we continue to honor the original Apache 2.0 license and attribute the original work to the original Google team.
@@ -18,7 +20,8 @@ This is the original example app, running in a browser with WASM.
 - Customizable appearance and behavior
 - Flutter-native implementation
 - Supports both mobile and web platforms
- 
+- Improved documentation and examples
+
 ## 🛠️ Installation
 
 Add the following to your `pubspec.yaml`:
@@ -55,6 +58,17 @@ For more examples and detailed documentation, please refer to the package docume
 
 ## ⚖️ License
 This project is a continuation of the original Google Charts library and maintains the same Apache 2.0 license. We are committed to honoring the original licenses and attributions. For full license details, please see the LICENSE file.
+
+## Running the Tests
+
+There are a heap of widget tests. Each of the widget tests create golden files. These golden files are generated with GitHub actions on Linux so they will always be slightly different to your local machine. If you want to run the tests locally, you can run the following command:
+
+```bash
+flutter test --update-goldens
+```
+
+Please don't commit goldens in PRs. We will merge your branch to a temporary branch and then run the `generate_goldens.yaml` action to generate the goldens. If there
+are changes in the goldens, they will show up in the PR.
 
 ## What Has Changed?
 
