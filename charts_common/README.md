@@ -2,7 +2,7 @@
 
 This package is part of [nimble_charts](https://pub.dev/packages/nimble_charts). This package is toolkit agnostic and contains shared code. You could use this package to build your own charting Flutter UI library, or even use it for something like [Jaspr](https://pub.dev/packages/jaspr). Below is the documentation for the Flutter package.
 
-![Charts Sample](https://github.com/Nimblesite/nimble_charts/blob/main/charts.gif)
+![Charts Sample](https://raw.githubusercontent.com/Nimblesite/nimble_charts/main/charts.gif)
 
 This project is a resurrection of the discontinued [charts_flutter](https://pub.dev/packages/charts_flutter). It aims to provide a robust and flexible charting package for Flutter developers.
 [Nimblesite](https://www.nimblesite.co/) now maintains this library. While the package name has changed, we are working towards making this fork as compatible as possible with the original.
