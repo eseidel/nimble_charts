@@ -1,6 +1,6 @@
 # nimble_charts: charts_flutter Resurrected
 
-![Charts Sample](https://github.com/Nimblesite/nimble_charts/blob/main/charts.gif)
+![Charts Sample](https://raw.githubusercontent.com/Nimblesite/nimble_charts/main/charts.gif)
 
 This project is a resurrection of the discontinued [charts_flutter](https://pub.dev/packages/charts_flutter). It aims to provide a robust and flexible charting package for Flutter developers.
 [Nimblesite](https://www.nimblesite.co/) now maintains this library. While the package name has changed, we are working towards making this fork as compatible as possible with the original.
@@ -31,7 +31,7 @@ Please compare the `pubspec.yaml` file, `analysis_options.yaml` file and the tes
 
 Add the following to your `pubspec.yaml`:
 
-nimble_charts: ^0.3.0-beta
+nimble_charts: ^0.4.0-beta
 
 ## 📝 Usage
 
