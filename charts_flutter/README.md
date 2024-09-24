@@ -31,7 +31,7 @@ Please compare the `pubspec.yaml` file, `analysis_options.yaml` file and the tes
 
 Add the following to your `pubspec.yaml`:
 
-nimble_charts: ^0.3.0-beta
+nimble_charts: ^0.4.0-beta
 
 ## 📝 Usage
 
